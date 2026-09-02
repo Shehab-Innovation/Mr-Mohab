@@ -886,4 +886,89 @@
         document.getElementById('lessonTitle').textContent = '📖 ' + data.title;
 
         // تعبئة الشرح
-        document.getElementById('explainContent').innerHTML = data.ex
+        document.getElementById('explainContent').innerHTML = data.explain;
+
+        // تعبئة الأسئلة
+        let questionsHTML = '';
+        data.questions.forEach((q, index) => {
+            questionsHTML += `
+                <div class="question" id="q${index}">
+                    <p>${index+1}. ${q.q}</p>
+                    ${q.options.map((opt, i) => `
+                        <label>
+                            <input type="radio" name="q${index}" value="${i}"> ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+        });
+        questionsHTML += `<button class="btn" onclick="checkAnswers('${key}')">✅ تصحيح الإجابات</button>`;
+        questionsHTML += `<div class="result-box" id="resultBox"></div>`;
+        document.getElementById('questionsContent').innerHTML = questionsHTML;
+
+        // تعبئة الواجب
+        document.getElementById('homeworkContent').innerHTML = `
+            <p>${data.homework}</p>
+            <div class="homework-submit">
+                <p><strong>تسليم الواجب:</strong></p>
+                <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+                <input type="file" />
+                <button class="btn btn-success" onclick="alert('✅ تم تسليم الواجب بنجاح!')">📤 تسليم الواجب</button>
+            </div>
+        `;
+
+        // إعادة ضبط التبويبات
+        switchTab('explain');
+    }
+
+    // ===== التبويبات =====
+    function switchTab(tabId) {
+        // إزالة التحديد من كل الأزرار
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        // تحديد الزر المناسب
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            if (btn.textContent.includes('الشرح') && tabId === 'explain') btn.classList.add('active');
+            if (btn.textContent.includes('الأسئلة') && tabId === 'questions') btn.classList.add('active');
+            if (btn.textContent.includes('الواجب') && tabId === 'homework') btn.classList.add('active');
+        });
+
+        // إخفاء كل المحتويات
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // إظهار المحتوى المطلوب
+        const target = document.getElementById('tab-' + tabId);
+        if (target) {
+            target.classList.add('active');
+        }
+    }
+
+    // ===== تصحيح الإجابات =====
+    function checkAnswers(lessonKey) {
+        const data = lessonsData[lessonKey];
+        if (!data) return;
+
+        let correct = 0;
+        data.questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selected && parseInt(selected.value) === q.correct) {
+                correct++;
+            }
+        });
+
+        const resultBox = document.getElementById('resultBox');
+        resultBox.innerHTML = `
+            <p><strong>نتيجتك:</strong> ${correct} من ${data.questions.length}</p>
+            <p style="color: ${correct === data.questions.length ? '#16a673' : '#f59e0b'}">
+                ${correct === data.questions.length ? '🎉 ممتاز! إجاباتك كلها صحيحة.' : '💪 حاول مرة أخرى، أنت قريب من الإتقان.'}
+            </p>
+        `;
+        resultBox.classList.add('show');
+    }
+</script>
+
+</body>
+</html>
