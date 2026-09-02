@@ -2,11 +2,12 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>مستر مهاب | البوابة التعليمية</title>
+<title>مستر مهاب | المنصة التعليمية</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
 
 *{
     box-sizing:border-box;
@@ -14,26 +15,25 @@
     padding:0;
 }
 
+:root{
+    --navy:#0b1f3a;
+    --blue:#1769e0;
+    --light-blue:#eef5ff;
+    --text:#172033;
+    --muted:#7b8495;
+    --bg:#f5f7fb;
+    --white:#fff;
+    --border:#e8edf5;
+    --green:#16a673;
+    --orange:#f59e0b;
+    --red:#ef4444;
+    --shadow:0 10px 30px rgba(15,35,65,.07);
+}
+
 body{
-    font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
-    background:#f4f7fb;
-    color:#17233b;
-}
-
-button,
-input{
-    font-family:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.app{
-    min-height:100vh;
+    font-family:'Cairo',sans-serif;
+    background:var(--bg);
+    color:var(--text);
 }
 
 /* =========================
@@ -43,660 +43,766 @@ button{
 .login-screen{
     position:fixed;
     inset:0;
-    z-index:999;
-    background:linear-gradient(
-        135deg,
-        #06264d,
-        #1764a8
-    );
+    background:
+        linear-gradient(135deg,#071a32,#123c75);
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+    z-index:9999;
     padding:20px;
 }
 
 .login-box{
     width:100%;
     max-width:430px;
-    background:#fff;
-    border-radius:24px;
-    padding:35px 28px;
+    background:white;
+    border-radius:28px;
+    padding:38px 30px;
+    box-shadow:0 30px 80px rgba(0,0,0,.25);
     text-align:center;
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.25);
 }
 
-.login-logo{
-    width:80px;
-    height:80px;
-    margin:0 auto 15px;
-    border-radius:22px;
-    background:#0b3d73;
-    color:#fff;
+.teacher-logo{
+    width:82px;
+    height:82px;
+    border-radius:50%;
+    margin:auto;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:40px;
+    background:linear-gradient(135deg,#1769e0,#0b1f3a);
+    color:white;
+    font-size:32px;
+    font-weight:800;
 }
 
 .login-box h1{
-    color:#0a3768;
-    margin-bottom:8px;
-    font-size:28px;
+    margin-top:18px;
+    font-size:25px;
 }
 
 .login-box p{
-    color:#7b8798;
-    font-size:14px;
-    margin-bottom:25px;
+    color:var(--muted);
+    margin:7px 0 25px;
 }
 
-.login-box input{
+.input{
     width:100%;
-    border:1px solid #dce3ec;
-    padding:14px;
-    border-radius:11px;
-    margin-bottom:11px;
+    border:1px solid var(--border);
+    padding:15px;
+    border-radius:14px;
+    font-family:inherit;
+    font-size:15px;
     outline:none;
-    font-size:14px;
+    margin-bottom:12px;
+    text-align:right;
 }
 
-.login-box input:focus{
-    border-color:#1764a8;
+.input:focus{
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(23,105,224,.1);
 }
 
-.login-btn{
+.main-btn{
     width:100%;
     border:none;
-    padding:14px;
-    border-radius:11px;
-    background:#0d4d8f;
-    color:#fff;
+    border-radius:14px;
+    padding:15px;
+    background:var(--blue);
+    color:white;
+    font-family:inherit;
     font-size:16px;
-    font-weight:bold;
-}
-
-.demo-teacher{
-    margin-top:18px;
-    font-size:13px;
-    color:#52708f;
+    font-weight:700;
     cursor:pointer;
+    transition:.2s;
 }
 
-.demo-teacher:hover{
-    color:#0d4d8f;
+.main-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(23,105,224,.25);
+}
+
+.demo-note{
+    margin-top:15px;
+    font-size:12px;
+    color:#9aa2af;
 }
 
 /* =========================
-   SIDEBAR
+   APP
 ========================= */
+
+.app{
+    display:none;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
 
 .sidebar{
     position:fixed;
-    top:0;
     right:0;
+    top:0;
     bottom:0;
-    width:255px;
-    background:
-        linear-gradient(
-            180deg,
-            #082c58,
-            #031a35
-        );
-    color:#fff;
-    padding:18px 14px;
+    width:250px;
+    background:white;
+    border-left:1px solid var(--border);
+    padding:25px 15px;
     z-index:100;
 }
 
-.sidebar-logo{
-    background:#fff;
-    color:#0b3568;
-    border-radius:17px;
-    padding:14px;
+.brand{
     display:flex;
     align-items:center;
-    gap:10px;
-    margin-bottom:20px;
+    gap:12px;
+    padding:0 10px 28px;
+    border-bottom:1px solid var(--border);
 }
 
-.sidebar-logo-icon{
+.brand-icon{
     width:45px;
     height:45px;
-    border-radius:12px;
-    background:#0c4077;
-    color:#fff;
+    background:linear-gradient(135deg,var(--blue),var(--navy));
+    color:white;
+    border-radius:13px;
     display:flex;
-    align-items:center;
     justify-content:center;
-    font-size:23px;
+    align-items:center;
+    font-weight:800;
+    font-size:18px;
 }
 
-.sidebar-logo h2{
-    font-size:17px;
-}
-
-.sidebar-logo span{
+.brand strong{
     display:block;
-    font-size:10px;
-    color:#7b8ba1;
-    margin-top:3px;
+    font-size:16px;
+}
+
+.brand span{
+    color:var(--muted);
+    font-size:11px;
 }
 
 .nav{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
+    margin-top:22px;
 }
 
 .nav button{
+    width:100%;
     border:none;
     background:transparent;
-    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 14px;
+    margin-bottom:5px;
+    border-radius:12px;
+    font-family:inherit;
+    color:#657083;
+    cursor:pointer;
     text-align:right;
-    padding:13px 15px;
-    border-radius:10px;
     font-size:14px;
 }
 
 .nav button:hover,
 .nav button.active{
-    background:#1c4e84;
+    background:var(--light-blue);
+    color:var(--blue);
+    font-weight:700;
 }
 
-.logout{
-    position:absolute;
-    bottom:18px;
-    right:14px;
-    left:14px;
-    background:#123e70!important;
+.nav-icon{
+    width:22px;
+    text-align:center;
+    font-size:17px;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .main{
-    margin-right:255px;
-    min-height:100vh;
+    margin-right:250px;
+    padding:25px 30px;
 }
+
+/* TOPBAR */
 
 .topbar{
-    height:78px;
-    background:#fff;
-    border-bottom:1px solid #e4eaf2;
+    height:65px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    padding:0 30px;
+    justify-content:space-between;
+    margin-bottom:25px;
 }
 
-.brand-small{
-    font-size:11px;
-    color:#8793a5;
+.page-title h2{
+    font-size:23px;
 }
 
-.brand-title{
-    color:#092f60;
-    font-size:25px;
-    font-weight:bold;
+.page-title p{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:2px;
 }
 
 .profile{
     display:flex;
     align-items:center;
     gap:10px;
+    background:white;
+    padding:7px 12px 7px 7px;
+    border-radius:14px;
+    box-shadow:var(--shadow);
 }
 
-.profile-info{
-    text-align:left;
-}
-
-.profile-info strong{
-    display:block;
-    font-size:14px;
-}
-
-.profile-info span{
-    font-size:11px;
-    color:#8490a2;
-}
-
-.avatar{
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    background:#153f6d;
-    color:#fff;
+.profile-img{
+    width:40px;
+    height:40px;
+    background:linear-gradient(135deg,#dbeafe,#93c5fd);
+    border-radius:11px;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-weight:bold;
+    font-weight:800;
+    color:#174ea6;
 }
 
-.content{
-    max-width:1250px;
-    margin:auto;
-    padding:28px;
+.profile strong{
+    display:block;
+    font-size:13px;
 }
 
-/* =========================
-   HERO
-========================= */
+.profile span{
+    display:block;
+    font-size:10px;
+    color:var(--muted);
+}
+
+/* HERO */
 
 .hero{
-    min-height:205px;
-    border-radius:23px;
-    padding:30px;
-    background:
-        linear-gradient(
-            120deg,
-            #062c58,
-            #1c5c9d
-        );
-    color:#fff;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    overflow:hidden;
     position:relative;
+    overflow:hidden;
+    min-height:230px;
+    background:
+        linear-gradient(110deg,#0b1f3a,#1769e0);
+    border-radius:24px;
+    padding:32px;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:var(--shadow);
 }
 
 .hero-content{
-    position:relative;
+    max-width:620px;
     z-index:2;
+}
+
+.hero small{
+    opacity:.75;
 }
 
 .hero h1{
     font-size:31px;
-    margin-bottom:9px;
+    margin:8px 0;
 }
 
 .hero p{
-    color:#dcecff;
-    font-size:14px;
+    color:#dbeafe;
+    line-height:1.9;
+    font-size:13px;
 }
 
-.hero-teacher{
-    font-size:100px;
-    font-weight:900;
-    opacity:.15;
+.hero-btn{
+    display:inline-block;
+    margin-top:18px;
+    background:white;
+    color:var(--navy);
+    padding:11px 19px;
+    border-radius:11px;
+    font-family:inherit;
+    font-weight:700;
+    border:none;
+    cursor:pointer;
+}
+
+.teacher-visual{
+    width:185px;
+    height:185px;
+    border-radius:50%;
+    background:
+        radial-gradient(circle at 50% 35%,#fff 0 22%,transparent 23%),
+        linear-gradient(145deg,#dbeafe,#91bdf8);
+    border:8px solid rgba(255,255,255,.16);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:65px;
+    color:#153d78;
+    margin-left:30px;
+}
+
+.hero-decoration{
     position:absolute;
-    left:50px;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    border:45px solid rgba(255,255,255,.04);
+    left:-80px;
+    bottom:-130px;
 }
 
-/* =========================
-   STATS
-========================= */
+/* STATS */
 
 .stats{
     display:grid;
-    grid-template-columns:
-        repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:16px;
-    margin:20px 0;
+    margin-top:20px;
 }
 
-.stat-card{
-    background:#fff;
-    border:1px solid #e6ebf2;
-    border-radius:16px;
+.stat{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
     padding:20px;
-    box-shadow:
-        0 5px 18px rgba(15,42,75,.05);
+    box-shadow:var(--shadow);
 }
 
-.stat-icon{
-    font-size:25px;
-    margin-bottom:8px;
-}
-
-.stat-number{
-    font-size:26px;
-    font-weight:bold;
-    color:#122f53;
-    margin-bottom:3px;
-}
-
-.stat-label{
-    font-size:12px;
-    color:#7d899a;
-}
-
-/* =========================
-   SECTIONS
-========================= */
-
-.columns{
-    display:grid;
-    grid-template-columns:
-        1.25fr .75fr;
-    gap:18px;
-}
-
-.card{
-    background:#fff;
-    border:1px solid #e5eaf1;
-    border-radius:17px;
-    padding:20px;
-    box-shadow:
-        0 5px 18px rgba(15,42,75,.04);
-}
-
-.section-title{
+.stat-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:16px;
 }
 
-.section-title h2{
-    font-size:17px;
-    color:#193452;
+.stat-icon{
+    width:43px;
+    height:43px;
+    border-radius:13px;
+    background:var(--light-blue);
+    color:var(--blue);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.stat strong{
+    display:block;
+    font-size:27px;
+    margin-top:15px;
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* GRID */
+
+.content-grid{
+    display:grid;
+    grid-template-columns:1.45fr .8fr;
+    gap:20px;
+    margin-top:20px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+
+.card-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.card-head h3{
+    font-size:16px;
+}
+
+.card-head a{
+    color:var(--blue);
+    font-size:12px;
+    cursor:pointer;
+}
+
+/* EXAMS */
+
+.exam{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.exam:last-child{
+    border-bottom:none;
+}
+
+.exam-icon{
+    width:43px;
+    height:43px;
+    border-radius:12px;
+    background:#eef5ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--blue);
+}
+
+.exam-info{
+    flex:1;
+}
+
+.exam-info strong{
+    display:block;
+    font-size:13px;
+}
+
+.exam-info span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.score{
+    font-weight:800;
+    color:var(--green);
+}
+
+/* CERTIFICATE */
+
+.certificate{
+    background:
+        linear-gradient(135deg,#f9fbff,#eef5ff);
+    border:1px solid #dce9ff;
+    border-radius:17px;
+    padding:18px;
+}
+
+.certificate-icon{
+    width:55px;
+    height:55px;
+    background:white;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+    margin-bottom:12px;
+}
+
+.certificate h4{
+    font-size:15px;
+}
+
+.certificate p{
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.7;
+    margin:6px 0 14px;
 }
 
 .small-btn{
     border:none;
-    background:#0d4d8f;
-    color:#fff;
+    background:var(--blue);
+    color:white;
+    border-radius:10px;
     padding:9px 13px;
-    border-radius:8px;
-    font-size:12px;
+    font-family:inherit;
+    font-size:11px;
+    cursor:pointer;
 }
 
-/* =========================
-   LIST
-========================= */
+/* ANNOUNCEMENT */
 
-.list{
+.notice{
+    margin-top:20px;
     display:flex;
-    flex-direction:column;
-    gap:10px;
+    gap:12px;
+    align-items:flex-start;
 }
 
-.list-item{
-    border:1px solid #e8edf4;
-    border-radius:12px;
-    padding:13px;
+.notice-icon{
+    min-width:40px;
+    height:40px;
+    border-radius:11px;
+    background:#fff7e6;
+    color:var(--orange);
     display:flex;
-    justify-content:space-between;
     align-items:center;
-}
-
-.item-title{
-    font-size:14px;
-    font-weight:bold;
-    margin-bottom:5px;
-}
-
-.item-info{
-    font-size:11px;
-    color:#8591a2;
-}
-
-.badge{
-    background:#eaf8ef;
-    color:#19854a;
-    border-radius:20px;
-    padding:6px 10px;
-    font-size:11px;
-}
-
-.badge-orange{
-    background:#fff4df;
-    color:#a96b00;
-}
-
-/* =========================
-   CERTIFICATE
-========================= */
-
-.certificate{
-    border:2px solid #d4aa4f;
-    border-radius:14px;
-    padding:22px;
-    text-align:center;
-    background:
-        linear-gradient(
-            135deg,
-            #fffdf4,
-            #fff
-        );
-}
-
-.certificate-icon{
-    font-size:38px;
-    margin-bottom:6px;
-}
-
-.certificate h2{
-    color:#956a13;
-    font-size:21px;
-    margin-bottom:10px;
-}
-
-.certificate p{
-    font-size:12px;
-    color:#65748a;
-    line-height:1.8;
-}
-
-.certificate strong{
-    color:#263a53;
-}
-
-.certificate-actions{
-    display:flex;
-    gap:8px;
     justify-content:center;
-    margin-top:15px;
-    flex-wrap:wrap;
 }
 
-.certificate-actions button{
-    border:none;
-    padding:9px 12px;
-    border-radius:8px;
+.notice strong{
+    font-size:13px;
+}
+
+.notice p{
+    color:var(--muted);
     font-size:11px;
+    line-height:1.8;
+    margin-top:3px;
 }
 
-.download{
-    background:#18864a;
-    color:#fff;
+/* PAGE */
+
+.section-page{
+    display:none;
 }
 
-.share{
-    background:#2861b5;
-    color:#fff;
+.section-page.active{
+    display:block;
 }
 
-.print{
-    background:#edf1f6;
-    color:#24344b;
+.empty-page{
+    background:white;
+    border-radius:22px;
+    padding:60px 25px;
+    text-align:center;
+    box-shadow:var(--shadow);
 }
 
-/* =========================
-   TEACHER DASHBOARD
-========================= */
+.empty-page .big{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.empty-page h3{
+    font-size:20px;
+}
+
+.empty-page p{
+    color:var(--muted);
+    margin-top:8px;
+}
+
+/* TEACHER DASHBOARD */
 
 .teacher-dashboard{
     display:none;
 }
 
-/* =========================
-   QUICK ACTIONS
-========================= */
-
-.quick-actions{
-    display:grid;
-    gap:9px;
-}
-
-.quick-action{
-    width:100%;
-    border:1px solid #e3e9f0;
-    background:#f9fbfd;
-    border-radius:10px;
-    padding:12px;
-    text-align:right;
-    font-size:13px;
-    color:#203752;
-}
-
-.quick-action:hover{
-    background:#edf4fa;
-}
-
-/* =========================
-   NOTICE
-========================= */
-
-.notice{
-    border-right:4px solid #1764a8;
-    background:#f3f8fd;
-    padding:13px;
-    border-radius:8px;
-    margin-bottom:10px;
-}
-
-.notice strong{
+.teacher-dashboard.active{
     display:block;
-    margin-bottom:5px;
-    font-size:13px;
 }
 
-.notice p{
-    font-size:11px;
-    color:#718096;
+.teacher-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+.students-table{
+    margin-top:20px;
+    overflow-x:auto;
+}
 
-@media(max-width:900px){
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:15px 10px;
+    text-align:right;
+    border-bottom:1px solid var(--border);
+    font-size:12px;
+}
+
+th{
+    color:var(--muted);
+    font-weight:600;
+}
+
+.student-name{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.student-avatar{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    background:#e8f1ff;
+    color:var(--blue);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+}
+
+.status{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    background:#eafaf4;
+    color:var(--green);
+}
+
+/* QUICK ACTIONS */
+
+.actions{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.action{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px;
+    background:white;
+    cursor:pointer;
+    text-align:right;
+    font-family:inherit;
+}
+
+.action:hover{
+    border-color:#bfd7ff;
+    background:#f8fbff;
+}
+
+.action b{
+    display:block;
+    font-size:12px;
+    margin-top:7px;
+}
+
+.action span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* MOBILE */
+
+.mobile-menu{
+    display:none;
+    border:none;
+    background:white;
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    font-size:20px;
+}
+
+@media(max-width:1000px){
 
     .sidebar{
-        width:210px;
+        transform:translateX(100%);
+        transition:.3s;
     }
 
-    .main{
-        margin-right:210px;
-    }
-
-    .stats{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .columns{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(max-width:650px){
-
-    .sidebar{
-        display:none;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
     .main{
         margin-right:0;
+        padding:20px;
+    }
+
+    .mobile-menu{
+        display:block;
     }
 
     .topbar{
-        padding:0 15px;
+        gap:10px;
     }
 
-    .content{
-        padding:15px;
+    .stats,
+    .teacher-stats{
+        grid-template-columns:repeat(2,1fr);
     }
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
 
     .hero{
-        min-height:170px;
-        padding:22px;
+        padding:24px;
+        min-height:270px;
     }
 
     .hero h1{
         font-size:23px;
     }
 
-    .hero-teacher{
+    .teacher-visual{
         display:none;
     }
 
-    .stats{
-        grid-template-columns:
-            repeat(2,1fr);
+    .stats,
+    .teacher-stats{
+        grid-template-columns:1fr 1fr;
         gap:10px;
     }
 
-    .stat-card{
+    .stat{
         padding:15px;
     }
 
-    .stat-number{
+    .stat strong{
         font-size:22px;
     }
 
-    .brand-title{
-        font-size:20px;
-    }
-
-    .profile-info{
+    .profile{
         display:none;
     }
-}
 
+    .main{
+        padding:14px;
+    }
+
+    .topbar{
+        margin-bottom:15px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-
-<!-- ==================================================
-     LOGIN SCREEN
-================================================== -->
+<!-- ================= LOGIN ================= -->
 
 <div class="login-screen" id="loginScreen">
 
     <div class="login-box">
 
-        <div class="login-logo">
-            🎓
-        </div>
+        <div class="teacher-logo">م</div>
 
-        <h1>
-            مستر مهاب
-        </h1>
+        <h1>منصة مستر مهاب</h1>
 
-        <p>
-            البوابة التعليمية الخاصة بالطلاب
-        </p>
+        <p>بوابتك التعليمية لمتابعة دراستك ونتائجك</p>
 
         <input
-            type="text"
+            class="input"
+            id="studentName"
+            placeholder="اسم الطالب"
+        >
+
+        <input
+            class="input"
             id="studentCode"
             placeholder="كود الطالب"
         >
 
-        <input
-            type="password"
-            id="studentPassword"
-            placeholder="كلمة المرور"
-        >
-
-        <button
-            class="login-btn"
-            onclick="studentLogin()"
-        >
-            دخول الطالب
+        <button class="main-btn" onclick="login()">
+            دخول إلى المنصة
         </button>
 
-        <div
-            class="demo-teacher"
-            onclick="teacherLogin()"
-        >
-            تجربة لوحة تحكم مستر مهاب
+        <div class="demo-note">
+            نسخة تجريبية — سيتم ربط الحسابات بقاعدة البيانات لاحقًا
         </div>
 
     </div>
@@ -704,767 +810,593 @@ button{
 </div>
 
 
-<!-- ==================================================
-     APP
-================================================== -->
+<!-- ================= APP ================= -->
 
-<div class="app">
+<div class="app" id="app">
 
+    <!-- SIDEBAR -->
 
-    <!-- ==================================================
-         SIDEBAR
-    ================================================== -->
+    <aside class="sidebar" id="sidebar">
 
-    <aside class="sidebar">
+        <div class="brand">
 
-        <div class="sidebar-logo">
-
-            <div class="sidebar-logo-icon">
-                🎓
-            </div>
+            <div class="brand-icon">م</div>
 
             <div>
-
-                <h2>
-                    مستر مهاب
-                </h2>
-
-                <span>
-                    البوابة التعليمية
-                </span>
-
+                <strong>مستر مهاب</strong>
+                <span>المنصة التعليمية</span>
             </div>
 
         </div>
 
+        <nav class="nav">
 
-        <div class="nav">
-
-            <button
-                class="active"
-                onclick="showSection('home',this)"
-            >
-                🏠 الرئيسية
+            <button class="active" onclick="showPage('home',this)">
+                <span class="nav-icon">⌂</span>
+                الرئيسية
             </button>
 
-            <button
-                onclick="showSection('materials',this)"
-            >
-                📚 المذكرات والملفات
+            <button onclick="showPage('files',this)">
+                <span class="nav-icon">▣</span>
+                المذكرات والملفات
             </button>
 
-            <button
-                onclick="showSection('homework',this)"
-            >
-                📝 الواجبات
+            <button onclick="showPage('homework',this)">
+                <span class="nav-icon">✓</span>
+                الواجبات
             </button>
 
-            <button
-                onclick="showSection('exams',this)"
-            >
-                🧠 الامتحانات
+            <button onclick="showPage('exams',this)">
+                <span class="nav-icon">✎</span>
+                الامتحانات
             </button>
 
-            <button
-                onclick="showSection('results',this)"
-            >
-                📊 النتائج والدرجات
+            <button onclick="showPage('results',this)">
+                <span class="nav-icon">▥</span>
+                النتائج والدرجات
             </button>
 
-            <button
-                onclick="showSection('attendance',this)"
-            >
-                ✅ الحضور والغياب
+            <button onclick="showPage('attendance',this)">
+                <span class="nav-icon">◷</span>
+                الحضور والغياب
             </button>
 
-            <button
-                onclick="showSection('schedule',this)"
-            >
-                📅 جدول الحصص
+            <button onclick="showPage('schedule',this)">
+                <span class="nav-icon">▦</span>
+                جدول الحصص
             </button>
 
-            <button
-                onclick="showSection('announcements',this)"
-            >
-                📢 الإعلانات
+            <button onclick="showPage('announcements',this)">
+                <span class="nav-icon">♢</span>
+                الإعلانات
             </button>
 
-            <button
-                onclick="showSection('contact',this)"
-            >
-                💬 تواصل مع المدرس
+            <button onclick="showPage('contact',this)">
+                <span class="nav-icon">✉</span>
+                تواصل مع المدرس
             </button>
 
-        </div>
+            <button onclick="openTeacherDashboard()" style="margin-top:20px;">
+                <span class="nav-icon">⚙</span>
+                لوحة تحكم مستر مهاب
+            </button>
 
-
-        <button
-            class="nav button logout"
-            onclick="logout()"
-        >
-            ↪ تسجيل الخروج
-        </button>
+        </nav>
 
     </aside>
 
 
-    <!-- ==================================================
-         MAIN
-    ================================================== -->
+    <!-- MAIN -->
 
     <main class="main">
 
+        <div class="topbar">
 
-        <!-- TOP BAR -->
+            <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
 
-        <header class="topbar">
+            <div class="page-title">
 
-            <div>
+                <h2 id="pageTitle">الرئيسية</h2>
 
-                <div class="brand-small">
-                    موقع
-                </div>
-
-                <div class="brand-title">
-                    مستر مهاب
-                </div>
+                <p id="welcomeText">
+                    أهلاً بك في منصة مستر مهاب
+                </p>
 
             </div>
 
-
             <div class="profile">
 
-                <div class="profile-info">
+                <div>
+                    <strong id="profileName">الطالب</strong>
+                    <span>طالب بالمنصة</span>
+                </div>
 
-                    <strong id="profileName">
-                        محمد أحمد
-                    </strong>
+                <div class="profile-img">ط</div>
 
-                    <span id="profileRole">
-                        طالب
-                    </span>
+            </div>
+
+        </div>
+
+
+        <!-- ================= STUDENT ================= -->
+
+        <div id="studentArea">
+
+            <!-- HOME -->
+
+            <section class="section-page active" id="home">
+
+                <div class="hero">
+
+                    <div class="hero-content">
+
+                        <small>مرحباً بك 👋</small>
+
+                        <h1>
+                            أهلاً يا <span id="heroName">طالب</span>
+                        </h1>
+
+                        <p>
+                            كل بياناتك التعليمية في مكان واحد.
+                            تابع امتحاناتك، درجاتك، واجباتك وحضورك
+                            بسهولة ومن غير ما تحتاج تسأل كل مرة.
+                        </p>
+
+                        <button class="hero-btn"
+                            onclick="showPage('exams')">
+                            ابدأ الامتحان
+                        </button>
+
+                    </div>
+
+                    <div class="teacher-visual">
+                        م
+                    </div>
+
+                    <div class="hero-decoration"></div>
 
                 </div>
 
-                <div class="avatar">
+
+                <!-- STATS -->
+
+                <div class="stats">
+
+                    <div class="stat">
+
+                        <div class="stat-top">
+                            <span>الامتحانات</span>
+                            <div class="stat-icon">✎</div>
+                        </div>
+
+                        <strong>8</strong>
+                        <span>امتحانات تم حلها</span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-top">
+                            <span>متوسط الدرجات</span>
+                            <div class="stat-icon">★</div>
+                        </div>
+
+                        <strong>87%</strong>
+                        <span>مستوى ممتاز</span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-top">
+                            <span>الحضور</span>
+                            <div class="stat-icon">◷</div>
+                        </div>
+
+                        <strong>94%</strong>
+                        <span>نسبة الحضور</span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-top">
+                            <span>الواجبات</span>
+                            <div class="stat-icon">✓</div>
+                        </div>
+
+                        <strong>12</strong>
+                        <span>واجب مكتمل</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="content-grid">
+
+                    <!-- EXAMS -->
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <h3>آخر الامتحانات</h3>
+
+                            <a onclick="showPage('exams')">
+                                عرض الكل
+                            </a>
+
+                        </div>
+
+
+                        <div class="exam">
+
+                            <div class="exam-icon">✎</div>
+
+                            <div class="exam-info">
+                                <strong>امتحان الوحدة الأولى</strong>
+                                <span>منذ يومين</span>
+                            </div>
+
+                            <div class="score">18/20</div>
+
+                        </div>
+
+
+                        <div class="exam">
+
+                            <div class="exam-icon">✎</div>
+
+                            <div class="exam-info">
+                                <strong>اختبار المراجعة</strong>
+                                <span>منذ 5 أيام</span>
+                            </div>
+
+                            <div class="score">17/20</div>
+
+                        </div>
+
+
+                        <div class="exam">
+
+                            <div class="exam-icon">✎</div>
+
+                            <div class="exam-info">
+                                <strong>اختبار الدرس الثالث</strong>
+                                <span>منذ أسبوع</span>
+                            </div>
+
+                            <div class="score">19/20</div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CERTIFICATE -->
+
+                    <div class="card">
+
+                        <div class="card-head">
+                            <h3>شهادتك</h3>
+                        </div>
+
+                        <div class="certificate">
+
+                            <div class="certificate-icon">
+                                🏆
+                            </div>
+
+                            <h4>شهادة تقدير</h4>
+
+                            <p>
+                                حصلت على شهادة تقدير بسبب
+                                تفوقك وتحقيقك لنتيجة مميزة.
+                            </p>
+
+                            <button class="small-btn"
+                                onclick="downloadCertificate()">
+                                تحميل الشهادة
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NOTICE -->
+
+                <div class="card notice">
+
+                    <div class="notice-icon">!</div>
+
+                    <div>
+
+                        <strong>إعلان جديد من مستر مهاب</strong>
+
+                        <p>
+                            تم رفع مذكرة جديدة للمراجعة.
+                            يمكنك الدخول إلى قسم المذكرات والملفات
+                            وتحميلها الآن.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- OTHER PAGES -->
+
+            <section class="section-page" id="files">
+                <div class="empty-page">
+                    <div class="big">📚</div>
+                    <h3>المذكرات والملفات</h3>
+                    <p>هنا سيجد الطالب جميع المذكرات والملفات الخاصة بالمادة.</p>
+                </div>
+            </section>
+
+
+            <section class="section-page" id="homework">
+                <div class="empty-page">
+                    <div class="big">📝</div>
+                    <h3>الواجبات</h3>
+                    <p>جميع الواجبات المطلوبة من الطالب ستظهر هنا.</p>
+                </div>
+            </section>
+
+
+            <section class="section-page" id="exams">
+                <div class="empty-page">
+                    <div class="big">✎</div>
+                    <h3>الامتحانات</h3>
+                    <p>الامتحانات المتاحة للطالب ستظهر هنا.</p>
+                </div>
+            </section>
+
+
+            <section class="section-page" id="results">
+                <div class="empty-page">
+                    <div class="big">📊</div>
+                    <h3>النتائج والدرجات</h3>
+                    <p>درجات الطالب ونتائج جميع الامتحانات.</p>
+                </div>
+            </section>
+
+
+            <section class="section-page" id="attendance">
+                <div class="empty-page">
+                    <div class="big">🗓️</div>
+                    <h3>الحضور والغياب</h3>
+                    <p>سجل حضور الطالب وغيابه في الحصص.</p>
+                </div>
+            </section>
+
+
+            <section class="section-page" id="schedule">
+                <div class="empty-page">
+                    <div class="big">📅</div>
+                    <h3>جدول الحصص</h3>
+                    <p>جدول مواعيد الحصص الخاص بالطالب.</p>
+                </div>
+            </section>
+
+
+            <section class="section-page" id="announcements">
+                <div class="empty-page">
+                    <div class="big">📢</div>
+                    <h3>الإعلانات</h3>
+                    <p>آخر أخبار وإعلانات مستر مهاب.</p>
+                </div>
+            </section>
+
+
+            <section class="section-page" id="contact">
+                <div class="empty-page">
+                    <div class="big">💬</div>
+                    <h3>تواصل مع المدرس</h3>
+                    <p>سيتم إضافة نظام التواصل المباشر لاحقًا.</p>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ================= TEACHER DASHBOARD ================= -->
+
+        <div class="teacher-dashboard" id="teacherDashboard">
+
+            <div class="hero">
+
+                <div class="hero-content">
+
+                    <small>لوحة الإدارة</small>
+
+                    <h1>أهلاً مستر مهاب 👋</h1>
+
+                    <p>
+                        من هنا تقدر تدير الطلاب والامتحانات
+                        والواجبات والدرجات وكل محتوى المنصة.
+                    </p>
+
+                </div>
+
+                <div class="teacher-visual">
                     م
                 </div>
 
             </div>
 
-        </header>
 
+            <div class="teacher-stats">
 
-        <!-- ==================================================
-             STUDENT HOME
-        ================================================== -->
-
-        <section
-            class="content"
-            id="homeSection"
-        >
-
-            <div class="hero">
-
-                <div class="hero-content">
-
-                    <h1>
-                        أهلاً بك يا محمد 👋
-                    </h1>
-
-                    <p>
-                        تابع دراستك وواجباتك ونتائجك
-                        من مكان واحد.
-                    </p>
-
+                <div class="stat">
+                    <span>إجمالي الطلاب</span>
+                    <strong>428</strong>
+                    <span>طالب مسجل</span>
                 </div>
 
-                <div class="hero-teacher">
-                    مهاب
+                <div class="stat">
+                    <span>الامتحانات</span>
+                    <strong>24</strong>
+                    <span>امتحان منشور</span>
+                </div>
+
+                <div class="stat">
+                    <span>متوسط النتائج</span>
+                    <strong>84%</strong>
+                    <span>هذا الشهر</span>
+                </div>
+
+                <div class="stat">
+                    <span>الحضور</span>
+                    <strong>91%</strong>
+                    <span>متوسط الحضور</span>
                 </div>
 
             </div>
 
 
-            <!-- STATS -->
-
-            <div class="stats">
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        📈
-                    </div>
-
-                    <div class="stat-number">
-                        85%
-                    </div>
-
-                    <div class="stat-label">
-                        متوسط درجاتك
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        🧠
-                    </div>
-
-                    <div class="stat-number">
-                        2
-                    </div>
-
-                    <div class="stat-label">
-                        امتحانات قادمة
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        📝
-                    </div>
-
-                    <div class="stat-number">
-                        1
-                    </div>
-
-                    <div class="stat-label">
-                        واجب مستحق
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        📢
-                    </div>
-
-                    <div class="stat-number">
-                        2
-                    </div>
-
-                    <div class="stat-label">
-                        إعلانات جديدة
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- COLUMNS -->
-
-            <div class="columns">
-
-
-                <!-- EXAMS -->
+            <div class="content-grid">
 
                 <div class="card">
 
-                    <div class="section-title">
-
-                        <h2>
-                            آخر الامتحانات
-                        </h2>
-
-                        <button
-                            class="small-btn"
-                            onclick="showSection('exams')"
-                        >
-                            عرض الكل
-                        </button>
-
+                    <div class="card-head">
+                        <h3>آخر الطلاب</h3>
+                        <a>عرض الكل</a>
                     </div>
 
+                    <div class="students-table">
 
-                    <div class="list">
+                        <table>
 
+                            <thead>
 
-                        <div class="list-item">
+                                <tr>
+                                    <th>الطالب</th>
+                                    <th>الصف</th>
+                                    <th>آخر نتيجة</th>
+                                    <th>الحالة</th>
+                                </tr>
 
-                            <div>
+                            </thead>
 
-                                <div class="item-title">
-                                    امتحان الرياضيات الأول
-                                </div>
+                            <tbody>
 
-                                <div class="item-info">
-                                    الدرجة: 18 / 20
-                                </div>
+                                <tr>
 
-                            </div>
+                                    <td>
+                                        <div class="student-name">
+                                            <div class="student-avatar">أ</div>
+                                            أحمد محمد
+                                        </div>
+                                    </td>
 
-                            <span class="badge">
-                                90%
-                            </span>
+                                    <td>الصف الثالث</td>
 
-                        </div>
+                                    <td>18/20</td>
 
+                                    <td>
+                                        <span class="status">منتظم</span>
+                                    </td>
 
-                        <div class="list-item">
-
-                            <div>
-
-                                <div class="item-title">
-                                    امتحان الوحدة الثانية
-                                </div>
-
-                                <div class="item-info">
-                                    الدرجة: 20 / 20
-                                </div>
-
-                            </div>
-
-                            <span class="badge">
-                                100%
-                            </span>
-
-                        </div>
+                                </tr>
 
 
-                        <div class="list-item">
+                                <tr>
 
-                            <div>
+                                    <td>
+                                        <div class="student-name">
+                                            <div class="student-avatar">م</div>
+                                            محمد علي
+                                        </div>
+                                    </td>
 
-                                <div class="item-title">
-                                    اختبار المراجعة
-                                </div>
+                                    <td>الصف الثالث</td>
 
-                                <div class="item-info">
-                                    الدرجة: 14 / 20
-                                </div>
+                                    <td>19/20</td>
 
-                            </div>
+                                    <td>
+                                        <span class="status">منتظم</span>
+                                    </td>
 
-                            <span class="badge badge-orange">
-                                70%
-                            </span>
+                                </tr>
 
-                        </div>
 
+                                <tr>
+
+                                    <td>
+                                        <div class="student-name">
+                                            <div class="student-avatar">ي</div>
+                                            يوسف خالد
+                                        </div>
+                                    </td>
+
+                                    <td>الصف الثاني</td>
+
+                                    <td>16/20</td>
+
+                                    <td>
+                                        <span class="status">منتظم</span>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
 
                     </div>
 
                 </div>
 
-
-                <!-- CERTIFICATE -->
 
                 <div class="card">
 
-                    <div class="section-title">
-
-                        <h2>
-                            شهادة تقدير 🏆
-                        </h2>
-
+                    <div class="card-head">
+                        <h3>إجراءات سريعة</h3>
                     </div>
 
-
-                    <div class="certificate">
-
-                        <div class="certificate-icon">
-                            🏅
-                        </div>
-
-                        <h2>
-                            شهادة تقدير
-                        </h2>
-
-                        <p>
-                            مقدمة إلى الطالب
-                        </p>
-
-                        <p>
-                            <strong>
-                                محمد أحمد
-                            </strong>
-                        </p>
-
-                        <p>
-                            لتميزه وتفوقه في اختبار الرياضيات
-                        </p>
-
-                        <br>
-
-                        <strong>
-                            18 من 20
-                        </strong>
-
-
-                        <div class="certificate-actions">
-
-                            <button
-                                class="download"
-                                onclick="downloadCertificate()"
-                            >
-                                ⬇ تحميل
-                            </button>
-
-                            <button
-                                class="share"
-                                onclick="shareCertificate()"
-                            >
-                                ↗ مشاركة
-                            </button>
-
-                            <button
-                                class="print"
-                                onclick="printCertificate()"
-                            >
-                                🖨 طباعة
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             OTHER STUDENT SECTIONS
-        ================================================== -->
-
-        <section
-            class="content"
-            id="otherSection"
-            style="display:none"
-        >
-
-            <div class="hero">
-
-                <div class="hero-content">
-
-                    <h1 id="sectionHeroTitle">
-                        قسم الموقع
-                    </h1>
-
-                    <p id="sectionHeroText">
-                        كل بياناتك التعليمية في مكان واحد.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <br>
-
-            <div class="card">
-
-                <div id="dynamicContent">
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             TEACHER DASHBOARD
-        ================================================== -->
-
-        <section
-            class="content teacher-dashboard"
-            id="teacherSection"
-        >
-
-            <div class="hero">
-
-                <div class="hero-content">
-
-                    <h1>
-                        لوحة تحكم مستر مهاب 👨‍🏫
-                    </h1>
-
-                    <p>
-                        إدارة الطلاب والواجبات والامتحانات
-                        والنتائج من مكان واحد.
-                    </p>
-
-                </div>
-
-                <div class="hero-teacher">
-                    M
-                </div>
-
-            </div>
-
-
-            <!-- TEACHER STATS -->
-
-            <div class="stats">
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        👨‍🎓
-                    </div>
-
-                    <div class="stat-number">
-                        128
-                    </div>
-
-                    <div class="stat-label">
-                        إجمالي الطلاب
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        📝
-                    </div>
-
-                    <div class="stat-number">
-                        7
-                    </div>
-
-                    <div class="stat-label">
-                        واجبات منشورة
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        🧠
-                    </div>
-
-                    <div class="stat-number">
-                        4
-                    </div>
-
-                    <div class="stat-label">
-                        امتحانات
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        📊
-                    </div>
-
-                    <div class="stat-number">
-                        86%
-                    </div>
-
-                    <div class="stat-label">
-                        متوسط الطلاب
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="columns">
-
-
-                <!-- STUDENTS -->
-
-                <div class="card">
-
-                    <div class="section-title">
-
-                        <h2>
-                            آخر الطلاب
-                        </h2>
-
-                        <button
-                            class="small-btn"
-                            onclick="addStudent()"
-                        >
-                            + إضافة طالب
+                    <div class="actions">
+
+                        <button class="action">
+                            📚
+                            <b>رفع مذكرة</b>
+                            <span>إضافة ملف جديد</span>
                         </button>
 
-                    </div>
-
-
-                    <div class="list">
-
-                        <div class="list-item">
-
-                            <div>
-
-                                <div class="item-title">
-                                    محمد أحمد
-                                </div>
-
-                                <div class="item-info">
-                                    الصف الثالث الإعدادي
-                                </div>
-
-                            </div>
-
-                            <span class="badge">
-                                نشط
-                            </span>
-
-                        </div>
-
-
-                        <div class="list-item">
-
-                            <div>
-
-                                <div class="item-title">
-                                    عمر خالد
-                                </div>
-
-                                <div class="item-info">
-                                    الصف الثالث الإعدادي
-                                </div>
-
-                            </div>
-
-                            <span class="badge">
-                                نشط
-                            </span>
-
-                        </div>
-
-
-                        <div class="list-item">
-
-                            <div>
-
-                                <div class="item-title">
-                                    يوسف علي
-                                </div>
-
-                                <div class="item-info">
-                                    الصف الثالث الإعدادي
-                                </div>
-
-                            </div>
-
-                            <span class="badge">
-                                نشط
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- QUICK ACTIONS -->
-
-                <div class="card">
-
-                    <div class="section-title">
-
-                        <h2>
-                            إجراءات سريعة
-                        </h2>
-
-                    </div>
-
-
-                    <div class="quick-actions">
-
-                        <button
-                            class="quick-action"
-                            onclick="createExam()"
-                        >
-                            🧠 إنشاء امتحان
+                        <button class="action">
+                            ✎
+                            <b>إنشاء امتحان</b>
+                            <span>إضافة اختبار</span>
                         </button>
 
-                        <button
-                            class="quick-action"
-                            onclick="createHomework()"
-                        >
-                            📝 إضافة واجب
+                        <button class="action">
+                            📢
+                            <b>إضافة إعلان</b>
+                            <span>إرسال للطلاب</span>
                         </button>
 
-                        <button
-                            class="quick-action"
-                            onclick="createAnnouncement()"
-                        >
-                            📢 نشر إعلان
-                        </button>
-
-                        <button
-                            class="quick-action"
-                            onclick="addGrades()"
-                        >
-                            📊 إدخال درجات
+                        <button class="action">
+                            🎓
+                            <b>الشهادات</b>
+                            <span>إدارة الشهادات</span>
                         </button>
 
                     </div>
 
                 </div>
 
-
             </div>
 
-
-            <br>
-
-
-            <div class="card">
-
-                <div class="section-title">
-
-                    <h2>
-                        آخر التحديثات
-                    </h2>
-
-                </div>
-
-
-                <div class="notice">
-
-                    <strong>
-                        تم إضافة امتحان جديد
-                    </strong>
-
-                    <p>
-                        امتحان الوحدة الثالثة متاح للطلاب.
-                    </p>
-
-                </div>
-
-
-                <div class="notice">
-
-                    <strong>
-                        إعلان جديد
-                    </strong>
-
-                    <p>
-                        سيتم مراجعة نتائج الطلاب هذا الأسبوع.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
+        </div>
 
     </main>
 
@@ -1473,509 +1405,135 @@ button{
 
 <script>
 
-/* ==================================================
-   LOGIN
-================================================== */
+/* LOGIN */
 
-function studentLogin(){
+function login(){
 
-    const code =
-        document.getElementById("studentCode").value.trim();
+    const name =
+        document.getElementById('studentName').value.trim();
 
-    const password =
-        document.getElementById("studentPassword").value.trim();
+    if(!name){
 
-    if(code === "" || password === ""){
-
-        alert("من فضلك اكتب كود الطالب وكلمة المرور.");
+        alert('اكتب اسم الطالب أولاً');
 
         return;
     }
 
-    document.getElementById("loginScreen").style.display =
-        "none";
+    document.getElementById('profileName').textContent = name;
+    document.getElementById('heroName').textContent = name;
 
-    document.getElementById("studentSection").style.display =
-        "block";
-
-}
-
-
-/* ==================================================
-   TEACHER LOGIN / DEMO
-================================================== */
-
-function teacherLogin(){
-
-    document.getElementById("loginScreen").style.display =
-        "none";
-
-    document.getElementById("homeSection").style.display =
-        "none";
-
-    document.getElementById("otherSection").style.display =
-        "none";
-
-    document.getElementById("teacherSection").style.display =
-        "block";
-
-    document.getElementById("profileName").textContent =
-        "مستر مهاب";
-
-    document.getElementById("profileRole").textContent =
-        "مدرس";
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
 
 }
 
 
-/* ==================================================
-   NAVIGATION
-================================================== */
+/* PAGE NAVIGATION */
 
-function showSection(section, button){
-
-    const home =
-        document.getElementById("homeSection");
-
-    const other =
-        document.getElementById("otherSection");
-
-    const teacher =
-        document.getElementById("teacherSection");
-
-    if(teacher.style.display === "block"){
-
-        teacher.style.display = "none";
-
-    }
-
-    if(section === "home"){
-
-        home.style.display = "block";
-        other.style.display = "none";
-
-    }else{
-
-        home.style.display = "none";
-        other.style.display = "block";
-
-        loadSection(section);
-
-    }
+function showPage(page,button){
 
     document
-        .querySelectorAll(".nav button")
-        .forEach(btn => {
-            btn.classList.remove("active");
+        .querySelectorAll('.section-page')
+        .forEach(section=>{
+            section.classList.remove('active');
         });
 
-    if(button){
-        button.classList.add("active");
+    const target =
+        document.getElementById(page);
+
+    if(target){
+        target.classList.add('active');
     }
 
-}
+    document.getElementById('teacherDashboard')
+        .classList.remove('active');
 
+    document.getElementById('studentArea')
+        .style.display = 'block';
 
-/* ==================================================
-   LOAD SECTIONS
-================================================== */
+    const titles = {
 
-function loadSection(section){
-
-    const title =
-        document.getElementById("sectionHeroTitle");
-
-    const text =
-        document.getElementById("sectionHeroText");
-
-    const content =
-        document.getElementById("dynamicContent");
-
-
-    const data = {
-
-        materials:{
-            title:"📚 المذكرات والملفات",
-            text:"كل المذكرات والملفات التعليمية الخاصة بك.",
-            html:`
-                <h3>المذكرات المتاحة</h3>
-                <br>
-
-                <div class="list">
-
-                    <div class="list-item">
-                        <div>
-                            <div class="item-title">
-                                مذكرة الرياضيات - الوحدة الأولى
-                            </div>
-                            <div class="item-info">
-                                PDF
-                            </div>
-                        </div>
-                        <button class="small-btn">
-                            تحميل
-                        </button>
-                    </div>
-
-                    <div class="list-item">
-                        <div>
-                            <div class="item-title">
-                                مذكرة الرياضيات - الوحدة الثانية
-                            </div>
-                            <div class="item-info">
-                                PDF
-                            </div>
-                        </div>
-                        <button class="small-btn">
-                            تحميل
-                        </button>
-                    </div>
-
-                </div>
-            `
-        },
-
-        homework:{
-            title:"📝 الواجبات",
-            text:"تابع الواجبات المطلوبة منك ومواعيد التسليم.",
-            html:`
-                <h3>الواجبات الحالية</h3>
-                <br>
-
-                <div class="list">
-
-                    <div class="list-item">
-                        <div>
-                            <div class="item-title">
-                                واجب الوحدة الثالثة
-                            </div>
-                            <div class="item-info">
-                                آخر موعد للتسليم: الخميس
-                            </div>
-                        </div>
-                        <span class="badge badge-orange">
-                            مطلوب
-                        </span>
-                    </div>
-
-                </div>
-            `
-        },
-
-        exams:{
-            title:"🧠 الامتحانات",
-            text:"ابدأ امتحاناتك وشاهد نتائج الامتحانات السابقة.",
-            html:`
-                <h3>الامتحانات المتاحة</h3>
-                <br>
-
-                <div class="list">
-
-                    <div class="list-item">
-                        <div>
-                            <div class="item-title">
-                                امتحان الوحدة الثالثة
-                            </div>
-                            <div class="item-info">
-                                20 سؤال - 30 دقيقة
-                            </div>
-                        </div>
-                        <button
-                            class="small-btn"
-                            onclick="startExam()"
-                        >
-                            ابدأ
-                        </button>
-                    </div>
-
-                </div>
-            `
-        },
-
-        results:{
-            title:"📊 النتائج والدرجات",
-            text:"راجع نتائجك ودرجاتك في جميع الامتحانات.",
-            html:`
-                <h3>نتائجك</h3>
-                <br>
-
-                <div class="list">
-
-                    <div class="list-item">
-                        <div>
-                            <div class="item-title">
-                                امتحان الرياضيات الأول
-                            </div>
-                            <div class="item-info">
-                                18 من 20
-                            </div>
-                        </div>
-                        <span class="badge">
-                            90%
-                        </span>
-                    </div>
-
-                    <div class="list-item">
-                        <div>
-                            <div class="item-title">
-                                امتحان الوحدة الثانية
-                            </div>
-                            <div class="item-info">
-                                20 من 20
-                            </div>
-                        </div>
-                        <span class="badge">
-                            100%
-                        </span>
-                    </div>
-
-                </div>
-            `
-        },
-
-        attendance:{
-            title:"✅ الحضور والغياب",
-            text:"تابع سجل حضورك وغيابك في الحصص.",
-            html:`
-                <h3>سجل الحضور</h3>
-                <br>
-
-                <div class="notice">
-                    <strong>
-                        نسبة الحضور: 95%
-                    </strong>
-                    <p>
-                        عدد مرات الحضور: 19
-                    </p>
-                </div>
-            `
-        },
-
-        schedule:{
-            title:"📅 جدول الحصص",
-            text:"اعرف مواعيد حصصك القادمة.",
-            html:`
-                <h3>جدول الحصص</h3>
-                <br>
-
-                <div class="list">
-
-                    <div class="list-item">
-                        <div>
-                            <div class="item-title">
-                                الرياضيات
-                            </div>
-                            <div class="item-info">
-                                السبت - 6:00 مساءً
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="list-item">
-                        <div>
-                            <div class="item-title">
-                                الرياضيات
-                            </div>
-                            <div class="item-info">
-                                الثلاثاء - 6:00 مساءً
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            `
-        },
-
-        announcements:{
-            title:"📢 الإعلانات",
-            text:"آخر أخبار وتنبيهات مستر مهاب.",
-            html:`
-                <div class="notice">
-                    <strong>
-                        امتحان جديد
-                    </strong>
-                    <p>
-                        تم إضافة امتحان جديد للطلاب.
-                    </p>
-                </div>
-
-                <div class="notice">
-                    <strong>
-                        تنبيه
-                    </strong>
-                    <p>
-                        يرجى تحميل المذكرة الجديدة.
-                    </p>
-                </div>
-            `
-        },
-
-        contact:{
-            title:"💬 تواصل مع المدرس",
-            text:"تواصل مع مستر مهاب عند الحاجة.",
-            html:`
-                <h3>
-                    تواصل مع مستر مهاب
-                </h3>
-
-                <br>
-
-                <p style="color:#718096;font-size:13px;line-height:2;">
-                    يمكنك إرسال استفسارك أو السؤال عن أي شيء
-                    متعلق بالدراسة.
-                </p>
-
-                <br>
-
-                <button
-                    class="small-btn"
-                    onclick="contactTeacher()"
-                >
-                    إرسال رسالة
-                </button>
-            `
-        }
+        home:'الرئيسية',
+        files:'المذكرات والملفات',
+        homework:'الواجبات',
+        exams:'الامتحانات',
+        results:'النتائج والدرجات',
+        attendance:'الحضور والغياب',
+        schedule:'جدول الحصص',
+        announcements:'الإعلانات',
+        contact:'تواصل مع المدرس'
 
     };
 
+    document.getElementById('pageTitle')
+        .textContent = titles[page] || 'الرئيسية';
 
-    const selected =
-        data[section];
+    document.getElementById('welcomeText')
+        .textContent =
+        page === 'home'
+        ? 'أهلاً بك في منصة مستر مهاب'
+        : 'تابع بياناتك التعليمية بسهولة';
 
-    if(!selected){
-        return;
+    document
+        .querySelectorAll('.nav button')
+        .forEach(btn=>{
+            btn.classList.remove('active');
+        });
+
+    if(button){
+        button.classList.add('active');
     }
 
-    title.textContent =
-        selected.title;
-
-    text.textContent =
-        selected.text;
-
-    content.innerHTML =
-        selected.html;
+    document
+        .getElementById('sidebar')
+        .classList.remove('open');
 
 }
 
 
-/* ==================================================
-   CERTIFICATE
-================================================== */
+/* TEACHER */
+
+function openTeacherDashboard(){
+
+    document.getElementById('studentArea')
+        .style.display = 'none';
+
+    document.getElementById('teacherDashboard')
+        .classList.add('active');
+
+    document.getElementById('pageTitle')
+        .textContent = 'لوحة تحكم مستر مهاب';
+
+    document.getElementById('welcomeText')
+        .textContent = 'إدارة المنصة والطلاب';
+
+    document
+        .querySelectorAll('.nav button')
+        .forEach(btn=>{
+            btn.classList.remove('active');
+        });
+
+}
+
+
+/* SIDEBAR MOBILE */
+
+function toggleSidebar(){
+
+    document
+        .getElementById('sidebar')
+        .classList.toggle('open');
+
+}
+
+
+/* CERTIFICATE */
 
 function downloadCertificate(){
 
     alert(
-        "في النسخة النهائية سيتم إنشاء شهادة حقيقية باسم الطالب وإتاحة تحميلها."
+        'سيتم إنشاء شهادة التقدير وتحميلها تلقائيًا بعد ربط قاعدة البيانات.'
     );
-
-}
-
-function shareCertificate(){
-
-    if(navigator.share){
-
-        navigator.share({
-            title:"شهادة تقدير",
-            text:"حصلت على شهادة تقدير من مستر مهاب."
-        });
-
-    }else{
-
-        alert(
-            "المشاركة ستكون متاحة تلقائيًا في النسخة النهائية."
-        );
-
-    }
-
-}
-
-function printCertificate(){
-
-    alert(
-        "في النسخة النهائية سيتم فتح الشهادة للطباعة."
-    );
-
-}
-
-
-/* ==================================================
-   TEACHER ACTIONS
-================================================== */
-
-function addStudent(){
-
-    alert(
-        "هنا لاحقًا سنضيف نموذج إضافة طالب وربطه بقاعدة البيانات."
-    );
-
-}
-
-function createExam(){
-
-    alert(
-        "هنا سيتم إنشاء الامتحانات وإضافة الأسئلة والاختيارات والدرجات."
-    );
-
-}
-
-function createHomework(){
-
-    alert(
-        "هنا سيتم إنشاء الواجب وتحديد موعد التسليم."
-    );
-
-}
-
-function createAnnouncement(){
-
-    alert(
-        "هنا سيتم إنشاء ونشر إعلان للطلاب."
-    );
-
-}
-
-function addGrades(){
-
-    alert(
-        "هنا سيتم إدخال درجات الطلاب."
-    );
-
-}
-
-
-/* ==================================================
-   EXAM
-================================================== */
-
-function startExam(){
-
-    alert(
-        "نظام الامتحانات والتصحيح التلقائي سيتم بناؤه في المرحلة القادمة."
-    );
-
-}
-
-
-/* ==================================================
-   CONTACT
-================================================== */
-
-function contactTeacher(){
-
-    alert(
-        "سيتم هنا إنشاء نظام مراسلة بين الطالب والمدرس."
-    );
-
-}
-
-
-/* ==================================================
-   LOGOUT
-================================================== */
-
-function logout(){
-
-    location.reload();
 
 }
 
