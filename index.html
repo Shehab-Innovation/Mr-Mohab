@@ -1,731 +1,1486 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEXORA | مستر مهاب</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-        /* ===== الأساسيات ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA | مستر مهاب</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f4f7fc;
-            display: flex;
-            justify-content: center;
-            padding: 30px;
-            min-height: 100vh;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .container {
-            max-width: 1400px;
-            width: 100%;
-            background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 60px rgba(0, 20, 50, 0.08);
-            display: flex;
-            overflow: hidden;
-            min-height: 90vh;
-        }
+body{
+    font-family:'Segoe UI',Tahoma,sans-serif;
+    background:#f4f7fc;
+    display:flex;
+    justify-content:center;
+    padding:30px;
+    min-height:100vh;
+}
 
-        /* ===== القائمة الجانبية ===== */
-        .sidebar {
-            width: 280px;
-            background: #0b1f3a;
-            color: white;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-        }
+.container{
+    max-width:1400px;
+    width:100%;
+    background:white;
+    border-radius:32px;
+    box-shadow:0 20px 60px rgba(0,20,50,.08);
+    display:flex;
+    overflow:hidden;
+    min-height:90vh;
+}
 
-        .sidebar-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+/* ================= SIDEBAR ================= */
 
-        .sidebar-header .teacher-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 10px;
-        }
+.sidebar{
+    width:280px;
+    background:#0b1f3a;
+    color:white;
+    padding:30px 20px;
+    display:flex;
+    flex-direction:column;
+    flex-shrink:0;
+}
 
-        .sidebar-header h2 {
-            font-size: 20px;
-            color: white;
-        }
+.sidebar-header{
+    text-align:center;
+    margin-bottom:25px;
+}
 
-        .sidebar-header p {
-            font-size: 13px;
-            color: #94a3c8;
-            margin-top: 4px;
-        }
+.sidebar-header .teacher-img{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid rgba(255,255,255,.2);
+    margin-bottom:10px;
+}
 
-        .sidebar-nav {
-            list-style: none;
-            padding: 0;
-            flex: 1;
-            overflow-y: auto;
-        }
+.sidebar-header h2{
+    font-size:20px;
+    color:white;
+}
 
-        .sidebar-nav li {
-            margin-bottom: 4px;
-        }
+.sidebar-header p{
+    font-size:13px;
+    color:#94a3c8;
+    margin-top:4px;
+}
 
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 11px 16px;
-            border-radius: 12px;
-            color: #c8d6f0;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.2s;
-            cursor: pointer;
-        }
+.sidebar-nav{
+    list-style:none;
+    padding:0;
+    flex:1;
+    overflow-y:auto;
+}
 
-        .sidebar-nav a:hover,
-        .sidebar-nav a.active {
-            background: rgba(255, 255, 255, 0.06);
-            color: white;
-        }
+.sidebar-nav li{
+    margin-bottom:4px;
+}
 
-        .sidebar-nav a i {
-            width: 22px;
-            color: #60a5fa;
-        }
+.sidebar-nav a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px 16px;
+    border-radius:12px;
+    color:#c8d6f0;
+    text-decoration:none;
+    font-size:14px;
+    transition:.2s;
+    cursor:pointer;
+}
 
-        /* ===== أزرار التواصل ===== */
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            padding: 12px;
-            border-radius: 30px;
-            text-align: center;
-            font-weight: 600;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-            transition: 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
+.sidebar-nav a:hover,
+.sidebar-nav a.active{
+    background:rgba(255,255,255,.07);
+    color:white;
+}
 
-        .whatsapp-btn:hover {
-            background: #1da851;
-            transform: scale(1.02);
-        }
+.sidebar-nav a i{
+    width:22px;
+    color:#60a5fa;
+}
 
-        .facebook-btn {
-            background: #1877F2;
-            color: white;
-            padding: 12px;
-            border-radius: 30px;
-            text-align: center;
-            font-weight: 600;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-            transition: 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
+/* ================= BUTTONS ================= */
 
-        .facebook-btn:hover {
-            background: #0d65d9;
-            transform: scale(1.02);
-        }
+.whatsapp-btn,
+.facebook-btn{
+    color:white;
+    padding:12px;
+    border-radius:30px;
+    text-align:center;
+    font-weight:600;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-top:10px;
+    transition:.2s;
+    font-size:14px;
+}
 
-        /* ===== المحتوى الرئيسي ===== */
-        .main-content {
-            flex: 1;
-            padding: 35px 40px;
-            background: #fafcff;
-            overflow-y: auto;
-        }
+.whatsapp-btn{
+    background:#25D366;
+}
 
-        .page {
-            display: none;
-        }
+.facebook-btn{
+    background:#1877F2;
+}
 
-        .page.active {
-            display: block;
-        }
+.whatsapp-btn:hover{
+    background:#1da851;
+    transform:scale(1.02);
+}
 
-        .page h2 {
-            font-size: 26px;
-            color: #0b1f3a;
-            border-bottom: 2px solid #eef2f7;
-            padding-bottom: 16px;
-            margin-bottom: 20px;
-        }
+.facebook-btn:hover{
+    background:#0d65d9;
+    transform:scale(1.02);
+}
 
-        .card {
-            background: white;
-            border: 1px solid #eef2f7;
-            border-radius: 18px;
-            padding: 22px 26px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-            margin-bottom: 16px;
-        }
+/* ================= MAIN ================= */
 
-        .card h3 {
-            font-size: 18px;
-            color: #0b1f3a;
-            margin-bottom: 10px;
-        }
+.main-content{
+    flex:1;
+    padding:35px 40px;
+    background:#fafcff;
+    overflow-y:auto;
+}
 
-        .card p {
-            color: #4a5a6a;
-            line-height: 1.8;
-            font-size: 14px;
-        }
+.page{
+    display:none;
+}
 
-        .btn {
-            background: #1769e0;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
+.page.active{
+    display:block;
+}
 
-        .btn:hover {
-            background: #0b4fa8;
-        }
+.page h2{
+    font-size:26px;
+    color:#0b1f3a;
+    border-bottom:2px solid #eef2f7;
+    padding-bottom:16px;
+    margin-bottom:20px;
+}
 
-        .btn-pdf {
-            background: #dc3545;
-            font-size: 16px;
-            padding: 14px 32px;
-        }
+.card{
+    background:white;
+    border:1px solid #eef2f7;
+    border-radius:18px;
+    padding:22px 26px;
+    box-shadow:0 2px 10px rgba(0,0,0,.02);
+    margin-bottom:16px;
+}
 
-        .btn-pdf:hover {
-            background: #b02a37;
-        }
+.card h3{
+    font-size:18px;
+    color:#0b1f3a;
+    margin-bottom:10px;
+}
 
-        .curriculum-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-        }
+.card p{
+    color:#4a5a6a;
+    line-height:1.8;
+    font-size:14px;
+}
 
-        .curriculum-card {
-            background: white;
-            border: 1px solid #eef2f7;
-            border-radius: 16px;
-            padding: 18px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+/* ================= WELCOME ================= */
 
-        .curriculum-card:hover {
-            border-color: #1769e0;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(23, 105, 224, 0.06);
-        }
+.welcome{
+    background:linear-gradient(135deg,#0b1f3a 0%,#1a3f7a 100%);
+    color:white;
+    border-radius:24px;
+    padding:30px 38px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:25px;
+}
 
-        .curriculum-card .icon {
-            font-size: 32px;
-            color: #1769e0;
-            margin-bottom: 8px;
-        }
+.welcome-text h2{
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:4px;
+}
 
-        .curriculum-card h4 {
-            color: #0b1f3a;
-            font-size: 16px;
-        }
+.welcome-text p{
+    opacity:.85;
+    font-size:15px;
+}
 
-        .curriculum-card p {
-            color: #7b8495;
-            font-size: 12px;
-        }
+.welcome-text .quote{
+    font-style:italic;
+    font-size:14px;
+    opacity:.75;
+    margin-top:6px;
+    border-right:4px solid #fbbf24;
+    padding-right:16px;
+}
 
-        .teacher-profile {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
+.welcome .teacher-img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid rgba(255,255,255,.3);
+}
 
-        .teacher-profile .info h2 {
-            font-size: 28px;
-            color: #0b1f3a;
-            border-bottom: none;
-            padding-bottom: 0;
-            margin-bottom: 6px;
-        }
+.hero-background{
+    background-image:url('https://i.ibb.co/xtmG53Lr/Whats-App-Image-2026-09-03-at-3-34-26-AM-1.jpg');
+    background-size:cover;
+    background-position:center;
+    min-height:400px;
+    border-radius:24px;
+    margin-bottom:30px;
+}
 
-        .teacher-profile .info p {
-            color: #4a5a6a;
-            font-size: 16px;
-            line-height: 1.8;
-        }
+/* ================= TEACHER PROFILE ================= */
 
-        .teacher-profile .big-img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #eef2f7;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-        }
+.teacher-profile{
+    display:flex;
+    align-items:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
 
-        .tabs {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eef2f7;
-            padding-bottom: 2px;
-        }
+.teacher-profile .big-img{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #eef2f7;
+}
 
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 10px 22px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #7b8495;
-            cursor: pointer;
-            border-radius: 12px 12px 0 0;
-            transition: 0.2s;
-        }
+.teacher-profile .info h2{
+    font-size:28px;
+    color:#0b1f3a;
+    border:none;
+    padding:0;
+    margin-bottom:6px;
+}
 
-        .tab-btn:hover {
-            color: #0b1f3a;
-            background: #f0f4fa;
-        }
+.teacher-profile .info p{
+    color:#4a5a6a;
+    font-size:16px;
+    line-height:1.8;
+}
 
-        .tab-btn.active {
-            color: #1769e0;
-            background: #eef5ff;
-            border-bottom: 3px solid #1769e0;
-        }
+/* ================= UNIT GRID ================= */
 
-        .tab-content {
-            display: none;
-        }
+.unit-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
 
-        .tab-content.active {
-            display: block;
-        }
+.unit-card{
+    background:white;
+    border:1px solid #e7edf6;
+    border-radius:20px;
+    padding:22px;
+    cursor:pointer;
+    transition:.25s;
+}
 
-        /* ===== عرض PDF ===== */
-        .pdf-frame {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 16px;
-        }
+.unit-card:hover{
+    border-color:#1769e0;
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(23,105,224,.08);
+}
 
-        /* ===== استجابة للشاشات ===== */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                border-radius: 24px;
-            }
-            .sidebar {
-                width: 100%;
-                padding: 20px;
-            }
-            .main-content {
-                padding: 20px;
-            }
-            .sidebar-nav {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 6px;
-            }
-            .sidebar-nav li {
-                flex: 1 1 45%;
-                margin-bottom: 0;
-            }
-            .sidebar-nav a {
-                padding: 10px 12px;
-                font-size: 13px;
-            }
-            .teacher-profile {
-                flex-direction: column;
-                text-align: center;
-            }
-            .curriculum-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .pdf-frame {
-                height: 400px;
-            }
-        }
+.unit-icon{
+    font-size:32px;
+    color:#1769e0;
+    margin-bottom:10px;
+}
 
-        @media (max-width: 480px) {
-            body {
-                padding: 12px;
-            }
-            .main-content {
-                padding: 14px;
-            }
-            .sidebar-nav li {
-                flex: 1 1 100%;
-            }
-            .curriculum-grid {
-                grid-template-columns: 1fr;
-            }
-            .pdf-frame {
-                height: 300px;
-            }
-        }
-    </style>
+.unit-card h3{
+    color:#0b1f3a;
+    margin-bottom:6px;
+}
+
+.unit-card p{
+    color:#7b8495;
+    font-size:13px;
+}
+
+/* ================= CONTENT OPTIONS ================= */
+
+.content-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:18px;
+}
+
+.content-box{
+    background:#f8faff;
+    border:1px solid #e7edf6;
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.content-box:hover{
+    background:white;
+    border-color:#1769e0;
+    transform:translateY(-3px);
+}
+
+.content-box i{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.content-box h4{
+    color:#0b1f3a;
+    margin-bottom:5px;
+}
+
+.content-box p{
+    color:#7b8495;
+    font-size:12px;
+}
+
+/* ================= LESSONS ================= */
+
+.lesson-list{
+    display:grid;
+    gap:12px;
+    margin-top:18px;
+}
+
+.lesson-item{
+    background:white;
+    border:1px solid #e8edf5;
+    padding:17px 20px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.lesson-item strong{
+    color:#0b1f3a;
+}
+
+.lesson-item span{
+    color:#7b8495;
+    font-size:12px;
+}
+
+.btn{
+    background:#1769e0;
+    color:white;
+    border:none;
+    padding:10px 22px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+}
+
+.btn:hover{
+    background:#0b4fa8;
+}
+
+.btn-back{
+    background:#eef4ff;
+    color:#1769e0;
+    margin-bottom:18px;
+}
+
+/* ================= CODES ================= */
+
+.code-summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:white;
+    border:1px solid #eef2f7;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+}
+
+.stat-card .number{
+    font-size:28px;
+    font-weight:700;
+    color:#1769e0;
+    margin-bottom:5px;
+}
+
+.stat-card p{
+    color:#6b7280;
+    font-size:13px;
+}
+
+.code-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.code-item{
+    background:#f8faff;
+    border:1px solid #e6edf7;
+    padding:15px;
+    border-radius:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.code-number{
+    font-weight:700;
+    letter-spacing:1px;
+    color:#0b1f3a;
+}
+
+.status{
+    font-size:11px;
+    padding:5px 10px;
+    border-radius:20px;
+}
+
+.status.available{
+    background:#e9f9ef;
+    color:#16833b;
+}
+
+.status.used{
+    background:#f1f1f1;
+    color:#777;
+}
+
+/* ================= PRICING ================= */
+
+.price-box{
+    background:linear-gradient(135deg,#0b1f3a,#1a3f7a);
+    color:white;
+    border-radius:22px;
+    padding:25px;
+    margin-bottom:20px;
+}
+
+.price-box h3{
+    color:white;
+    margin-bottom:10px;
+}
+
+.price{
+    font-size:34px;
+    font-weight:700;
+}
+
+.price small{
+    font-size:14px;
+    opacity:.8;
+}
+
+.pricing-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.pricing-table th,
+.pricing-table td{
+    padding:13px;
+    border-bottom:1px solid #edf1f7;
+    text-align:center;
+}
+
+.pricing-table th{
+    color:#0b1f3a;
+    background:#f8faff;
+}
+
+.pricing-table td{
+    color:#4a5a6a;
+}
+
+/* ================= PDF ================= */
+
+.pdf-view{
+    width:100%;
+    height:600px;
+    border:none;
+    border-radius:16px;
+}
+
+.btn-pdf{
+    background:#dc3545;
+    font-size:15px;
+    padding:13px 28px;
+}
+
+.btn-pdf:hover{
+    background:#b02a37;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+    body{
+        padding:12px;
+    }
+
+    .container{
+        flex-direction:column;
+        border-radius:24px;
+    }
+
+    .sidebar{
+        width:100%;
+        padding:20px;
+    }
+
+    .main-content{
+        padding:20px;
+    }
+
+    .sidebar-nav{
+        display:flex;
+        flex-wrap:wrap;
+        gap:6px;
+    }
+
+    .sidebar-nav li{
+        flex:1 1 45%;
+    }
+
+    .unit-grid,
+    .content-grid,
+    .code-summary{
+        grid-template-columns:1fr;
+    }
+
+    .code-list{
+        grid-template-columns:1fr;
+    }
+
+    .welcome{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .welcome-text .quote{
+        border:none;
+        padding:0;
+    }
+
+    .hero-background{
+        min-height:250px;
+    }
+}
+
+@media(max-width:480px){
+
+    .sidebar-nav li{
+        flex:1 1 100%;
+    }
+
+    .hero-background{
+        min-height:180px;
+    }
+
+    .lesson-item{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- ===== القائمة الجانبية ===== -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <img 
-                    src="https://i.ibb.co/vxdrYRR9/IMG-20241213-WA0103.jpg" 
-                    alt="صورة مستر مهاب"
-                    class="teacher-img"
-                    onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%231769e0%22 rx=%2250%22/%3E%3Ctext x=%2250%22 y=%2265%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
-                />
-                <h2>مستر مهاب</h2>
-                <p>مدرس رياضيات – المرحلة الابتدائية</p>
-            </div>
+<!-- ================= SIDEBAR ================= -->
 
-            <ul class="sidebar-nav">
-                <li><a class="active" onclick="showPage('home')"><i class="fas fa-home"></i> تعريف المدرس</a></li>
-                <li><a onclick="showPage('curriculum')"><i class="fas fa-book"></i> المنهج</a></li>
-                <li><a onclick="showPage('notebook')"><i class="fas fa-file-alt"></i> المذكرة</a></li>
-                <li><a onclick="showPage('homework')"><i class="fas fa-pencil-alt"></i> الواجبات</a></li>
-                <li><a onclick="showPage('exams')"><i class="fas fa-star"></i> الامتحانات</a></li>
-                <li><a onclick="showPage('attendance')"><i class="fas fa-calendar-check"></i> الحضور والغياب</a></li>
-                <li><a onclick="showPage('grades')"><i class="fas fa-chart-line"></i> تقييم الطالب</a></li>
-                <li><a onclick="showPage('certificate')"><i class="fas fa-award"></i> الشهادات</a></li>
-            </ul>
+<div class="sidebar">
 
-            <a href="https://wa.me/201152715104" target="_blank" class="whatsapp-btn">
-                <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
-            </a>
-            <a href="https://www.facebook.com/share/1Dup2hS5YH/" target="_blank" class="facebook-btn">
-                <i class="fab fa-facebook"></i> صفحة الفيسبوك
-            </a>
-        </div>
+    <div class="sidebar-header">
 
-        <!-- ===== المحتوى الرئيسي ===== -->
-        <div class="main-content">
+        <img
+            src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
+            alt="مستر مهاب"
+            class="teacher-img"
+        >
 
-            <!-- الصفحة الرئيسية -->
-            <div id="home" class="page active">
-                <div class="teacher-profile">
-                    <img 
-                        src="https://i.ibb.co/vxdrYRR9/IMG-20241213-WA0103.jpg" 
-                        alt="صورة مستر مهاب"
-                        class="big-img"
-                        onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22 viewBox=%220 0 140 140%22%3E%3Crect width=%22140%22 height=%22140%22 fill=%22%231769e0%22 rx=%2270%22/%3E%3Ctext x=%2270%22 y=%2285%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
-                    />
-                    <div class="info">
-                        <h2>مستر مهاب</h2>
-                        <p><strong>مدرس رياضيات</strong> – المرحلة الابتدائية</p>
-                        <p style="margin-top: 8px;">مرحباً بكم في منصة مستر مهاب التعليمية. ستجدون هنا المذكرة، الأسئلة، والواجبات الخاصة بالمدرس.</p>
-                        <p style="margin-top: 6px;">📞 للتواصل: <strong>+201152715104</strong></p>
-                    </div>
-                </div>
-            </div>
+        <h2>مستر مهاب</h2>
+        <p>مدرس رياضيات – المرحلة الابتدائية</p>
 
-            <!-- المنهج -->
-            <div id="curriculum" class="page">
-                <h2>📚 المنهج</h2>
-                <div class="card">
-                    <h3>اختر الصف</h3>
-                    <div class="curriculum-grid">
-                        <div class="curriculum-card" onclick="showCurriculum('grade1')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الأول الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade2')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الثاني الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade3')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الثالث الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade4')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الرابع الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade5')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الخامس الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade6')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف السادس الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- الصف الأول -->
-                <div id="grade1" class="card" style="display: none;">
-                    <h3>الصف الأول الابتدائي – الرياضيات</h3>
-                    <div style="margin-bottom: 20px;">
-                        <h4 style="color: #1769e0; margin-bottom: 12px;">الوحدة الأولى: الأعداد من 1 إلى 10</h4>
-                        <div class="curriculum-grid">
-                            <!-- المذكرات الجديدة مرتبة -->
-                            <div class="curriculum-card" onclick="openLesson('grade1', 'lesson1')">
-                                <div class="icon"><i class="fas fa-play-circle"></i></div>
-                                <h4>الدرس الأول: مذكرة الياس</h4>
-                                <p>مذكرة + أسئلة + واجب</p>
-                            </div>
-                            <div class="curriculum-card" onclick="openLesson('grade1', 'lesson2')">
-                                <div class="icon"><i class="fas fa-play-circle"></i></div>
-                                <h4>الدرس الثاني: مراجعة رياضيات</h4>
-                                <p>مذكرة + أسئلة + واجب</p>
-                            </div>
-                            <div class="curriculum-card" onclick="openLesson('grade1', 'lesson3')">
-                                <div class="icon"><i class="fas fa-play-circle"></i></div>
-                                <h4>الدرس الثالث: مراجعة لغة عربية</h4>
-                                <p>مذكرة + أسئلة + واجب</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- باقي الصفوف -->
-                <div id="grade2" class="card" style="display: none;"><h3>الصف الثاني الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-                <div id="grade3" class="card" style="display: none;"><h3>الصف الثالث الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-                <div id="grade4" class="card" style="display: none;"><h3>الصف الرابع الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-                <div id="grade5" class="card" style="display: none;"><h3>الصف الخامس الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-                <div id="grade6" class="card" style="display: none;"><h3>الصف السادس الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-            </div>
-
-            <!-- المذكرة -->
-            <div id="notebook" class="page">
-                <h2>📖 المذكرة</h2>
-                <div class="card">
-                    <h3>مذكرة مستر مهاب في الرياضيات</h3>
-                    <p>هنا ستجد مذكرات الدروس كاملة، جاهزة للعرض والتحميل.</p>
-                    <ul style="margin-top: 12px; list-style: none; padding: 0;">
-                        <li style="padding: 10px 0; border-bottom: 1px solid #eef2f7;">
-                            <a href="#" onclick="openLesson('grade1', 'lesson1')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
-                                📘 الصف الأول – الدرس الأول: مذكرة الياس
-                            </a>
-                        </li>
-                        <li style="padding: 10px 0; border-bottom: 1px solid #eef2f7;">
-                            <a href="#" onclick="openLesson('grade1', 'lesson2')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
-                                📘 الصف الأول – الدرس الثاني: مراجعة رياضيات
-                            </a>
-                        </li>
-                        <li style="padding: 10px 0; border-bottom: 1px solid #eef2f7;">
-                            <a href="#" onclick="openLesson('grade1', 'lesson3')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
-                                📘 الصف الأول – الدرس الثالث: مراجعة لغة عربية
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- صفحة عرض الدرس -->
-            <div id="lessonView" class="page">
-                <h2 id="lessonTitle">الدرس</h2>
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="switchTab('explain')">📖 الشرح</button>
-                    <button class="tab-btn" onclick="switchTab('questions')">❓ الأسئلة</button>
-                    <button class="tab-btn" onclick="switchTab('homework')">📝 الواجب</button>
-                </div>
-
-                <div id="tab-explain" class="tab-content active">
-                    <div class="card">
-                        <h3>📖 مذكرة الدرس</h3>
-                        <div id="explainContent">
-                            <!-- المذكرة هتظهر هنا -->
-                        </div>
-                    </div>
-                </div>
-
-                <div id="tab-questions" class="tab-content">
-                    <div class="card">
-                        <h3>❓ أسئلة الدرس</h3>
-                        <div id="questionsContent">
-                            <p>سيتم إضافة أسئلة الدرس قريباً...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="tab-homework" class="tab-content">
-                    <div class="card">
-                        <h3>📝 واجب الدرس</h3>
-                        <div id="homeworkContent">
-                            <p>سيتم إضافة الواجب قريباً...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn" onclick="showPage('curriculum')" style="margin-top: 16px;">
-                    <i class="fas fa-arrow-right"></i> العودة إلى المنهج
-                </button>
-            </div>
-
-            <!-- باقي الصفحات -->
-            <div id="homework" class="page">
-                <h2>📘 الواجبات</h2>
-                <div class="card"><h3>قائمة الواجبات</h3><p>سيتم إضافة الواجبات قريباً...</p></div>
-            </div>
-            <div id="exams" class="page">
-                <h2>⭐ الامتحانات</h2>
-                <div class="card"><h3>نتائج الامتحانات</h3><p>سيتم إضافة الامتحانات قريباً...</p></div>
-            </div>
-            <div id="attendance" class="page">
-                <h2>🗓️ الحضور والغياب</h2>
-                <div class="card"><h3>سجل الحضور</h3><p>سيتم إضافة الحضور والغياب قريباً...</p></div>
-            </div>
-            <div id="grades" class="page">
-                <h2>📊 تقييم الطالب</h2>
-                <div class="card"><h3>تقرير الأداء</h3><p>سيتم إضافة تقييم الطالب قريباً...</p></div>
-            </div>
-            <div id="certificate" class="page">
-                <h2>🏆 الشهادات</h2>
-                <div class="card"><h3>شهادة تقدير</h3><p>سيتم إضافة الشهادات قريباً...</p></div>
-            </div>
-
-        </div>
     </div>
 
-    <script>
-        // ===== عرض الصفحات =====
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            const target = document.getElementById(pageId);
-            if (target) {
-                target.classList.add('active');
-            }
-            document.querySelectorAll('.sidebar-nav a').forEach(link => {
-                link.classList.remove('active');
-            });
-            document.querySelectorAll('.sidebar-nav a').forEach(link => {
-                if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(pageId)) {
-                    link.classList.add('active');
-                }
-            });
-        }
+    <ul class="sidebar-nav">
 
-        // ===== عرض المنهج =====
-        function showCurriculum(gradeId) {
-            document.querySelectorAll('#curriculum .card[id^="grade"]').forEach(el => {
-                el.style.display = 'none';
-            });
-            const target = document.getElementById(gradeId);
-            if (target) {
-                target.style.display = 'block';
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
+        <li>
+            <a class="active" onclick="showPage('home',this)">
+                <i class="fas fa-home"></i>
+                تعريف المدرس
+            </a>
+        </li>
 
-        // ===== بيانات الدروس بالمذكرات الجديدة =====
-        const lessonsData = {
-            'grade1-lesson1': {
-                title: 'مذكرة الياس',
-                pdfUrl: 'https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/grade-1/%D9%85%D8%A7%D8%AB%20%D9%85%D8%B0%D9%83%D8%B1%D8%A9%20%D8%A7%D9%84%D9%8A%D8%A7%D8%B3%20%D9%81%D8%B5%D9%84%D9%A1%20%20%D9%A3%D8%A8%20%D9%A2%D9%A0%D9%A2%D9%A7%20.pdf'
-            },
-            'grade1-lesson2': {
-                title: 'مراجعة رياضيات',
-                pdfUrl: 'https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/grade-1/%D9%85%D8%B1%D8%A7%D8%AC%D8%B9%D8%A9%20%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A7%D8%AA%20-%202%20%D8%B9%20-%20%D9%86%D9%88%D9%81%D9%85%D8%A8%D8%B1%20-%20%D8%B0%D8%A7%D9%83%D8%B1%D9%88%D9%84%D9%8A.pdf'
-            },
-            'grade1-lesson3': {
-                title: 'مراجعة لغة عربية',
-                pdfUrl: 'https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/grade-1/%D9%85%D8%B1%D8%A7%D8%AC%D8%B9%D8%A9%20%D9%84%D8%BA%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9%20-%202%20%D8%B9%20-%20%D9%86%D9%88%D9%81%D9%85%D8%A8%D8%B1%20-%20%D8%B0%D8%A7%D9%83%D8%B1%D9%88%D9%84%D9%8A.pdf'
-            }
-        };
+        <li>
+            <a onclick="showPage('curriculum',this)">
+                <i class="fas fa-book"></i>
+                المنهج
+            </a>
+        </li>
 
-        // ===== فتح الدرس =====
-        function openLesson(grade, lesson) {
-            const key = grade + '-' + lesson;
-            const data = lessonsData[key];
-            if (!data) {
-                alert('الدرس غير موجود حالياً.');
-                return;
-            }
+        <li>
+            <a onclick="showPage('attendance',this)">
+                <i class="fas fa-calendar-check"></i>
+                الحضور والغياب
+            </a>
+        </li>
 
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
+        <li>
+            <a onclick="showPage('grades',this)">
+                <i class="fas fa-chart-line"></i>
+                تقييم الطالب
+            </a>
+        </li>
 
-            const lessonView = document.getElementById('lessonView');
-            lessonView.classList.add('active');
+        <li>
+            <a onclick="showPage('certificate',this)">
+                <i class="fas fa-award"></i>
+                الشهادات
+            </a>
+        </li>
 
-            document.getElementById('lessonTitle').textContent = '📖 ' + data.title;
+        <li>
+            <a onclick="showPage('codes',this)">
+                <i class="fas fa-key"></i>
+                أكواد الدخول
+            </a>
+        </li>
 
-            // عرض المذكرة من GitHub (رابط خام)
-            document.getElementById('explainContent').innerHTML = `
-                <iframe 
-                    src="${data.pdfUrl}" 
-                    class="pdf-frame"
-                    style="width: 100%; height: 600px; border: none; border-radius: 16px;">
-                </iframe>
-                <div style="margin-top: 16px; text-align: center;">
-                    <a href="${data.pdfUrl}" 
-                       target="_blank" 
-                       class="btn btn-pdf">
-                        📥 تحميل المذكرة بصيغة PDF
-                    </a>
+        <li>
+            <a onclick="showPage('pricing',this)">
+                <i class="fas fa-credit-card"></i>
+                الاشتراك
+            </a>
+        </li>
+
+    </ul>
+
+    <a
+        href="https://wa.me/+201289958954"
+        target="_blank"
+        class="whatsapp-btn"
+    >
+        <i class="fab fa-whatsapp"></i>
+        تواصل عبر واتساب
+    </a>
+
+    <a
+        href="https://www.facebook.com/share/1Dup2hS5YH/"
+        target="_blank"
+        class="facebook-btn"
+    >
+        <i class="fab fa-facebook"></i>
+        صفحة الفيسبوك
+    </a>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+<!-- HOME -->
+
+<div id="home" class="page active">
+
+    <div class="welcome">
+
+        <div class="welcome-text">
+
+            <h2>أهلاً بك في موقع مستر مهاب</h2>
+
+            <p>
+                مدرس الرياضيات – المرحلة الابتدائية
+            </p>
+
+            <p class="quote">
+                "النجاح هو مجموع الجهود الصغيرة المتكررة يومًا بعد يوم."
+            </p>
+
+            <p style="margin-top:8px;">
+                📞 للتواصل:
+                <strong>01289958954</strong>
+            </p>
+
+        </div>
+
+        <img
+            src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
+            alt="مستر مهاب"
+            class="teacher-img"
+        >
+
+    </div>
+
+    <div class="hero-background"></div>
+
+    <div class="card">
+
+        <h3>عن نظام NEXORA</h3>
+
+        <p>
+            نظام تعليمي رقمي خاص بمستر مهاب، يجمع المذكرات والواجبات
+            والامتحانات والحضور والتقييم والشهادات في مكان واحد.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- CURRICULUM -->
+
+<div id="curriculum" class="page">
+
+    <h2>📚 المنهج</h2>
+
+    <div class="card">
+
+        <h3>الوحدات الدراسية</h3>
+
+        <p>
+            اختر الوحدة للوصول إلى المذكرة والواجبات والامتحانات الخاصة بها.
+        </p>
+
+    </div>
+
+    <div class="unit-grid">
+
+        <div class="unit-card" onclick="openUnit(1)">
+
+            <div class="unit-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+
+            <h3>الوحدة الأولى</h3>
+
+            <p>
+                4 دروس • مذكرة • واجبات • امتحانات
+            </p>
+
+        </div>
+
+        <div class="unit-card" onclick="openUnit(2)">
+
+            <div class="unit-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+
+            <h3>الوحدة الثانية</h3>
+
+            <p>
+                محتوى الوحدة الثانية
+            </p>
+
+        </div>
+
+        <div class="unit-card" onclick="openUnit(3)">
+
+            <div class="unit-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+
+            <h3>الوحدة الثالثة</h3>
+
+            <p>
+                محتوى الوحدة الثالثة
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- UNIT -->
+
+<div id="unit" class="page">
+
+    <button class="btn btn-back" onclick="showPage('curriculum')">
+        ← العودة للوحدات
+    </button>
+
+    <h2 id="unitTitle">الوحدة الأولى</h2>
+
+    <div class="content-grid">
+
+        <div class="content-box" onclick="openUnitSection('memo')">
+
+            <i class="fas fa-file-alt" style="color:#1769e0"></i>
+
+            <h4>📖 مذكرة الوحدة</h4>
+
+            <p>
+                دروس المذكرة الخاصة بالوحدة
+            </p>
+
+        </div>
+
+        <div class="content-box" onclick="openUnitSection('homework')">
+
+            <i class="fas fa-pencil-alt" style="color:#16a34a"></i>
+
+            <h4>📝 واجبات الوحدة</h4>
+
+            <p>
+                واجبات الدروس
+            </p>
+
+        </div>
+
+        <div class="content-box" onclick="openUnitSection('exams')">
+
+            <i class="fas fa-brain" style="color:#9333ea"></i>
+
+            <h4>🧠 امتحانات الوحدة</h4>
+
+            <p>
+                امتحانات الدروس والامتحان الشامل
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- UNIT SECTION -->
+
+<div id="unitSection" class="page">
+
+    <button class="btn btn-back" onclick="showPage('unit')">
+        ← العودة للوحدة
+    </button>
+
+    <h2 id="sectionTitle"></h2>
+
+    <div id="sectionContent"></div>
+
+</div>
+
+
+<!-- LESSON VIEW -->
+
+<div id="lessonView" class="page">
+
+    <button class="btn btn-back" onclick="showPage('unitSection')">
+        ← العودة
+    </button>
+
+    <h2 id="lessonTitle"></h2>
+
+    <div class="card">
+
+        <iframe
+            id="pdfFrame"
+            class="pdf-view"
+            src="https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/preview"
+        ></iframe>
+
+        <div style="margin-top:16px;text-align:center;">
+
+            <a
+                id="pdfDownload"
+                href="https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/view?usp=sharing"
+                target="_blank"
+                class="btn btn-pdf"
+            >
+                📥 فتح / تحميل المذكرة PDF
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ATTENDANCE -->
+
+<div id="attendance" class="page">
+
+    <h2>📅 الحضور والغياب</h2>
+
+    <div class="card">
+
+        <h3>تسجيل حضور الحصة</h3>
+
+        <p>
+            يتم استخدام كود خاص بالحصة لتسجيل حضور الطالب.
+        </p>
+
+        <div style="margin-top:20px;text-align:center;">
+
+            <div style="font-size:30px;font-weight:700;color:#1769e0;">
+                4827
+            </div>
+
+            <p>كود الحضور الحالي</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- GRADES -->
+
+<div id="grades" class="page">
+
+    <h2>📊 تقييم الطالب</h2>
+
+    <div class="card">
+
+        <h3>متابعة مستوى الطالب</h3>
+
+        <p>
+            يتم جمع نتائج الامتحانات والواجبات والحضور والتقييمات
+            لمتابعة مستوى الطالب مع مرور الوقت.
+        </p>
+
+    </div>
+
+    <div class="code-summary">
+
+        <div class="stat-card">
+            <div class="number">85%</div>
+            <p>متوسط الامتحانات</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="number">92%</div>
+            <p>الواجبات</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="number">96%</div>
+            <p>الحضور</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CERTIFICATE -->
+
+<div id="certificate" class="page">
+
+    <h2>🏆 الشهادات</h2>
+
+    <div class="card">
+
+        <h3>شهادة تقدير</h3>
+
+        <p>
+            يمكن للطالب الحصول على شهادة تقدير رقمية عند تحقيق
+            نتيجة أو إنجاز معين.
+        </p>
+
+        <div style="margin-top:20px;text-align:center;">
+
+            <div style="
+                border:2px solid #1769e0;
+                border-radius:20px;
+                padding:35px;
+                background:#fbfdff;
+            ">
+
+                <h2 style="border:none;margin:0;">
+                    🏆 شهادة تقدير
+                </h2>
+
+                <p style="margin-top:15px;">
+                    تقدم إلى الطالب
+                </p>
+
+                <h3 style="font-size:25px;">
+                    أحمد محمد
+                </h3>
+
+                <p>
+                    تقديرًا لتحقيقه 90% في امتحان الوحدة الأولى
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CODES -->
+
+<div id="codes" class="page">
+
+    <h2>🔐 أكواد الدخول</h2>
+
+    <div class="card">
+
+        <h3>أكواد دخول الطلاب إلى الموقع</h3>
+
+        <p>
+            الاشتراك الحالي يشمل 50 كود دخول للطلاب.
+            هذه الأكواد هي أساس الدخول إلى نظام المدرس.
+        </p>
+
+    </div>
+
+    <div class="code-summary">
+
+        <div class="stat-card">
+
+            <div class="number">50</div>
+
+            <p>إجمالي الأكواد</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="number">37</div>
+
+            <p>أكواد مستخدمة</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="number">13</div>
+
+            <p>أكواد متبقية</p>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>الأكواد</h3>
+
+        <div class="code-list">
+
+            <div class="code-item">
+                <span class="code-number">NX-583214</span>
+                <span class="status used">مستخدم</span>
+            </div>
+
+            <div class="code-item">
+                <span class="code-number">NX-741906</span>
+                <span class="status used">مستخدم</span>
+            </div>
+
+            <div class="code-item">
+                <span class="code-number">NX-326581</span>
+                <span class="status available">متاح</span>
+            </div>
+
+            <div class="code-item">
+                <span class="code-number">NX-905437</span>
+                <span class="status available">متاح</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PRICING -->
+
+<div id="pricing" class="page">
+
+    <h2>💳 الاشتراك</h2>
+
+    <div class="price-box">
+
+        <h3>الباقة الحالية</h3>
+
+        <div class="price">
+            250 جنيه
+            <small>/ شهريًا</small>
+        </div>
+
+        <p style="color:white;opacity:.85;margin-top:8px;">
+            تشمل 50 كود دخول للطلاب
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>باقات أكواد الدخول</h3>
+
+        <table class="pricing-table">
+
+            <tr>
+                <th>الأكواد</th>
+                <th>الاشتراك الشهري</th>
+            </tr>
+
+            <tr>
+                <td>50</td>
+                <td>250 جنيه</td>
+            </tr>
+
+            <tr>
+                <td>100</td>
+                <td>500 جنيه</td>
+            </tr>
+
+            <tr>
+                <td>150</td>
+                <td>750 جنيه</td>
+            </tr>
+
+            <tr>
+                <td>200</td>
+                <td>1000 جنيه</td>
+            </tr>
+
+            <tr>
+                <td>250</td>
+                <td>1250 جنيه</td>
+            </tr>
+
+            <tr>
+                <td>300</td>
+                <td>1500 جنيه</td>
+            </tr>
+
+            <tr>
+                <td>500</td>
+                <td>2500 جنيه</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="card">
+
+        <h3>📖 أكواد المذكرات</h3>
+
+        <p>
+            أكواد المذكرات منفصلة عن أكواد دخول الموقع.
+            يمكن استخدامها لتنظيم ومتابعة بيع نسخ المذكرات الخاصة بالمدرس.
+        </p>
+
+        <p style="margin-top:10px;">
+            سعر المذكرة يحدده المدرس، ومبيعات المذكرات تخص المدرس بالكامل.
+        </p>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
+
+<script>
+
+/* ================= GENERAL ================= */
+
+function showPage(pageId, clickedLink){
+
+    document.querySelectorAll('.page').forEach(page=>{
+        page.classList.remove('active');
+    });
+
+    const page=document.getElementById(pageId);
+
+    if(page){
+        page.classList.add('active');
+        window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    if(clickedLink){
+
+        document.querySelectorAll('.sidebar-nav a')
+            .forEach(link=>link.classList.remove('active'));
+
+        clickedLink.classList.add('active');
+
+    }
+}
+
+
+/* ================= UNIT ================= */
+
+let currentUnit=1;
+
+function openUnit(unitNumber){
+
+    currentUnit=unitNumber;
+
+    document.getElementById('unitTitle').textContent=
+        'الوحدة ' + numberArabic(unitNumber);
+
+    showPage('unit');
+
+}
+
+
+/* ================= SECTION ================= */
+
+function openUnitSection(section){
+
+    const title=document.getElementById('sectionTitle');
+    const content=document.getElementById('sectionContent');
+
+    if(section==='memo'){
+
+        title.textContent=
+            '📖 مذكرة الوحدة ' + numberArabic(currentUnit);
+
+        content.innerHTML=`
+
+            <div class="card">
+
+                <h3>دروس المذكرة</h3>
+
+                <p>
+                    اختر الدرس لفتح المذكرة.
+                </p>
+
+            </div>
+
+            <div class="lesson-list">
+
+                <div class="lesson-item">
+
+                    <div>
+                        <strong>الدرس الأول: التعرف على الأعداد</strong>
+                        <br>
+                        <span>مذكرة الدرس الأول</span>
+                    </div>
+
+                    <button
+                        class="btn"
+                        onclick="openLesson()"
+                    >
+                        فتح المذكرة
+                    </button>
+
                 </div>
-            `;
 
-            switchTab('explain');
-        }
+                <div class="lesson-item">
 
-        // ===== التبويبات =====
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                if (btn.textContent.includes('الشرح') && tabId === 'explain') btn.classList.add('active');
-                if (btn.textContent.includes('الأسئلة') && tabId === 'questions') btn.classList.add('active');
-                if (btn.textContent.includes('الواجب') && tabId === 'homework') btn.classList.add('active');
-            });
+                    <div>
+                        <strong>الدرس الثاني</strong>
+                        <br>
+                        <span>مذكرة الدرس الثاني</span>
+                    </div>
 
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
+                    <button class="btn">
+                        فتح المذكرة
+                    </button>
 
-            const target = document.getElementById('tab-' + tabId);
-            if (target) {
-                target.classList.add('active');
-            }
-        }
-    </script>
+                </div>
+
+                <div class="lesson-item">
+
+                    <div>
+                        <strong>الدرس الثالث</strong>
+                        <br>
+                        <span>مذكرة الدرس الثالث</span>
+                    </div>
+
+                    <button class="btn">
+                        فتح المذكرة
+                    </button>
+
+                </div>
+
+                <div class="lesson-item">
+
+                    <div>
+                        <strong>الدرس الرابع</strong>
+                        <br>
+                        <span>مذكرة الدرس الرابع</span>
+                    </div>
+
+                    <button class="btn">
+                        فتح المذكرة
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    }
+
+
+    if(section==='homework'){
+
+        title.textContent=
+            '📝 واجبات الوحدة ' + numberArabic(currentUnit);
+
+        content.innerHTML=`
+
+            <div class="lesson-list">
+
+                <div class="lesson-item">
+                    <strong>واجب الدرس الأول</strong>
+                    <button class="btn">ابدأ الواجب</button>
+                </div>
+
+                <div class="lesson-item">
+                    <strong>واجب الدرس الثاني</strong>
+                    <button class="btn">ابدأ الواجب</button>
+                </div>
+
+                <div class="lesson-item">
+                    <strong>واجب الدرس الثالث</strong>
+                    <button class="btn">ابدأ الواجب</button>
+                </div>
+
+                <div class="lesson-item">
+                    <strong>واجب الدرس الرابع</strong>
+                    <button class="btn">ابدأ الواجب</button>
+                </div>
+
+            </div>
+        `;
+
+    }
+
+
+    if(section==='exams'){
+
+        title.textContent=
+            '🧠 امتحانات الوحدة ' + numberArabic(currentUnit);
+
+        content.innerHTML=`
+
+            <div class="lesson-list">
+
+                <div class="lesson-item">
+                    <strong>امتحان الدرس الأول</strong>
+                    <button class="btn">ابدأ الامتحان</button>
+                </div>
+
+                <div class="lesson-item">
+                    <strong>امتحان الدرس الثاني</strong>
+                    <button class="btn">ابدأ الامتحان</button>
+                </div>
+
+                <div class="lesson-item">
+                    <strong>امتحان الدرس الثالث</strong>
+                    <button class="btn">ابدأ الامتحان</button>
+                </div>
+
+                <div class="lesson-item">
+                    <strong>امتحان الدرس الرابع</strong>
+                    <button class="btn">ابدأ الامتحان</button>
+                </div>
+
+                <div class="lesson-item">
+
+                    <div>
+                        <strong>⭐ امتحان شامل على الوحدة</strong>
+                        <br>
+                        <span>امتحان شامل لجميع دروس الوحدة</span>
+                    </div>
+
+                    <button class="btn">
+                        ابدأ الامتحان
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    }
+
+    showPage('unitSection');
+
+}
+
+
+/* ================= LESSON ================= */
+
+function openLesson(){
+
+    document.querySelectorAll('.page')
+        .forEach(page=>page.classList.remove('active'));
+
+    document.getElementById('lessonView')
+        .classList.add('active');
+
+    document.getElementById('lessonTitle').textContent=
+        '📖 الدرس الأول: التعرف على الأعداد';
+
+    document.getElementById('pdfFrame').src =
+        'https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/preview';
+
+    document.getElementById('pdfDownload').href =
+        'https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/view?usp=sharing';
+}
+
+
+/* ================= NUMBER ================= */
+
+function numberArabic(number){
+
+    const numbers=[
+        '',
+        'الأولى',
+        'الثانية',
+        'الثالثة',
+        'الرابعة',
+        'الخامسة',
+        'السادسة',
+        'السابعة',
+        'الثامنة',
+        'التاسعة',
+        'العاشرة'
+    ];
+
+    return numbers[number] || number;
+}
+
+</script>
 
 </body>
 </html>
