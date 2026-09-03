@@ -6,7 +6,7 @@
     <title>NEXORA | مستر مهاب</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* كل الستايلات السابقة موجودة هنا، نفس الكود */
+        /* ===== كل الستايلات السابقة ===== */
         * {
             margin: 0;
             padding: 0;
@@ -189,6 +189,8 @@
         }
         .btn-pdf {
             background: #dc3545;
+            font-size: 16px;
+            padding: 14px 32px;
         }
         .btn-pdf:hover {
             background: #b02a37;
@@ -284,32 +286,27 @@
         .tab-content.active {
             display: block;
         }
-        /* الحل الجديد: عرض PDF كصفحة منفصلة */
-        .pdf-viewer {
-            width: 100%;
-            height: 600px;
-            border: 1px solid #eef2f7;
-            border-radius: 16px;
-        }
-        .pdf-fallback {
+        /* ===== عرض المذكرة ===== */
+        .pdf-box {
             text-align: center;
             padding: 40px 20px;
             background: #f8fafc;
             border-radius: 16px;
         }
-        .pdf-fallback .icon {
-            font-size: 48px;
+        .pdf-box .icon {
+            font-size: 64px;
             color: #dc3545;
             margin-bottom: 16px;
         }
-        .pdf-fallback h4 {
-            font-size: 18px;
+        .pdf-box h4 {
+            font-size: 20px;
             color: #0b1f3a;
             margin-bottom: 8px;
         }
-        .pdf-fallback p {
+        .pdf-box p {
             color: #7b8495;
-            font-size: 14px;
+            font-size: 15px;
+            margin-bottom: 16px;
         }
         @media (max-width: 768px) {
             .container {
@@ -343,9 +340,6 @@
             .curriculum-grid {
                 grid-template-columns: 1fr 1fr;
             }
-            .pdf-viewer {
-                height: 400px;
-            }
         }
         @media (max-width: 480px) {
             body {
@@ -359,9 +353,6 @@
             }
             .curriculum-grid {
                 grid-template-columns: 1fr;
-            }
-            .pdf-viewer {
-                height: 300px;
             }
         }
     </style>
@@ -505,23 +496,15 @@
                     <div class="card">
                         <h3>📖 مذكرة الدرس</h3>
                         <div id="explainContent">
-                            <!-- الحل الجديد: عرض PDF باستخدام object أو embed -->
-                            <object 
-                                data="https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/%D9%85%D8%B0%D9%83%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%89%20%D8%A7%D8%A8%D8%AA%D8%AF%D8%A7%D8%A6%D9%8A%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%20-%20%D8%AF%D8%B9%D9%88%D8%A9%20%D8%A8%D8%B8%D9%87%D8%B1%20%D8%A7%D9%84%D8%BA%D9%8A%D8%A8%20%D9%84%D8%B4%D9%81%D8%A7%D8%A1%20%D8%B2%D9%88%D8%AC%D8%AA%D9%8A.pdf" 
-                                type="application/pdf" 
-                                class="pdf-viewer"
-                                style="width: 100%; height: 600px; border: 1px solid #eef2f7; border-radius: 16px;">
-                            </object>
-                            <!-- رسالة بديلة لو الملف مش ظاهر -->
-                            <div class="pdf-fallback" style="display: none;" id="pdfFallback">
+                            <!-- عرض بسيط: زر تحميل فقط -->
+                            <div class="pdf-box">
                                 <div class="icon"><i class="fas fa-file-pdf"></i></div>
-                                <h4>المذكرة غير قابلة للعرض في المتصفح</h4>
-                                <p>اضغط على الزر أدناه لتحميل المذكرة وفتحها على جهازك.</p>
+                                <h4>📄 مذكرة مستر مهاب</h4>
+                                <p>اضغط على الزر أدناه لفتح المذكرة أو تحميلها على جهازك.</p>
                                 <a href="https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/%D9%85%D8%B0%D9%83%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%89%20%D8%A7%D8%A8%D8%AA%D8%AF%D8%A7%D8%A6%D9%8A%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%20-%20%D8%AF%D8%B9%D9%88%D8%A9%20%D8%A8%D8%B8%D9%87%D8%B1%20%D8%A7%D9%84%D8%BA%D9%8A%D8%A8%20%D9%84%D8%B4%D9%81%D8%A7%D8%A1%20%D8%B2%D9%88%D8%AC%D8%AA%D9%8A.pdf" 
                                    target="_blank" 
-                                   class="btn btn-pdf" 
-                                   style="margin-top: 16px;">
-                                    📥 تحميل المذكرة بصيغة PDF
+                                   class="btn btn-pdf">
+                                    <i class="fas fa-download"></i> 📥 فتح أو تحميل المذكرة
                                 </a>
                             </div>
                         </div>
@@ -625,34 +608,19 @@
 
             document.getElementById('lessonTitle').textContent = '📖 ' + data.title;
 
-            // استخدام object بدلاً من iframe
+            // عرض زر التحميل فقط (شغال على كل المتصفحات)
             document.getElementById('explainContent').innerHTML = `
-                <object 
-                    data="${data.pdfUrl}" 
-                    type="application/pdf" 
-                    class="pdf-viewer"
-                    style="width: 100%; height: 600px; border: 1px solid #eef2f7; border-radius: 16px;">
-                </object>
-                <div class="pdf-fallback" style="text-align: center; padding: 40px 20px; background: #f8fafc; border-radius: 16px; display: none;" id="pdfFallback">
-                    <div class="icon" style="font-size: 48px; color: #dc3545; margin-bottom: 16px;"><i class="fas fa-file-pdf"></i></div>
-                    <h4 style="font-size: 18px; color: #0b1f3a; margin-bottom: 8px;">المذكرة غير قابلة للعرض في المتصفح</h4>
-                    <p style="color: #7b8495; font-size: 14px;">اضغط على الزر أدناه لتحميل المذكرة وفتحها على جهازك.</p>
+                <div class="pdf-box">
+                    <div class="icon"><i class="fas fa-file-pdf"></i></div>
+                    <h4>📄 مذكرة مستر مهاب</h4>
+                    <p>اضغط على الزر أدناه لفتح المذكرة أو تحميلها على جهازك.</p>
                     <a href="${data.pdfUrl}" 
                        target="_blank" 
-                       class="btn btn-pdf" 
-                       style="margin-top: 16px;">
-                        📥 تحميل المذكرة بصيغة PDF
+                       class="btn btn-pdf">
+                        <i class="fas fa-download"></i> 📥 فتح أو تحميل المذكرة
                     </a>
                 </div>
             `;
-
-            // محاولة اكتشاف إذا كان الـ object فشل في العرض
-            setTimeout(() => {
-                const obj = document.querySelector('.pdf-viewer');
-                if (obj && obj.clientHeight < 100) {
-                    document.getElementById('pdfFallback').style.display = 'block';
-                }
-            }, 2000);
 
             switchTab('explain');
         }
