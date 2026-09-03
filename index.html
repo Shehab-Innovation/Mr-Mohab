@@ -333,30 +333,12 @@
             display: block;
         }
 
-        /* ===== عرض المذكرة ===== */
-        .pdf-box {
-            text-align: center;
-            padding: 40px 20px;
-            background: #f8fafc;
+        /* ===== عرض PDF من Google Drive ===== */
+        .pdf-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
             border-radius: 16px;
-        }
-
-        .pdf-box .icon {
-            font-size: 64px;
-            color: #dc3545;
-            margin-bottom: 16px;
-        }
-
-        .pdf-box h4 {
-            font-size: 20px;
-            color: #0b1f3a;
-            margin-bottom: 8px;
-        }
-
-        .pdf-box p {
-            color: #7b8495;
-            font-size: 15px;
-            margin-bottom: 16px;
         }
 
         /* ===== استجابة للشاشات ===== */
@@ -392,6 +374,9 @@
             .curriculum-grid {
                 grid-template-columns: 1fr 1fr;
             }
+            .pdf-frame {
+                height: 400px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -406,6 +391,9 @@
             }
             .curriculum-grid {
                 grid-template-columns: 1fr;
+            }
+            .pdf-frame {
+                height: 300px;
             }
         }
     </style>
@@ -534,7 +522,7 @@
                 <h2>📖 المذكرة</h2>
                 <div class="card">
                     <h3>مذكرة مستر مهاب في الرياضيات</h3>
-                    <p>هنا ستجد مذكرات الدروس كاملة، جاهزة للتحميل.</p>
+                    <p>هنا ستجد مذكرات الدروس كاملة، جاهزة للعرض والتحميل.</p>
                     <ul style="margin-top: 12px; list-style: none; padding: 0;">
                         <li style="padding: 10px 0; border-bottom: 1px solid #eef2f7;">
                             <a href="#" onclick="openLesson('grade1', 'lesson1')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
@@ -647,7 +635,7 @@
         const lessonsData = {
             'grade1-lesson1': {
                 title: 'التعرف على الأعداد',
-                pdfUrl: 'https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/%D9%85%D8%B0%D9%83%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%89%20%D8%A7%D8%A8%D8%AA%D8%AF%D8%A7%D8%A6%D9%8A%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%20-%20%D8%AF%D8%B9%D9%88%D8%A9%20%D8%A8%D8%B8%D9%87%D8%B1%20%D8%A7%D9%84%D8%BA%D9%8A%D8%A8%20%D9%84%D8%B4%D9%81%D8%A7%D8%A1%20%D8%B2%D9%88%D8%AC%D8%AA%D9%8A.pdf'
+                pdfUrl: 'https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/preview'
             }
         };
 
@@ -669,17 +657,18 @@
 
             document.getElementById('lessonTitle').textContent = '📖 ' + data.title;
 
-            // عرض زر التحميل فقط (شغال على كل المتصفحات)
+            // عرض المذكرة من Google Drive
             document.getElementById('explainContent').innerHTML = `
-                <div class="pdf-box">
-                    <div class="icon"><i class="fas fa-file-pdf"></i></div>
-                    <h4>📄 مذكرة مستر مهاب</h4>
-                    <p>المذكرة غير قابلة للعرض مباشرة في المتصفح بسبب إعدادات الأمان.</p>
-                    <p>اضغط على الزر لفتحها أو تحميلها:</p>
-                    <a href="${data.pdfUrl}" 
+                <iframe 
+                    src="${data.pdfUrl}" 
+                    class="pdf-frame"
+                    style="width: 100%; height: 600px; border: none; border-radius: 16px;">
+                </iframe>
+                <div style="margin-top: 16px; text-align: center;">
+                    <a href="https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/view?usp=sharing" 
                        target="_blank" 
                        class="btn btn-pdf">
-                        <i class="fas fa-download"></i> 📥 فتح أو تحميل المذكرة
+                        📥 تحميل المذكرة بصيغة PDF
                     </a>
                 </div>
             `;
