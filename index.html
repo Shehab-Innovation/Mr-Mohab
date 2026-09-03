@@ -573,74 +573,152 @@ body{
     background:#b02a37;
 }
 
+/* ================= QUIZ ================= */
+
+.quiz-timer{
+    font-size:20px;
+    font-weight:700;
+    color:#1769e0;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.quiz-progress{
+    width:100%;
+    height:8px;
+    background:#eef2f7;
+    border-radius:10px;
+    margin-bottom:20px;
+    overflow:hidden;
+}
+
+.quiz-progress-bar{
+    height:100%;
+    background:linear-gradient(90deg,#1769e0,#60a5fa);
+    transition:width .3s;
+    border-radius:10px;
+}
+
+.quiz-question{
+    font-size:18px;
+    font-weight:600;
+    color:#0b1f3a;
+    margin-bottom:15px;
+}
+
+.quiz-option{
+    display:block;
+    background:#f8faff;
+    border:2px solid #e7edf6;
+    border-radius:12px;
+    padding:12px 18px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:.2s;
+    font-size:15px;
+}
+
+.quiz-option:hover{
+    border-color:#1769e0;
+    background:#eef5ff;
+}
+
+.quiz-option.selected{
+    border-color:#1769e0;
+    background:#1769e0;
+    color:white;
+}
+
+.quiz-result{
+    text-align:center;
+    padding:30px;
+}
+
+.quiz-result .score{
+    font-size:48px;
+    font-weight:700;
+    color:#1769e0;
+}
+
+.quiz-result .message{
+    font-size:18px;
+    margin-top:10px;
+}
+
+.quiz-review{
+    text-align:right;
+    margin-top:20px;
+}
+
+.quiz-review-item{
+    border-bottom:1px solid #eef2f7;
+    padding:12px 0;
+}
+
+.quiz-review-item.correct{
+    border-right:4px solid #16a673;
+    padding-right:12px;
+}
+
+.quiz-review-item.wrong{
+    border-right:4px solid #ef4444;
+    padding-right:12px;
+}
+
 /* ================= MOBILE ================= */
 
 @media(max-width:768px){
-
     body{
         padding:12px;
     }
-
     .container{
         flex-direction:column;
         border-radius:24px;
     }
-
     .sidebar{
         width:100%;
         padding:20px;
     }
-
     .main-content{
         padding:20px;
     }
-
     .sidebar-nav{
         display:flex;
         flex-wrap:wrap;
         gap:6px;
     }
-
     .sidebar-nav li{
         flex:1 1 45%;
     }
-
     .grade-grid,
     .unit-grid,
     .content-grid,
     .code-summary{
         grid-template-columns:1fr;
     }
-
     .code-list{
         grid-template-columns:1fr;
     }
-
     .welcome{
         flex-direction:column;
         text-align:center;
     }
-
     .welcome-text .quote{
         border:none;
         padding:0;
     }
-
     .hero-background{
         min-height:250px;
     }
 }
 
 @media(max-width:480px){
-
     .sidebar-nav li{
         flex:1 1 100%;
     }
-
     .hero-background{
         min-height:180px;
     }
-
     .lesson-item{
         flex-direction:column;
         align-items:flex-start;
@@ -998,6 +1076,21 @@ body{
 </div>
 
 
+<!-- ================= QUIZ ================= -->
+
+<div id="quiz" class="page">
+
+    <button class="btn btn-back" onclick="showPage('unit')">
+        ← العودة للوحدة
+    </button>
+
+    <h2 id="quizTitle">الاختبار</h2>
+
+    <div id="quizContainer"></div>
+
+</div>
+
+
 <!-- ATTENDANCE -->
 
 <div id="attendance" class="page">
@@ -1325,44 +1418,49 @@ const gradesData = {
             {
                 number: 1,
                 title: 'الأعداد من 1 إلى 10',
+                pages: '1-18',
                 lessons: [
                     { title: 'العدد 1' },
                     { title: 'العدد 2' },
                     { title: 'العدد 3' }
                 ],
-                questions: {
-                    easy: [
-                        { q: 'ما هو العدد الذي يأتي بعد 1؟', options: ['2', '3', '0'], answer: 0, type: 'mcq' },
-                        { q: 'أكمل: 1 + 1 = ...', options: ['1', '2', '3'], answer: 1, type: 'mcq' }
-                    ],
-                    medium: [
-                        { q: 'قارن: 2 ... 3', options: ['>', '<', '='], answer: 1, type: 'mcq' }
-                    ],
-                    hard: [
-                        { q: 'إذا كان عندك 3 تفاحات وأضفت 2، كم تصبح؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' }
-                    ]
-                }
+                questions: [
+                    { q: 'ما هو العدد الذي يأتي بعد 1؟', options: ['2', '3', '0'], answer: 0, type: 'mcq' },
+                    { q: 'أكمل: 1 + 1 = ...', options: ['1', '2', '3'], answer: 1, type: 'mcq' },
+                    { q: 'قارن: 2 ... 3', options: ['>', '<', '='], answer: 1, type: 'mcq' },
+                    { q: 'إذا كان عندك 3 تفاحات وأضفت 2، كم تصبح؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
+                    { q: 'العدد 2 يأتي بعد العدد 1', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: '3 + 1 = 5', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
+                    { q: '4 أكبر من 2', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: 'أكمل: 1, 2, 3, ..., 5', type: 'fill', answer: '4' },
+                    { q: 'أكمل: 2 + 3 = ...', type: 'fill', answer: '5' },
+                    { q: 'أكمل: 4 - 1 = ...', type: 'fill', answer: '3' },
+                    { q: 'أكمل: 3 + 2 = ...', type: 'fill', answer: '5' },
+                    { q: 'أكمل: 5 - 2 = ...', type: 'fill', answer: '3' }
+                ]
             },
             {
                 number: 2,
                 title: 'الجمع والطرح',
+                pages: '19-35',
                 lessons: [
                     { title: 'الجمع' },
                     { title: 'الطرح' }
                 ],
-                questions: {
-                    easy: [
-                        { q: '2 + 3 = ...', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
-                        { q: '5 - 2 = ...', options: ['2', '3', '4'], answer: 1, type: 'mcq' }
-                    ],
-                    medium: [
-                        { q: '7 + 2 = ...', options: ['8', '9', '10'], answer: 1, type: 'mcq' },
-                        { q: 'أكمل: 4 + ... = 7', options: ['2', '3', '4'], answer: 1, type: 'mcq' }
-                    ],
-                    hard: [
-                        { q: 'إذا كان مع أحمد 8 ريالات، وأعطى أخيه 3، كم تبقى معه؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' }
-                    ]
-                }
+                questions: [
+                    { q: '2 + 3 = ...', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
+                    { q: '5 - 2 = ...', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
+                    { q: '7 + 2 = ...', options: ['8', '9', '10'], answer: 1, type: 'mcq' },
+                    { q: 'أكمل: 4 + ... = 7', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
+                    { q: 'إذا كان مع أحمد 8 ريالات، وأعطى أخيه 3، كم تبقى معه؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
+                    { q: '5 + 5 = 10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: '3 - 1 = 1', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
+                    { q: '7 - 2 = 5', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: 'أكمل: 6 + 2 = ...', type: 'fill', answer: '8' },
+                    { q: 'أكمل: 9 - 4 = ...', type: 'fill', answer: '5' },
+                    { q: 'أكمل: 3 + 4 = ...', type: 'fill', answer: '7' },
+                    { q: 'أكمل: 8 - 3 = ...', type: 'fill', answer: '5' }
+                ]
             }
         ]
     },
@@ -1374,22 +1472,23 @@ const gradesData = {
             {
                 number: 1,
                 title: 'الأعداد الكبيرة',
+                pages: '1-15',
                 lessons: [
                     { title: 'العدد 10' },
                     { title: 'العدد 20' }
                 ],
-                questions: {
-                    easy: [
-                        { q: 'العدد 10 يكتب ...', options: ['10', '01', '100'], answer: 0, type: 'mcq' },
-                        { q: 'أكمل: 10 + 5 = ...', options: ['12', '15', '20'], answer: 1, type: 'mcq' }
-                    ],
-                    medium: [
-                        { q: 'ما هو العدد الذي يزيد 5 عن 10؟', options: ['12', '15', '20'], answer: 1, type: 'mcq' }
-                    ],
-                    hard: [
-                        { q: 'إذا كان لديك 15 تفاحة وأكلت 7، كم تبقى؟', options: ['6', '7', '8'], answer: 2, type: 'mcq' }
-                    ]
-                }
+                questions: [
+                    { q: 'العدد 10 يكتب ...', options: ['10', '01', '100'], answer: 0, type: 'mcq' },
+                    { q: 'أكمل: 10 + 5 = ...', options: ['12', '15', '20'], answer: 1, type: 'mcq' },
+                    { q: 'ما هو العدد الذي يزيد 5 عن 10؟', options: ['12', '15', '20'], answer: 1, type: 'mcq' },
+                    { q: 'إذا كان لديك 15 تفاحة وأكلت 7، كم تبقى؟', options: ['6', '7', '8'], answer: 2, type: 'mcq' },
+                    { q: 'العدد 20 أكبر من العدد 10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: '10 + 10 = 30', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
+                    { q: 'أكمل: 20 - 5 = ...', type: 'fill', answer: '15' },
+                    { q: 'أكمل: 10 + 8 = ...', type: 'fill', answer: '18' },
+                    { q: 'أكمل: 5 + 5 = ...', type: 'fill', answer: '10' },
+                    { q: 'أكمل: 15 - 5 = ...', type: 'fill', answer: '10' }
+                ]
             }
         ]
     },
@@ -1401,22 +1500,23 @@ const gradesData = {
             {
                 number: 1,
                 title: 'القيمة المكانية',
+                pages: '1-20',
                 lessons: [
                     { title: 'الآحاد والعشرات' },
                     { title: 'المئات' }
                 ],
-                questions: {
-                    easy: [
-                        { q: 'العدد 25 يتكون من ...', options: ['2 آحاد 5 عشرات', '5 آحاد 2 عشرات', '2 عشرات 5 آحاد'], answer: 2, type: 'mcq' },
-                        { q: 'أكمل: 34 = 3 عشرات + ... آحاد', options: ['3', '4', '5'], answer: 1, type: 'mcq' }
-                    ],
-                    medium: [
-                        { q: 'ما هو العدد المكون من 4 عشرات و 3 آحاد؟', options: ['34', '43', '44'], answer: 1, type: 'mcq' }
-                    ],
-                    hard: [
-                        { q: 'إذا كان العدد 56، فما هو ناتج جمع 5 عشرات + 6 آحاد؟', options: ['56', '65', '50'], answer: 0, type: 'mcq' }
-                    ]
-                }
+                questions: [
+                    { q: 'العدد 25 يتكون من ...', options: ['2 آحاد 5 عشرات', '5 آحاد 2 عشرات', '2 عشرات 5 آحاد'], answer: 2, type: 'mcq' },
+                    { q: 'أكمل: 34 = 3 عشرات + ... آحاد', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
+                    { q: 'ما هو العدد المكون من 4 عشرات و 3 آحاد؟', options: ['34', '43', '44'], answer: 1, type: 'mcq' },
+                    { q: 'العدد 56 يساوي 5 عشرات و 6 آحاد', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: 'العدد 100 يتكون من 10 عشرات', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: 'أكمل: 3 مئات = ...', type: 'fill', answer: '300' },
+                    { q: 'أكمل: 5 عشرات = ...', type: 'fill', answer: '50' },
+                    { q: 'أكمل: 4 آحاد = ...', type: 'fill', answer: '4' },
+                    { q: 'أكمل: 2 مئات + 3 عشرات = ...', type: 'fill', answer: '230' },
+                    { q: 'أكمل: 6 عشرات + 8 آحاد = ...', type: 'fill', answer: '68' }
+                ]
             }
         ]
     },
@@ -1428,6 +1528,7 @@ const gradesData = {
             {
                 number: 1,
                 title: 'جدول الضرب',
+                pages: '1-25',
                 lessons: [
                     { title: 'جدول 2' },
                     { title: 'جدول 3' },
@@ -1435,18 +1536,18 @@ const gradesData = {
                     { title: 'جدول 5' },
                     { title: 'جدول 6-9' }
                 ],
-                questions: {
-                    easy: [
-                        { q: '3 × 4 = ...', options: ['10', '12', '14'], answer: 1, type: 'mcq' },
-                        { q: 'أكمل: 5 × ... = 20', options: ['3', '4', '5'], answer: 1, type: 'mcq' }
-                    ],
-                    medium: [
-                        { q: 'ما هو ناتج 7 × 8؟', options: ['48', '56', '64'], answer: 1, type: 'mcq' }
-                    ],
-                    hard: [
-                        { q: 'إذا كان لديك 6 صفوف، كل صف به 8 طلاب، كم عدد الطلاب؟', options: ['42', '48', '56'], answer: 1, type: 'mcq' }
-                    ]
-                }
+                questions: [
+                    { q: '3 × 4 = ...', options: ['10', '12', '14'], answer: 1, type: 'mcq' },
+                    { q: 'أكمل: 5 × ... = 20', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
+                    { q: 'ما هو ناتج 7 × 8؟', options: ['48', '56', '64'], answer: 1, type: 'mcq' },
+                    { q: 'إذا كان لديك 6 صفوف، كل صف به 8 طلاب، كم عدد الطلاب؟', options: ['42', '48', '56'], answer: 1, type: 'mcq' },
+                    { q: '3 × 6 = 18', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: '4 × 7 = 28', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: 'أكمل: 6 × 7 = ...', type: 'fill', answer: '42' },
+                    { q: 'أكمل: 8 × 9 = ...', type: 'fill', answer: '72' },
+                    { q: 'أكمل: 5 × 9 = ...', type: 'fill', answer: '45' },
+                    { q: 'أكمل: 7 × 6 = ...', type: 'fill', answer: '42' }
+                ]
             }
         ]
     },
@@ -1458,22 +1559,23 @@ const gradesData = {
             {
                 number: 1,
                 title: 'الكسور العشرية',
+                pages: '1-20',
                 lessons: [
                     { title: 'الأجزاء من 10' },
                     { title: 'الأجزاء من 100' }
                 ],
-                questions: {
-                    easy: [
-                        { q: '0.5 = ...', options: ['5/10', '1/2', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
-                        { q: 'أكمل: 0.25 = ...', options: ['25/100', '1/4', 'كلا الإجابتين'], answer: 2, type: 'mcq' }
-                    ],
-                    medium: [
-                        { q: 'ما هو الكسر العشري للعدد 3/4؟', options: ['0.75', '0.5', '0.25'], answer: 0, type: 'mcq' }
-                    ],
-                    hard: [
-                        { q: 'إذا كان 0.6 من الطلاب يحبون الرياضيات، فما هو الكسر العشري للذين لا يحبونها؟', options: ['0.4', '0.6', '0.3'], answer: 0, type: 'mcq' }
-                    ]
-                }
+                questions: [
+                    { q: '0.5 = ...', options: ['5/10', '1/2', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
+                    { q: 'أكمل: 0.25 = ...', options: ['25/100', '1/4', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
+                    { q: 'ما هو الكسر العشري للعدد 3/4؟', options: ['0.75', '0.5', '0.25'], answer: 0, type: 'mcq' },
+                    { q: '0.6 يساوي 6/10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: '0.75 يساوي 3/4', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: 'أكمل: 0.3 = ... /10', type: 'fill', answer: '3' },
+                    { q: 'أكمل: 0.7 = ... /10', type: 'fill', answer: '7' },
+                    { q: 'أكمل: 0.25 = ... /100', type: 'fill', answer: '25' },
+                    { q: 'أكمل: 0.5 = ... /100', type: 'fill', answer: '50' },
+                    { q: 'أكمل: 0.1 = ... /10', type: 'fill', answer: '1' }
+                ]
             }
         ]
     },
@@ -1485,22 +1587,23 @@ const gradesData = {
             {
                 number: 1,
                 title: 'الأعداد الصحيحة',
+                pages: '1-20',
                 lessons: [
                     { title: 'الأعداد الموجبة والسالبة' },
                     { title: 'الجمع والطرح مع الأعداد الصحيحة' }
                 ],
-                questions: {
-                    easy: [
-                        { q: '-3 + 5 = ...', options: ['-2', '2', '8'], answer: 1, type: 'mcq' },
-                        { q: 'أكمل: -4 - 2 = ...', options: ['-6', '-2', '6'], answer: 0, type: 'mcq' }
-                    ],
-                    medium: [
-                        { q: 'ما هو ناتج -7 + 3؟', options: ['-4', '4', '10'], answer: 0, type: 'mcq' }
-                    ],
-                    hard: [
-                        { q: 'إذا كانت درجة الحرارة -2 درجة، وارتفعت 5 درجات، فما هي درجة الحرارة الجديدة؟', options: ['3', '-3', '7'], answer: 0, type: 'mcq' }
-                    ]
-                }
+                questions: [
+                    { q: '-3 + 5 = ...', options: ['-2', '2', '8'], answer: 1, type: 'mcq' },
+                    { q: 'أكمل: -4 - 2 = ...', options: ['-6', '-2', '6'], answer: 0, type: 'mcq' },
+                    { q: 'ما هو ناتج -7 + 3؟', options: ['-4', '4', '10'], answer: 0, type: 'mcq' },
+                    { q: 'إذا كانت درجة الحرارة -2 درجة، وارتفعت 5 درجات، فما هي درجة الحرارة الجديدة؟', options: ['3', '-3', '7'], answer: 0, type: 'mcq' },
+                    { q: '-5 أكبر من -10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: '-3 + -4 = -7', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                    { q: 'أكمل: 5 + (-3) = ...', type: 'fill', answer: '2' },
+                    { q: 'أكمل: -6 + 2 = ...', type: 'fill', answer: '-4' },
+                    { q: 'أكمل: 4 - (-2) = ...', type: 'fill', answer: '6' },
+                    { q: 'أكمل: -8 - 3 = ...', type: 'fill', answer: '-11' }
+                ]
             }
         ]
     }
@@ -1794,11 +1897,14 @@ function openLesson(){
     document.getElementById('lessonTitle').textContent =
         '📖 ' + unit.title;
 
-    document.getElementById('pdfFrame').src =
-        grade.pdf;
-
-    document.getElementById('pdfDownload').href =
-        grade.pdf;
+    // عرض المذكرة مع نطاق الصفحات الخاص بالوحدة
+    let pdfUrl = grade.pdf;
+    if (unit.pages) {
+        const pageStart = unit.pages.split('-')[0];
+        pdfUrl += `#page=${pageStart}`;
+    }
+    document.getElementById('pdfFrame').src = pdfUrl;
+    document.getElementById('pdfDownload').href = grade.pdf;
 
     showPage('lessonView');
 
@@ -1817,31 +1923,20 @@ function startHomework(unitNumber, lessonIndex){
         return;
     }
 
-    const allQuestions = [];
-    const levels = ['easy', 'medium', 'hard'];
+    // استخدام الأسئلة من بيانات الوحدة
+    const questions = unit.questions || [];
 
-    levels.forEach(level => {
-        if (unit.questions && unit.questions[level]) {
-            allQuestions.push(...unit.questions[level]);
-        }
-    });
-
-    const selectedQuestions = allQuestions.slice(0, Math.min(5, allQuestions.length));
-
-    if (selectedQuestions.length === 0) {
+    if (questions.length === 0) {
         alert('لا توجد أسئلة متاحة لهذا الواجب.');
         return;
     }
 
-    const quizQuestions = selectedQuestions.map(q => ({
-        q: q.q,
-        options: q.options,
-        answer: q.answer,
-        type: 'mcq'
-    }));
+    // اختيار 5 أسئلة عشوائية للواجب
+    const shuffled = [...questions].sort(() => Math.random() - 0.5);
+    const selectedQuestions = shuffled.slice(0, Math.min(5, shuffled.length));
 
     const title = `📝 واجب الدرس: ${unit.lessons[lessonIndex].title}`;
-    startQuiz(quizQuestions, title, 120);
+    startQuiz(selectedQuestions, title, 120);
 }
 
 function startUnitHomework(unitNumber){
@@ -1854,32 +1949,19 @@ function startUnitHomework(unitNumber){
         return;
     }
 
-    const allQuestions = [];
-    const levels = ['easy', 'medium', 'hard'];
+    const questions = unit.questions || [];
 
-    levels.forEach(level => {
-        if (unit.questions && unit.questions[level]) {
-            allQuestions.push(...unit.questions[level]);
-        }
-    });
-
-    if (allQuestions.length === 0) {
+    if (questions.length === 0) {
         alert('لا توجد أسئلة متاحة لهذا الواجب.');
         return;
     }
 
-    const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+    // اختيار 7 أسئلة عشوائية للواجب الشامل
+    const shuffled = [...questions].sort(() => Math.random() - 0.5);
     const selectedQuestions = shuffled.slice(0, Math.min(7, shuffled.length));
 
-    const quizQuestions = selectedQuestions.map(q => ({
-        q: q.q,
-        options: q.options,
-        answer: q.answer,
-        type: 'mcq'
-    }));
-
     const title = `⭐ واجب شامل على ${unit.title}`;
-    startQuiz(quizQuestions, title, 150);
+    startQuiz(selectedQuestions, title, 150);
 }
 
 
@@ -1895,21 +1977,14 @@ function startExam(unitNumber, lessonIndex, type){
         return;
     }
 
-    const allQuestions = [];
-    const levels = ['easy', 'medium', 'hard'];
+    const questions = unit.questions || [];
 
-    levels.forEach(level => {
-        if (unit.questions && unit.questions[level]) {
-            allQuestions.push(...unit.questions[level]);
-        }
-    });
-
-    if (allQuestions.length === 0) {
+    if (questions.length === 0) {
         alert('لا توجد أسئلة متاحة لهذا الامتحان.');
         return;
     }
 
-    const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+    const shuffled = [...questions].sort(() => Math.random() - 0.5);
 
     let selectedQuestions;
     let title;
@@ -1922,14 +1997,7 @@ function startExam(unitNumber, lessonIndex, type){
         title = `⭐ امتحان شامل على ${unit.title}`;
     }
 
-    const quizQuestions = selectedQuestions.map(q => ({
-        q: q.q,
-        options: q.options,
-        answer: q.answer,
-        type: 'mcq'
-    }));
-
-    startQuiz(quizQuestions, title, 180);
+    startQuiz(selectedQuestions, title, 180);
 }
 
 
@@ -1974,11 +2042,25 @@ function renderQuestion() {
             <div class="quiz-question">السؤال ${quizState.current + 1} من ${total}: ${q.q}</div>
     `;
 
-    q.options.forEach((opt, i) => {
+    if (q.type === 'truefalse') {
         html += `
-            <div class="quiz-option" onclick="selectAnswer(${i})">${opt}</div>
+            <div class="quiz-option" onclick="selectAnswer(0)">✅ صح</div>
+            <div class="quiz-option" onclick="selectAnswer(1)">❌ خطأ</div>
         `;
-    });
+    } else if (q.type === 'fill') {
+        html += `
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="fillAnswer" class="quiz-option" style="width: 100%; padding: 12px 18px; border: 2px solid #e7edf6; border-radius: 12px; font-size: 15px;" placeholder="اكتب الإجابة...">
+            </div>
+            <button class="btn" onclick="submitFillAnswer()">تأكيد الإجابة</button>
+        `;
+    } else {
+        q.options.forEach((opt, i) => {
+            html += `
+                <div class="quiz-option" onclick="selectAnswer(${i})">${opt}</div>
+            `;
+        });
+    }
 
     html += '</div>';
     container.innerHTML = html;
@@ -1986,6 +2068,18 @@ function renderQuestion() {
 
 function selectAnswer(index) {
     quizState.answers[quizState.current] = index;
+    nextQuestion();
+}
+
+function submitFillAnswer() {
+    const input = document.getElementById('fillAnswer');
+    if (!input) return;
+    const answer = input.value.trim();
+    if (answer === '') {
+        alert('من فضلك اكتب الإجابة');
+        return;
+    }
+    quizState.answers[quizState.current] = answer;
     nextQuestion();
 }
 
@@ -2019,7 +2113,11 @@ function finishQuiz() {
 
     quizState.questions.forEach((q, i) => {
         const userAnswer = quizState.answers[i];
-        if (userAnswer === q.answer) correct++;
+        if (q.type === 'fill') {
+            if (userAnswer && userAnswer.trim().toLowerCase() === q.answer.toLowerCase()) correct++;
+        } else {
+            if (userAnswer === q.answer) correct++;
+        }
     });
 
     const percentage = Math.round((correct / total) * 100);
@@ -2033,9 +2131,24 @@ function finishQuiz() {
     let reviewHtml = '';
     quizState.questions.forEach((q, i) => {
         const userAns = quizState.answers[i];
-        const isCorrect = userAns === q.answer;
-        const userDisplay = q.options[userAns] || 'لم يجب';
-        const correctDisplay = q.options[q.answer];
+        let isCorrect = false;
+        let userDisplay = '';
+        let correctDisplay = '';
+
+        if (q.type === 'fill') {
+            isCorrect = (userAns && userAns.trim().toLowerCase() === q.answer.toLowerCase());
+            userDisplay = userAns || 'لم يجب';
+            correctDisplay = q.answer;
+        } else if (q.type === 'truefalse') {
+            isCorrect = (userAns === q.answer);
+            userDisplay = (userAns === 0) ? 'صح' : (userAns === 1 ? 'خطأ' : 'لم يجب');
+            correctDisplay = (q.answer === 0) ? 'صح' : 'خطأ';
+        } else {
+            isCorrect = (userAns === q.answer);
+            userDisplay = (userAns !== undefined && q.options[userAns]) ? q.options[userAns] : 'لم يجب';
+            correctDisplay = q.options[q.answer];
+        }
+
         reviewHtml += `
             <div class="quiz-review-item ${isCorrect ? 'correct' : 'wrong'}">
                 <strong>السؤال ${i+1}:</strong> ${q.q}<br>
