@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NEXORA | مستر مهاب</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== كل الستايلات السابقة ===== */
+        /* ===== الأساسيات ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
             background: #f4f7fc;
@@ -20,6 +21,7 @@
             padding: 30px;
             min-height: 100vh;
         }
+
         .container {
             max-width: 1400px;
             width: 100%;
@@ -30,6 +32,8 @@
             overflow: hidden;
             min-height: 90vh;
         }
+
+        /* ===== القائمة الجانبية ===== */
         .sidebar {
             width: 280px;
             background: #0b1f3a;
@@ -39,10 +43,12 @@
             flex-direction: column;
             flex-shrink: 0;
         }
+
         .sidebar-header {
             text-align: center;
             margin-bottom: 25px;
         }
+
         .sidebar-header .teacher-img {
             width: 100px;
             height: 100px;
@@ -51,24 +57,29 @@
             border: 3px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 10px;
         }
+
         .sidebar-header h2 {
             font-size: 20px;
             color: white;
         }
+
         .sidebar-header p {
             font-size: 13px;
             color: #94a3c8;
             margin-top: 4px;
         }
+
         .sidebar-nav {
             list-style: none;
             padding: 0;
             flex: 1;
             overflow-y: auto;
         }
+
         .sidebar-nav li {
             margin-bottom: 4px;
         }
+
         .sidebar-nav a {
             display: flex;
             align-items: center;
@@ -81,15 +92,19 @@
             transition: 0.2s;
             cursor: pointer;
         }
+
         .sidebar-nav a:hover,
         .sidebar-nav a.active {
             background: rgba(255, 255, 255, 0.06);
             color: white;
         }
+
         .sidebar-nav a i {
             width: 22px;
             color: #60a5fa;
         }
+
+        /* ===== أزرار التواصل ===== */
         .whatsapp-btn {
             background: #25D366;
             color: white;
@@ -108,10 +123,12 @@
             cursor: pointer;
             font-size: 14px;
         }
+
         .whatsapp-btn:hover {
             background: #1da851;
             transform: scale(1.02);
         }
+
         .facebook-btn {
             background: #1877F2;
             color: white;
@@ -130,22 +147,28 @@
             cursor: pointer;
             font-size: 14px;
         }
+
         .facebook-btn:hover {
             background: #0d65d9;
             transform: scale(1.02);
         }
+
+        /* ===== المحتوى الرئيسي ===== */
         .main-content {
             flex: 1;
             padding: 35px 40px;
             background: #fafcff;
             overflow-y: auto;
         }
+
         .page {
             display: none;
         }
+
         .page.active {
             display: block;
         }
+
         .page h2 {
             font-size: 26px;
             color: #0b1f3a;
@@ -153,6 +176,7 @@
             padding-bottom: 16px;
             margin-bottom: 20px;
         }
+
         .card {
             background: white;
             border: 1px solid #eef2f7;
@@ -161,16 +185,19 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
             margin-bottom: 16px;
         }
+
         .card h3 {
             font-size: 18px;
             color: #0b1f3a;
             margin-bottom: 10px;
         }
+
         .card p {
             color: #4a5a6a;
             line-height: 1.8;
             font-size: 14px;
         }
+
         .btn {
             background: #1769e0;
             color: white;
@@ -184,22 +211,27 @@
             text-decoration: none;
             display: inline-block;
         }
+
         .btn:hover {
             background: #0b4fa8;
         }
+
         .btn-pdf {
             background: #dc3545;
             font-size: 16px;
             padding: 14px 32px;
         }
+
         .btn-pdf:hover {
             background: #b02a37;
         }
+
         .curriculum-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 16px;
         }
+
         .curriculum-card {
             background: white;
             border: 1px solid #eef2f7;
@@ -209,30 +241,36 @@
             cursor: pointer;
             transition: 0.2s;
         }
+
         .curriculum-card:hover {
             border-color: #1769e0;
             transform: translateY(-4px);
             box-shadow: 0 8px 25px rgba(23, 105, 224, 0.06);
         }
+
         .curriculum-card .icon {
             font-size: 32px;
             color: #1769e0;
             margin-bottom: 8px;
         }
+
         .curriculum-card h4 {
             color: #0b1f3a;
             font-size: 16px;
         }
+
         .curriculum-card p {
             color: #7b8495;
             font-size: 12px;
         }
+
         .teacher-profile {
             display: flex;
             align-items: center;
             gap: 30px;
             flex-wrap: wrap;
         }
+
         .teacher-profile .info h2 {
             font-size: 28px;
             color: #0b1f3a;
@@ -240,11 +278,13 @@
             padding-bottom: 0;
             margin-bottom: 6px;
         }
+
         .teacher-profile .info p {
             color: #4a5a6a;
             font-size: 16px;
             line-height: 1.8;
         }
+
         .teacher-profile .big-img {
             width: 140px;
             height: 140px;
@@ -253,6 +293,7 @@
             border: 4px solid #eef2f7;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
         }
+
         .tabs {
             display: flex;
             gap: 6px;
@@ -260,6 +301,7 @@
             border-bottom: 2px solid #eef2f7;
             padding-bottom: 2px;
         }
+
         .tab-btn {
             background: transparent;
             border: none;
@@ -271,21 +313,26 @@
             border-radius: 12px 12px 0 0;
             transition: 0.2s;
         }
+
         .tab-btn:hover {
             color: #0b1f3a;
             background: #f0f4fa;
         }
+
         .tab-btn.active {
             color: #1769e0;
             background: #eef5ff;
             border-bottom: 3px solid #1769e0;
         }
+
         .tab-content {
             display: none;
         }
+
         .tab-content.active {
             display: block;
         }
+
         /* ===== عرض المذكرة ===== */
         .pdf-box {
             text-align: center;
@@ -293,21 +340,26 @@
             background: #f8fafc;
             border-radius: 16px;
         }
+
         .pdf-box .icon {
             font-size: 64px;
             color: #dc3545;
             margin-bottom: 16px;
         }
+
         .pdf-box h4 {
             font-size: 20px;
             color: #0b1f3a;
             margin-bottom: 8px;
         }
+
         .pdf-box p {
             color: #7b8495;
             font-size: 15px;
             margin-bottom: 16px;
         }
+
+        /* ===== استجابة للشاشات ===== */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -341,6 +393,7 @@
                 grid-template-columns: 1fr 1fr;
             }
         }
+
         @media (max-width: 480px) {
             body {
                 padding: 12px;
@@ -358,8 +411,10 @@
     </style>
 </head>
 <body>
+
     <div class="container">
-        <!-- القائمة الجانبية -->
+
+        <!-- ===== القائمة الجانبية ===== -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <img 
@@ -371,6 +426,7 @@
                 <h2>مستر مهاب</h2>
                 <p>مدرس رياضيات – المرحلة الابتدائية</p>
             </div>
+
             <ul class="sidebar-nav">
                 <li><a class="active" onclick="showPage('home')"><i class="fas fa-home"></i> تعريف المدرس</a></li>
                 <li><a onclick="showPage('curriculum')"><i class="fas fa-book"></i> المنهج</a></li>
@@ -381,6 +437,7 @@
                 <li><a onclick="showPage('grades')"><i class="fas fa-chart-line"></i> تقييم الطالب</a></li>
                 <li><a onclick="showPage('certificate')"><i class="fas fa-award"></i> الشهادات</a></li>
             </ul>
+
             <a href="https://wa.me/201152715104" target="_blank" class="whatsapp-btn">
                 <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
             </a>
@@ -389,9 +446,10 @@
             </a>
         </div>
 
-        <!-- المحتوى الرئيسي -->
+        <!-- ===== المحتوى الرئيسي ===== -->
         <div class="main-content">
-            <!-- الرئيسية -->
+
+            <!-- الصفحة الرئيسية -->
             <div id="home" class="page active">
                 <div class="teacher-profile">
                     <img 
@@ -403,7 +461,7 @@
                     <div class="info">
                         <h2>مستر مهاب</h2>
                         <p><strong>مدرس رياضيات</strong> – المرحلة الابتدائية</p>
-                        <p style="margin-top: 8px;">مرحباً بكم في منصة مستر مهاب التعليمية.</p>
+                        <p style="margin-top: 8px;">مرحباً بكم في منصة مستر مهاب التعليمية. ستجدون هنا المذكرة، الأسئلة، والواجبات الخاصة بالمدرس.</p>
                         <p style="margin-top: 6px;">📞 للتواصل: <strong>+201152715104</strong></p>
                     </div>
                 </div>
@@ -447,6 +505,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- الصف الأول -->
                 <div id="grade1" class="card" style="display: none;">
                     <h3>الصف الأول الابتدائي – الرياضيات</h3>
                     <div style="margin-bottom: 20px;">
@@ -460,6 +520,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- باقي الصفوف -->
                 <div id="grade2" class="card" style="display: none;"><h3>الصف الثاني الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
                 <div id="grade3" class="card" style="display: none;"><h3>الصف الثالث الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
                 <div id="grade4" class="card" style="display: none;"><h3>الصف الرابع الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
@@ -472,7 +534,7 @@
                 <h2>📖 المذكرة</h2>
                 <div class="card">
                     <h3>مذكرة مستر مهاب في الرياضيات</h3>
-                    <p>هنا ستجد مذكرات الدروس كاملة، جاهزة للعرض والتحميل.</p>
+                    <p>هنا ستجد مذكرات الدروس كاملة، جاهزة للتحميل.</p>
                     <ul style="margin-top: 12px; list-style: none; padding: 0;">
                         <li style="padding: 10px 0; border-bottom: 1px solid #eef2f7;">
                             <a href="#" onclick="openLesson('grade1', 'lesson1')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
@@ -483,7 +545,7 @@
                 </div>
             </div>
 
-            <!-- صفحة الدرس -->
+            <!-- صفحة عرض الدرس -->
             <div id="lessonView" class="page">
                 <h2 id="lessonTitle">الدرس</h2>
                 <div class="tabs">
@@ -496,17 +558,7 @@
                     <div class="card">
                         <h3>📖 مذكرة الدرس</h3>
                         <div id="explainContent">
-                            <!-- عرض بسيط: زر تحميل فقط -->
-                            <div class="pdf-box">
-                                <div class="icon"><i class="fas fa-file-pdf"></i></div>
-                                <h4>📄 مذكرة مستر مهاب</h4>
-                                <p>اضغط على الزر أدناه لفتح المذكرة أو تحميلها على جهازك.</p>
-                                <a href="https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/%D9%85%D8%B0%D9%83%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%89%20%D8%A7%D8%A8%D8%AA%D8%AF%D8%A7%D8%A6%D9%8A%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%20-%20%D8%AF%D8%B9%D9%88%D8%A9%20%D8%A8%D8%B8%D9%87%D8%B1%20%D8%A7%D9%84%D8%BA%D9%8A%D8%A8%20%D9%84%D8%B4%D9%81%D8%A7%D8%A1%20%D8%B2%D9%88%D8%AC%D8%AA%D9%8A.pdf" 
-                                   target="_blank" 
-                                   class="btn btn-pdf">
-                                    <i class="fas fa-download"></i> 📥 فتح أو تحميل المذكرة
-                                </a>
-                            </div>
+                            <!-- المذكرة هتظهر هنا -->
                         </div>
                     </div>
                 </div>
@@ -514,14 +566,18 @@
                 <div id="tab-questions" class="tab-content">
                     <div class="card">
                         <h3>❓ أسئلة الدرس</h3>
-                        <div id="questionsContent"><p>سيتم إضافة أسئلة الدرس قريباً...</p></div>
+                        <div id="questionsContent">
+                            <p>سيتم إضافة أسئلة الدرس قريباً...</p>
+                        </div>
                     </div>
                 </div>
 
                 <div id="tab-homework" class="tab-content">
                     <div class="card">
                         <h3>📝 واجب الدرس</h3>
-                        <div id="homeworkContent"><p>سيتم إضافة الواجب قريباً...</p></div>
+                        <div id="homeworkContent">
+                            <p>سيتم إضافة الواجب قريباً...</p>
+                        </div>
                     </div>
                 </div>
 
@@ -551,10 +607,12 @@
                 <h2>🏆 الشهادات</h2>
                 <div class="card"><h3>شهادة تقدير</h3><p>سيتم إضافة الشهادات قريباً...</p></div>
             </div>
+
         </div>
     </div>
 
     <script>
+        // ===== عرض الصفحات =====
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -573,6 +631,7 @@
             });
         }
 
+        // ===== عرض المنهج =====
         function showCurriculum(gradeId) {
             document.querySelectorAll('#curriculum .card[id^="grade"]').forEach(el => {
                 el.style.display = 'none';
@@ -584,6 +643,7 @@
             }
         }
 
+        // ===== بيانات الدروس =====
         const lessonsData = {
             'grade1-lesson1': {
                 title: 'التعرف على الأعداد',
@@ -591,6 +651,7 @@
             }
         };
 
+        // ===== فتح الدرس =====
         function openLesson(grade, lesson) {
             const key = grade + '-' + lesson;
             const data = lessonsData[key];
@@ -613,7 +674,8 @@
                 <div class="pdf-box">
                     <div class="icon"><i class="fas fa-file-pdf"></i></div>
                     <h4>📄 مذكرة مستر مهاب</h4>
-                    <p>اضغط على الزر أدناه لفتح المذكرة أو تحميلها على جهازك.</p>
+                    <p>المذكرة غير قابلة للعرض مباشرة في المتصفح بسبب إعدادات الأمان.</p>
+                    <p>اضغط على الزر لفتحها أو تحميلها:</p>
                     <a href="${data.pdfUrl}" 
                        target="_blank" 
                        class="btn btn-pdf">
@@ -625,6 +687,7 @@
             switchTab('explain');
         }
 
+        // ===== التبويبات =====
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -645,5 +708,6 @@
             }
         }
     </script>
+
 </body>
 </html>
