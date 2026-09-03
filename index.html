@@ -271,6 +271,45 @@ body{
     line-height:1.8;
 }
 
+/* ================= GRADES ================= */
+
+.grade-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.grade-card{
+    background:white;
+    border:1px solid #e7edf6;
+    border-radius:20px;
+    padding:22px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.grade-card:hover{
+    border-color:#1769e0;
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(23,105,224,.08);
+}
+
+.grade-icon{
+    font-size:32px;
+    color:#1769e0;
+    margin-bottom:10px;
+}
+
+.grade-card h3{
+    color:#0b1f3a;
+    margin-bottom:6px;
+}
+
+.grade-card p{
+    color:#7b8495;
+    font-size:13px;
+}
+
 /* ================= UNIT GRID ================= */
 
 .unit-grid{
@@ -566,6 +605,7 @@ body{
         flex:1 1 45%;
     }
 
+    .grade-grid,
     .unit-grid,
     .content-grid,
     .code-summary{
@@ -758,11 +798,86 @@ body{
 </div>
 
 
-<!-- CURRICULUM -->
+<!-- ================= CURRICULUM / GRADES ================= -->
 
 <div id="curriculum" class="page">
 
     <h2>📚 المنهج</h2>
+
+    <div class="card">
+
+        <h3>اختر الصف الدراسي</h3>
+
+        <p>
+            اختر الصف للوصول إلى الوحدات الدراسية والمحتوى التعليمي الخاص به.
+        </p>
+
+    </div>
+
+    <div class="grade-grid">
+
+        <div class="grade-card" onclick="openGrade(1)">
+            <div class="grade-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>الصف الأول الابتدائي</h3>
+            <p>الوحدات والمذكرات والواجبات والامتحانات</p>
+        </div>
+
+        <div class="grade-card" onclick="openGrade(2)">
+            <div class="grade-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>الصف الثاني الابتدائي</h3>
+            <p>محتوى الصف الثاني الابتدائي</p>
+        </div>
+
+        <div class="grade-card" onclick="openGrade(3)">
+            <div class="grade-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>الصف الثالث الابتدائي</h3>
+            <p>محتوى الصف الثالث الابتدائي</p>
+        </div>
+
+        <div class="grade-card" onclick="openGrade(4)">
+            <div class="grade-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>الصف الرابع الابتدائي</h3>
+            <p>محتوى الصف الرابع الابتدائي</p>
+        </div>
+
+        <div class="grade-card" onclick="openGrade(5)">
+            <div class="grade-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>الصف الخامس الابتدائي</h3>
+            <p>محتوى الصف الخامس الابتدائي</p>
+        </div>
+
+        <div class="grade-card" onclick="openGrade(6)">
+            <div class="grade-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>الصف السادس الابتدائي</h3>
+            <p>محتوى الصف السادس الابتدائي</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= GRADE ================= -->
+
+<div id="grade" class="page">
+
+    <button class="btn btn-back" onclick="showPage('curriculum')">
+        ← العودة للصفوف
+    </button>
+
+    <h2 id="gradeTitle">الصف الأول الابتدائي</h2>
 
     <div class="card">
 
@@ -774,60 +889,16 @@ body{
 
     </div>
 
-    <div class="unit-grid">
-
-        <div class="unit-card" onclick="openUnit(1)">
-
-            <div class="unit-icon">
-                <i class="fas fa-book-open"></i>
-            </div>
-
-            <h3>الوحدة الأولى</h3>
-
-            <p>
-                4 دروس • مذكرة • واجبات • امتحانات
-            </p>
-
-        </div>
-
-        <div class="unit-card" onclick="openUnit(2)">
-
-            <div class="unit-icon">
-                <i class="fas fa-book-open"></i>
-            </div>
-
-            <h3>الوحدة الثانية</h3>
-
-            <p>
-                محتوى الوحدة الثانية
-            </p>
-
-        </div>
-
-        <div class="unit-card" onclick="openUnit(3)">
-
-            <div class="unit-icon">
-                <i class="fas fa-book-open"></i>
-            </div>
-
-            <h3>الوحدة الثالثة</h3>
-
-            <p>
-                محتوى الوحدة الثالثة
-            </p>
-
-        </div>
-
-    </div>
+    <div id="unitGrid" class="unit-grid"></div>
 
 </div>
 
 
-<!-- UNIT -->
+<!-- ================= UNIT ================= -->
 
 <div id="unit" class="page">
 
-    <button class="btn btn-back" onclick="showPage('curriculum')">
+    <button class="btn btn-back" onclick="backToGrade()">
         ← العودة للوحدات
     </button>
 
@@ -842,7 +913,7 @@ body{
             <h4>📖 مذكرة الوحدة</h4>
 
             <p>
-                دروس المذكرة الخاصة بالوحدة
+                مذكرة الوحدة والدروس الخاصة بها
             </p>
 
         </div>
@@ -876,7 +947,7 @@ body{
 </div>
 
 
-<!-- UNIT SECTION -->
+<!-- ================= UNIT SECTION ================= -->
 
 <div id="unitSection" class="page">
 
@@ -891,7 +962,7 @@ body{
 </div>
 
 
-<!-- LESSON VIEW -->
+<!-- ================= LESSON / PDF VIEW ================= -->
 
 <div id="lessonView" class="page">
 
@@ -906,14 +977,14 @@ body{
         <iframe
             id="pdfFrame"
             class="pdf-view"
-            src="https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/preview"
+            src=""
         ></iframe>
 
         <div style="margin-top:16px;text-align:center;">
 
             <a
                 id="pdfDownload"
-                href="https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/view?usp=sharing"
+                href=""
                 target="_blank"
                 class="btn btn-pdf"
             >
@@ -1243,18 +1314,155 @@ function showPage(pageId, clickedLink){
 }
 
 
-/* ================= UNIT ================= */
+/* ================= DATA ================= */
 
-let currentUnit=1;
+const gradesData = {
+
+    1: {
+        title: 'الصف الأول الابتدائي',
+        units: [
+            {
+                number: 1,
+                title: 'الوحدة الأولى',
+                memo: 'https://drive.google.com/file/d/1yLVAJs4OIDO2-mtxwUYPdSFvCsxqsKxm/preview'
+            },
+            {
+                number: 2,
+                title: 'الوحدة الثانية',
+                memo: 'https://drive.google.com/file/d/1NUS4y112TGZls6sjn9Pcs9GfqtO4rqvF/preview'
+            },
+            {
+                number: 3,
+                title: 'الوحدة الثالثة',
+                memo: 'https://drive.google.com/file/d/14swoXS01J_cr4gsPsNrDjZ9rL_WSeQ2u/preview'
+            }
+        ]
+    },
+
+    2: {
+        title: 'الصف الثاني الابتدائي',
+        units: []
+    },
+
+    3: {
+        title: 'الصف الثالث الابتدائي',
+        units: []
+    },
+
+    4: {
+        title: 'الصف الرابع الابتدائي',
+        units: []
+    },
+
+    5: {
+        title: 'الصف الخامس الابتدائي',
+        units: []
+    },
+
+    6: {
+        title: 'الصف السادس الابتدائي',
+        units: []
+    }
+
+};
+
+
+/* ================= CURRENT STATE ================= */
+
+let currentGrade = 1;
+let currentUnit = 1;
+
+
+/* ================= GRADE ================= */
+
+function openGrade(gradeNumber){
+
+    currentGrade = gradeNumber;
+
+    const grade = gradesData[gradeNumber];
+
+    document.getElementById('gradeTitle').textContent =
+        grade.title;
+
+    const unitGrid =
+        document.getElementById('unitGrid');
+
+    unitGrid.innerHTML = '';
+
+    if(grade.units.length === 0){
+
+        unitGrid.innerHTML = `
+
+            <div class="card" style="grid-column:1/-1;text-align:center;">
+
+                <h3>📚 محتوى الصف قيد التجهيز</h3>
+
+                <p>
+                    سيتم إضافة الوحدات والمذكرات والواجبات
+                    والامتحانات الخاصة بهذا الصف قريبًا.
+                </p>
+
+            </div>
+
+        `;
+
+    }else{
+
+        grade.units.forEach(unit=>{
+
+            unitGrid.innerHTML += `
+
+                <div class="unit-card"
+                     onclick="openUnit(${unit.number})">
+
+                    <div class="unit-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+
+                    <h3>${unit.title}</h3>
+
+                    <p>
+                        مذكرة • واجبات • امتحانات
+                    </p>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+    showPage('grade');
+
+}
+
+
+/* ================= UNIT ================= */
 
 function openUnit(unitNumber){
 
-    currentUnit=unitNumber;
+    currentUnit = unitNumber;
 
-    document.getElementById('unitTitle').textContent=
-        'الوحدة ' + numberArabic(unitNumber);
+    const grade = gradesData[currentGrade];
+
+    const unit = grade.units.find(
+        item => item.number === unitNumber
+    );
+
+    document.getElementById('unitTitle').textContent =
+        unit ? unit.title : 'الوحدة ' + numberArabic(unitNumber);
 
     showPage('unit');
+
+}
+
+
+/* ================= BACK TO GRADE ================= */
+
+function backToGrade(){
+
+    openGrade(currentGrade);
 
 }
 
@@ -1263,22 +1471,60 @@ function openUnit(unitNumber){
 
 function openUnitSection(section){
 
-    const title=document.getElementById('sectionTitle');
-    const content=document.getElementById('sectionContent');
+    const title =
+        document.getElementById('sectionTitle');
 
-    if(section==='memo'){
+    const content =
+        document.getElementById('sectionContent');
 
-        title.textContent=
-            '📖 مذكرة الوحدة ' + numberArabic(currentUnit);
+    const grade =
+        gradesData[currentGrade];
 
-        content.innerHTML=`
+    const unit =
+        grade.units.find(
+            item => item.number === currentUnit
+        );
+
+    if(!unit){
+
+        title.textContent =
+            'محتوى الوحدة';
+
+        content.innerHTML = `
 
             <div class="card">
 
-                <h3>دروس المذكرة</h3>
+                <h3>المحتوى قيد التجهيز</h3>
 
                 <p>
-                    اختر الدرس لفتح المذكرة.
+                    سيتم إضافة محتوى هذه الوحدة قريبًا.
+                </p>
+
+            </div>
+
+        `;
+
+        showPage('unitSection');
+
+        return;
+    }
+
+
+    /* ================= MEMO ================= */
+
+    if(section === 'memo'){
+
+        title.textContent =
+            '📖 مذكرة ' + unit.title;
+
+        content.innerHTML = `
+
+            <div class="card">
+
+                <h3>مذكرة ${unit.title}</h3>
+
+                <p>
+                    اضغط على الزر لفتح المذكرة وعرضها داخل الموقع.
                 </p>
 
             </div>
@@ -1288,9 +1534,17 @@ function openUnitSection(section){
                 <div class="lesson-item">
 
                     <div>
-                        <strong>الدرس الأول: التعرف على الأعداد</strong>
+
+                        <strong>
+                            📖 مذكرة ${unit.title}
+                        </strong>
+
                         <br>
-                        <span>مذكرة الدرس الأول</span>
+
+                        <span>
+                            عرض المذكرة كاملة
+                        </span>
+
                     </div>
 
                     <button
@@ -1302,124 +1556,99 @@ function openUnitSection(section){
 
                 </div>
 
-                <div class="lesson-item">
-
-                    <div>
-                        <strong>الدرس الثاني</strong>
-                        <br>
-                        <span>مذكرة الدرس الثاني</span>
-                    </div>
-
-                    <button class="btn">
-                        فتح المذكرة
-                    </button>
-
-                </div>
-
-                <div class="lesson-item">
-
-                    <div>
-                        <strong>الدرس الثالث</strong>
-                        <br>
-                        <span>مذكرة الدرس الثالث</span>
-                    </div>
-
-                    <button class="btn">
-                        فتح المذكرة
-                    </button>
-
-                </div>
-
-                <div class="lesson-item">
-
-                    <div>
-                        <strong>الدرس الرابع</strong>
-                        <br>
-                        <span>مذكرة الدرس الرابع</span>
-                    </div>
-
-                    <button class="btn">
-                        فتح المذكرة
-                    </button>
-
-                </div>
-
             </div>
+
         `;
 
     }
 
 
-    if(section==='homework'){
+    /* ================= HOMEWORK ================= */
 
-        title.textContent=
-            '📝 واجبات الوحدة ' + numberArabic(currentUnit);
+    if(section === 'homework'){
 
-        content.innerHTML=`
+        title.textContent =
+            '📝 واجبات ' + unit.title;
+
+        content.innerHTML = `
 
             <div class="lesson-list">
 
                 <div class="lesson-item">
-                    <strong>واجب الدرس الأول</strong>
-                    <button class="btn">ابدأ الواجب</button>
-                </div>
 
-                <div class="lesson-item">
-                    <strong>واجب الدرس الثاني</strong>
-                    <button class="btn">ابدأ الواجب</button>
-                </div>
+                    <div>
+                        <strong>
+                            واجبات ${unit.title}
+                        </strong>
 
-                <div class="lesson-item">
-                    <strong>واجب الدرس الثالث</strong>
-                    <button class="btn">ابدأ الواجب</button>
-                </div>
+                        <br>
 
-                <div class="lesson-item">
-                    <strong>واجب الدرس الرابع</strong>
-                    <button class="btn">ابدأ الواجب</button>
+                        <span>
+                            سيتم إضافة الواجبات الخاصة بالوحدة.
+                        </span>
+                    </div>
+
+                    <button class="btn">
+                        ابدأ الواجب
+                    </button>
+
                 </div>
 
             </div>
+
         `;
 
     }
 
 
-    if(section==='exams'){
+    /* ================= EXAMS ================= */
 
-        title.textContent=
-            '🧠 امتحانات الوحدة ' + numberArabic(currentUnit);
+    if(section === 'exams'){
 
-        content.innerHTML=`
+        title.textContent =
+            '🧠 امتحانات ' + unit.title;
+
+        content.innerHTML = `
 
             <div class="lesson-list">
 
                 <div class="lesson-item">
-                    <strong>امتحان الدرس الأول</strong>
-                    <button class="btn">ابدأ الامتحان</button>
+
+                    <div>
+
+                        <strong>
+                            امتحان ${unit.title}
+                        </strong>
+
+                        <br>
+
+                        <span>
+                            امتحان الوحدة
+                        </span>
+
+                    </div>
+
+                    <button class="btn">
+                        ابدأ الامتحان
+                    </button>
+
                 </div>
 
-                <div class="lesson-item">
-                    <strong>امتحان الدرس الثاني</strong>
-                    <button class="btn">ابدأ الامتحان</button>
-                </div>
-
-                <div class="lesson-item">
-                    <strong>امتحان الدرس الثالث</strong>
-                    <button class="btn">ابدأ الامتحان</button>
-                </div>
-
-                <div class="lesson-item">
-                    <strong>امتحان الدرس الرابع</strong>
-                    <button class="btn">ابدأ الامتحان</button>
-                </div>
 
                 <div class="lesson-item">
 
                     <div>
-                        <strong>⭐ امتحان شامل على الوحدة</strong>
+
+                        <strong>
+                            ⭐ امتحان شامل على ${unit.title}
+                        </strong>
+
                         <br>
-                        <span>امتحان شامل لجميع دروس الوحدة</span>
+
+                        <span>
+                            امتحان شامل لجميع محتويات الوحدة
+                        </span>
+
                     </div>
 
                     <button class="btn">
@@ -1429,6 +1658,7 @@ function openUnitSection(section){
                 </div>
 
             </div>
+
         `;
 
     }
@@ -1438,24 +1668,37 @@ function openUnitSection(section){
 }
 
 
-/* ================= LESSON ================= */
+/* ================= LESSON / PDF ================= */
 
 function openLesson(){
 
-    document.querySelectorAll('.page')
-        .forEach(page=>page.classList.remove('active'));
+    const grade =
+        gradesData[currentGrade];
 
-    document.getElementById('lessonView')
-        .classList.add('active');
+    const unit =
+        grade.units.find(
+            item => item.number === currentUnit
+        );
 
-    document.getElementById('lessonTitle').textContent=
-        '📖 الدرس الأول: التعرف على الأعداد';
+    if(!unit || !unit.memo){
+
+        alert('المذكرة غير متاحة حاليًا.');
+
+        return;
+
+    }
+
+    document.getElementById('lessonTitle').textContent =
+        '📖 مذكرة ' + unit.title;
 
     document.getElementById('pdfFrame').src =
-        'https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/preview';
+        unit.memo;
 
     document.getElementById('pdfDownload').href =
-        'https://drive.google.com/file/d/1TE1Fe6UR9BPAwJDYcimmLhaLbe7aIKjN/view?usp=sharing';
+        unit.memo;
+
+    showPage('lessonView');
+
 }
 
 
