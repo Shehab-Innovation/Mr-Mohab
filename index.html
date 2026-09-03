@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXORA | منصة مستر مهاب</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXORA | مستر مهاب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+        /* ===== الأساسيات ===== */
         * {
             margin: 0;
             padding: 0;
@@ -32,6 +33,7 @@
             min-height: 90vh;
         }
 
+        /* ===== القائمة الجانبية ===== */
         .sidebar {
             width: 280px;
             background: #0b1f3a;
@@ -102,6 +104,7 @@
             color: #60a5fa;
         }
 
+        /* ===== أزرار التواصل ===== */
         .whatsapp-btn {
             background: #25D366;
             color: white;
@@ -150,6 +153,7 @@
             transform: scale(1.02);
         }
 
+        /* ===== المحتوى الرئيسي ===== */
         .main-content {
             flex: 1;
             padding: 35px 40px;
@@ -194,34 +198,30 @@
             font-size: 14px;
         }
 
-        .teacher-profile {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
+        .btn {
+            background: #1769e0;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .teacher-profile .info h2 {
-            font-size: 28px;
-            color: #0b1f3a;
-            border-bottom: none;
-            padding-bottom: 0;
-            margin-bottom: 6px;
+        .btn:hover {
+            background: #0b4fa8;
         }
 
-        .teacher-profile .info p {
-            color: #4a5a6a;
-            font-size: 16px;
-            line-height: 1.8;
+        .btn-pdf {
+            background: #dc3545;
         }
 
-        .teacher-profile .big-img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #eef2f7;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        .btn-pdf:hover {
+            background: #b02a37;
         }
 
         .curriculum-grid {
@@ -260,6 +260,36 @@
         .curriculum-card p {
             color: #7b8495;
             font-size: 12px;
+        }
+
+        .teacher-profile {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .teacher-profile .info h2 {
+            font-size: 28px;
+            color: #0b1f3a;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 6px;
+        }
+
+        .teacher-profile .info p {
+            color: #4a5a6a;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .teacher-profile .big-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #eef2f7;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
         }
 
         .tabs {
@@ -301,93 +331,14 @@
             display: block;
         }
 
-        .question {
-            background: #f8fafc;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 14px;
-        }
-
-        .question p {
-            font-weight: 600;
-            color: #0b1f3a;
-            margin-bottom: 8px;
-        }
-
-        .question label {
-            display: block;
-            padding: 6px 12px;
-            margin-bottom: 4px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .question label:hover {
-            background: #eef5ff;
-        }
-
-        .question input[type="radio"] {
-            margin-left: 10px;
-        }
-
-        .btn {
-            background: #1769e0;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn:hover {
-            background: #0b4fa8;
-        }
-
-        .btn-success {
-            background: #16a673;
-        }
-
-        .btn-success:hover {
-            background: #0f8a5f;
-        }
-
-        .result-box {
-            background: #eafaf4;
-            border: 1px solid #b8e6d0;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-top: 16px;
-            display: none;
-        }
-
-        .result-box.show {
-            display: block;
-        }
-
-        .homework-submit {
-            margin-top: 16px;
-        }
-
-        .homework-submit textarea {
+        .pdf-frame {
             width: 100%;
-            padding: 14px;
-            border: 1px solid #eef2f7;
-            border-radius: 14px;
-            font-family: inherit;
-            font-size: 14px;
-            resize: vertical;
-            min-height: 100px;
+            height: 600px;
+            border: none;
+            border-radius: 16px;
         }
 
-        .homework-submit input[type="file"] {
-            display: block;
-            margin: 12px 0;
-        }
-
+        /* ===== استجابة للشاشات ===== */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -420,6 +371,9 @@
             .curriculum-grid {
                 grid-template-columns: 1fr 1fr;
             }
+            .pdf-frame {
+                height: 400px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -435,476 +389,315 @@
             .curriculum-grid {
                 grid-template-columns: 1fr;
             }
+            .pdf-frame {
+                height: 300px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <!-- القائمة الجانبية -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <img 
-                src="https://i.ibb.co/vxdrYRR9/IMG-20241213-WA0103.jpg" 
-                alt="صورة مستر مهاب"
-                class="teacher-img"
-                onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%231769e0%22 rx=%2250%22/%3E%3Ctext x=%2250%22 y=%2265%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
-            />
-            <h2>مستر مهاب</h2>
-            <p>مدرس رياضيات – المرحلة الابتدائية</p>
-        </div>
-
-        <ul class="sidebar-nav">
-            <li><a class="active" onclick="showPage('home')"><i class="fas fa-home"></i> تعريف المدرس</a></li>
-            <li><a onclick="showPage('curriculum')"><i class="fas fa-book"></i> المنهج</a></li>
-            <li><a onclick="showPage('notebook')"><i class="fas fa-file-alt"></i> المذكرة</a></li>
-            <li><a onclick="showPage('homework')"><i class="fas fa-pencil-alt"></i> الواجبات</a></li>
-            <li><a onclick="showPage('exams')"><i class="fas fa-star"></i> الامتحانات</a></li>
-            <li><a onclick="showPage('attendance')"><i class="fas fa-calendar-check"></i> الحضور والغياب</a></li>
-            <li><a onclick="showPage('grades')"><i class="fas fa-chart-line"></i> تقييم الطالب</a></li>
-            <li><a onclick="showPage('certificate')"><i class="fas fa-award"></i> الشهادات</a></li>
-        </ul>
-
-        <a href="https://wa.me/201152715104" target="_blank" class="whatsapp-btn">
-            <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
-        </a>
-        <a href="https://www.facebook.com/share/1Dup2hS5YH/" target="_blank" class="facebook-btn">
-            <i class="fab fa-facebook"></i> صفحة الفيسبوك
-        </a>
-    </div>
-
-    <!-- المحتوى الرئيسي -->
-    <div class="main-content">
-
-        <!-- الصفحة الرئيسية -->
-        <div id="home" class="page active">
-            <div class="teacher-profile">
+        <!-- ===== القائمة الجانبية ===== -->
+        <div class="sidebar">
+            <div class="sidebar-header">
                 <img 
                     src="https://i.ibb.co/vxdrYRR9/IMG-20241213-WA0103.jpg" 
                     alt="صورة مستر مهاب"
-                    class="big-img"
-                    onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22 viewBox=%220 0 140 140%22%3E%3Crect width=%22140%22 height=%22140%22 fill=%22%231769e0%22 rx=%2270%22/%3E%3Ctext x=%2270%22 y=%2285%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
+                    class="teacher-img"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%231769e0%22 rx=%2250%22/%3E%3Ctext x=%2250%22 y=%2265%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
                 />
-                <div class="info">
-                    <h2>مستر مهاب</h2>
-                    <p><strong>مدرس رياضيات</strong> – المرحلة الابتدائية</p>
-                    <p style="margin-top: 8px;">مرحباً بكم في منصة مستر مهاب التعليمية. ستجدون هنا المذكرة، الأسئلة، والواجبات الخاصة بالمدرس.</p>
-                    <p style="margin-top: 6px;">📞 للتواصل: <strong>+201152715104</strong></p>
-                </div>
+                <h2>مستر مهاب</h2>
+                <p>مدرس رياضيات – المرحلة الابتدائية</p>
             </div>
+
+            <ul class="sidebar-nav">
+                <li><a class="active" onclick="showPage('home')"><i class="fas fa-home"></i> تعريف المدرس</a></li>
+                <li><a onclick="showPage('curriculum')"><i class="fas fa-book"></i> المنهج</a></li>
+                <li><a onclick="showPage('notebook')"><i class="fas fa-file-alt"></i> المذكرة</a></li>
+                <li><a onclick="showPage('homework')"><i class="fas fa-pencil-alt"></i> الواجبات</a></li>
+                <li><a onclick="showPage('exams')"><i class="fas fa-star"></i> الامتحانات</a></li>
+                <li><a onclick="showPage('attendance')"><i class="fas fa-calendar-check"></i> الحضور والغياب</a></li>
+                <li><a onclick="showPage('grades')"><i class="fas fa-chart-line"></i> تقييم الطالب</a></li>
+                <li><a onclick="showPage('certificate')"><i class="fas fa-award"></i> الشهادات</a></li>
+            </ul>
+
+            <a href="https://wa.me/201152715104" target="_blank" class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+            </a>
+            <a href="https://www.facebook.com/share/1Dup2hS5YH/" target="_blank" class="facebook-btn">
+                <i class="fab fa-facebook"></i> صفحة الفيسبوك
+            </a>
         </div>
 
-        <!-- المنهج -->
-        <div id="curriculum" class="page">
-            <h2>📚 المنهج</h2>
-            <div class="card">
-                <h3>اختر الصف</h3>
-                <div class="curriculum-grid">
-                    <div class="curriculum-card" onclick="showCurriculum('grade5')">
-                        <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                        <h4>الصف الخامس الابتدائي</h4>
-                        <p>رياضيات – الترم الأول</p>
-                    </div>
-                    <div class="curriculum-card" onclick="showCurriculum('grade6')">
-                        <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                        <h4>الصف السادس الابتدائي</h4>
-                        <p>رياضيات – الترم الأول</p>
+        <!-- ===== المحتوى الرئيسي ===== -->
+        <div class="main-content">
+
+            <!-- الصفحة الرئيسية -->
+            <div id="home" class="page active">
+                <div class="teacher-profile">
+                    <img 
+                        src="https://i.ibb.co/vxdrYRR9/IMG-20241213-WA0103.jpg" 
+                        alt="صورة مستر مهاب"
+                        class="big-img"
+                        onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22 viewBox=%220 0 140 140%22%3E%3Crect width=%22140%22 height=%22140%22 fill=%22%231769e0%22 rx=%2270%22/%3E%3Ctext x=%2270%22 y=%2285%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
+                    />
+                    <div class="info">
+                        <h2>مستر مهاب</h2>
+                        <p><strong>مدرس رياضيات</strong> – المرحلة الابتدائية</p>
+                        <p style="margin-top: 8px;">مرحباً بكم في منصة مستر مهاب التعليمية. ستجدون هنا المذكرة، الأسئلة، والواجبات الخاصة بالمدرس.</p>
+                        <p style="margin-top: 6px;">📞 للتواصل: <strong>+201152715104</strong></p>
                     </div>
                 </div>
             </div>
 
-            <div id="grade5" class="card" style="display: none;">
-                <h3>الصف الخامس الابتدائي – الرياضيات</h3>
-                <div style="margin-bottom: 20px;">
-                    <h4 style="color: #1769e0; margin-bottom: 12px;">الوحدة الأولى: الأعداد الطبيعية</h4>
+            <!-- المنهج -->
+            <div id="curriculum" class="page">
+                <h2>📚 المنهج</h2>
+                <div class="card">
+                    <h3>اختر الصف</h3>
                     <div class="curriculum-grid">
-                        <div class="curriculum-card" onclick="openLesson('grade5', 'lesson1')">
-                            <div class="icon"><i class="fas fa-play-circle"></i></div>
-                            <h4>الدرس الأول: قراءة الأعداد وكتابتها</h4>
-                            <p>شرح + أسئلة + واجب</p>
+                        <div class="curriculum-card" onclick="showCurriculum('grade1')">
+                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
+                            <h4>الصف الأول الابتدائي</h4>
+                            <p>رياضيات – الترم الأول</p>
                         </div>
-                        <div class="curriculum-card" onclick="openLesson('grade5', 'lesson2')">
-                            <div class="icon"><i class="fas fa-play-circle"></i></div>
-                            <h4>الدرس الثاني: مقارنة الأعداد</h4>
-                            <p>شرح + أسئلة + واجب</p>
+                        <div class="curriculum-card" onclick="showCurriculum('grade2')">
+                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
+                            <h4>الصف الثاني الابتدائي</h4>
+                            <p>رياضيات – الترم الأول</p>
+                        </div>
+                        <div class="curriculum-card" onclick="showCurriculum('grade3')">
+                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
+                            <h4>الصف الثالث الابتدائي</h4>
+                            <p>رياضيات – الترم الأول</p>
+                        </div>
+                        <div class="curriculum-card" onclick="showCurriculum('grade4')">
+                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
+                            <h4>الصف الرابع الابتدائي</h4>
+                            <p>رياضيات – الترم الأول</p>
+                        </div>
+                        <div class="curriculum-card" onclick="showCurriculum('grade5')">
+                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
+                            <h4>الصف الخامس الابتدائي</h4>
+                            <p>رياضيات – الترم الأول</p>
+                        </div>
+                        <div class="curriculum-card" onclick="showCurriculum('grade6')">
+                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
+                            <h4>الصف السادس الابتدائي</h4>
+                            <p>رياضيات – الترم الأول</p>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <h4 style="color: #1769e0; margin-bottom: 12px;">الوحدة الثانية: العمليات الحسابية</h4>
-                    <div class="curriculum-grid">
-                        <div class="curriculum-card" onclick="openLesson('grade5', 'lesson3')">
-                            <div class="icon"><i class="fas fa-play-circle"></i></div>
-                            <h4>الدرس الأول: الجمع والطرح</h4>
-                            <p>شرح + أسئلة + واجب</p>
-                        </div>
-                        <div class="curriculum-card" onclick="openLesson('grade5', 'lesson4')">
-                            <div class="icon"><i class="fas fa-play-circle"></i></div>
-                            <h4>الدرس الثاني: الضرب والقسمة</h4>
-                            <p>شرح + أسئلة + واجب</p>
+
+                <!-- الصف الأول -->
+                <div id="grade1" class="card" style="display: none;">
+                    <h3>الصف الأول الابتدائي – الرياضيات</h3>
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #1769e0; margin-bottom: 12px;">الوحدة الأولى: الأعداد من 1 إلى 10</h4>
+                        <div class="curriculum-grid">
+                            <div class="curriculum-card" onclick="openLesson('grade1', 'lesson1')">
+                                <div class="icon"><i class="fas fa-play-circle"></i></div>
+                                <h4>الدرس الأول: التعرف على الأعداد</h4>
+                                <p>مذكرة + أسئلة + واجب</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- باقي الصفوف -->
+                <div id="grade2" class="card" style="display: none;"><h3>الصف الثاني الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
+                <div id="grade3" class="card" style="display: none;"><h3>الصف الثالث الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
+                <div id="grade4" class="card" style="display: none;"><h3>الصف الرابع الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
+                <div id="grade5" class="card" style="display: none;"><h3>الصف الخامس الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
+                <div id="grade6" class="card" style="display: none;"><h3>الصف السادس الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
             </div>
 
-            <div id="grade6" class="card" style="display: none;">
-                <h3>الصف السادس الابتدائي – الرياضيات</h3>
-                <p style="color: #7b8495;">سيتم إضافة المحتوى قريباً...</p>
-            </div>
-        </div>
-
-        <!-- المذكرة -->
-        <div id="notebook" class="page">
-            <h2>📖 المذكرة</h2>
-            <div class="card">
-                <h3>مذكرة مستر مهاب في الرياضيات</h3>
-                <p>هنا ستجد شرح جميع دروس المنهج كاملة، مع أمثلة وتدريبات.</p>
-                <ul style="margin-top: 12px; list-style: none; padding: 0;">
-                    <li style="padding: 8px 0; border-bottom: 1px solid #eef2f7;">
-                        <a href="#" onclick="openLesson('grade5', 'lesson1')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
-                            📘 الدرس الأول: قراءة الأعداد وكتابتها
-                        </a>
-                    </li>
-                    <li style="padding: 8px 0; border-bottom: 1px solid #eef2f7;">
-                        <a href="#" onclick="openLesson('grade5', 'lesson2')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
-                            📘 الدرس الثاني: مقارنة الأعداد
-                        </a>
-                    </li>
-                    <li style="padding: 8px 0; border-bottom: 1px solid #eef2f7;">
-                        <a href="#" onclick="openLesson('grade5', 'lesson3')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
-                            📘 الدرس الثالث: الجمع والطرح
-                        </a>
-                    </li>
-                    <li style="padding: 8px 0;">
-                        <a href="#" onclick="openLesson('grade5', 'lesson4')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
-                            📘 الدرس الرابع: الضرب والقسمة
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- الواجبات -->
-        <div id="homework" class="page">
-            <h2>📘 الواجبات</h2>
-            <div class="card">
-                <h3>قائمة الواجبات</h3>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                    <span>واجب (1) – قراءة الأعداد</span>
-                    <span class="badge success" style="background: #eafaf4; color: #16a673; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700;">تم التسليم</span>
-                </div>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                    <span>واجب (2) – مقارنة الأعداد</span>
-                    <span class="badge success" style="background: #eafaf4; color: #16a673; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700;">تم التسليم</span>
-                </div>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0;">
-                    <span>واجب (3) – الجمع والطرح</span>
-                    <span class="badge danger" style="background: #fde8e8; color: #ef4444; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700;">لم يتم التسليم</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- الامتحانات -->
-        <div id="exams" class="page">
-            <h2>⭐ الامتحانات</h2>
-            <div class="card">
-                <h3>نتائج الامتحانات</h3>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                    <span>امتحان (1) – الأعداد الطبيعية</span>
-                    <span><strong>18 / 20</strong></span>
-                </div>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                    <span>امتحان (2) – العمليات الحسابية</span>
-                    <span><strong>20 / 20</strong></span>
-                </div>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0;">
-                    <span>امتحان (3) – الكسور</span>
-                    <span><strong>14 / 20</strong></span>
-                </div>
-            </div>
-        </div>
-
-        <!-- الحضور والغياب -->
-        <div id="attendance" class="page">
-            <h2>🗓️ الحضور والغياب</h2>
-            <div class="card">
-                <h3>سجل الحضور</h3>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                    <span>الأسبوع الأول</span>
-                    <span class="status present" style="color: #16a673; font-weight: 600;">✅ حضر</span>
-                </div>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                    <span>الأسبوع الثاني</span>
-                    <span class="status present" style="color: #16a673; font-weight: 600;">✅ حضر</span>
-                </div>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                    <span>الأسبوع الثالث</span>
-                    <span class="status absent" style="color: #ef4444; font-weight: 600;">❌ غائب</span>
-                </div>
-                <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0;">
-                    <span>الأسبوع الرابع</span>
-                    <span class="status present" style="color: #16a673; font-weight: 600;">✅ حضر</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- تقييم الطالب -->
-        <div id="grades" class="page">
-            <h2>📊 تقييم الطالب</h2>
-            <div class="card">
-                <h3>تقرير الأداء</h3>
-                <p><strong>الطالب:</strong> محمد أحمد</p>
-                <p><strong>المادة:</strong> الرياضيات</p>
-                <p><strong>المستوى العام:</strong> ممتاز</p>
-                <p><strong>الملاحظات:</strong> يحتاج إلى مراجعة جدول الضرب.</p>
-            </div>
-        </div>
-
-        <!-- الشهادات -->
-        <div id="certificate" class="page">
-            <h2>🏆 الشهادات</h2>
-            <div class="card">
-                <h3>شهادة تقدير</h3>
-                <p>مقدمة إلى الطالب / محمد أحمد</p>
-                <p>وذلك لتقوية في امتحان (الامتحان الأول) وحصوله على درجة 18 من 20</p>
-                <p style="font-weight: 600; color: #0b1f3a; margin-top: 8px;">أتمنى لك دوام التوفيق والنجاح</p>
-                <p style="margin-top: 4px;"><strong>مستر مهاب</strong> – مدرس الرياضيات</p>
-                <button class="btn" style="margin-top: 12px;">📥 تحميل الشهادة</button>
-            </div>
-        </div>
-
-        <!-- صفحة عرض الدرس -->
-        <div id="lessonView" class="page">
-            <h2 id="lessonTitle">الدرس</h2>
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('explain')">📖 الشرح</button>
-                <button class="tab-btn" onclick="switchTab('questions')">❓ الأسئلة</button>
-                <button class="tab-btn" onclick="switchTab('homework')">📝 الواجب</button>
-            </div>
-
-            <div id="tab-explain" class="tab-content active">
+            <!-- المذكرة -->
+            <div id="notebook" class="page">
+                <h2>📖 المذكرة</h2>
                 <div class="card">
-                    <h3>شرح الدرس</h3>
-                    <div id="explainContent"><p>هذا هو شرح الدرس. سيتم عرض المحتوى التعليمي هنا.</p></div>
+                    <h3>مذكرة مستر مهاب في الرياضيات</h3>
+                    <p>هنا ستجد مذكرات الدروس كاملة، جاهزة للعرض والتحميل.</p>
+                    <ul style="margin-top: 12px; list-style: none; padding: 0;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eef2f7;">
+                            <a href="#" onclick="openLesson('grade1', 'lesson1')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
+                                📘 الصف الأول – الدرس الأول: التعرف على الأعداد
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div id="tab-questions" class="tab-content">
-                <div class="card">
-                    <h3>أسئلة الدرس</h3>
-                    <div id="questionsContent"><p>سيتم عرض الأسئلة هنا.</p></div>
+            <!-- صفحة عرض الدرس -->
+            <div id="lessonView" class="page">
+                <h2 id="lessonTitle">الدرس</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('explain')">📖 الشرح</button>
+                    <button class="tab-btn" onclick="switchTab('questions')">❓ الأسئلة</button>
+                    <button class="tab-btn" onclick="switchTab('homework')">📝 الواجب</button>
                 </div>
+
+                <div id="tab-explain" class="tab-content active">
+                    <div class="card">
+                        <h3>📖 مذكرة الدرس</h3>
+                        <div id="explainContent">
+                            <!-- المذكرة هتظهر هنا -->
+                        </div>
+                        <div style="margin-top: 16px; text-align: center;">
+                            <a href="https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/%D9%85%D8%B0%D9%83%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%89%20%D8%A7%D8%A8%D8%AA%D8%AF%D8%A7%D8%A6%D9%8A%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%20-%20%D8%AF%D8%B9%D9%88%D8%A9%20%D8%A8%D8%B8%D9%87%D8%B1%20%D8%A7%D9%84%D8%BA%D9%8A%D8%A8%20%D9%84%D8%B4%D9%81%D8%A7%D8%A1%20%D8%B2%D9%88%D8%AC%D8%AA%D9%8A.pdf" 
+                               target="_blank" 
+                               class="btn btn-pdf">
+                                📥 تحميل المذكرة بصيغة PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-questions" class="tab-content">
+                    <div class="card">
+                        <h3>❓ أسئلة الدرس</h3>
+                        <div id="questionsContent">
+                            <p>سيتم إضافة أسئلة الدرس قريباً...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-homework" class="tab-content">
+                    <div class="card">
+                        <h3>📝 واجب الدرس</h3>
+                        <div id="homeworkContent">
+                            <p>سيتم إضافة الواجب قريباً...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="showPage('curriculum')" style="margin-top: 16px;">
+                    <i class="fas fa-arrow-right"></i> العودة إلى المنهج
+                </button>
             </div>
 
-            <div id="tab-homework" class="tab-content">
-                <div class="card">
-                    <h3>واجب الدرس</h3>
-                    <div id="homeworkContent"><p>سيتم عرض الواجب هنا.</p></div>
-                </div>
+            <!-- باقي الصفحات -->
+            <div id="homework" class="page">
+                <h2>📘 الواجبات</h2>
+                <div class="card"><h3>قائمة الواجبات</h3><p>سيتم إضافة الواجبات قريباً...</p></div>
+            </div>
+            <div id="exams" class="page">
+                <h2>⭐ الامتحانات</h2>
+                <div class="card"><h3>نتائج الامتحانات</h3><p>سيتم إضافة الامتحانات قريباً...</p></div>
+            </div>
+            <div id="attendance" class="page">
+                <h2>🗓️ الحضور والغياب</h2>
+                <div class="card"><h3>سجل الحضور</h3><p>سيتم إضافة الحضور والغياب قريباً...</p></div>
+            </div>
+            <div id="grades" class="page">
+                <h2>📊 تقييم الطالب</h2>
+                <div class="card"><h3>تقرير الأداء</h3><p>سيتم إضافة تقييم الطالب قريباً...</p></div>
+            </div>
+            <div id="certificate" class="page">
+                <h2>🏆 الشهادات</h2>
+                <div class="card"><h3>شهادة تقدير</h3><p>سيتم إضافة الشهادات قريباً...</p></div>
             </div>
 
-            <button class="btn" onclick="showPage('curriculum')" style="margin-top: 16px;">
-                <i class="fas fa-arrow-right"></i> العودة إلى المنهج
-            </button>
         </div>
-
     </div>
-</div>
 
-<script>
-    // ===== عرض الصفحات =====
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(page => {
-            page.classList.remove('active');
-        });
-        const target = document.getElementById(pageId);
-        if (target) {
-            target.classList.add('active');
-        }
-        document.querySelectorAll('.sidebar-nav a').forEach(link => {
-            link.classList.remove('active');
-        });
-        document.querySelectorAll('.sidebar-nav a').forEach(link => {
-            if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(pageId)) {
-                link.classList.add('active');
+    <script>
+        // ===== عرض الصفحات =====
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
             }
-        });
-    }
-
-    // ===== عرض المنهج =====
-    function showCurriculum(gradeId) {
-        document.querySelectorAll('#curriculum .card[id^="grade"]').forEach(el => {
-            el.style.display = 'none';
-        });
-        const target = document.getElementById(gradeId);
-        if (target) {
-            target.style.display = 'block';
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    // ===== بيانات الدروس (مذكرة + أسئلة خاصة + واجبات) =====
-    const lessonsData = {
-        'grade5-lesson1': {
-            title: 'قراءة الأعداد وكتابتها',
-            explain: `
-                <p><strong>مذكرة مستر مهاب</strong></p>
-                <p><strong>قراءة الأعداد:</strong> يتم قراءة العدد من اليسار إلى اليمين مع مراعاة المنازل (آحاد، عشرات، مئات، آلاف، إلخ).</p>
-                <p><strong>كتابة الأعداد:</strong> يتم كتابة العدد بالأرقام مع مراعاة المنازل.</p>
-                <p><strong>مثال:</strong> العدد ٥٦٧٢ يُقرأ: خمسة آلاف وستمائة واثنان وسبعون.</p>
-                <p><strong>ملاحظة:</strong> هذه المذكرة خاصة بمستر مهاب، ويُمنع نسخها أو استخدامها خارج المنصة.</p>
-            `,
-            questions: [
-                { q: 'ما هو العدد الصحيح للرقم ٤٥٦؟', options: ['أربعمائة وستة وخمسون', 'أربعمائة وخمسة وستون', 'أربعمائة وستون وخمسة'], correct: 0 },
-                { q: 'كيف يُقرأ العدد ٨٩٣١؟', options: ['ثمانية آلاف وتسعمائة وثلاثة وثلاثون', 'ثمانية آلاف وتسعمائة وواحد وثلاثون', 'ثمانية آلاف وتسعمائة وثلاثون'], correct: 0 },
-                { q: 'ما هو العدد المكتوب: ثلاثة آلاف وسبعمائة وخمسة وثلاثون؟', options: ['٣٧٥٠', '٣٧٥٣', '٣٧٣٥'], correct: 0 }
-            ],
-            homework: 'حل التمارين التالية: ١) اكتب العدد ٥٦٧٨ بالحروف. ٢) اقرأ العدد ٩٨٧٦. ٣) قارن بين ٥٦٧ و ٥٧٦.'
-        },
-        'grade5-lesson2': {
-            title: 'مقارنة الأعداد',
-            explain: `
-                <p><strong>مذكرة مستر مهاب</strong></p>
-                <p><strong>مقارنة الأعداد:</strong> نقارن الأعداد باستخدام الرموز (>, <, =).</p>
-                <p><strong>القاعدة:</strong> نقارن أولاً عدد المنازل، ثم نبدأ بالمقارنة من اليسار إلى اليمين.</p>
-                <p><strong>مثال:</strong> ٥٦٧ > ٥٦٦</p>
-            `,
-            questions: [
-                { q: 'أي من الأعداد التالية أكبر: ٥٦٧ أم ٥٧٦؟', options: ['٥٦٧', '٥٧٦', 'متساويان'], correct: 1 },
-                { q: 'ما هو الرمز الصحيح للمقارنة: ٨٩٣١ ___ ٨٩٣٢؟', options: ['>', '<', '='], correct: 1 },
-                { q: 'أي من الأعداد التالية أصغر: ٤٥٦ أم ٤٦٥؟', options: ['٤٥٦', '٤٦٥', 'متساويان'], correct: 0 }
-            ],
-            homework: 'قارن بين الأعداد التالية: ١) ٥٦٧ و ٥٧٦. ٢) ٨٩٣١ و ٨٩٣٢. ٣) ٤٥٦ و ٤٦٥.'
-        },
-        'grade5-lesson3': {
-            title: 'الجمع والطرح',
-            explain: `
-                <p><strong>مذكرة مستر مهاب</strong></p>
-                <p><strong>الجمع:</strong> عملية إضافة عدد إلى آخر.</p>
-                <p><strong>الطرح:</strong> عملية إزالة عدد من آخر.</p>
-                <p><strong>مثال جمع:</strong> ٥ + ٣ = ٨</p>
-                <p><strong>مثال طرح:</strong> ٨ - ٣ = ٥</p>
-            `,
-            questions: [
-                { q: 'ما هو ناتج جمع: ٧ + ٦؟', options: ['١٢', '١٣', '١٤'], correct: 1 },
-                { q: 'ما هو ناتج طرح: ١٥ - ٨؟', options: ['٦', '٧', '٨'], correct: 1 },
-                { q: 'ما هو ناتج جمع: ٢٣ + ١٧؟', options: ['٣٥', '٤٠', '٤٥'], correct: 1 }
-            ],
-            homework: 'احسب: ١) ١٤ + ٢٧. ٢) ٥٦ - ٢٩. ٣) ٤٥ + ٣٨.'
-        },
-        'grade5-lesson4': {
-            title: 'الضرب والقسمة',
-            explain: `
-                <p><strong>مذكرة مستر مهاب</strong></p>
-                <p><strong>الضرب:</strong> عملية تكرار عدد معين.</p>
-                <p><strong>القسمة:</strong> عملية تقسيم عدد إلى أجزاء متساوية.</p>
-                <p><strong>مثال ضرب:</strong> ٤ × ٥ = ٢٠</p>
-                <p><strong>مثال قسمة:</strong> ٢٠ ÷ ٤ = ٥</p>
-            `,
-            questions: [
-                { q: 'ما هو ناتج ضرب: ٦ × ٧؟', options: ['٣٦', '٤٢', '٤٨'], correct: 1 },
-                { q: 'ما هو ناتج قسمة: ٣٦ ÷ ٦؟', options: ['٥', '٦', '٧'], correct: 1 },
-                { q: 'ما هو ناتج ضرب: ٨ × ٩؟', options: ['٦٤', '٧٢', '٨١'], correct: 1 }
-            ],
-            homework: 'احسب: ١) ٧ × ٨. ٢) ٥٦ ÷ ٧. ٣) ٩ × ٦.'
-        }
-    };
-
-    // ===== فتح الدرس =====
-    function openLesson(grade, lesson) {
-        const key = grade + '-' + lesson;
-        const data = lessonsData[key];
-        if (!data) {
-            alert('الدرس غير موجود حالياً.');
-            return;
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(pageId)) {
+                    link.classList.add('active');
+                }
+            });
         }
 
-        document.querySelectorAll('.page').forEach(page => {
-            page.classList.remove('active');
-        });
+        // ===== عرض المنهج =====
+        function showCurriculum(gradeId) {
+            document.querySelectorAll('#curriculum .card[id^="grade"]').forEach(el => {
+                el.style.display = 'none';
+            });
+            const target = document.getElementById(gradeId);
+            if (target) {
+                target.style.display = 'block';
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
-        const lessonView = document.getElementById('lessonView');
-        lessonView.classList.add('active');
+        // ===== بيانات الدروس =====
+        const lessonsData = {
+            'grade1-lesson1': {
+                title: 'التعرف على الأعداد',
+                pdfUrl: 'https://raw.githubusercontent.com/Shehab-Innovation/Mr-Mohab/main/%D9%85%D8%B0%D9%83%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%89%20%D8%A7%D8%A8%D8%AA%D8%AF%D8%A7%D8%A6%D9%8A%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%20-%20%D8%AF%D8%B9%D9%88%D8%A9%20%D8%A8%D8%B8%D9%87%D8%B1%20%D8%A7%D9%84%D8%BA%D9%8A%D8%A8%20%D9%84%D8%B4%D9%81%D8%A7%D8%A1%20%D8%B2%D9%88%D8%AC%D8%AA%D9%8A.pdf'
+            }
+        };
 
-        document.getElementById('lessonTitle').textContent = '📖 ' + data.title;
+        // ===== فتح الدرس =====
+        function openLesson(grade, lesson) {
+            const key = grade + '-' + lesson;
+            const data = lessonsData[key];
+            if (!data) {
+                alert('الدرس غير موجود حالياً.');
+                return;
+            }
 
-        document.getElementById('explainContent').innerHTML = data.explain;
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
 
-        let questionsHTML = '';
-        data.questions.forEach((q, index) => {
-            questionsHTML += `
-                <div class="question" id="q${index}">
-                    <p>${index+1}. ${q.q}</p>
-                    ${q.options.map((opt, i) => `
-                        <label>
-                            <input type="radio" name="q${index}" value="${i}"> ${opt}
-                        </label>
-                    `).join('')}
-                </div>
+            const lessonView = document.getElementById('lessonView');
+            lessonView.classList.add('active');
+
+            document.getElementById('lessonTitle').textContent = '📖 ' + data.title;
+
+            // عرض المذكرة
+            document.getElementById('explainContent').innerHTML = `
+                <iframe 
+                    src="${data.pdfUrl}" 
+                    class="pdf-frame"
+                    style="width: 100%; height: 600px; border: none; border-radius: 16px;">
+                </iframe>
             `;
-        });
-        questionsHTML += `<button class="btn" onclick="checkAnswers('${key}')">✅ تصحيح الإجابات</button>`;
-        questionsHTML += `<div class="result-box" id="resultBox"></div>`;
-        document.getElementById('questionsContent').innerHTML = questionsHTML;
 
-        document.getElementById('homeworkContent').innerHTML = `
-            <p>${data.homework}</p>
-            <div class="homework-submit">
-                <p><strong>تسليم الواجب:</strong></p>
-                <textarea placeholder="اكتب إجابتك هنا..."></textarea>
-                <input type="file" />
-                <button class="btn btn-success" onclick="alert('✅ تم تسليم الواجب بنجاح!')">📤 تسليم الواجب</button>
-            </div>
-        `;
+            // تحديث رابط التحميل
+            document.querySelector('#tab-explain .btn-pdf').href = data.pdfUrl;
 
-        switchTab('explain');
-    }
-
-    // ===== التبويبات =====
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            if (btn.textContent.includes('الشرح') && tabId === 'explain') btn.classList.add('active');
-            if (btn.textContent.includes('الأسئلة') && tabId === 'questions') btn.classList.add('active');
-            if (btn.textContent.includes('الواجب') && tabId === 'homework') btn.classList.add('active');
-        });
-
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            tab.classList.remove('active');
-        });
-
-        const target = document.getElementById('tab-' + tabId);
-        if (target) {
-            target.classList.add('active');
+            // إعادة ضبط التبويبات
+            switchTab('explain');
         }
-    }
 
-    // ===== تصحيح الإجابات =====
-    function checkAnswers(lessonKey) {
-        const data = lessonsData[lessonKey];
-        if (!data) return;
+        // ===== التبويبات =====
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.textContent.includes('الشرح') && tabId === 'explain') btn.classList.add('active');
+                if (btn.textContent.includes('الأسئلة') && tabId === 'questions') btn.classList.add('active');
+                if (btn.textContent.includes('الواجب') && tabId === 'homework') btn.classList.add('active');
+            });
 
-        let correct = 0;
-        data.questions.forEach((q, index) => {
-            const selected = document.querySelector(`input[name="q${index}"]:checked`);
-            if (selected && parseInt(selected.value) === q.correct) {
-                correct++;
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            const target = document.getElementById('tab-' + tabId);
+            if (target) {
+                target.classList.add('active');
             }
-        });
-
-        const resultBox = document.getElementById('resultBox');
-        resultBox.innerHTML = `
-            <p><strong>نتيجتك:</strong> ${correct} من ${data.questions.length}</p>
-            <p style="color: ${correct === data.questions.length ? '#16a673' : '#f59e0b'}">
-                ${correct === data.questions.length ? '🎉 ممتاز! إجاباتك كلها صحيحة.' : '💪 حاول مرة أخرى، أنت قريب من الإتقان.'}
-            </p>
-        `;
-        resultBox.classList.add('show');
-    }
-</script>
+        }
+    </script>
 
 </body>
 </html>
