@@ -13,13 +13,28 @@
             box-sizing: border-box;
         }
 
+        /* ===== خلفية الموقع ===== */
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f4f7fc;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             padding: 30px;
-            min-height: 100vh;
+            background-image: url('https://i.ibb.co/xtmG53Lr/Whats-App-Image-2026-09-03-at-3-34-26-AM-1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        /* طبقة شفافة فوق الخلفية عشان النص يبان */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 0;
         }
 
         .container {
@@ -31,6 +46,8 @@
             display: flex;
             overflow: hidden;
             min-height: 90vh;
+            position: relative;
+            z-index: 1;
         }
 
         /* ===== القائمة الجانبية ===== */
@@ -50,12 +67,13 @@
         }
 
         .sidebar-header .teacher-img {
-            width: 100px;
-            height: 100px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 10px;
+            background: #1769e0;
         }
 
         .sidebar-header h2 {
@@ -286,12 +304,13 @@
         }
 
         .teacher-profile .big-img {
-            width: 140px;
-            height: 140px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid #eef2f7;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            background: #1769e0;
         }
 
         .tabs {
@@ -406,10 +425,10 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <img 
-                    src="https://i.ibb.co/vxdrYRR9/IMG-20241213-WA0103.jpg" 
+                    src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg" 
                     alt="صورة مستر مهاب"
                     class="teacher-img"
-                    onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%231769e0%22 rx=%2250%22/%3E%3Ctext x=%2250%22 y=%2265%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22130%22 height=%22130%22 viewBox=%220 0 130 130%22%3E%3Crect width=%22130%22 height=%22130%22 fill=%22%231769e0%22 rx=%2265%22/%3E%3Ctext x=%2265%22 y=%2280%22 text-anchor=%22middle%22 font-size=%2250%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
                 />
                 <h2>مستر مهاب</h2>
                 <p>مدرس رياضيات – المرحلة الابتدائية</p>
@@ -441,15 +460,15 @@
             <div id="home" class="page active">
                 <div class="teacher-profile">
                     <img 
-                        src="https://i.ibb.co/vxdrYRR9/IMG-20241213-WA0103.jpg" 
+                        src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg" 
                         alt="صورة مستر مهاب"
                         class="big-img"
-                        onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22 viewBox=%220 0 140 140%22%3E%3Crect width=%22140%22 height=%22140%22 fill=%22%231769e0%22 rx=%2270%22/%3E%3Ctext x=%2270%22 y=%2285%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
+                        onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22 viewBox=%220 0 160 160%22%3E%3Crect width=%22160%22 height=%22160%22 fill=%22%231769e0%22 rx=%2280%22/%3E%3Ctext x=%2280%22 y=%2295%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22%3E%25D9%2585%3C/text%3E%3C/svg%3E';"
                     />
                     <div class="info">
                         <h2>مستر مهاب</h2>
                         <p><strong>مدرس رياضيات</strong> – المرحلة الابتدائية</p>
-                        <p style="margin-top: 8px;">مرحباً بكم في منصة مستر مهاب التعليمية. ستجدون هنا المذكرة، الأسئلة، والواجبات الخاصة بالمدرس.</p>
+                        <p style="margin-top: 8px;">مرحباً بكم في منصة مستر مهاب التعليمية.</p>
                         <p style="margin-top: 6px;">📞 للتواصل: <strong>+201152715104</strong></p>
                     </div>
                 </div>
