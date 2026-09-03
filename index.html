@@ -1410,204 +1410,184 @@ function showPage(pageId, clickedLink){
 /* ================= DATA ================= */
 
 const gradesData = {
-
     1: {
         title: 'الصف الأول الابتدائي',
         pdf: 'https://drive.google.com/file/d/1yUIxdgJURcG36GXtqkM0UZQm-aTKo0lC/preview',
-        units: [
-            {
-                number: 1,
-                title: 'الأعداد من 1 إلى 10',
-                pages: '1-18',
-                lessons: [
-                    { title: 'العدد 1' },
-                    { title: 'العدد 2' },
-                    { title: 'العدد 3' }
-                ],
-                questions: [
-                    { q: 'ما هو العدد الذي يأتي بعد 1؟', options: ['2', '3', '0'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 1 + 1 = ...', options: ['1', '2', '3'], answer: 1, type: 'mcq' },
-                    { q: 'قارن: 2 ... 3', options: ['>', '<', '='], answer: 1, type: 'mcq' },
-                    { q: 'إذا كان عندك 3 تفاحات وأضفت 2، كم تصبح؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
-                    { q: 'العدد 2 يأتي بعد العدد 1', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: '3 + 1 = 5', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
-                    { q: '4 أكبر من 2', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: 'أكمل: 1, 2, 3, ..., 5', type: 'fill', answer: '4' },
-                    { q: 'أكمل: 2 + 3 = ...', type: 'fill', answer: '5' },
-                    { q: 'أكمل: 4 - 1 = ...', type: 'fill', answer: '3' },
-                    { q: 'أكمل: 3 + 2 = ...', type: 'fill', answer: '5' },
-                    { q: 'أكمل: 5 - 2 = ...', type: 'fill', answer: '3' }
-                ]
-            },
-            {
-                number: 2,
-                title: 'الجمع والطرح',
-                pages: '19-35',
-                lessons: [
-                    { title: 'الجمع' },
-                    { title: 'الطرح' }
-                ],
-                questions: [
-                    { q: '2 + 3 = ...', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
-                    { q: '5 - 2 = ...', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
-                    { q: '7 + 2 = ...', options: ['8', '9', '10'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: 4 + ... = 7', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
-                    { q: 'إذا كان مع أحمد 8 ريالات، وأعطى أخيه 3، كم تبقى معه؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
-                    { q: '5 + 5 = 10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: '3 - 1 = 1', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
-                    { q: '7 - 2 = 5', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: 'أكمل: 6 + 2 = ...', type: 'fill', answer: '8' },
-                    { q: 'أكمل: 9 - 4 = ...', type: 'fill', answer: '5' },
-                    { q: 'أكمل: 3 + 4 = ...', type: 'fill', answer: '7' },
-                    { q: 'أكمل: 8 - 3 = ...', type: 'fill', answer: '5' }
-                ]
-            }
-        ]
+        units: [{
+            number: 1,
+            title: 'الأعداد من 1 إلى 10',
+            pages: '1-18',
+            lessons: [
+                { title: 'العدد 1' },
+                { title: 'العدد 2' },
+                { title: 'العدد 3' }
+            ],
+            questions: [
+                { q: 'ما هو العدد الذي يأتي بعد 1؟', options: ['2', '3', '0'], answer: 0, type: 'mcq' },
+                { q: 'أكمل: 1 + 1 = ...', options: ['1', '2', '3'], answer: 1, type: 'mcq' },
+                { q: 'قارن: 2 ... 3', options: ['>', '<', '='], answer: 1, type: 'mcq' },
+                { q: 'إذا كان عندك 3 تفاحات وأضفت 2، كم تصبح؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
+                { q: 'العدد 2 يأتي بعد العدد 1', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: '3 + 1 = 5', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
+                { q: '4 أكبر من 2', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: 'أكمل: 1, 2, 3, ..., 5', type: 'fill', answer: '4' },
+                { q: 'أكمل: 2 + 3 = ...', type: 'fill', answer: '5' },
+                { q: 'أكمل: 4 - 1 = ...', type: 'fill', answer: '3' },
+                { q: 'أكمل: 3 + 2 = ...', type: 'fill', answer: '5' },
+                { q: 'أكمل: 5 - 2 = ...', type: 'fill', answer: '3' }
+            ]
+        }, {
+            number: 2,
+            title: 'الجمع والطرح',
+            pages: '19-35',
+            lessons: [
+                { title: 'الجمع' },
+                { title: 'الطرح' }
+            ],
+            questions: [
+                { q: '2 + 3 = ...', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
+                { q: '5 - 2 = ...', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
+                { q: '7 + 2 = ...', options: ['8', '9', '10'], answer: 1, type: 'mcq' },
+                { q: 'أكمل: 4 + ... = 7', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
+                { q: 'إذا كان مع أحمد 8 ريالات، وأعطى أخيه 3، كم تبقى معه؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
+                { q: '5 + 5 = 10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: '3 - 1 = 1', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
+                { q: '7 - 2 = 5', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: 'أكمل: 6 + 2 = ...', type: 'fill', answer: '8' },
+                { q: 'أكمل: 9 - 4 = ...', type: 'fill', answer: '5' },
+                { q: 'أكمل: 3 + 4 = ...', type: 'fill', answer: '7' },
+                { q: 'أكمل: 8 - 3 = ...', type: 'fill', answer: '5' }
+            ]
+        }]
     },
-
     2: {
         title: 'الصف الثاني الابتدائي',
         pdf: 'https://drive.google.com/file/d/12GBX2mviwB9BcXyOX84lw1hZNUbp-EQh/preview',
-        units: [
-            {
-                number: 1,
-                title: 'الأعداد الكبيرة',
-                pages: '1-15',
-                lessons: [
-                    { title: 'العدد 10' },
-                    { title: 'العدد 20' }
-                ],
-                questions: [
-                    { q: 'العدد 10 يكتب ...', options: ['10', '01', '100'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 10 + 5 = ...', options: ['12', '15', '20'], answer: 1, type: 'mcq' },
-                    { q: 'ما هو العدد الذي يزيد 5 عن 10؟', options: ['12', '15', '20'], answer: 1, type: 'mcq' },
-                    { q: 'إذا كان لديك 15 تفاحة وأكلت 7، كم تبقى؟', options: ['6', '7', '8'], answer: 2, type: 'mcq' },
-                    { q: 'العدد 20 أكبر من العدد 10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: '10 + 10 = 30', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
-                    { q: 'أكمل: 20 - 5 = ...', type: 'fill', answer: '15' },
-                    { q: 'أكمل: 10 + 8 = ...', type: 'fill', answer: '18' },
-                    { q: 'أكمل: 5 + 5 = ...', type: 'fill', answer: '10' },
-                    { q: 'أكمل: 15 - 5 = ...', type: 'fill', answer: '10' }
-                ]
-            }
-        ]
+        units: [{
+            number: 1,
+            title: 'الأعداد الكبيرة',
+            pages: '1-15',
+            lessons: [
+                { title: 'العدد 10' },
+                { title: 'العدد 20' }
+            ],
+            questions: [
+                { q: 'العدد 10 يكتب ...', options: ['10', '01', '100'], answer: 0, type: 'mcq' },
+                { q: 'أكمل: 10 + 5 = ...', options: ['12', '15', '20'], answer: 1, type: 'mcq' },
+                { q: 'ما هو العدد الذي يزيد 5 عن 10؟', options: ['12', '15', '20'], answer: 1, type: 'mcq' },
+                { q: 'إذا كان لديك 15 تفاحة وأكلت 7، كم تبقى؟', options: ['6', '7', '8'], answer: 2, type: 'mcq' },
+                { q: 'العدد 20 أكبر من العدد 10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: '10 + 10 = 30', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
+                { q: 'أكمل: 20 - 5 = ...', type: 'fill', answer: '15' },
+                { q: 'أكمل: 10 + 8 = ...', type: 'fill', answer: '18' },
+                { q: 'أكمل: 5 + 5 = ...', type: 'fill', answer: '10' },
+                { q: 'أكمل: 15 - 5 = ...', type: 'fill', answer: '10' }
+            ]
+        }]
     },
-
     3: {
         title: 'الصف الثالث الابتدائي',
         pdf: 'https://drive.google.com/file/d/1L-p_bG-rGuRYnfFcbtkviGTz5SElAD2W/preview',
-        units: [
-            {
-                number: 1,
-                title: 'القيمة المكانية',
-                pages: '1-20',
-                lessons: [
-                    { title: 'الآحاد والعشرات' },
-                    { title: 'المئات' }
-                ],
-                questions: [
-                    { q: 'العدد 25 يتكون من ...', options: ['2 آحاد 5 عشرات', '5 آحاد 2 عشرات', '2 عشرات 5 آحاد'], answer: 2, type: 'mcq' },
-                    { q: 'أكمل: 34 = 3 عشرات + ... آحاد', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
-                    { q: 'ما هو العدد المكون من 4 عشرات و 3 آحاد؟', options: ['34', '43', '44'], answer: 1, type: 'mcq' },
-                    { q: 'العدد 56 يساوي 5 عشرات و 6 آحاد', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: 'العدد 100 يتكون من 10 عشرات', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: 'أكمل: 3 مئات = ...', type: 'fill', answer: '300' },
-                    { q: 'أكمل: 5 عشرات = ...', type: 'fill', answer: '50' },
-                    { q: 'أكمل: 4 آحاد = ...', type: 'fill', answer: '4' },
-                    { q: 'أكمل: 2 مئات + 3 عشرات = ...', type: 'fill', answer: '230' },
-                    { q: 'أكمل: 6 عشرات + 8 آحاد = ...', type: 'fill', answer: '68' }
-                ]
-            }
-        ]
+        units: [{
+            number: 1,
+            title: 'القيمة المكانية',
+            pages: '1-20',
+            lessons: [
+                { title: 'الآحاد والعشرات' },
+                { title: 'المئات' }
+            ],
+            questions: [
+                { q: 'العدد 25 يتكون من ...', options: ['2 آحاد 5 عشرات', '5 آحاد 2 عشرات', '2 عشرات 5 آحاد'], answer: 2, type: 'mcq' },
+                { q: 'أكمل: 34 = 3 عشرات + ... آحاد', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
+                { q: 'ما هو العدد المكون من 4 عشرات و 3 آحاد؟', options: ['34', '43', '44'], answer: 1, type: 'mcq' },
+                { q: 'العدد 56 يساوي 5 عشرات و 6 آحاد', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: 'العدد 100 يتكون من 10 عشرات', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: 'أكمل: 3 مئات = ...', type: 'fill', answer: '300' },
+                { q: 'أكمل: 5 عشرات = ...', type: 'fill', answer: '50' },
+                { q: 'أكمل: 4 آحاد = ...', type: 'fill', answer: '4' },
+                { q: 'أكمل: 2 مئات + 3 عشرات = ...', type: 'fill', answer: '230' },
+                { q: 'أكمل: 6 عشرات + 8 آحاد = ...', type: 'fill', answer: '68' }
+            ]
+        }]
     },
-
     4: {
         title: 'الصف الرابع الابتدائي',
         pdf: 'https://drive.google.com/file/d/18LfLf7J2mU_4Jl2flJco2RFCH1PQ2zPM/preview',
-        units: [
-            {
-                number: 1,
-                title: 'جدول الضرب',
-                pages: '1-25',
-                lessons: [
-                    { title: 'جدول 2' },
-                    { title: 'جدول 3' },
-                    { title: 'جدول 4' },
-                    { title: 'جدول 5' },
-                    { title: 'جدول 6-9' }
-                ],
-                questions: [
-                    { q: '3 × 4 = ...', options: ['10', '12', '14'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: 5 × ... = 20', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
-                    { q: 'ما هو ناتج 7 × 8؟', options: ['48', '56', '64'], answer: 1, type: 'mcq' },
-                    { q: 'إذا كان لديك 6 صفوف، كل صف به 8 طلاب، كم عدد الطلاب؟', options: ['42', '48', '56'], answer: 1, type: 'mcq' },
-                    { q: '3 × 6 = 18', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: '4 × 7 = 28', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: 'أكمل: 6 × 7 = ...', type: 'fill', answer: '42' },
-                    { q: 'أكمل: 8 × 9 = ...', type: 'fill', answer: '72' },
-                    { q: 'أكمل: 5 × 9 = ...', type: 'fill', answer: '45' },
-                    { q: 'أكمل: 7 × 6 = ...', type: 'fill', answer: '42' }
-                ]
-            }
-        ]
+        units: [{
+            number: 1,
+            title: 'جدول الضرب',
+            pages: '1-25',
+            lessons: [
+                { title: 'جدول 2' },
+                { title: 'جدول 3' },
+                { title: 'جدول 4' },
+                { title: 'جدول 5' },
+                { title: 'جدول 6-9' }
+            ],
+            questions: [
+                { q: '3 × 4 = ...', options: ['10', '12', '14'], answer: 1, type: 'mcq' },
+                { q: 'أكمل: 5 × ... = 20', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
+                { q: 'ما هو ناتج 7 × 8؟', options: ['48', '56', '64'], answer: 1, type: 'mcq' },
+                { q: 'إذا كان لديك 6 صفوف، كل صف به 8 طلاب، كم عدد الطلاب؟', options: ['42', '48', '56'], answer: 1, type: 'mcq' },
+                { q: '3 × 6 = 18', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: '4 × 7 = 28', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: 'أكمل: 6 × 7 = ...', type: 'fill', answer: '42' },
+                { q: 'أكمل: 8 × 9 = ...', type: 'fill', answer: '72' },
+                { q: 'أكمل: 5 × 9 = ...', type: 'fill', answer: '45' },
+                { q: 'أكمل: 7 × 6 = ...', type: 'fill', answer: '42' }
+            ]
+        }]
     },
-
     5: {
         title: 'الصف الخامس الابتدائي',
         pdf: 'https://drive.google.com/file/d/1yYex_tZ_4j_eI5jjb39CNwqnbfWdA3hx/preview',
-        units: [
-            {
-                number: 1,
-                title: 'الكسور العشرية',
-                pages: '1-20',
-                lessons: [
-                    { title: 'الأجزاء من 10' },
-                    { title: 'الأجزاء من 100' }
-                ],
-                questions: [
-                    { q: '0.5 = ...', options: ['5/10', '1/2', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
-                    { q: 'أكمل: 0.25 = ...', options: ['25/100', '1/4', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
-                    { q: 'ما هو الكسر العشري للعدد 3/4؟', options: ['0.75', '0.5', '0.25'], answer: 0, type: 'mcq' },
-                    { q: '0.6 يساوي 6/10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: '0.75 يساوي 3/4', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: 'أكمل: 0.3 = ... /10', type: 'fill', answer: '3' },
-                    { q: 'أكمل: 0.7 = ... /10', type: 'fill', answer: '7' },
-                    { q: 'أكمل: 0.25 = ... /100', type: 'fill', answer: '25' },
-                    { q: 'أكمل: 0.5 = ... /100', type: 'fill', answer: '50' },
-                    { q: 'أكمل: 0.1 = ... /10', type: 'fill', answer: '1' }
-                ]
-            }
-        ]
+        units: [{
+            number: 1,
+            title: 'الكسور العشرية',
+            pages: '1-20',
+            lessons: [
+                { title: 'الأجزاء من 10' },
+                { title: 'الأجزاء من 100' }
+            ],
+            questions: [
+                { q: '0.5 = ...', options: ['5/10', '1/2', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
+                { q: 'أكمل: 0.25 = ...', options: ['25/100', '1/4', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
+                { q: 'ما هو الكسر العشري للعدد 3/4؟', options: ['0.75', '0.5', '0.25'], answer: 0, type: 'mcq' },
+                { q: '0.6 يساوي 6/10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: '0.75 يساوي 3/4', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: 'أكمل: 0.3 = ... /10', type: 'fill', answer: '3' },
+                { q: 'أكمل: 0.7 = ... /10', type: 'fill', answer: '7' },
+                { q: 'أكمل: 0.25 = ... /100', type: 'fill', answer: '25' },
+                { q: 'أكمل: 0.5 = ... /100', type: 'fill', answer: '50' },
+                { q: 'أكمل: 0.1 = ... /10', type: 'fill', answer: '1' }
+            ]
+        }]
     },
-
     6: {
         title: 'الصف السادس الابتدائي',
         pdf: 'https://drive.google.com/file/d/1QTDgDQphvfjnACSAddOv9pKegyptUpLU/preview',
-        units: [
-            {
-                number: 1,
-                title: 'الأعداد الصحيحة',
-                pages: '1-20',
-                lessons: [
-                    { title: 'الأعداد الموجبة والسالبة' },
-                    { title: 'الجمع والطرح مع الأعداد الصحيحة' }
-                ],
-                questions: [
-                    { q: '-3 + 5 = ...', options: ['-2', '2', '8'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: -4 - 2 = ...', options: ['-6', '-2', '6'], answer: 0, type: 'mcq' },
-                    { q: 'ما هو ناتج -7 + 3؟', options: ['-4', '4', '10'], answer: 0, type: 'mcq' },
-                    { q: 'إذا كانت درجة الحرارة -2 درجة، وارتفعت 5 درجات، فما هي درجة الحرارة الجديدة؟', options: ['3', '-3', '7'], answer: 0, type: 'mcq' },
-                    { q: '-5 أكبر من -10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: '-3 + -4 = -7', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: 'أكمل: 5 + (-3) = ...', type: 'fill', answer: '2' },
-                    { q: 'أكمل: -6 + 2 = ...', type: 'fill', answer: '-4' },
-                    { q: 'أكمل: 4 - (-2) = ...', type: 'fill', answer: '6' },
-                    { q: 'أكمل: -8 - 3 = ...', type: 'fill', answer: '-11' }
-                ]
-            }
-        ]
+        units: [{
+            number: 1,
+            title: 'الأعداد الصحيحة',
+            pages: '1-20',
+            lessons: [
+                { title: 'الأعداد الموجبة والسالبة' },
+                { title: 'الجمع والطرح مع الأعداد الصحيحة' }
+            ],
+            questions: [
+                { q: '-3 + 5 = ...', options: ['-2', '2', '8'], answer: 1, type: 'mcq' },
+                { q: 'أكمل: -4 - 2 = ...', options: ['-6', '-2', '6'], answer: 0, type: 'mcq' },
+                { q: 'ما هو ناتج -7 + 3؟', options: ['-4', '4', '10'], answer: 0, type: 'mcq' },
+                { q: 'إذا كانت درجة الحرارة -2 درجة، وارتفعت 5 درجات، فما هي درجة الحرارة الجديدة؟', options: ['3', '-3', '7'], answer: 0, type: 'mcq' },
+                { q: '-5 أكبر من -10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: '-3 + -4 = -7', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                { q: 'أكمل: 5 + (-3) = ...', type: 'fill', answer: '2' },
+                { q: 'أكمل: -6 + 2 = ...', type: 'fill', answer: '-4' },
+                { q: 'أكمل: 4 - (-2) = ...', type: 'fill', answer: '6' },
+                { q: 'أكمل: -8 - 3 = ...', type: 'fill', answer: '-11' }
+            ]
+        }]
     }
-
 };
 
 
@@ -1931,9 +1911,9 @@ function startHomework(unitNumber, lessonIndex){
         return;
     }
 
-    // اختيار 5 أسئلة عشوائية للواجب
+    // اختيار 20 سؤال عشوائية للواجب
     const shuffled = [...questions].sort(() => Math.random() - 0.5);
-    const selectedQuestions = shuffled.slice(0, Math.min(5, shuffled.length));
+    const selectedQuestions = shuffled.slice(0, Math.min(20, shuffled.length));
 
     const title = `📝 واجب الدرس: ${unit.lessons[lessonIndex].title}`;
     startQuiz(selectedQuestions, title, 120);
@@ -1956,9 +1936,9 @@ function startUnitHomework(unitNumber){
         return;
     }
 
-    // اختيار 7 أسئلة عشوائية للواجب الشامل
+    // اختيار 20 سؤال عشوائية للواجب الشامل
     const shuffled = [...questions].sort(() => Math.random() - 0.5);
-    const selectedQuestions = shuffled.slice(0, Math.min(7, shuffled.length));
+    const selectedQuestions = shuffled.slice(0, Math.min(20, shuffled.length));
 
     const title = `⭐ واجب شامل على ${unit.title}`;
     startQuiz(selectedQuestions, title, 150);
@@ -1990,10 +1970,10 @@ function startExam(unitNumber, lessonIndex, type){
     let title;
 
     if (type === 'lesson' && lessonIndex >= 0 && unit.lessons && unit.lessons[lessonIndex]) {
-        selectedQuestions = shuffled.slice(0, Math.min(5, shuffled.length));
+        selectedQuestions = shuffled.slice(0, Math.min(30, shuffled.length));
         title = `📝 امتحان الدرس: ${unit.lessons[lessonIndex].title}`;
     } else {
-        selectedQuestions = shuffled.slice(0, Math.min(10, shuffled.length));
+        selectedQuestions = shuffled.slice(0, Math.min(30, shuffled.length));
         title = `⭐ امتحان شامل على ${unit.title}`;
     }
 
