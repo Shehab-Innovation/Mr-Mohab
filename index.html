@@ -6,7 +6,6 @@
     <title>NEXORA | مستر مهاب</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== كل الستايلات موجودة ===== */
         * {
             margin: 0;
             padding: 0;
@@ -33,7 +32,6 @@
             min-height: 90vh;
         }
 
-        /* ===== القائمة الجانبية ===== */
         .sidebar {
             width: 280px;
             background: #0b1f3a;
@@ -104,7 +102,6 @@
             color: #60a5fa;
         }
 
-        /* ===== أزرار التواصل ===== */
         .whatsapp-btn {
             background: #25D366;
             color: white;
@@ -153,7 +150,6 @@
             transform: scale(1.02);
         }
 
-        /* ===== المحتوى الرئيسي ===== */
         .main-content {
             flex: 1;
             padding: 35px 40px;
@@ -294,54 +290,7 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
         }
 
-        .tabs {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eef2f7;
-            padding-bottom: 2px;
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 10px 22px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #7b8495;
-            cursor: pointer;
-            border-radius: 12px 12px 0 0;
-            transition: 0.2s;
-        }
-
-        .tab-btn:hover {
-            color: #0b1f3a;
-            background: #f0f4fa;
-        }
-
-        .tab-btn.active {
-            color: #1769e0;
-            background: #eef5ff;
-            border-bottom: 3px solid #1769e0;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* ===== عرض PDF من Google Drive ===== */
-        .pdf-frame {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 16px;
-        }
-
-        /* ===== البانر الأزرق ===== */
+        /* ===== البانر ===== */
         .welcome {
             background: linear-gradient(135deg, #0b1f3a 0%, #1a3f7a 100%);
             color: white;
@@ -384,7 +333,6 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
-        /* ===== القسم الجديد (خلفية الصورة الأولى) ===== */
         .hero-background {
             background-image: url('https://i.ibb.co/xtmG53Lr/Whats-App-Image-2026-09-03-at-3-34-26-AM-1.jpg');
             background-size: cover;
@@ -396,7 +344,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
-        /* ===== استجابة للشاشات ===== */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -429,9 +376,6 @@
             .curriculum-grid {
                 grid-template-columns: 1fr 1fr;
             }
-            .pdf-frame {
-                height: 400px;
-            }
             .welcome {
                 flex-direction: column;
                 text-align: center;
@@ -458,9 +402,6 @@
             .curriculum-grid {
                 grid-template-columns: 1fr;
             }
-            .pdf-frame {
-                height: 300px;
-            }
             .hero-background {
                 min-height: 180px;
             }
@@ -471,10 +412,9 @@
 
     <div class="container">
 
-        <!-- ===== القائمة الجانبية ===== -->
+        <!-- القائمة الجانبية -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <!-- الصورة الجديدة -->
                 <img 
                     src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg" 
                     alt="صورة مستر مهاب"
@@ -496,7 +436,6 @@
                 <li><a onclick="showPage('certificate')"><i class="fas fa-award"></i> الشهادات</a></li>
             </ul>
 
-            <!-- رقم واتساب الجديد -->
             <a href="https://wa.me/01289958954" target="_blank" class="whatsapp-btn">
                 <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
             </a>
@@ -505,13 +444,11 @@
             </a>
         </div>
 
-        <!-- ===== المحتوى الرئيسي ===== -->
+        <!-- المحتوى الرئيسي -->
         <div class="main-content">
 
-            <!-- الصفحة الرئيسية -->
+            <!-- الصفحة الرئيسية (فاضية غير البانر والخلفية) -->
             <div id="home" class="page active">
-
-                <!-- البانر الأزرق (مع الصورة الجديدة والرقم الجديد) -->
                 <div class="welcome">
                     <div class="welcome-text">
                         <h2>أهلاً بك في موقع مستر مهاب</h2>
@@ -527,270 +464,23 @@
                     />
                 </div>
 
-                <!-- الجزء الأبيض (خلفية الصورة الأولى) -->
+                <!-- الخلفية الجديدة -->
                 <div class="hero-background"></div>
-
-                <!-- ===== الكاردات الأصلية زي ما هي في الكود بتاعك ===== -->
-                <div class="dashboard-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-
-                    <!-- العمود الأيمن -->
-                    <div>
-                        <div class="card">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                                <h3>الواجبات القادمة</h3>
-                                <a style="font-size: 12px; color: #1769e0; font-weight: 600; cursor: pointer;">عرض الكل</a>
-                            </div>
-                            <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                                <span class="label">📘 واجب مستحق</span>
-                                <span class="badge" style="background: #eef5ff; color: #1769e0; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700;">1</span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                                <h3>الامتحانات القادمة</h3>
-                                <a style="font-size: 12px; color: #1769e0; font-weight: 600; cursor: pointer;">عرض الكل</a>
-                            </div>
-                            <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                                <span class="label">📝 امتحان قادم</span>
-                                <span class="badge" style="background: #eef5ff; color: #1769e0; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700;">2</span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                                <h3>جدول الحصص القادم</h3>
-                                <a style="font-size: 12px; color: #1769e0; font-weight: 600; cursor: pointer;">عرض الكل</a>
-                            </div>
-                            <div class="schedule-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
-                                <div class="schedule-box" style="background: #f8fafc; border-radius: 14px; padding: 14px 8px; text-align: center; border: 1px solid #eef2f7;">
-                                    <div class="day" style="font-weight: 600; color: #1a2a4a; font-size: 14px;">السبت</div>
-                                    <div class="percent" style="font-size: 22px; font-weight: 800; color: #1769e0; margin: 4px 0 2px;">90%</div>
-                                    <div class="sub" style="font-size: 11px; color: #7b8495;">حضور</div>
-                                </div>
-                                <div class="schedule-box" style="background: #f8fafc; border-radius: 14px; padding: 14px 8px; text-align: center; border: 1px solid #eef2f7;">
-                                    <div class="day" style="font-weight: 600; color: #1a2a4a; font-size: 14px;">الأحد</div>
-                                    <div class="percent" style="font-size: 22px; font-weight: 800; color: #1769e0; margin: 4px 0 2px;">80%</div>
-                                    <div class="sub" style="font-size: 11px; color: #7b8495;">حضور</div>
-                                </div>
-                                <div class="schedule-box" style="background: #f8fafc; border-radius: 14px; padding: 14px 8px; text-align: center; border: 1px solid #eef2f7;">
-                                    <div class="day" style="font-weight: 600; color: #1a2a4a; font-size: 14px;">الإثنين</div>
-                                    <div class="percent" style="font-size: 22px; font-weight: 800; color: #1769e0; margin: 4px 0 2px;">70%</div>
-                                    <div class="sub" style="font-size: 11px; color: #7b8495;">حضور</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="announcement" style="background: #fffbf0; border: 1px solid #fdecc8; border-radius: 16px; padding: 16px 22px; display: flex; align-items: flex-start; gap: 14px;">
-                            <div class="icon" style="font-size: 20px; color: #f59e0b; min-width: 30px;">📢</div>
-                            <div>
-                                <strong style="font-size: 14px; color: #0b1f3a; display: block;">إعلانات</strong>
-                                <p style="font-size: 12px; color: #5a6a7a; margin-top: 4px;">📌 تم رفع مذكرة مراجعة جديدة للصف الثالث الإعدادي</p>
-                                <p style="font-size: 12px; color: #5a6a7a; margin-top: 4px;">📌 موعد امتحان الشهر القادم يوم الخميس 20 مايو</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- العمود الأيسر -->
-                    <div>
-                        <div class="card">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                                <h3>نتائج الامتحانات</h3>
-                                <a style="font-size: 12px; color: #1769e0; font-weight: 600; cursor: pointer;">عرض الكل</a>
-                            </div>
-                            <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                                <span class="label">امتحان (1)</span>
-                                <span class="score" style="font-weight: 700; color: #0b1f3a;">18 / 20</span>
-                            </div>
-                            <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                                <span class="label">امتحان (2)</span>
-                                <span class="score" style="font-weight: 700; color: #0b1f3a;">20 / 20</span>
-                            </div>
-                            <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0;">
-                                <span class="label">امتحان (3)</span>
-                                <span class="score" style="font-weight: 700; color: #0b1f3a;">14 / 20</span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                                <h3>الواجبات المقدمة</h3>
-                                <a style="font-size: 12px; color: #1769e0; font-weight: 600; cursor: pointer;">عرض الكل</a>
-                            </div>
-                            <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                                <span class="label">واجب (1)</span>
-                                <span class="badge" style="background: #eafaf4; color: #16a673; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700;">✓ تم التسليم</span>
-                            </div>
-                            <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f4fa;">
-                                <span class="label">واجب (2)</span>
-                                <span class="badge" style="background: #eafaf4; color: #16a673; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700;">✓ تم التسليم</span>
-                            </div>
-                            <div class="item-row" style="display: flex; justify-content: space-between; padding: 10px 0;">
-                                <span class="label">واجب (3)</span>
-                                <span class="badge" style="background: #fde8e8; color: #ef4444; padding: 2px 14px; border-radius: 30px; font-size: 12px; font-weight: 700;">✗ لم يتم التسليم</span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                                <h3>شهادة تقدير</h3>
-                            </div>
-                            <div class="cert-box" style="background: #f8fbff; border: 1px solid #dce9ff; border-radius: 16px; padding: 18px 22px;">
-                                <div class="icon" style="font-size: 30px; margin-bottom: 4px;">🏆</div>
-                                <h4 style="font-size: 15px; color: #0b1f3a; margin-bottom: 2px;">مقدمة إلى الطالب / محمد أحمد</h4>
-                                <p style="font-size: 12px; color: #4a5a6a; line-height: 1.7;">وذلك لتقوية في امتحان (الامتحان الأول) وحصوله على درجة 18 من 20</p>
-                                <p style="font-weight: 600; color: #0b1f3a; font-size: 12px;">أتمنى لك دوام التوفيق والنجاح</p>
-                                <p class="teacher-name" style="font-weight: 700; color: #0b1f3a; margin-top: 6px; font-size: 12px;">مستمر مهاب – مدرس الرياضيات</p>
-                                <button class="btn-sm" style="background: #1769e0; color: white; border: none; padding: 8px 20px; border-radius: 30px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 8px;">📥 تحميل الشهادة</button>
-                            </div>
-                        </div>
-
-                        <div class="congrats" style="background: #eafaf4; border: 1px solid #b8e6d0; border-radius: 16px; padding: 16px 22px; margin-top: 18px;">
-                            <p style="font-weight: 700; color: #0b5e3a; font-size: 15px;">🎉 مبروك يا محمد أحمد!</p>
-                            <p style="font-size: 13px; color: #1a3a2a; margin-top: 2px;">لقد حصلت على درجة 18 من 20 في امتحان (الامتحان الأول)</p>
-                            <p style="font-size: 13px; color: #1a3a2a; margin-top: 2px;">أنت من المتفوقين! استمر في هذا المستوى الرائع.</p>
-                        </div>
-                    </div>
-
-                </div>
             </div>
 
-            <!-- باقي الصفحات (المنهج، المذكرة، إلخ) زي ما هي -->
-            <div id="curriculum" class="page">
-                <h2>📚 المنهج</h2>
-                <div class="card">
-                    <h3>اختر الصف</h3>
-                    <div class="curriculum-grid">
-                        <div class="curriculum-card" onclick="showCurriculum('grade1')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الأول الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade2')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الثاني الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade3')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الثالث الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade4')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الرابع الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade5')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف الخامس الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                        <div class="curriculum-card" onclick="showCurriculum('grade6')">
-                            <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                            <h4>الصف السادس الابتدائي</h4>
-                            <p>رياضيات – الترم الأول</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="grade1" class="card" style="display: none;">
-                    <h3>الصف الأول الابتدائي – الرياضيات</h3>
-                    <div style="margin-bottom: 20px;">
-                        <h4 style="color: #1769e0; margin-bottom: 12px;">الوحدة الأولى: الأعداد من 1 إلى 10</h4>
-                        <div class="curriculum-grid">
-                            <div class="curriculum-card" onclick="openLesson('grade1', 'lesson1')">
-                                <div class="icon"><i class="fas fa-play-circle"></i></div>
-                                <h4>الدرس الأول: التعرف على الأعداد</h4>
-                                <p>مذكرة + أسئلة + واجب</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="grade2" class="card" style="display: none;"><h3>الصف الثاني الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-                <div id="grade3" class="card" style="display: none;"><h3>الصف الثالث الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-                <div id="grade4" class="card" style="display: none;"><h3>الصف الرابع الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-                <div id="grade5" class="card" style="display: none;"><h3>الصف الخامس الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-                <div id="grade6" class="card" style="display: none;"><h3>الصف السادس الابتدائي</h3><p>سيتم إضافة المحتوى قريباً...</p></div>
-            </div>
-
-            <div id="notebook" class="page">
-                <h2>📖 المذكرة</h2>
-                <div class="card">
-                    <h3>مذكرة مستر مهاب في الرياضيات</h3>
-                    <ul style="margin-top: 12px; list-style: none; padding: 0;">
-                        <li style="padding: 10px 0; border-bottom: 1px solid #eef2f7;">
-                            <a href="#" onclick="openLesson('grade1', 'lesson1')" style="color: #1769e0; text-decoration: none; font-weight: 600;">
-                                📘 الصف الأول – الدرس الأول: التعرف على الأعداد
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="lessonView" class="page">
-                <h2 id="lessonTitle">الدرس</h2>
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="switchTab('explain')">📖 الشرح</button>
-                    <button class="tab-btn" onclick="switchTab('questions')">❓ الأسئلة</button>
-                    <button class="tab-btn" onclick="switchTab('homework')">📝 الواجب</button>
-                </div>
-
-                <div id="tab-explain" class="tab-content active">
-                    <div class="card">
-                        <h3>📖 مذكرة الدرس</h3>
-                        <div id="explainContent">
-                            <!-- المذكرة هتظهر هنا -->
-                        </div>
-                    </div>
-                </div>
-
-                <div id="tab-questions" class="tab-content">
-                    <div class="card">
-                        <h3>❓ أسئلة الدرس</h3>
-                        <div id="questionsContent"><p>سيتم إضافة أسئلة الدرس قريباً...</p></div>
-                    </div>
-                </div>
-
-                <div id="tab-homework" class="tab-content">
-                    <div class="card">
-                        <h3>📝 واجب الدرس</h3>
-                        <div id="homeworkContent"><p>سيتم إضافة الواجب قريباً...</p></div>
-                    </div>
-                </div>
-
-                <button class="btn" onclick="showPage('curriculum')" style="margin-top: 16px;">
-                    <i class="fas fa-arrow-right"></i> العودة إلى المنهج
-                </button>
-            </div>
-
-            <div id="homework" class="page">
-                <h2>📘 الواجبات</h2>
-                <div class="card"><h3>قائمة الواجبات</h3><p>سيتم إضافة الواجبات قريباً...</p></div>
-            </div>
-            <div id="exams" class="page">
-                <h2>⭐ الامتحانات</h2>
-                <div class="card"><h3>نتائج الامتحانات</h3><p>سيتم إضافة الامتحانات قريباً...</p></div>
-            </div>
-            <div id="attendance" class="page">
-                <h2>🗓️ الحضور والغياب</h2>
-                <div class="card"><h3>سجل الحضور</h3><p>سيتم إضافة الحضور والغياب قريباً...</p></div>
-            </div>
-            <div id="grades" class="page">
-                <h2>📊 تقييم الطالب</h2>
-                <div class="card"><h3>تقرير الأداء</h3><p>سيتم إضافة تقييم الطالب قريباً...</p></div>
-            </div>
-            <div id="certificate" class="page">
-                <h2>🏆 الشهادات</h2>
-                <div class="card"><h3>شهادة تقدير</h3><p>سيتم إضافة الشهادات قريباً...</p></div>
-            </div>
+            <!-- باقي الصفحات -->
+            <div id="curriculum" class="page">...</div>
+            <div id="notebook" class="page">...</div>
+            <div id="homework" class="page">...</div>
+            <div id="exams" class="page">...</div>
+            <div id="attendance" class="page">...</div>
+            <div id="grades" class="page">...</div>
+            <div id="certificate" class="page">...</div>
 
         </div>
     </div>
 
     <script>
-        // ===== عرض الصفحات =====
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -809,7 +499,6 @@
             });
         }
 
-        // ===== عرض المنهج =====
         function showCurriculum(gradeId) {
             document.querySelectorAll('#curriculum .card[id^="grade"]').forEach(el => {
                 el.style.display = 'none';
@@ -821,7 +510,6 @@
             }
         }
 
-        // ===== بيانات الدروس =====
         const lessonsData = {
             'grade1-lesson1': {
                 title: 'التعرف على الأعداد',
@@ -829,7 +517,6 @@
             }
         };
 
-        // ===== فتح الدرس =====
         function openLesson(grade, lesson) {
             const key = grade + '-' + lesson;
             const data = lessonsData[key];
@@ -850,7 +537,6 @@
             document.getElementById('explainContent').innerHTML = `
                 <iframe 
                     src="${data.pdfUrl}" 
-                    class="pdf-frame"
                     style="width: 100%; height: 600px; border: none; border-radius: 16px;">
                 </iframe>
                 <div style="margin-top: 16px; text-align: center;">
@@ -865,7 +551,6 @@
             switchTab('explain');
         }
 
-        // ===== التبويبات =====
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -886,6 +571,5 @@
             }
         }
     </script>
-
 </body>
 </html>
