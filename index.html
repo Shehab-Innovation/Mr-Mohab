@@ -763,12 +763,7 @@
                 </a>
             </li>
 
-            <li>
-                <a onclick="showPage('attendance',this)">
-                    <i class="fas fa-calendar-check"></i>
-                    الحضور والغياب
-                </a>
-            </li>
+            <!-- تم إخفاء العناصر الإدارية: الحضور والغياب، أكواد الدخول، الاشتراك -->
 
             <li>
                 <a onclick="showPage('grades',this)">
@@ -781,20 +776,6 @@
                 <a onclick="showPage('certificate',this)">
                     <i class="fas fa-award"></i>
                     الشهادات
-                </a>
-            </li>
-
-            <li>
-                <a onclick="showPage('codes',this)">
-                    <i class="fas fa-key"></i>
-                    أكواد الدخول
-                </a>
-            </li>
-
-            <li>
-                <a onclick="showPage('pricing',this)">
-                    <i class="fas fa-credit-card"></i>
-                    الاشتراك
                 </a>
             </li>
 
@@ -824,6 +805,85 @@
     <!-- ================= MAIN CONTENT ================= -->
 
     <div class="main-content">
+
+
+        <!-- ================= STUDENT REGISTRATION ================= -->
+
+        <div id="registration" class="page">
+
+            <div class="card" style="max-width:600px;margin:40px auto;text-align:center;">
+
+                <img
+                    src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
+                    alt="مستر مهاب"
+                    style="
+                        width:110px;
+                        height:110px;
+                        border-radius:50%;
+                        object-fit:cover;
+                        margin-bottom:15px;
+                    "
+                >
+
+                <h2 style="border:none;margin-bottom:8px;">
+                    أهلاً بك في موقع مستر مهاب 👋
+                </h2>
+
+                <p style="margin-bottom:25px;">
+                    سجل بيانات الطالب للدخول إلى المحتوى التعليمي.
+                </p>
+
+                <div style="text-align:right;">
+
+                    <label style="display:block;margin-bottom:7px;font-weight:600;">
+                        اسم الطالب
+                    </label>
+
+                    <input
+                        id="studentName"
+                        type="text"
+                        placeholder="اكتب اسم الطالب"
+                        style="
+                            width:100%;
+                            padding:14px;
+                            border:1px solid #e7edf6;
+                            border-radius:12px;
+                            font-size:15px;
+                            margin-bottom:16px;
+                        "
+                    >
+
+                    <label style="display:block;margin-bottom:7px;font-weight:600;">
+                        رقم هاتف الطالب
+                    </label>
+
+                    <input
+                        id="studentPhone"
+                        type="tel"
+                        placeholder="01xxxxxxxxx"
+                        style="
+                            width:100%;
+                            padding:14px;
+                            border:1px solid #e7edf6;
+                            border-radius:12px;
+                            font-size:15px;
+                            margin-bottom:20px;
+                        "
+                    >
+
+                    <button
+                        class="btn"
+                        onclick="registerStudent()"
+                        style="width:100%;padding:14px;"
+                    >
+                        دخول إلى الموقع
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
         <!-- HOME -->
@@ -1090,36 +1150,7 @@
         </div>
 
 
-        <!-- ATTENDANCE -->
-
-        <div id="attendance" class="page">
-
-            <h2>📅 الحضور والغياب</h2>
-
-            <div class="card">
-
-                <h3>تسجيل حضور الحصة</h3>
-
-                <p>
-                    يتم استخدام كود خاص بالحصة لتسجيل حضور الطالب.
-                </p>
-
-                <div style="margin-top:20px;text-align:center;">
-
-                    <div style="font-size:30px;font-weight:700;color:#1769e0;">
-                        4827
-                    </div>
-
-                    <p>كود الحضور الحالي</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- GRADES -->
+        <!-- GRADES (تقييم الطالب) -->
 
         <div id="grades" class="page">
 
@@ -1139,18 +1170,18 @@
             <div class="code-summary">
 
                 <div class="stat-card">
-                    <div class="number">85%</div>
+                    <div class="number" id="avgExam">—</div>
                     <p>متوسط الامتحانات</p>
                 </div>
 
                 <div class="stat-card">
-                    <div class="number">92%</div>
-                    <p>الواجبات</p>
+                    <div class="number" id="avgHomework">—</div>
+                    <p>متوسط الواجبات</p>
                 </div>
 
                 <div class="stat-card">
-                    <div class="number">96%</div>
-                    <p>الحضور</p>
+                    <div class="number" id="totalAttempts">0</div>
+                    <p>إجمالي المحاولات</p>
                 </div>
 
             </div>
@@ -1173,201 +1204,7 @@
                     نتيجة أو إنجاز معين.
                 </p>
 
-                <div style="margin-top:20px;text-align:center;">
-
-                    <div style="
-                        border:2px solid #1769e0;
-                        border-radius:20px;
-                        padding:35px;
-                        background:#fbfdff;
-                    ">
-
-                        <h2 style="border:none;margin:0;">
-                            🏆 شهادة تقدير
-                        </h2>
-
-                        <p style="margin-top:15px;">
-                            تقدم إلى الطالب
-                        </p>
-
-                        <h3 style="font-size:25px;">
-                            أحمد محمد
-                        </h3>
-
-                        <p>
-                            تقديرًا لتحقيقه 90% في امتحان الوحدة الأولى
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- CODES -->
-
-        <div id="codes" class="page">
-
-            <h2>🔐 أكواد الدخول</h2>
-
-            <div class="card">
-
-                <h3>أكواد دخول الطلاب إلى الموقع</h3>
-
-                <p>
-                    الاشتراك الحالي يشمل 50 كود دخول للطلاب.
-                    هذه الأكواد هي أساس الدخول إلى نظام المدرس.
-                </p>
-
-            </div>
-
-            <div class="code-summary">
-
-                <div class="stat-card">
-
-                    <div class="number">50</div>
-
-                    <p>إجمالي الأكواد</p>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <div class="number">37</div>
-
-                    <p>أكواد مستخدمة</p>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <div class="number">13</div>
-
-                    <p>أكواد متبقية</p>
-
-                </div>
-
-            </div>
-
-            <div class="card">
-
-                <h3>الأكواد</h3>
-
-                <div class="code-list">
-
-                    <div class="code-item">
-                        <span class="code-number">NX-583214</span>
-                        <span class="status used">مستخدم</span>
-                    </div>
-
-                    <div class="code-item">
-                        <span class="code-number">NX-741906</span>
-                        <span class="status used">مستخدم</span>
-                    </div>
-
-                    <div class="code-item">
-                        <span class="code-number">NX-326581</span>
-                        <span class="status available">متاح</span>
-                    </div>
-
-                    <div class="code-item">
-                        <span class="code-number">NX-905437</span>
-                        <span class="status available">متاح</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- PRICING -->
-
-        <div id="pricing" class="page">
-
-            <h2>💳 الاشتراك</h2>
-
-            <div class="price-box">
-
-                <h3>الباقة الحالية</h3>
-
-                <div class="price">
-                    250 جنيه
-                    <small>/ شهريًا</small>
-                </div>
-
-                <p style="color:white;opacity:.85;margin-top:8px;">
-                    تشمل 50 كود دخول للطلاب
-                </p>
-
-            </div>
-
-            <div class="card">
-
-                <h3>باقات أكواد الدخول</h3>
-
-                <table class="pricing-table">
-
-                    <tr>
-                        <th>الأكواد</th>
-                        <th>الاشتراك الشهري</th>
-                    </tr>
-
-                    <tr>
-                        <td>50</td>
-                        <td>250 جنيه</td>
-                    </tr>
-
-                    <tr>
-                        <td>100</td>
-                        <td>500 جنيه</td>
-                    </tr>
-
-                    <tr>
-                        <td>150</td>
-                        <td>750 جنيه</td>
-                    </tr>
-
-                    <tr>
-                        <td>200</td>
-                        <td>1000 جنيه</td>
-                    </tr>
-
-                    <tr>
-                        <td>250</td>
-                        <td>1250 جنيه</td>
-                    </tr>
-
-                    <tr>
-                        <td>300</td>
-                        <td>1500 جنيه</td>
-                    </tr>
-
-                    <tr>
-                        <td>500</td>
-                        <td>2500 جنيه</td>
-                    </tr>
-
-                </table>
-
-            </div>
-
-            <div class="card">
-
-                <h3>📖 أكواد المذكرات</h3>
-
-                <p>
-                    أكواد المذكرات منفصلة عن أكواد دخول الموقع.
-                    يمكن استخدامها لتنظيم ومتابعة بيع نسخ المذكرات الخاصة بالمدرس.
-                </p>
-
-                <p style="margin-top:10px;">
-                    سعر المذكرة يحدده المدرس، ومبيعات المذكرات تخص المدرس بالكامل.
-                </p>
+                <div id="certificateContainer"></div>
 
             </div>
 
@@ -2220,6 +2057,17 @@
             `;
         });
 
+        // Save result to student system
+        saveQuizResult({
+            type: document.getElementById('quizTitle').textContent.includes('واجب') ? 'homework' : 'exam',
+            grade: currentGrade,
+            unit: currentUnit,
+            title: document.getElementById('quizTitle').textContent,
+            correct: correct,
+            total: total,
+            percentage: percentage
+        });
+
         container.innerHTML = `
             <div class="card">
                 <div class="quiz-result">
@@ -2258,6 +2106,865 @@
 
         return numbers[number] || number;
     }
+
+
+    /* ================= NEXORA STUDENT SYSTEM ================= */
+
+    const STUDENT_KEY = 'nexora_student';
+    const RESULTS_KEY = 'nexora_results';
+    const ACTIVITIES_KEY = 'nexora_activities';
+    const CERTIFICATES_KEY = 'nexora_certificates';
+
+    let currentStudent = null;
+
+
+    /* ================= STUDENT ID ================= */
+
+    function generateStudentId(){
+
+        return 'ST-' +
+            Date.now().toString(36).toUpperCase() +
+            '-' +
+            Math.random().toString(36).substring(2,8).toUpperCase();
+
+    }
+
+
+    /* ================= LOAD STUDENT ================= */
+
+    function loadStudent(){
+
+        try{
+
+            const saved =
+                localStorage.getItem(STUDENT_KEY);
+
+            if(saved){
+
+                currentStudent = JSON.parse(saved);
+
+                return true;
+
+            }
+
+        }catch(error){
+
+            console.error(error);
+
+        }
+
+        return false;
+
+    }
+
+
+    /* ================= REGISTRATION ================= */
+
+    function registerStudent(){
+
+        const name =
+            document.getElementById('studentName').value.trim();
+
+        const phone =
+            document.getElementById('studentPhone').value.trim();
+
+        if(!name){
+
+            alert('من فضلك اكتب اسم الطالب.');
+
+            return;
+
+        }
+
+        if(!phone){
+
+            alert('من فضلك اكتب رقم هاتف الطالب.');
+
+            return;
+
+        }
+
+
+        currentStudent = {
+
+            student_id: generateStudentId(),
+
+            name: name,
+
+            phone: phone,
+
+            created_at: new Date().toISOString(),
+
+            last_activity: new Date().toISOString()
+
+        };
+
+
+        localStorage.setItem(
+            STUDENT_KEY,
+            JSON.stringify(currentStudent)
+        );
+
+
+        trackActivity(
+            'registration',
+            'تم تسجيل الطالب'
+        );
+
+
+        enterStudentSite();
+
+    }
+
+
+    /* ================= ENTER SITE ================= */
+
+    function enterStudentSite(){
+
+        if(!currentStudent){
+
+            showPage('registration');
+
+            return;
+
+        }
+
+
+        const sidebar =
+            document.querySelector('.sidebar');
+
+        if(sidebar){
+
+            sidebar.style.display = 'flex';
+
+        }
+
+
+        showPage('home');
+
+
+        trackActivity(
+            'login',
+            'دخول الطالب إلى الموقع'
+        );
+
+    }
+
+
+    /* ================= ACTIVITY ================= */
+
+    function trackActivity(action, details){
+
+        if(!currentStudent) return;
+
+
+        let activities = [];
+
+        try{
+
+            activities =
+                JSON.parse(
+                    localStorage.getItem(ACTIVITIES_KEY) || '[]'
+                );
+
+        }catch(error){
+
+            activities = [];
+
+        }
+
+
+        const activity = {
+
+            activity_id:
+                'ACT-' + Date.now(),
+
+            student_id:
+                currentStudent.student_id,
+
+            action:
+                action,
+
+            details:
+                details || '',
+
+            timestamp:
+                new Date().toISOString()
+
+        };
+
+
+        activities.push(activity);
+
+
+        localStorage.setItem(
+            ACTIVITIES_KEY,
+            JSON.stringify(activities)
+        );
+
+
+        currentStudent.last_activity =
+            activity.timestamp;
+
+
+        localStorage.setItem(
+            STUDENT_KEY,
+            JSON.stringify(currentStudent)
+        );
+
+    }
+
+
+    /* ================= RESULTS ================= */
+
+    function saveQuizResult(data){
+
+        if(!currentStudent) return;
+
+
+        let results = [];
+
+        try{
+
+            results =
+                JSON.parse(
+                    localStorage.getItem(RESULTS_KEY) || '[]'
+                );
+
+        }catch(error){
+
+            results = [];
+
+        }
+
+
+        const result = {
+
+            result_id:
+                'RES-' + Date.now(),
+
+            student_id:
+                currentStudent.student_id,
+
+            type:
+                data.type || 'exam',
+
+            grade:
+                data.grade,
+
+            unit:
+                data.unit,
+
+            title:
+                data.title,
+
+            correct:
+                data.correct,
+
+            total:
+                data.total,
+
+            percentage:
+                data.percentage,
+
+            completed_at:
+                new Date().toISOString()
+
+        };
+
+
+        results.push(result);
+
+
+        localStorage.setItem(
+            RESULTS_KEY,
+            JSON.stringify(results)
+        );
+
+
+        trackActivity(
+
+            data.type === 'homework'
+                ? 'homework_completed'
+                : 'exam_completed',
+
+            data.title +
+            ' - ' +
+            data.percentage +
+            '%'
+
+        );
+
+
+        if(result.percentage >= 90){
+
+            createCertificate(result);
+
+        }
+
+        // Update the grades page if it's visible
+        renderStudentEvaluation();
+
+    }
+
+
+    /* ================= GET RESULTS ================= */
+
+    function getStudentResults(){
+
+        if(!currentStudent) return [];
+
+
+        let results = [];
+
+        try{
+
+            results =
+                JSON.parse(
+                    localStorage.getItem(RESULTS_KEY) || '[]'
+                );
+
+        }catch(error){
+
+            results = [];
+
+        }
+
+
+        return results.filter(
+
+            result =>
+                result.student_id ===
+                currentStudent.student_id
+
+        );
+
+    }
+
+
+    /* ================= AVERAGE ================= */
+
+    function calculateAverage(type){
+
+        const results =
+            getStudentResults().filter(
+                result => result.type === type
+            );
+
+
+        if(results.length === 0){
+
+            return null;
+
+        }
+
+
+        const total =
+            results.reduce(
+
+                (sum,result) =>
+                    sum + result.percentage,
+
+                0
+
+            );
+
+
+        return Math.round(
+            total / results.length
+        );
+
+    }
+
+
+    /* ================= CERTIFICATES ================= */
+
+    function createCertificate(result){
+
+        if(!currentStudent) return;
+
+
+        let certificates = [];
+
+        try{
+
+            certificates =
+                JSON.parse(
+                    localStorage.getItem(CERTIFICATES_KEY) || '[]'
+                );
+
+        }catch(error){
+
+            certificates = [];
+
+        }
+
+
+        const alreadyExists =
+            certificates.some(
+
+                certificate =>
+                    certificate.student_id ===
+                        currentStudent.student_id
+                    &&
+                    certificate.result_id ===
+                        result.result_id
+
+            );
+
+
+        if(alreadyExists) return;
+
+
+        certificates.push({
+
+            certificate_id:
+                'CERT-' + Date.now(),
+
+            result_id:
+                result.result_id,
+
+            student_id:
+                currentStudent.student_id,
+
+            student_name:
+                currentStudent.name,
+
+            teacher_name:
+                'مستر مهاب',
+
+            teacher_image:
+                'https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg',
+
+            assessment_name:
+                result.title,
+
+            score:
+                result.percentage,
+
+            message:
+                'أحسنت! استمر في التفوق والمثابرة.',
+
+            date:
+                new Date().toLocaleDateString('ar-EG'),
+
+            created_at:
+                new Date().toISOString()
+
+        });
+
+
+        localStorage.setItem(
+
+            CERTIFICATES_KEY,
+
+            JSON.stringify(certificates)
+
+        );
+
+    }
+
+
+    /* ================= SHOW EVALUATION ================= */
+
+    function renderStudentEvaluation(){
+
+        if(!currentStudent) return;
+
+
+        const examAverage =
+            calculateAverage('exam');
+
+        const homeworkAverage =
+            calculateAverage('homework');
+
+        const results =
+            getStudentResults();
+
+
+        const examText =
+            examAverage === null
+                ? '—'
+                : examAverage + '%';
+
+
+        const homeworkText =
+            homeworkAverage === null
+                ? '—'
+                : homeworkAverage + '%';
+
+
+        // Update stat cards
+        const avgExamEl = document.getElementById('avgExam');
+        const avgHomeworkEl = document.getElementById('avgHomework');
+        const totalAttemptsEl = document.getElementById('totalAttempts');
+
+        if (avgExamEl) avgExamEl.textContent = examText;
+        if (avgHomeworkEl) avgHomeworkEl.textContent = homeworkText;
+        if (totalAttemptsEl) totalAttemptsEl.textContent = results.length;
+
+
+        // Render results list
+        const gradesPage =
+            document.getElementById('grades');
+
+        if(!gradesPage) return;
+
+
+        let oldList =
+            gradesPage.querySelector(
+                '.student-results-list'
+            );
+
+
+        if(oldList){
+
+            oldList.remove();
+
+        }
+
+
+        const list =
+            document.createElement('div');
+
+        list.className =
+            'card student-results-list';
+
+
+        if(results.length === 0){
+
+            list.innerHTML = `
+
+                <h3>
+                    📚 النتائج
+                </h3>
+
+                <p>
+                    لا توجد نتائج مسجلة بعد.
+                </p>
+
+            `;
+
+        }else{
+
+            const items =
+                [...results]
+                    .reverse()
+                    .map(result => `
+
+                        <div style="
+                            padding:14px 0;
+                            border-bottom:1px solid #eef2f7;
+                        ">
+
+                            <strong>
+                                ${result.title}
+                            </strong>
+
+                            <br>
+
+                            <span style="color:#7b8495;font-size:13px;">
+                                ${
+                                    result.type === 'homework'
+                                        ? 'واجب'
+                                        : 'امتحان'
+                                }
+                                —
+                                ${result.correct}/${result.total}
+                                —
+                                ${result.percentage}%
+                            </span>
+
+                        </div>
+
+                    `)
+                    .join('');
+
+
+            list.innerHTML = `
+
+                <h3>
+                    📚 نتائج الطالب
+                </h3>
+
+                ${items}
+
+            `;
+
+        }
+
+
+        gradesPage.appendChild(list);
+
+        // Update certificate page
+        renderCertificates();
+
+    }
+
+
+    /* ================= SHOW CERTIFICATES ================= */
+
+    function renderCertificates(){
+
+        const container =
+            document.getElementById('certificateContainer');
+
+
+        if(!container) return;
+
+
+        let certificates = [];
+
+        try{
+
+            certificates =
+                JSON.parse(
+                    localStorage.getItem(CERTIFICATES_KEY) || '[]'
+                );
+
+        }catch(error){
+
+            certificates = [];
+
+        }
+
+
+        certificates =
+            certificates.filter(
+
+                certificate =>
+                    currentStudent &&
+                    certificate.student_id ===
+                    currentStudent.student_id
+
+            );
+
+
+        if(certificates.length === 0){
+
+            container.innerHTML = `
+
+                <div style="margin-top:20px;text-align:center;padding:20px;">
+
+                    <p>
+                        لا توجد شهادات للطالب حتى الآن.
+                        عند تحقيق 90% في أي امتحان ستظهر الشهادة هنا.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML = `
+
+            <div style="margin-top:20px;">
+
+                ${
+                    certificates
+                        .reverse()
+                        .map(certificate => `
+
+                            <div style="
+                                border:2px solid #1769e0;
+                                border-radius:20px;
+                                padding:30px 20px;
+                                background:#fbfdff;
+                                text-align:center;
+                                margin-bottom:20px;
+                            ">
+
+                                <img
+                                    src="${certificate.teacher_image}"
+                                    alt="مستر مهاب"
+                                    style="
+                                        width:75px;
+                                        height:75px;
+                                        border-radius:50%;
+                                        object-fit:cover;
+                                        margin-bottom:10px;
+                                    "
+                                >
+
+                                <h2 style="
+                                    border:none;
+                                    margin:0;
+                                    padding:0;
+                                ">
+                                    🏆 شهادة تقدير
+                                </h2>
+
+                                <p style="margin-top:15px;">
+                                    تقدم إلى الطالب
+                                </p>
+
+                                <h3 style="font-size:25px;">
+                                    ${certificate.student_name}
+                                </h3>
+
+                                <p>
+                                    تقديرًا لتحقيقه
+                                    <strong>
+                                        ${certificate.score}%
+                                    </strong>
+                                    في
+                                    <strong>
+                                        ${certificate.assessment_name}
+                                    </strong>
+                                </p>
+
+                                <p style="margin-top:15px;">
+                                    ${certificate.message}
+                                </p>
+
+                                <p style="
+                                    margin-top:15px;
+                                    font-size:13px;
+                                ">
+                                    المدرس:
+                                    ${certificate.teacher_name}
+                                </p>
+
+                                <p style="
+                                    font-size:12px;
+                                    color:#7b8495;
+                                ">
+                                    ${certificate.date}
+                                </p>
+
+                            </div>
+
+                        `)
+                        .join('')
+                }
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ================= TRACK PAGE ACTIVITY ================= */
+
+    const originalShowPage =
+        showPage;
+
+
+    showPage = function(pageId, clickedLink){
+
+        if(!currentStudent && pageId !== 'registration'){
+
+            showPage('registration');
+
+            return;
+
+        }
+
+
+        originalShowPage(pageId, clickedLink);
+
+
+        if(pageId === 'grades'){
+
+            renderStudentEvaluation();
+
+        }
+
+
+        if(pageId === 'certificate'){
+
+            renderCertificates();
+
+        }
+
+
+        const activityNames = {
+
+            home:
+                'فتح تعريف المدرس',
+
+            curriculum:
+                'فتح المنهج',
+
+            grade:
+                'فتح الصف',
+
+            unit:
+                'فتح الوحدة',
+
+            unitSection:
+                'فتح محتوى الوحدة',
+
+            lessonView:
+                'فتح المذكرة',
+
+            quiz:
+                'فتح الاختبار',
+
+            grades:
+                'فتح تقييم الطالب',
+
+            certificate:
+                'فتح الشهادات'
+
+        };
+
+
+        if(activityNames[pageId]){
+
+            trackActivity(
+                'page_view',
+                activityNames[pageId]
+            );
+
+        }
+
+    };
+
+
+    /* ================= INITIALIZATION ================= */
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        function(){
+
+            const hasStudent =
+                loadStudent();
+
+
+            if(hasStudent){
+
+                enterStudentSite();
+
+            }else{
+
+                const sidebar =
+                    document.querySelector('.sidebar');
+
+                if(sidebar){
+
+                    sidebar.style.display = 'none';
+
+                }
+
+
+                showPage('registration');
+
+            }
+
+            // Render certificates if student exists
+            if (currentStudent) {
+                renderCertificates();
+                renderStudentEvaluation();
+            }
+
+        }
+    );
 
 </script>
 
