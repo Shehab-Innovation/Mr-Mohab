@@ -39,9 +39,13 @@
             background:#0b1f3a;
             color:white;
             padding:30px 20px;
-            display:flex;
+            display:none;
             flex-direction:column;
             flex-shrink:0;
+        }
+
+        .sidebar.active{
+            display:flex;
         }
 
         .sidebar-header{
@@ -67,6 +71,16 @@
             font-size:13px;
             color:#94a3c8;
             margin-top:4px;
+        }
+
+        .sidebar-header .student-info{
+            font-size:12px;
+            color:#60a5fa;
+            margin-top:8px;
+            padding:8px 12px;
+            background:rgba(255,255,255,.05);
+            border-radius:10px;
+            line-height:1.8;
         }
 
         .sidebar-nav{
@@ -102,6 +116,19 @@
         .sidebar-nav a i{
             width:22px;
             color:#60a5fa;
+        }
+
+        .sidebar-nav .logout a{
+            color:#ef4444;
+        }
+
+        .sidebar-nav .logout a i{
+            color:#ef4444;
+        }
+
+        .sidebar-nav .logout a:hover{
+            background:rgba(239,68,68,.15);
+            color:#ef4444;
         }
 
         /* ================= BUTTONS ================= */
@@ -187,6 +214,106 @@
             font-size:14px;
         }
 
+        /* ================= REGISTRATION PAGE ================= */
+
+        #registration .card{
+            max-width:600px;
+            margin:40px auto;
+            text-align:center;
+        }
+
+        #registration .card img{
+            width:110px;
+            height:110px;
+            border-radius:50%;
+            object-fit:cover;
+            margin-bottom:15px;
+        }
+
+        #registration .card h2{
+            border:none;
+            margin-bottom:6px;
+            font-size:24px;
+        }
+
+        #registration .card .subtitle{
+            margin-bottom:20px;
+            color:#4a5a6a;
+            font-size:14px;
+        }
+
+        #registration .card .subtitle i{
+            color:#fbbf24;
+        }
+
+        #registration .card .note{
+            background:#f0f7ff;
+            border-radius:12px;
+            padding:14px 18px;
+            margin-bottom:22px;
+            font-size:13px;
+            color:#1a3f7a;
+            border-right:4px solid #1769e0;
+            text-align:right;
+            line-height:1.8;
+        }
+
+        #registration .card .note i{
+            color:#1769e0;
+            margin-left:8px;
+        }
+
+        #registration .card .note strong{
+            color:#0b1f3a;
+        }
+
+        #registration .card .note .highlight{
+            color:#1769e0;
+            font-weight:600;
+        }
+
+        #registration .card label{
+            display:block;
+            margin-bottom:7px;
+            font-weight:600;
+            text-align:right;
+            font-size:14px;
+        }
+
+        #registration .card label .hint{
+            font-weight:400;
+            color:#7b8495;
+            font-size:12px;
+        }
+
+        #registration .card label .required{
+            color:#ef4444;
+            font-weight:700;
+        }
+
+        #registration .card input{
+            width:100%;
+            padding:14px;
+            border:1px solid #e7edf6;
+            border-radius:12px;
+            font-size:15px;
+            margin-bottom:16px;
+            transition:border .3s;
+        }
+
+        #registration .card input:focus{
+            outline:none;
+            border-color:#1769e0;
+            box-shadow:0 0 0 3px rgba(23,105,224,.1);
+        }
+
+        #registration .card .btn{
+            width:100%;
+            padding:14px;
+            font-size:16px;
+            margin-top:4px;
+        }
+
         /* ================= WELCOME ================= */
 
         .welcome{
@@ -237,37 +364,6 @@
             min-height:400px;
             border-radius:24px;
             margin-bottom:30px;
-        }
-
-        /* ================= TEACHER PROFILE ================= */
-
-        .teacher-profile{
-            display:flex;
-            align-items:center;
-            gap:30px;
-            flex-wrap:wrap;
-        }
-
-        .teacher-profile .big-img{
-            width:140px;
-            height:140px;
-            border-radius:50%;
-            object-fit:cover;
-            border:4px solid #eef2f7;
-        }
-
-        .teacher-profile .info h2{
-            font-size:28px;
-            color:#0b1f3a;
-            border:none;
-            padding:0;
-            margin-bottom:6px;
-        }
-
-        .teacher-profile .info p{
-            color:#4a5a6a;
-            font-size:16px;
-            line-height:1.8;
         }
 
         /* ================= GRADES ================= */
@@ -352,7 +448,7 @@
 
         .content-grid{
             display:grid;
-            grid-template-columns:repeat(3,1fr);
+            grid-template-columns:repeat(4,1fr);
             gap:14px;
             margin-top:18px;
         }
@@ -405,6 +501,11 @@
             justify-content:space-between;
             align-items:center;
             gap:15px;
+            flex-wrap:wrap;
+        }
+
+        .lesson-item .lesson-info{
+            flex:1;
         }
 
         .lesson-item strong{
@@ -414,6 +515,12 @@
         .lesson-item span{
             color:#7b8495;
             font-size:12px;
+        }
+
+        .lesson-item .lesson-actions{
+            display:flex;
+            gap:8px;
+            flex-wrap:wrap;
         }
 
         .btn{
@@ -439,118 +546,12 @@
             margin-bottom:18px;
         }
 
-        /* ================= CODES ================= */
-
-        .code-summary{
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:15px;
-            margin-bottom:20px;
+        .btn-video{
+            background:#ff0000;
         }
 
-        .stat-card{
-            background:white;
-            border:1px solid #eef2f7;
-            border-radius:18px;
-            padding:20px;
-            text-align:center;
-        }
-
-        .stat-card .number{
-            font-size:28px;
-            font-weight:700;
-            color:#1769e0;
-            margin-bottom:5px;
-        }
-
-        .stat-card p{
-            color:#6b7280;
-            font-size:13px;
-        }
-
-        .code-list{
-            display:grid;
-            grid-template-columns:repeat(2,1fr);
-            gap:10px;
-        }
-
-        .code-item{
-            background:#f8faff;
-            border:1px solid #e6edf7;
-            padding:15px;
-            border-radius:14px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-        }
-
-        .code-number{
-            font-weight:700;
-            letter-spacing:1px;
-            color:#0b1f3a;
-        }
-
-        .status{
-            font-size:11px;
-            padding:5px 10px;
-            border-radius:20px;
-        }
-
-        .status.available{
-            background:#e9f9ef;
-            color:#16833b;
-        }
-
-        .status.used{
-            background:#f1f1f1;
-            color:#777;
-        }
-
-        /* ================= PRICING ================= */
-
-        .price-box{
-            background:linear-gradient(135deg,#0b1f3a,#1a3f7a);
-            color:white;
-            border-radius:22px;
-            padding:25px;
-            margin-bottom:20px;
-        }
-
-        .price-box h3{
-            color:white;
-            margin-bottom:10px;
-        }
-
-        .price{
-            font-size:34px;
-            font-weight:700;
-        }
-
-        .price small{
-            font-size:14px;
-            opacity:.8;
-        }
-
-        .pricing-table{
-            width:100%;
-            border-collapse:collapse;
-            margin-top:15px;
-        }
-
-        .pricing-table th,
-        .pricing-table td{
-            padding:13px;
-            border-bottom:1px solid #edf1f7;
-            text-align:center;
-        }
-
-        .pricing-table th{
-            color:#0b1f3a;
-            background:#f8faff;
-        }
-
-        .pricing-table td{
-            color:#4a5a6a;
+        .btn-video:hover{
+            background:#cc0000;
         }
 
         /* ================= PDF ================= */
@@ -570,6 +571,26 @@
 
         .btn-pdf:hover{
             background:#b02a37;
+        }
+
+        /* ================= VIDEO ================= */
+
+        .video-container{
+            position:relative;
+            padding-bottom:56.25%;
+            height:0;
+            overflow:hidden;
+            border-radius:16px;
+            margin-bottom:15px;
+        }
+
+        .video-container iframe{
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            border:none;
         }
 
         /* ================= QUIZ ================= */
@@ -678,6 +699,9 @@
                 width:100%;
                 padding:20px;
             }
+            .sidebar.active{
+                display:flex;
+            }
             .main-content{
                 padding:20px;
             }
@@ -695,8 +719,8 @@
             .code-summary{
                 grid-template-columns:1fr;
             }
-            .code-list{
-                grid-template-columns:1fr;
+            .content-grid{
+                grid-template-columns:repeat(2,1fr);
             }
             .welcome{
                 flex-direction:column;
@@ -709,6 +733,20 @@
             .hero-background{
                 min-height:250px;
             }
+            .lesson-item{
+                flex-direction:column;
+                align-items:flex-start;
+            }
+            .lesson-item .lesson-actions{
+                width:100%;
+            }
+            .lesson-item .lesson-actions .btn{
+                flex:1;
+                text-align:center;
+            }
+            #registration .card{
+                margin:20px auto;
+            }
         }
 
         @media(max-width:480px){
@@ -718,9 +756,15 @@
             .hero-background{
                 min-height:180px;
             }
-            .lesson-item{
-                flex-direction:column;
-                align-items:flex-start;
+            .content-grid{
+                grid-template-columns:1fr;
+            }
+            #registration .card{
+                margin:10px auto;
+                padding:15px;
+            }
+            #registration .card h2{
+                font-size:20px;
             }
         }
     </style>
@@ -732,7 +776,7 @@
 
     <!-- ================= SIDEBAR ================= -->
 
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
 
         <div class="sidebar-header">
 
@@ -744,6 +788,10 @@
 
             <h2>مستر مهاب</h2>
             <p>مدرس رياضيات – المرحلة الابتدائية</p>
+
+            <div id="studentInfo" class="student-info">
+                👤 <span id="studentNameDisplay"></span>
+            </div>
 
         </div>
 
@@ -763,8 +811,6 @@
                 </a>
             </li>
 
-            <!-- تم إخفاء العناصر الإدارية: الحضور والغياب، أكواد الدخول، الاشتراك -->
-
             <li>
                 <a onclick="showPage('grades',this)">
                     <i class="fas fa-chart-line"></i>
@@ -776,6 +822,13 @@
                 <a onclick="showPage('certificate',this)">
                     <i class="fas fa-award"></i>
                     الشهادات
+                </a>
+            </li>
+
+            <li class="logout">
+                <a onclick="logoutStudent()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    تسجيل خروج
                 </a>
             </li>
 
@@ -809,74 +862,70 @@
 
         <!-- ================= STUDENT REGISTRATION ================= -->
 
-        <div id="registration" class="page">
+        <div id="registration" class="page active">
 
-            <div class="card" style="max-width:600px;margin:40px auto;text-align:center;">
+            <div class="card">
 
                 <img
                     src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
                     alt="مستر مهاب"
-                    style="
-                        width:110px;
-                        height:110px;
-                        border-radius:50%;
-                        object-fit:cover;
-                        margin-bottom:15px;
-                    "
                 >
 
-                <h2 style="border:none;margin-bottom:8px;">
-                    أهلاً بك في موقع مستر مهاب 👋
-                </h2>
+                <h2>📚 منصة مستر مهاب التعليمية</h2>
 
-                <p style="margin-bottom:25px;">
-                    سجل بيانات الطالب للدخول إلى المحتوى التعليمي.
+                <p class="subtitle">
+                    <i class="fas fa-user-graduate"></i>
+                    سجل بيانات الطالب للمتابعة والاستفادة من المحتوى التعليمي
                 </p>
 
-                <div style="text-align:right;">
+                <div class="note">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>💡 الموقع مخصص للطالب وولي الأمر معاً</strong><br>
+                    الطالب لمتابعة دروسه، وولي الأمر لمتابعة مستوى الطالب.
+                    <br><br>
+                    <span class="highlight">📌 يرجى إدخال رقم هاتف الطالب ورقم هاتف ولي الأمر لضمان التواصل والمتابعة.</span>
+                </div>
 
-                    <label style="display:block;margin-bottom:7px;font-weight:600;">
-                        اسم الطالب
+                <div>
+
+                    <label>
+                        👤 اسم الطالب <span class="required">*</span>
+                        <span class="hint">(الاسم الظاهر في الشهادات)</span>
                     </label>
 
                     <input
                         id="studentName"
                         type="text"
-                        placeholder="اكتب اسم الطالب"
-                        style="
-                            width:100%;
-                            padding:14px;
-                            border:1px solid #e7edf6;
-                            border-radius:12px;
-                            font-size:15px;
-                            margin-bottom:16px;
-                        "
+                        placeholder="أدخل اسم الطالب"
                     >
 
-                    <label style="display:block;margin-bottom:7px;font-weight:600;">
-                        رقم هاتف الطالب
+                    <label>
+                        📱 رقم هاتف الطالب <span class="required">*</span>
+                        <span class="hint">(للتواصل مع الطالب)</span>
                     </label>
 
                     <input
                         id="studentPhone"
                         type="tel"
-                        placeholder="01xxxxxxxxx"
-                        style="
-                            width:100%;
-                            padding:14px;
-                            border:1px solid #e7edf6;
-                            border-radius:12px;
-                            font-size:15px;
-                            margin-bottom:20px;
-                        "
+                        placeholder="مثال: 01234567890"
+                    >
+
+                    <label>
+                        📱 رقم هاتف ولي الأمر <span class="required">*</span>
+                        <span class="hint">(للمتابعة والتواصل)</span>
+                    </label>
+
+                    <input
+                        id="parentPhone"
+                        type="tel"
+                        placeholder="مثال: 01234567890"
                     >
 
                     <button
                         class="btn"
                         onclick="registerStudent()"
-                        style="width:100%;padding:14px;"
                     >
-                        دخول إلى الموقع
+                        🚀 دخول إلى المنصة
                     </button>
 
                 </div>
@@ -888,16 +937,16 @@
 
         <!-- HOME -->
 
-        <div id="home" class="page active">
+        <div id="home" class="page">
 
             <div class="welcome">
 
                 <div class="welcome-text">
 
-                    <h2>أهلاً بك في موقع مستر مهاب</h2>
+                    <h2>أهلاً بك في منصة مستر مهاب التعليمية</h2>
 
                     <p>
-                        مدرس الرياضيات – المرحلة الابتدائية
+                        تعلم الرياضيات بسهولة مع مستر مهاب
                     </p>
 
                     <p class="quote">
@@ -926,8 +975,8 @@
                 <h3>عن نظام NEXORA</h3>
 
                 <p>
-                    نظام تعليمي رقمي خاص بمستر مهاب، يجمع المذكرات والواجبات
-                    والامتحانات والحضور والتقييم والشهادات في مكان واحد.
+                    نظام تعليمي رقمي خاص بمستر مهاب، يجمع المذكرات والفيديوهات والواجبات
+                    والامتحانات والتقييم والشهادات في مكان واحد.
                 </p>
 
             </div>
@@ -1021,7 +1070,7 @@
                 <h3>الوحدات الدراسية</h3>
 
                 <p>
-                    اختر الوحدة للوصول إلى المذكرة والواجبات والامتحانات الخاصة بها.
+                    اختر الوحدة للوصول إلى المحتوى التعليمي الخاص بها.
                 </p>
 
             </div>
@@ -1050,7 +1099,19 @@
                     <h4>📖 مذكرة الوحدة</h4>
 
                     <p>
-                        مذكرة الوحدة والدروس الخاصة بها
+                        مذكرة الوحدة كاملة
+                    </p>
+
+                </div>
+
+                <div class="content-box" onclick="openUnitSection('videos')">
+
+                    <i class="fas fa-video" style="color:#ff0000"></i>
+
+                    <h4>🎬 فيديوهات الشرح</h4>
+
+                    <p>
+                        فيديوهات شرح الدروس
                     </p>
 
                 </div>
@@ -1135,6 +1196,32 @@
         </div>
 
 
+        <!-- ================= VIDEO VIEW ================= -->
+
+        <div id="videoView" class="page">
+
+            <button class="btn btn-back" onclick="showPage('unitSection')">
+                ← العودة
+            </button>
+
+            <h2 id="videoTitle"></h2>
+
+            <div class="card">
+
+                <div id="videoContainer" class="video-container">
+                    <iframe
+                        id="videoFrame"
+                        src=""
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+
+            </div>
+
+        </div>
+
+
         <!-- ================= QUIZ ================= -->
 
         <div id="quiz" class="page">
@@ -1161,8 +1248,7 @@
                 <h3>متابعة مستوى الطالب</h3>
 
                 <p>
-                    يتم جمع نتائج الامتحانات والواجبات والحضور والتقييمات
-                    لمتابعة مستوى الطالب مع مرور الوقت.
+                    يتم جمع نتائج الامتحانات والواجبات لمتابعة مستوى الطالب مع مرور الوقت.
                 </p>
 
             </div>
@@ -1200,8 +1286,7 @@
                 <h3>شهادة تقدير</h3>
 
                 <p>
-                    يمكن للطالب الحصول على شهادة تقدير رقمية عند تحقيق
-                    نتيجة أو إنجاز معين.
+                    يحصل الطالب على شهادة تقدير رقمية عند تحقيق 80% أو أكثر في أي امتحان أو واجب.
                 </p>
 
                 <div id="certificateContainer"></div>
@@ -1249,265 +1334,127 @@
 
         1: {
             title: 'الصف الأول الابتدائي',
-            pdf: 'https://drive.google.com/file/d/1yUIxdgJURcG36GXtqkM0UZQm-aTKo0lC/preview',
             units: [
-                { number: 1, title: 'الأعداد من 1 إلى 10', pages: '1-18', lessons: [{title: 'العدد 1'}, {title: 'العدد 2'}, {title: 'العدد 3'}],
-                    questions: [
-                        { q: 'ما هو العدد الذي يأتي بعد 1؟', options: ['2', '3', '0'], answer: 0, type: 'mcq' },
-                        { q: 'أكمل: 1 + 1 = ...', options: ['1', '2', '3'], answer: 1, type: 'mcq' },
-                        { q: 'قارن: 2 ... 3', options: ['>', '<', '='], answer: 1, type: 'mcq' },
-                        { q: 'إذا كان عندك 3 تفاحات وأضفت 2، كم تصبح؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
-                        { q: 'العدد 2 يأتي بعد العدد 1', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                        { q: '3 + 1 = 5', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
-                        { q: '4 أكبر من 2', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                {
+                    number: 1,
+                    title: 'الأعداد من 1 إلى 10',
+                    pdf: 'https://drive.google.com/file/d/1yUIxdgJURcG36GXtqkM0UZQm-aTKo0lC/preview',
+                    lessons: [
+                        {
+                            title: 'العدد 1',
+                            video: 'https://www.youtube.com/embed/VIDEO_ID_1',
+                            questions: [
+                                { q: 'ما هو العدد الذي يأتي بعد 1؟', options: ['2', '3', '0'], answer: 0, type: 'mcq' },
+                                { q: '1 + 1 = ...', options: ['1', '2', '3'], answer: 1, type: 'mcq' },
+                                { q: 'العدد 1 هو أصغر عدد موجب', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                                { q: 'أكمل: 1 + ... = 2', type: 'fill', answer: '1' }
+                            ]
+                        },
+                        {
+                            title: 'العدد 2',
+                            video: 'https://www.youtube.com/embed/VIDEO_ID_2',
+                            questions: [
+                                { q: 'العدد الذي يأتي بعد 2 هو ...', options: ['1', '2', '3'], answer: 2, type: 'mcq' },
+                                { q: '2 + 2 = ...', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
+                                { q: 'العدد 2 أكبر من العدد 1', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                                { q: 'أكمل: 2 + 1 = ...', type: 'fill', answer: '3' }
+                            ]
+                        },
+                        {
+                            title: 'العدد 3',
+                            video: 'https://www.youtube.com/embed/VIDEO_ID_3',
+                            questions: [
+                                { q: '3 + 1 = ...', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
+                                { q: 'العدد 3 يأتي بعد العدد 2', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                                { q: 'أكمل: 3 + 2 = ...', type: 'fill', answer: '5' }
+                            ]
+                        }
+                    ],
+                    unitQuestions: [
+                        { q: 'ما هو العدد الذي يأتي بعد 3؟', options: ['2', '4', '5'], answer: 1, type: 'mcq' },
+                        { q: 'كم عدد الأصابع في يد واحدة؟', options: ['3', '4', '5'], answer: 2, type: 'mcq' },
                         { q: 'أكمل: 1, 2, 3, ..., 5', type: 'fill', answer: '4' },
                         { q: 'أكمل: 2 + 3 = ...', type: 'fill', answer: '5' },
                         { q: 'أكمل: 4 - 1 = ...', type: 'fill', answer: '3' },
-                        { q: 'أكمل: 3 + 2 = ...', type: 'fill', answer: '5' },
-                        { q: 'أكمل: 5 - 2 = ...', type: 'fill', answer: '3' },
-                        { q: 'أكمل: 1 + 4 = ...', type: 'fill', answer: '5' },
-                        { q: 'أكمل: 3 + 3 = ...', type: 'fill', answer: '6' },
-                        { q: 'أكمل: 5 - 3 = ...', type: 'fill', answer: '2' },
-                        { q: 'أكمل: 2 + 2 = ...', type: 'fill', answer: '4' },
-                        { q: 'أكمل: 4 + 1 = ...', type: 'fill', answer: '5' },
-                        { q: 'أكمل: 3 - 1 = ...', type: 'fill', answer: '2' },
-                        { q: 'أكمل: 5 + 0 = ...', type: 'fill', answer: '5' },
-                        { q: 'أكمل: 2 + 4 = ...', type: 'fill', answer: '6' }
-                    ] },
-                { number: 2, title: 'الجمع والطرح', pages: '19-35', lessons: [{title: 'الجمع'}, {title: 'الطرح'}],
-                    questions: [
-                        { q: '2 + 3 = ...', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
-                        { q: '5 - 2 = ...', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
-                        { q: '7 + 2 = ...', options: ['8', '9', '10'], answer: 1, type: 'mcq' },
-                        { q: 'أكمل: 4 + ... = 7', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
-                        { q: 'إذا كان مع أحمد 8 ريالات، وأعطى أخيه 3، كم تبقى معه؟', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
-                        { q: '5 + 5 = 10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                        { q: '3 - 1 = 1', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
+                        { q: 'أكمل: 3 + 2 = ...', type: 'fill', answer: '5' }
+                    ]
+                },
+                {
+                    number: 2,
+                    title: 'الجمع والطرح',
+                    pdf: 'https://drive.google.com/file/d/1yUIxdgJURcG36GXtqkM0UZQm-aTKo0lC/preview',
+                    lessons: [
+                        {
+                            title: 'الجمع',
+                            video: 'https://www.youtube.com/embed/VIDEO_ID_4',
+                            questions: [
+                                { q: '2 + 3 = ...', options: ['4', '5', '6'], answer: 1, type: 'mcq' },
+                                { q: '5 + 5 = 10', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                                { q: 'أكمل: 3 + 4 = ...', type: 'fill', answer: '7' }
+                            ]
+                        },
+                        {
+                            title: 'الطرح',
+                            video: 'https://www.youtube.com/embed/VIDEO_ID_5',
+                            questions: [
+                                { q: '5 - 2 = ...', options: ['2', '3', '4'], answer: 1, type: 'mcq' },
+                                { q: '3 - 1 = 1', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
+                                { q: 'أكمل: 8 - 3 = ...', type: 'fill', answer: '5' }
+                            ]
+                        }
+                    ],
+                    unitQuestions: [
+                        { q: '2 + 4 = ...', options: ['5', '6', '7'], answer: 1, type: 'mcq' },
                         { q: '7 - 2 = 5', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
                         { q: 'أكمل: 6 + 2 = ...', type: 'fill', answer: '8' },
                         { q: 'أكمل: 9 - 4 = ...', type: 'fill', answer: '5' },
-                        { q: 'أكمل: 3 + 4 = ...', type: 'fill', answer: '7' },
-                        { q: 'أكمل: 8 - 3 = ...', type: 'fill', answer: '5' },
-                        { q: 'أكمل: 7 + 1 = ...', type: 'fill', answer: '8' },
-                        { q: 'أكمل: 10 - 3 = ...', type: 'fill', answer: '7' },
-                        { q: 'أكمل: 2 + 6 = ...', type: 'fill', answer: '8' },
-                        { q: 'أكمل: 9 - 2 = ...', type: 'fill', answer: '7' },
-                        { q: 'أكمل: 4 + 4 = ...', type: 'fill', answer: '8' },
-                        { q: 'أكمل: 10 - 5 = ...', type: 'fill', answer: '5' },
-                        { q: 'أكمل: 1 + 8 = ...', type: 'fill', answer: '9' },
-                        { q: 'أكمل: 6 - 3 = ...', type: 'fill', answer: '3' }
-                    ] },
-                { number: 3, title: 'الأشكال الهندسية', pages: '36-50', lessons: [{title: 'المربع'}, {title: 'المثلث'}, {title: 'الدائرة'}],
-                    questions: [
-                        { q: 'كم عدد أضلاع المربع؟', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
-                        { q: 'الشكل الذي له 3 أضلاع هو ...', options: ['المربع', 'المثلث', 'الدائرة'], answer: 1, type: 'mcq' },
-                        { q: 'الدائرة ليس لها أضلاع', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                        { q: 'أكمل: 10 - 3 = ...', type: 'fill', answer: '7' }
+                    ]
+                },
+                {
+                    number: 3,
+                    title: 'الأشكال الهندسية',
+                    pdf: 'https://drive.google.com/file/d/1yUIxdgJURcG36GXtqkM0UZQm-aTKo0lC/preview',
+                    lessons: [
+                        {
+                            title: 'المربع',
+                            video: 'https://www.youtube.com/embed/VIDEO_ID_6',
+                            questions: [
+                                { q: 'كم عدد أضلاع المربع؟', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
+                                { q: 'أكمل: المربع له ... أضلاع متساوية', type: 'fill', answer: '4' }
+                            ]
+                        },
+                        {
+                            title: 'المثلث',
+                            video: 'https://www.youtube.com/embed/VIDEO_ID_7',
+                            questions: [
+                                { q: 'الشكل الذي له 3 أضلاع هو ...', options: ['المربع', 'المثلث', 'الدائرة'], answer: 1, type: 'mcq' },
+                                { q: 'أكمل: المثلث له ... أضلاع', type: 'fill', answer: '3' }
+                            ]
+                        },
+                        {
+                            title: 'الدائرة',
+                            video: 'https://www.youtube.com/embed/VIDEO_ID_8',
+                            questions: [
+                                { q: 'الدائرة ليس لها أضلاع', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
+                                { q: 'أكمل: الدائرة لها ... أضلاع', type: 'fill', answer: '0' }
+                            ]
+                        }
+                    ],
+                    unitQuestions: [
+                        { q: 'المربع له ... زوايا', options: ['3', '4', '5'], answer: 1, type: 'mcq' },
+                        { q: 'المثلث له 4 أضلاع', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
                         { q: 'أكمل: المربع له ... أضلاع متساوية', type: 'fill', answer: '4' },
-                        { q: 'أكمل: المثلث له ... أضلاع', type: 'fill', answer: '3' },
-                        { q: 'أكمل: الدائرة لها ... أضلاع', type: 'fill', answer: '0' },
-                        { q: 'أكمل: الشكل الذي له 4 أضلاع متساوية هو ...', type: 'fill', answer: 'المربع' },
-                        { q: 'أكمل: الشكل الذي له 3 زوايا هو ...', type: 'fill', answer: 'المثلث' },
-                        { q: 'أكمل: الدائرة ليس لها ...', type: 'fill', answer: 'أضلاع' },
-                        { q: 'أكمل: المربع له ... زوايا', type: 'fill', answer: '4' }
-                    ] }
-            ] },
-        2: { title: 'الصف الثاني الابتدائي', pdf: 'https://drive.google.com/file/d/12GBX2mviwB9BcXyOX84lw1hZNUbp-EQh/preview', units: [
-            { number: 1, title: 'التمثيل البياني', pages: '1-10', lessons: [{title: 'جمع البيانات'}, {title: 'تحليل البيانات'}],
-                questions: [
-                    { q: 'التمثيل البياني يستخدم لـ ...', options: ['عرض البيانات', 'حل المعادلات', 'رسم الأشكال'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: التمثيل بالأعمدة يوضح ... البيانات', type: 'fill', answer: 'مقارنة' },
-                    { q: 'التمثيل البياني مفيد فقط للرياضيات', options: ['صح', 'خطأ'], answer: 1, type: 'truefalse' },
-                    { q: 'أكمل: التمثيل البياني يساعد في ... البيانات', type: 'fill', answer: 'تنظيم' },
-                    { q: 'أكمل: من أنواع التمثيل البياني ...', type: 'fill', answer: 'الأعمدة' },
-                    { q: 'أكمل: التمثيل بالأعمدة يستخدم لمقارنة ...', type: 'fill', answer: 'البيانات' }
-                ] },
-            { number: 2, title: 'استراتيجيات الجمع والطرح', pages: '11-20', lessons: [{title: 'الجمع بالعد'}, {title: 'الطرح بالعد'}],
-                questions: [
-                    { q: 'استراتيجية الجمع بالعد تستخدم لـ ...', options: ['جمع الأعداد', 'طرح الأعداد', 'ضرب الأعداد'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: الجمع بالعد يبدأ من العدد ...', type: 'fill', answer: 'الأكبر' },
-                    { q: 'أكمل: ناتج 5 + 3 = ...', type: 'fill', answer: '8' },
-                    { q: 'أكمل: ناتج 7 - 2 = ...', type: 'fill', answer: '5' }
-                ] },
-            { number: 3, title: 'القيمة المكانية', pages: '21-30', lessons: [{title: 'الآحاد والعشرات'}, {title: 'المئات'}],
-                questions: [
-                    { q: 'العدد 25 يتكون من ...', options: ['2 آحاد 5 عشرات', '5 آحاد 2 عشرات', '2 عشرات 5 آحاد'], answer: 2, type: 'mcq' },
-                    { q: 'أكمل: 34 = 3 عشرات + ... آحاد', type: 'fill', answer: '4' },
-                    { q: 'العدد 100 يتكون من 10 عشرات', options: ['صح', 'خطأ'], answer: 0, type: 'truefalse' },
-                    { q: 'أكمل: 56 = 5 عشرات + ... آحاد', type: 'fill', answer: '6' },
-                    { q: 'أكمل: 3 مئات = ...', type: 'fill', answer: '300' }
-                ] },
-            { number: 4, title: 'الجمع والطرح بإعادة التجميع', pages: '31-40', lessons: [{title: 'الجمع بإعادة التجميع'}, {title: 'الطرح بإعادة التجميع'}],
-                questions: [
-                    { q: 'ناتج 27 + 35 = ...', options: ['52', '62', '72'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: 43 - 18 = ...', type: 'fill', answer: '25' },
-                    { q: 'أكمل: 56 + 27 = ...', type: 'fill', answer: '83' }
-                ] },
-            { number: 5, title: 'الهندسة والمصفوفات', pages: '41-50', lessons: [{title: 'الأشكال ثلاثية الأبعاد'}, {title: 'المصفوفات'}],
-                questions: [
-                    { q: 'المكعب له ... وجوه', options: ['4', '6', '8'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: المصفوفة هي ترتيب ... في صفوف وأعمدة', type: 'fill', answer: 'أشياء' },
-                    { q: 'أكمل: المكعب له ... أحرف', type: 'fill', answer: '12' }
-                ] },
-            { number: 6, title: 'القياس والوقت', pages: '51-60', lessons: [{title: 'الطول والكتلة'}, {title: 'قراءة الساعة'}],
-                questions: [
-                    { q: 'وحدة قياس الطول هي ...', options: ['السنتيمتر', 'الكيلوغرام', 'اللتر'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: الساعة تشير إلى ...', type: 'fill', answer: 'الوقت' },
-                    { q: 'أكمل: الكيلوغرام وحدة قياس ...', type: 'fill', answer: 'الكتلة' }
-                ] }
-        ] },
-        3: { title: 'الصف الثالث الابتدائي', pdf: 'https://drive.google.com/file/d/1L-p_bG-rGuRYnfFcbtkviGTz5SElAD2W/preview', units: [
-            { number: 1, title: 'القيمة المكانية للأعداد الكبيرة', pages: '1-15', lessons: [{title: 'قراءة الأعداد الكبيرة'}, {title: 'تكوين الأعداد الكبيرة'}],
-                questions: [
-                    { q: 'العدد 1234 يتكون من ...', options: ['1 آلاف 2 مئات 3 عشرات 4 آحاد', '1 آلاف 3 مئات 2 عشرات 4 آحاد', '4 آلاف 3 مئات 2 عشرات 1 آحاد'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 5678 = 5 آلاف + 6 مئات + 7 عشرات + ... آحاد', type: 'fill', answer: '8' },
-                    { q: 'أكمل: 2345 = 2 آلاف + 3 مئات + 4 عشرات + ... آحاد', type: 'fill', answer: '5' }
-                ] },
-            { number: 2, title: 'استراتيجيات الجمع والطرح', pages: '16-25', lessons: [{title: 'جمع الأعداد الكبيرة'}, {title: 'طرح الأعداد الكبيرة'}],
-                questions: [
-                    { q: 'ناتج 234 + 567 = ...', options: ['701', '801', '901'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: 890 - 456 = ...', type: 'fill', answer: '434' },
-                    { q: 'أكمل: 345 + 678 = ...', type: 'fill', answer: '1023' }
-                ] },
-            { number: 3, title: 'الضرب كعلاقة', pages: '26-35', lessons: [{title: 'مفهوم الضرب'}, {title: 'جدول الضرب'}],
-                questions: [
-                    { q: '3 × 4 = ...', options: ['10', '12', '14'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: 5 × 6 = ...', type: 'fill', answer: '30' },
-                    { q: 'أكمل: 7 × 8 = ...', type: 'fill', answer: '56' }
-                ] },
-            { number: 4, title: 'العمليات على الأعداد', pages: '36-45', lessons: [{title: 'الجمع والطرح'}, {title: 'الضرب'}],
-                questions: [
-                    { q: 'ناتج 123 + 456 = ...', options: ['579', '569', '589'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 7 × 8 = ...', type: 'fill', answer: '56' },
-                    { q: 'أكمل: 9 × 6 = ...', type: 'fill', answer: '54' }
-                ] },
-            { number: 5, title: 'الهندسة والقياس', pages: '46-55', lessons: [{title: 'المساحة'}, {title: 'المحيط'}],
-                questions: [
-                    { q: 'المساحة هي ...', options: ['مقدار السطح', 'طول الحواف', 'حجم الشكل'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: محيط المربع = 4 × ...', type: 'fill', answer: 'الضلع' },
-                    { q: 'أكمل: مساحة المستطيل = الطول × ...', type: 'fill', answer: 'العرض' }
-                ] }
-        ] },
-        4: { title: 'الصف الرابع الابتدائي', pdf: 'https://drive.google.com/file/d/18LfLf7J2mU_4Jl2flJco2RFCH1PQ2zPM/preview', units: [
-            { number: 1, title: 'القيمة المكانية', pages: '1-15', lessons: [{title: 'الأعداد الكبيرة'}, {title: 'القيمة المكانية'}],
-                questions: [
-                    { q: 'العدد 4567 يتكون من ...', options: ['4 آلاف 5 مئات 6 عشرات 7 آحاد', '4 آلاف 6 مئات 5 عشرات 7 آحاد', '7 آلاف 6 مئات 5 عشرات 4 آحاد'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 1234 = 1 آلاف + 2 مئات + 3 عشرات + ... آحاد', type: 'fill', answer: '4' },
-                    { q: 'أكمل: 6789 = 6 آلاف + 7 مئات + 8 عشرات + ... آحاد', type: 'fill', answer: '9' }
-                ] },
-            { number: 2, title: 'العمليات الحسابية', pages: '16-25', lessons: [{title: 'الجمع'}, {title: 'الطرح'}],
-                questions: [
-                    { q: 'ناتج 2345 + 6789 = ...', options: ['9134', '9034', '9234'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 9876 - 5432 = ...', type: 'fill', answer: '4444' },
-                    { q: 'أكمل: 4567 + 2345 = ...', type: 'fill', answer: '6912' }
-                ] },
-            { number: 3, title: 'المساحة والمحيط', pages: '26-35', lessons: [{title: 'المساحة'}, {title: 'المحيط'}],
-                questions: [
-                    { q: 'مساحة المستطيل = ...', options: ['الطول × العرض', '2 × (الطول + العرض)', 'الطول + العرض'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: محيط المستطيل = 2 × (... + العرض)', type: 'fill', answer: 'الطول' },
-                    { q: 'أكمل: محيط المربع = 4 × ...', type: 'fill', answer: 'الضلع' }
-                ] },
-            { number: 4, title: 'عوامل الأعداد', pages: '36-45', lessons: [{title: 'العوامل'}, {title: 'المضاعفات'}],
-                questions: [
-                    { q: 'عوامل العدد 12 هي ...', options: ['1,2,3,4,6,12', '1,2,4,6,12', '1,2,3,4,12'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: مضاعفات العدد 3 هي 3,6,9,...,15', type: 'fill', answer: '12' },
-                    { q: 'أكمل: عوامل العدد 18 هي ...', type: 'fill', answer: '1,2,3,6,9,18' }
-                ] },
-            { number: 5, title: 'الضرب كعلاقة', pages: '46-55', lessons: [{title: 'الضرب'}, {title: 'القسمة'}],
-                questions: [
-                    { q: 'ناتج 12 × 15 = ...', options: ['170', '180', '190'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: 144 ÷ 12 = ...', type: 'fill', answer: '12' },
-                    { q: 'أكمل: 15 × 12 = ...', type: 'fill', answer: '180' }
-                ] },
-            { number: 6, title: 'العوامل والمضاعفات', pages: '56-65', lessons: [{title: 'العوامل'}, {title: 'المضاعفات'}],
-                questions: [
-                    { q: 'العوامل الأولية للعدد 30 هي ...', options: ['2,3,5', '2,5,7', '3,5,7'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: المضاعف المشترك الأصغر للعددين 4 و 6 هو ...', type: 'fill', answer: '12' },
-                    { q: 'أكمل: العوامل الأولية للعدد 24 هي ...', type: 'fill', answer: '2,3' }
-                ] },
-            { number: 7, title: 'عمليتا الضرب والقسمة', pages: '66-75', lessons: [{title: 'الضرب'}, {title: 'القسمة'}],
-                questions: [
-                    { q: 'ناتج 24 × 36 = ...', options: ['854', '864', '874'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: 252 ÷ 12 = ...', type: 'fill', answer: '21' },
-                    { q: 'أكمل: 18 × 12 = ...', type: 'fill', answer: '216' }
-                ] },
-            { number: 8, title: 'ترتيب العمليات', pages: '76-85', lessons: [{title: 'الأولوية'}, {title: 'الترتيب'}],
-                questions: [
-                    { q: 'ناتج 3 + 5 × 2 = ...', options: ['13', '16', '10'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: (4 + 6) × 2 = ...', type: 'fill', answer: '20' },
-                    { q: 'أكمل: 5 + 3 × 4 = ...', type: 'fill', answer: '17' }
-                ] }
-        ] },
-        5: { title: 'الصف الخامس الابتدائي', pdf: 'https://drive.google.com/file/d/1yYex_tZ_4j_eI5jjb39CNwqnbfWdA3hx/preview', units: [
-            { number: 1, title: 'الكسور العشرية', pages: '1-15', lessons: [{title: 'الأجزاء من 10'}, {title: 'الأجزاء من 100'}],
-                questions: [
-                    { q: '0.5 = ...', options: ['5/10', '1/2', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
-                    { q: 'أكمل: 0.25 = ...', options: ['25/100', '1/4', 'كلا الإجابتين'], answer: 2, type: 'mcq' },
-                    { q: 'أكمل: 0.75 = ...', type: 'fill', answer: '3/4' },
-                    { q: 'أكمل: 0.3 = ...', type: 'fill', answer: '3/10' }
-                ] },
-            { number: 2, title: 'المساحة والحجم', pages: '16-25', lessons: [{title: 'المساحة'}, {title: 'الحجم'}],
-                questions: [
-                    { q: 'وحدة قياس المساحة هي ...', options: ['المتر المربع', 'المتر المكعب', 'السنتيمتر'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: حجم المكعب = ... × ... × ...', type: 'fill', answer: 'الطول' },
-                    { q: 'أكمل: حجم متوازي المستطيلات = الطول × العرض × ...', type: 'fill', answer: 'الارتفاع' }
-                ] },
-            { number: 3, title: 'الأنماط البصرية', pages: '26-35', lessons: [{title: 'الأنماط'}, {title: 'التسلسل'}],
-                questions: [
-                    { q: 'الأنماط البصرية هي ...', options: ['ترتيب متكرر', 'ترتيب عشوائي', 'ترتيب حسب الحجم'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 1, 2, 4, 8, ...', type: 'fill', answer: '16' },
-                    { q: 'أكمل: 2, 4, 6, 8, ...', type: 'fill', answer: '10' }
-                ] },
-            { number: 4, title: 'القسمة المطولة', pages: '36-45', lessons: [{title: 'القسمة'}, {title: 'الباقي'}],
-                questions: [
-                    { q: 'ناتج 144 ÷ 12 = ...', options: ['12', '14', '10'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 235 ÷ 5 = ...', type: 'fill', answer: '47' },
-                    { q: 'أكمل: 180 ÷ 6 = ...', type: 'fill', answer: '30' }
-                ] },
-            { number: 5, title: 'العوامل والمضاعفات', pages: '46-55', lessons: [{title: 'العوامل'}, {title: 'المضاعفات'}],
-                questions: [
-                    { q: 'العوامل الأولية للعدد 60 هي ...', options: ['2,3,5', '2,5,7', '3,5,7'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: المضاعف المشترك الأصغر للعددين 6 و 8 هو ...', type: 'fill', answer: '24' },
-                    { q: 'أكمل: العوامل الأولية للعدد 48 هي ...', type: 'fill', answer: '2,3' }
-                ] }
-        ] },
-        6: { title: 'الصف السادس الابتدائي', pdf: 'https://drive.google.com/file/d/1QTDgDQphvfjnACSAddOv9pKegyptUpLU/preview', units: [
-            { number: 1, title: 'الأنماط العددية والدوال', pages: '1-15', lessons: [{title: 'الأنماط'}, {title: 'الدوال'}],
-                questions: [
-                    { q: 'الأنماط العددية هي ...', options: ['تسلسل منتظم', 'تسلسل عشوائي', 'مجموعة أعداد'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 2, 4, 6, 8, ...', type: 'fill', answer: '10' },
-                    { q: 'أكمل: 3, 6, 9, 12, ...', type: 'fill', answer: '15' }
-                ] },
-            { number: 2, title: 'العوامل الأولية والقوى والأسس', pages: '16-25', lessons: [{title: 'العوامل الأولية'}, {title: 'القوى والأسس'}],
-                questions: [
-                    { q: 'العوامل الأولية للعدد 36 هي ...', options: ['2,3', '2,5', '3,5'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: 2^3 = ...', type: 'fill', answer: '8' },
-                    { q: 'أكمل: 3^2 = ...', type: 'fill', answer: '9' }
-                ] },
-            { number: 3, title: 'ترتيب العمليات والمتغيرات', pages: '26-35', lessons: [{title: 'ترتيب العمليات'}, {title: 'المتغيرات'}],
-                questions: [
-                    { q: 'ناتج 3 + 4 × 2 = ...', options: ['11', '14', '10'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: إذا كانت س = 3، فإن 2س + 4 = ...', type: 'fill', answer: '10' },
-                    { q: 'أكمل: إذا كانت ص = 5، فإن 3ص - 2 = ...', type: 'fill', answer: '13' }
-                ] },
-            { number: 4, title: 'حل المعادلات البسيطة', pages: '36-45', lessons: [{title: 'المعادلات'}, {title: 'الحل'}],
-                questions: [
-                    { q: 'حل المعادلة س + 5 = 10 هو ...', options: ['5', '10', '15'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: حل المعادلة 2س = 10 هو س = ...', type: 'fill', answer: '5' },
-                    { q: 'أكمل: حل المعادلة 3س = 15 هو س = ...', type: 'fill', answer: '5' }
-                ] },
-            { number: 5, title: 'الأعداد الصحيحة', pages: '46-55', lessons: [{title: 'الأعداد الموجبة والسالبة'}, {title: 'الجمع والطرح'}],
-                questions: [
-                    { q: '-3 + 5 = ...', options: ['-2', '2', '8'], answer: 1, type: 'mcq' },
-                    { q: 'أكمل: -4 - 2 = ...', type: 'fill', answer: '-6' },
-                    { q: 'أكمل: -5 + 3 = ...', type: 'fill', answer: '-2' }
-                ] },
-            { number: 6, title: 'المساحات والحجوم', pages: '56-65', lessons: [{title: 'المساحة'}, {title: 'الحجم'}],
-                questions: [
-                    { q: 'مساحة المثلث = ...', options: ['1/2 × القاعدة × الارتفاع', 'القاعدة × الارتفاع', 'الطول × العرض'], answer: 0, type: 'mcq' },
-                    { q: 'أكمل: حجم المنشور = مساحة القاعدة × ...', type: 'fill', answer: 'الارتفاع' },
-                    { q: 'أكمل: مساحة المربع = ... × ...', type: 'fill', answer: 'الضلع' }
-                ] }
-        ] }
+                        { q: 'أكمل: المثلث له ... أضلاع', type: 'fill', answer: '3' }
+                    ]
+                }
+            ]
+        },
+        2: { title: 'الصف الثاني الابتدائي', units: [] },
+        3: { title: 'الصف الثالث الابتدائي', units: [] },
+        4: { title: 'الصف الرابع الابتدائي', units: [] },
+        5: { title: 'الصف الخامس الابتدائي', units: [] },
+        6: { title: 'الصف السادس الابتدائي', units: [] }
     };
 
 
@@ -1538,7 +1485,7 @@
             unitGrid.innerHTML = `
                 <div class="card" style="grid-column:1/-1;text-align:center;">
                     <h3>📚 محتوى الصف قيد التجهيز</h3>
-                    <p>سيتم إضافة الوحدات والمذكرات والواجبات والامتحانات الخاصة بهذا الصف قريبًا.</p>
+                    <p>سيتم إضافة الوحدات والمذكرات والفيديوهات والواجبات والامتحانات الخاصة بهذا الصف قريبًا.</p>
                 </div>
             `;
 
@@ -1550,7 +1497,7 @@
                     <div class="unit-card" onclick="openUnit(${unit.number})">
                         <div class="unit-icon"><i class="fas fa-book-open"></i></div>
                         <h3>${unit.title}</h3>
-                        <p>مذكرة • واجبات • امتحانات</p>
+                        <p>مذكرة • فيديوهات • واجبات • امتحانات</p>
                     </div>
                 `;
 
@@ -1635,37 +1582,59 @@
             title.textContent =
                 '📖 مذكرة ' + unit.title;
 
-            let lessonsHtml = '';
+            content.innerHTML = `
+                <div class="card">
+                    <h3>📖 مذكرة ${unit.title}</h3>
+                    <p>عرض مذكرة الوحدة كاملة.</p>
+                </div>
+                <div style="text-align:center;margin-top:15px;">
+                    <button class="btn btn-pdf" onclick="openUnitMemo()">
+                        📥 فتح المذكرة
+                    </button>
+                </div>
+            `;
+
+        }
+
+
+        /* ================= VIDEOS ================= */
+
+        if(section === 'videos'){
+
+            title.textContent =
+                '🎬 فيديوهات شرح ' + unit.title;
+
+            let videosHtml = '';
+
             if (unit.lessons && unit.lessons.length > 0) {
-                lessonsHtml = unit.lessons.map((lesson, idx) => `
+                videosHtml = unit.lessons.map((lesson, idx) => `
                     <div class="lesson-item">
-                        <div>
-                            <strong>📘 الدرس ${idx + 1}: ${lesson.title}</strong>
+                        <div class="lesson-info">
+                            <strong>🎥 فيديو الدرس ${idx + 1}: ${lesson.title}</strong>
                             <br>
-                            <span>مذكرة الدرس</span>
+                            <span>فيديو شرح الدرس</span>
                         </div>
-                        <button class="btn" onclick="openLesson()">فتح المذكرة</button>
+                        <div class="lesson-actions">
+                            <button class="btn btn-video" onclick="openVideo(${currentUnit}, ${idx})">
+                                <i class="fas fa-play"></i> مشاهدة
+                            </button>
+                        </div>
                     </div>
                 `).join('');
             } else {
-                lessonsHtml = `
-                    <div class="lesson-item">
-                        <div>
-                            <strong>📖 مذكرة ${unit.title}</strong>
-                            <br>
-                            <span>عرض المذكرة كاملة</span>
-                        </div>
-                        <button class="btn" onclick="openLesson()">فتح المذكرة</button>
+                videosHtml = `
+                    <div class="card">
+                        <p>لا توجد فيديوهات متاحة لهذه الوحدة حالياً.</p>
                     </div>
                 `;
             }
 
             content.innerHTML = `
                 <div class="card">
-                    <h3>مذكرة ${unit.title}</h3>
-                    <p>اختر الدرس لفتح المذكرة.</p>
+                    <h3>🎬 فيديوهات شرح ${unit.title}</h3>
+                    <p>اختر الدرس لمشاهدة فيديو الشرح.</p>
                 </div>
-                <div class="lesson-list">${lessonsHtml}</div>
+                <div class="lesson-list">${videosHtml}</div>
             `;
 
         }
@@ -1683,42 +1652,48 @@
             if (unit.lessons && unit.lessons.length > 0) {
                 homeworkHtml = unit.lessons.map((lesson, idx) => `
                     <div class="lesson-item">
-                        <div>
+                        <div class="lesson-info">
                             <strong>📝 واجب الدرس ${idx + 1}: ${lesson.title}</strong>
                             <br>
                             <span>واجب تدريبي على الدرس</span>
                         </div>
-                        <button class="btn" onclick="startHomework(${currentUnit}, ${idx})">ابدأ الواجب</button>
+                        <div class="lesson-actions">
+                            <button class="btn" onclick="startHomework(${currentUnit}, ${idx})">ابدأ الواجب</button>
+                        </div>
                     </div>
                 `).join('');
 
                 homeworkHtml += `
                     <div class="lesson-item">
-                        <div>
+                        <div class="lesson-info">
                             <strong>⭐ واجب شامل على ${unit.title}</strong>
                             <br>
                             <span>واجب شامل لجميع دروس الوحدة</span>
                         </div>
-                        <button class="btn" onclick="startUnitHomework(${currentUnit})">ابدأ الواجب</button>
+                        <div class="lesson-actions">
+                            <button class="btn" onclick="startUnitHomework(${currentUnit})">ابدأ الواجب</button>
+                        </div>
                     </div>
                 `;
 
             } else {
                 homeworkHtml = `
                     <div class="lesson-item">
-                        <div>
+                        <div class="lesson-info">
                             <strong>📝 واجب ${unit.title}</strong>
                             <br>
                             <span>واجب تدريبي على الوحدة</span>
                         </div>
-                        <button class="btn" onclick="startUnitHomework(${currentUnit})">ابدأ الواجب</button>
+                        <div class="lesson-actions">
+                            <button class="btn" onclick="startUnitHomework(${currentUnit})">ابدأ الواجب</button>
+                        </div>
                     </div>
                 `;
             }
 
             content.innerHTML = `
                 <div class="card">
-                    <h3>واجبات ${unit.title}</h3>
+                    <h3>📝 واجبات ${unit.title}</h3>
                     <p>اختر الواجب المناسب للتدريب.</p>
                 </div>
                 <div class="lesson-list">${homeworkHtml}</div>
@@ -1739,30 +1714,34 @@
             if (unit.lessons && unit.lessons.length > 0) {
                 examsHtml = unit.lessons.map((lesson, idx) => `
                     <div class="lesson-item">
-                        <div>
+                        <div class="lesson-info">
                             <strong>📝 امتحان الدرس ${idx + 1}: ${lesson.title}</strong>
                             <br>
                             <span>امتحان تدريبي على الدرس</span>
                         </div>
-                        <button class="btn" onclick="startExam(${currentUnit}, ${idx}, 'lesson')">ابدأ الامتحان</button>
+                        <div class="lesson-actions">
+                            <button class="btn" onclick="startExam(${currentUnit}, ${idx}, 'lesson')">ابدأ الامتحان</button>
+                        </div>
                     </div>
                 `).join('');
             }
 
             examsHtml += `
                 <div class="lesson-item">
-                    <div>
+                    <div class="lesson-info">
                         <strong>⭐ امتحان شامل على ${unit.title}</strong>
                         <br>
                         <span>امتحان شامل لجميع دروس الوحدة</span>
                     </div>
-                    <button class="btn" onclick="startExam(${currentUnit}, -1, 'unit')">ابدأ الامتحان</button>
+                    <div class="lesson-actions">
+                        <button class="btn" onclick="startExam(${currentUnit}, -1, 'unit')">ابدأ الامتحان</button>
+                    </div>
                 </div>
             `;
 
             content.innerHTML = `
                 <div class="card">
-                    <h3>امتحانات ${unit.title}</h3>
+                    <h3>🧠 امتحانات ${unit.title}</h3>
                     <p>اختر الامتحان المناسب للاختبار.</p>
                 </div>
                 <div class="lesson-list">${examsHtml}</div>
@@ -1775,9 +1754,9 @@
     }
 
 
-    /* ================= LESSON / PDF ================= */
+    /* ================= UNIT MEMO ================= */
 
-    function openLesson(){
+    function openUnitMemo(){
 
         const grade =
             gradesData[currentGrade];
@@ -1787,7 +1766,7 @@
                 item => item.number === currentUnit
             );
 
-        if(!unit || !grade.pdf){
+        if(!unit || !unit.pdf){
 
             alert('المذكرة غير متاحة حاليًا.');
 
@@ -1795,18 +1774,41 @@
         }
 
         document.getElementById('lessonTitle').textContent =
-            '📖 ' + unit.title;
+            '📖 مذكرة ' + unit.title;
 
-        // عرض المذكرة مع نطاق الصفحات الخاص بالوحدة
-        let pdfUrl = grade.pdf;
-        if (unit.pages) {
-            const pageStart = unit.pages.split('-')[0];
-            pdfUrl += `#page=${pageStart}`;
-        }
-        document.getElementById('pdfFrame').src = pdfUrl;
-        document.getElementById('pdfDownload').href = grade.pdf;
+        document.getElementById('pdfFrame').src = unit.pdf;
+        document.getElementById('pdfDownload').href = unit.pdf;
 
         showPage('lessonView');
+
+    }
+
+
+    /* ================= VIDEO ================= */
+
+    function openVideo(unitNumber, lessonIndex){
+
+        const grade = gradesData[currentGrade];
+        const unit = grade.units.find(item => item.number === unitNumber);
+
+        if (!unit || !unit.lessons || !unit.lessons[lessonIndex]) {
+            alert('فيديو الشرح غير متاح حالياً.');
+            return;
+        }
+
+        const lesson = unit.lessons[lessonIndex];
+
+        if (!lesson.video) {
+            alert('لا يوجد فيديو لهذا الدرس حالياً.');
+            return;
+        }
+
+        document.getElementById('videoTitle').textContent =
+            '🎬 فيديو شرح: ' + lesson.title;
+
+        document.getElementById('videoFrame').src = lesson.video;
+
+        showPage('videoView');
 
     }
 
@@ -1823,7 +1825,8 @@
             return;
         }
 
-        const questions = unit.questions || [];
+        const lesson = unit.lessons[lessonIndex];
+        const questions = lesson.questions || [];
 
         if (questions.length === 0) {
             alert('لا توجد أسئلة متاحة لهذا الواجب.');
@@ -1833,8 +1836,8 @@
         const shuffled = [...questions].sort(() => Math.random() - 0.5);
         const selectedQuestions = shuffled.slice(0, Math.min(20, shuffled.length));
 
-        const title = `📝 واجب الدرس: ${unit.lessons[lessonIndex].title}`;
-        startQuiz(selectedQuestions, title, 120);
+        const title = `📝 واجب الدرس: ${lesson.title}`;
+        startQuiz(selectedQuestions, title, 120, 'homework');
     }
 
     function startUnitHomework(unitNumber){
@@ -1847,7 +1850,7 @@
             return;
         }
 
-        const questions = unit.questions || [];
+        const questions = unit.unitQuestions || [];
 
         if (questions.length === 0) {
             alert('لا توجد أسئلة متاحة لهذا الواجب.');
@@ -1858,7 +1861,7 @@
         const selectedQuestions = shuffled.slice(0, Math.min(20, shuffled.length));
 
         const title = `⭐ واجب شامل على ${unit.title}`;
-        startQuiz(selectedQuestions, title, 150);
+        startQuiz(selectedQuestions, title, 150, 'homework');
     }
 
 
@@ -1874,27 +1877,31 @@
             return;
         }
 
-        const questions = unit.questions || [];
-
-        if (questions.length === 0) {
-            alert('لا توجد أسئلة متاحة لهذا الامتحان.');
-            return;
-        }
-
-        const shuffled = [...questions].sort(() => Math.random() - 0.5);
-
-        let selectedQuestions;
+        let questions;
         let title;
 
         if (type === 'lesson' && lessonIndex >= 0 && unit.lessons && unit.lessons[lessonIndex]) {
-            selectedQuestions = shuffled.slice(0, Math.min(30, shuffled.length));
-            title = `📝 امتحان الدرس: ${unit.lessons[lessonIndex].title}`;
+            const lesson = unit.lessons[lessonIndex];
+            questions = lesson.questions || [];
+            if (questions.length === 0) {
+                alert('لا توجد أسئلة متاحة لهذا الامتحان.');
+                return;
+            }
+            const shuffled = [...questions].sort(() => Math.random() - 0.5);
+            questions = shuffled.slice(0, Math.min(30, shuffled.length));
+            title = `📝 امتحان الدرس: ${lesson.title}`;
         } else {
-            selectedQuestions = shuffled.slice(0, Math.min(30, shuffled.length));
+            questions = unit.unitQuestions || [];
+            if (questions.length === 0) {
+                alert('لا توجد أسئلة متاحة للامتحان الشامل.');
+                return;
+            }
+            const shuffled = [...questions].sort(() => Math.random() - 0.5);
+            questions = shuffled.slice(0, Math.min(30, shuffled.length));
             title = `⭐ امتحان شامل على ${unit.title}`;
         }
 
-        startQuiz(selectedQuestions, title, 180);
+        startQuiz(questions, title, 180, 'exam');
     }
 
 
@@ -1906,15 +1913,17 @@
         answers: [],
         timer: null,
         timeLeft: 0,
-        started: false
+        started: false,
+        type: 'exam'
     };
 
-    function startQuiz(questions, title, timeLimit = 60) {
+    function startQuiz(questions, title, timeLimit = 60, type = 'exam') {
         quizState.questions = questions;
         quizState.current = 0;
         quizState.answers = [];
         quizState.timeLeft = timeLimit;
         quizState.started = true;
+        quizState.type = type;
 
         document.getElementById('quizTitle').textContent = title;
 
@@ -2020,9 +2029,9 @@
         const percentage = Math.round((correct / total) * 100);
         let message = '';
         let emoji = '';
-        if (percentage >= 90) { emoji = '🌟'; message = 'ممتاز! أنت عبقري!'; }
-        else if (percentage >= 70) { emoji = '💪'; message = 'جيد جدًا! استمر في التمرين.'; }
-        else if (percentage >= 50) { emoji = '📖'; message = 'جيد، لكن تحتاج مراجعة.'; }
+        if (percentage >= 80) { emoji = '🌟'; message = 'ممتاز! أنت عبقري!'; }
+        else if (percentage >= 60) { emoji = '💪'; message = 'جيد جدًا! استمر في التمرين.'; }
+        else if (percentage >= 40) { emoji = '📖'; message = 'جيد، لكن تحتاج مراجعة.'; }
         else { emoji = '🔁'; message = 'لا بأس، حاول مرة أخرى.'; }
 
         let reviewHtml = '';
@@ -2059,7 +2068,7 @@
 
         // Save result to student system
         saveQuizResult({
-            type: document.getElementById('quizTitle').textContent.includes('واجب') ? 'homework' : 'exam',
+            type: quizState.type,
             grade: currentGrade,
             unit: currentUnit,
             title: document.getElementById('quizTitle').textContent,
@@ -2143,6 +2152,14 @@
 
                 currentStudent = JSON.parse(saved);
 
+                // Update sidebar with student name
+                const studentInfo = document.getElementById('studentInfo');
+                const studentNameDisplay = document.getElementById('studentNameDisplay');
+                if (studentInfo && studentNameDisplay) {
+                    studentInfo.style.display = 'block';
+                    studentNameDisplay.textContent = currentStudent.name;
+                }
+
                 return true;
 
             }
@@ -2168,9 +2185,13 @@
         const phone =
             document.getElementById('studentPhone').value.trim();
 
+        const parentPhone =
+            document.getElementById('parentPhone').value.trim();
+
+        // التحقق من الحقول الإجبارية
         if(!name){
 
-            alert('من فضلك اكتب اسم الطالب.');
+            alert('⚠️ من فضلك اكتب اسم الطالب.');
 
             return;
 
@@ -2178,12 +2199,38 @@
 
         if(!phone){
 
-            alert('من فضلك اكتب رقم هاتف الطالب.');
+            alert('⚠️ من فضلك اكتب رقم هاتف الطالب.');
 
             return;
 
         }
 
+        if(!parentPhone){
+
+            alert('⚠️ من فضلك اكتب رقم هاتف ولي الأمر (للمتابعة والتواصل).');
+
+            return;
+
+        }
+
+        // Validate student phone number (Egyptian format)
+        const phoneRegex = /^01[0125][0-9]{8}$/;
+        if(!phoneRegex.test(phone)){
+            alert('⚠️ من فضلك اكتب رقم هاتف الطالب بصيغة مصرية صحيحة (مثال: 01234567890)');
+            return;
+        }
+
+        // Validate parent phone number (Egyptian format)
+        if(!phoneRegex.test(parentPhone)){
+            alert('⚠️ من فضلك اكتب رقم هاتف ولي الأمر بصيغة مصرية صحيحة (مثال: 01234567890)');
+            return;
+        }
+
+        // التأكد إن رقم الطالب مختلف عن رقم ولي الأمر
+        if(phone === parentPhone){
+            alert('⚠️ رقم هاتف الطالب ورقم هاتف ولي الأمر لا يمكن أن يكونا متماثلين.');
+            return;
+        }
 
         currentStudent = {
 
@@ -2192,6 +2239,8 @@
             name: name,
 
             phone: phone,
+
+            parent_phone: parentPhone,
 
             created_at: new Date().toISOString(),
 
@@ -2208,7 +2257,7 @@
 
         trackActivity(
             'registration',
-            'تم تسجيل الطالب'
+            'تم تسجيل الطالب: ' + name
         );
 
 
@@ -2230,13 +2279,23 @@
         }
 
 
+        // Show sidebar
         const sidebar =
-            document.querySelector('.sidebar');
+            document.getElementById('sidebar');
 
         if(sidebar){
 
-            sidebar.style.display = 'flex';
+            sidebar.classList.add('active');
 
+        }
+
+
+        // Update student name in sidebar
+        const studentInfo = document.getElementById('studentInfo');
+        const studentNameDisplay = document.getElementById('studentNameDisplay');
+        if (studentInfo && studentNameDisplay) {
+            studentInfo.style.display = 'block';
+            studentNameDisplay.textContent = currentStudent.name;
         }
 
 
@@ -2245,8 +2304,39 @@
 
         trackActivity(
             'login',
-            'دخول الطالب إلى الموقع'
+            'دخول الطالب: ' + currentStudent.name
         );
+
+    }
+
+
+    /* ================= LOGOUT ================= */
+
+    function logoutStudent(){
+
+        if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+            localStorage.removeItem(STUDENT_KEY);
+            currentStudent = null;
+            
+            // Hide sidebar
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.remove('active');
+            }
+
+            // Hide student info
+            const studentInfo = document.getElementById('studentInfo');
+            if (studentInfo) {
+                studentInfo.style.display = 'none';
+            }
+
+            showPage('registration');
+            
+            // Clear registration fields
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentPhone').value = '';
+            document.getElementById('parentPhone').value = '';
+        }
 
     }
 
@@ -2396,7 +2486,8 @@
         );
 
 
-        if(result.percentage >= 90){
+        // شهادة عند 80% فأكثر (للإمتحانات والواجبات)
+        if(result.percentage >= 80){
 
             createCertificate(result);
 
@@ -2748,7 +2839,7 @@
 
                     <p>
                         لا توجد شهادات للطالب حتى الآن.
-                        عند تحقيق 90% في أي امتحان ستظهر الشهادة هنا.
+                        عند تحقيق 80% في أي امتحان أو واجب ستظهر الشهادة هنا.
                     </p>
 
                 </div>
@@ -2903,6 +2994,9 @@
             lessonView:
                 'فتح المذكرة',
 
+            videoView:
+                'فتح فيديو',
+
             quiz:
                 'فتح الاختبار',
 
@@ -2943,12 +3037,13 @@
 
             }else{
 
+                // Hide sidebar
                 const sidebar =
-                    document.querySelector('.sidebar');
+                    document.getElementById('sidebar');
 
                 if(sidebar){
 
-                    sidebar.style.display = 'none';
+                    sidebar.classList.remove('active');
 
                 }
 
