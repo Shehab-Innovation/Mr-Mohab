@@ -388,6 +388,127 @@
             font-weight: 800;
         }
 
+        /* =========================
+           محتوى الأنشطة
+        ========================= */
+
+        .activities-container {
+            display: none;
+            padding: 0 25px 25px;
+        }
+
+        .activities-container.show {
+            display: block;
+        }
+
+        .activities-title {
+            font-size: 21px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .activities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .activity-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: #f8fafc;
+        }
+
+        .activity-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .activity-type {
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 1.6;
+        }
+
+        .activity-date {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .activity-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .activity-info-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 11px;
+        }
+
+        .activity-info-label {
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .activity-info-value {
+            font-size: 14px;
+            font-weight: 900;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .activity-details {
+            margin-top: 10px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .activity-details-label {
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .activity-details-value {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.7;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .activities-loading {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-weight: 800;
+        }
+
+        .empty-activities {
+            border: 1px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #64748b;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
         .footer {
             text-align: center;
 
@@ -478,11 +599,19 @@
                 padding: 0 20px 20px;
             }
 
+            .activities-container {
+                padding: 0 20px 20px;
+            }
+
             .results-summary {
                 grid-template-columns: 1fr;
             }
 
             .result-info {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-info {
                 grid-template-columns: 1fr;
             }
 
@@ -508,6 +637,10 @@
             }
 
             .result-top {
+                flex-direction: column;
+            }
+
+            .activity-top {
                 flex-direction: column;
             }
 
@@ -636,6 +769,29 @@
         }
 
 
+        function formatDateTime(value) {
+
+            if (!value) {
+                return 'غير متوفر';
+            }
+
+            const date = new Date(value);
+
+            if (isNaN(date.getTime())) {
+                return value;
+            }
+
+            return date.toLocaleString('ar-EG', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+
+        }
+
+
         function showError(title, text) {
 
             document.getElementById('profileCard').innerHTML = `
@@ -657,6 +813,76 @@
                 </div>
 
             `;
+
+        }
+
+
+        function formatActivityType(type) {
+
+            if (!type) {
+                return 'نشاط داخل المنصة';
+            }
+
+            const activityMap = {
+
+                'page_view': '👁️ مشاهدة صفحة',
+
+                'view_page': '👁️ مشاهدة صفحة',
+
+                'login': '🔐 تسجيل دخول',
+
+                'logout': '🚪 تسجيل خروج',
+
+                'exam_start': '📝 بدء اختبار',
+
+                'exam_complete': '✅ إكمال اختبار',
+
+                'lesson_start': '📖 بدء درس',
+
+                'lesson_complete': '🎯 إكمال درس',
+
+                'certificate_view': '🏆 مشاهدة شهادة',
+
+                'result_view': '📊 مشاهدة نتيجة',
+
+                'registration': '👤 تسجيل الطالب'
+
+            };
+
+            return activityMap[type] || type;
+
+        }
+
+
+        function formatActivityDetails(details) {
+
+            if (
+                details === null ||
+                details === undefined ||
+                details === ''
+            ) {
+                return '';
+            }
+
+            if (typeof details === 'object') {
+
+                try {
+
+                    return JSON.stringify(
+                        details,
+                        null,
+                        2
+                    );
+
+                } catch (error) {
+
+                    return String(details);
+
+                }
+
+            }
+
+            return String(details);
 
         }
 
@@ -930,6 +1156,221 @@
         }
 
 
+        function renderActivities(activities) {
+
+            if (!activities || activities.length === 0) {
+
+                return `
+
+                    <div class="empty-activities">
+                        لا توجد أنشطة مسجلة لهذا الطالب حتى الآن.
+                    </div>
+
+                `;
+
+            }
+
+
+            const activityCards = activities.map(function (activity) {
+
+                const details =
+                    formatActivityDetails(activity.details);
+
+
+                return `
+
+                    <div class="activity-card">
+
+                        <div class="activity-top">
+
+                            <div class="activity-type">
+                                ${escapeHtml(
+                                    formatActivityType(
+                                        activity.activity_type
+                                    )
+                                )}
+                            </div>
+
+                            <div class="activity-date">
+                                ${formatDateTime(activity.created_at)}
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-info">
+
+
+                            <div class="activity-info-item">
+
+                                <div class="activity-info-label">
+                                    الصفحة
+                                </div>
+
+                                <div class="activity-info-value">
+                                    ${
+                                        activity.page
+                                            ? escapeHtml(activity.page)
+                                            : 'غير محددة'
+                                    }
+                                </div>
+
+                            </div>
+
+
+                            <div class="activity-info-item">
+
+                                <div class="activity-info-label">
+                                    نوع النشاط
+                                </div>
+
+                                <div class="activity-info-value">
+                                    ${escapeHtml(
+                                        activity.activity_type ||
+                                        'غير محدد'
+                                    )}
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        ${
+                            details
+                                ? `
+                                    <div class="activity-details">
+
+                                        <div class="activity-details-label">
+                                            التفاصيل
+                                        </div>
+
+                                        <div class="activity-details-value">
+                                            ${escapeHtml(details)}
+                                        </div>
+
+                                    </div>
+                                `
+                                : ''
+                        }
+
+                    </div>
+
+                `;
+
+            }).join('');
+
+
+            return `
+
+                <div class="activities-title">
+                    📚 نشاط الطالب
+                </div>
+
+
+                <div class="activities-list">
+
+                    ${activityCards}
+
+                </div>
+
+            `;
+
+        }
+
+
+        async function loadStudentActivities(
+            sessionToken,
+            studentId
+        ) {
+
+            const activitiesContainer =
+                document.getElementById('activitiesContainer');
+
+
+            activitiesContainer.innerHTML = `
+
+                <div class="activities-title">
+                    📚 نشاط الطالب
+                </div>
+
+                <div class="activities-loading">
+                    ⏳ جاري تحميل الأنشطة...
+                </div>
+
+            `;
+
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_teacher_student_activities_by_session',
+                    {
+                        p_session_token: sessionToken,
+                        p_student_id: studentId
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Activities RPC error:',
+                    error
+                );
+
+                activitiesContainer.innerHTML = `
+
+                    <div class="activities-title">
+                        📚 نشاط الطالب
+                    </div>
+
+                    <div class="empty-activities">
+                        تعذر تحميل أنشطة الطالب حاليًا.
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            activitiesContainer.innerHTML =
+                renderActivities(data);
+
+        }
+
+
+        function toggleActivities() {
+
+            const activitiesContainer =
+                document.getElementById('activitiesContainer');
+
+            const activitiesButton =
+                document.getElementById('activitiesButton');
+
+
+            if (
+                activitiesContainer.classList.contains('show')
+            ) {
+
+                activitiesContainer.classList.remove('show');
+
+                activitiesButton.classList.remove('active');
+
+                return;
+
+            }
+
+
+            activitiesContainer.classList.add('show');
+
+            activitiesButton.classList.add('active');
+
+        }
+
+
         async function loadStudent() {
 
             try {
@@ -1195,7 +1636,8 @@
 
                         <div
                             class="section-card"
-                            onclick="alert('قسم الأنشطة سيتم تفعيله لاحقًا 📚')"
+                            id="activitiesButton"
+                            onclick="toggleActivities()"
                         >
 
                             <div class="section-icon">
@@ -1242,14 +1684,28 @@
                     >
                     </div>
 
+
+                    <div
+                        class="activities-container"
+                        id="activitiesContainer"
+                    >
+                    </div>
+
                 `;
 
 
                 /*
-                 * نجهز النتائج من البداية،
-                 * لكنها تظل مخفية حتى الضغط على زر النتائج.
+                 * نجهز النتائج والأنشطة من البداية،
+                 * لكنهما يظلان مخفيين حتى الضغط على القسم.
                  */
+
                 await loadStudentResults(
+                    sessionToken,
+                    student.student_id
+                );
+
+
+                await loadStudentActivities(
                     sessionToken,
                     student.student_id
                 );
