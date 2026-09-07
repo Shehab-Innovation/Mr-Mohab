@@ -2666,10 +2666,12 @@
             <div class="card">
 
                 <div class="quiz-progress">
+
                     <div
                         class="quiz-progress-bar"
                         style="width: ${progress}%"
                     ></div>
+
                 </div>
 
                 <div class="quiz-timer">
@@ -2677,11 +2679,13 @@
                 </div>
 
                 <div class="quiz-question">
+
                     السؤال
                     ${quizState.current + 1}
                     من
                     ${total}:
                     ${q.q}
+
                 </div>
         `;
 
@@ -2707,6 +2711,7 @@
 
             html += `
                 <div style="margin-bottom:15px;">
+
                     <input
                         type="text"
                         id="fillAnswer"
@@ -2720,6 +2725,7 @@
                         "
                         placeholder="اكتب الإجابة..."
                     >
+
                 </div>
 
                 <button
@@ -2761,7 +2767,8 @@
 
         quizState.answers[
             quizState.current
-        ] = index;
+        ] =
+            index;
 
         nextQuestion();
 
@@ -2793,7 +2800,8 @@
 
         quizState.answers[
             quizState.current
-        ] = answer;
+        ] =
+            answer;
 
         nextQuestion();
 
@@ -2823,9 +2831,11 @@
     function startTimer(){
 
         if(quizState.timer){
+
             clearInterval(
                 quizState.timer
             );
+
         }
 
         quizState.timer =
@@ -2883,7 +2893,8 @@
         const total =
             quizState.questions.length;
 
-        let correct = 0;
+        let correct =
+            0;
 
         quizState.questions.forEach(
             (q,i) => {
@@ -2924,7 +2935,11 @@
 
         const percentage =
             Math.round(
-                (correct / total) * 100
+                (
+                    correct /
+                    total
+                ) *
+                100
             );
 
         let message = '';
@@ -2932,24 +2947,33 @@
 
         if(percentage >= 80){
 
-            emoji = '🌟';
-            message = 'ممتاز! أنت عبقري!';
+            emoji =
+                '🌟';
+
+            message =
+                'ممتاز! أنت عبقري!';
 
         }else if(percentage >= 60){
 
-            emoji = '💪';
+            emoji =
+                '💪';
+
             message =
                 'جيد جدًا! استمر في التمرين.';
 
         }else if(percentage >= 40){
 
-            emoji = '📖';
+            emoji =
+                '📖';
+
             message =
                 'جيد، لكن تحتاج مراجعة.';
 
         }else{
 
-            emoji = '🔁';
+            emoji =
+                '🔁';
+
             message =
                 'لا بأس، حاول مرة أخرى.';
 
@@ -3086,22 +3110,28 @@
 
         saveQuizResult({
 
-            type: quizState.type,
+            type:
+                quizState.type,
 
-            grade: currentGrade,
+            grade:
+                currentGrade,
 
-            unit: currentUnit,
+            unit:
+                currentUnit,
 
             title:
                 document.getElementById(
                     'quizTitle'
                 ).textContent,
 
-            correct: correct,
+            correct:
+                correct,
 
-            total: total,
+            total:
+                total,
 
-            percentage: percentage
+            percentage:
+                percentage
 
         });
 
@@ -3115,8 +3145,10 @@
                     </div>
 
                     <div class="message">
+
                         ${emoji}
                         ${message}
+
                     </div>
 
                     <div
@@ -3126,8 +3158,10 @@
                             color:#7b8495;
                         "
                     >
+
                         النسبة:
                         ${percentage}%
+
                     </div>
 
                     <button
@@ -3172,17 +3206,29 @@
     function numberArabic(number){
 
         const numbers = [
+
             '',
+
             'الأولى',
+
             'الثانية',
+
             'الثالثة',
+
             'الرابعة',
+
             'الخامسة',
+
             'السادسة',
+
             'السابعة',
+
             'الثامنة',
+
             'التاسعة',
+
             'العاشرة'
+
         ];
 
         return numbers[number] || number;
@@ -3213,15 +3259,20 @@
     function generateStudentId(){
 
         return (
+
             'ST-' +
+
             Date.now()
                 .toString(36)
                 .toUpperCase() +
+
             '-' +
+
             Math.random()
                 .toString(36)
                 .substring(2,8)
                 .toUpperCase()
+
         );
 
     }
@@ -3272,7 +3323,9 @@
 
         }catch(error){
 
-            console.error(error);
+            console.error(
+                error
+            );
 
         }
 
@@ -3345,7 +3398,12 @@
         const phoneRegex =
             /^01[0125][0-9]{8}$/;
 
-        if(!phoneRegex.test(phone)){
+
+        if(
+            !phoneRegex.test(
+                phone
+            )
+        ){
 
             alert(
                 '⚠️ من فضلك اكتب رقم هاتف الطالب بصيغة مصرية صحيحة (مثال: 01234567890)'
@@ -3355,7 +3413,11 @@
 
         }
 
-        if(!phoneRegex.test(parentPhone)){
+        if(
+            !phoneRegex.test(
+                parentPhone
+            )
+        ){
 
             alert(
                 '⚠️ من فضلك اكتب رقم هاتف ولي الأمر بصيغة مصرية صحيحة (مثال: 01234567890)'
@@ -3365,7 +3427,10 @@
 
         }
 
-        if(phone === parentPhone){
+        if(
+            phone ===
+            parentPhone
+        ){
 
             alert(
                 '⚠️ رقم هاتف الطالب ورقم هاتف ولي الأمر لا يمكن أن يكونا متماثلين.'
@@ -3391,7 +3456,8 @@
 
         if(button){
 
-            button.disabled = true;
+            button.disabled =
+                true;
 
             button.textContent =
                 'جاري التسجيل...';
@@ -3405,7 +3471,11 @@
 
             const { error } =
                 await supabaseClient
-                    .from('students')
+
+                    .from(
+                        'students'
+                    )
+
                     .insert([{
 
                         student_id:
@@ -3446,6 +3516,7 @@
                 }
 
                 alert(
+
                     '❌ Supabase رجّع خطأ\n\n' +
 
                     'Code:\n' +
@@ -3471,6 +3542,7 @@
                         error.hint ||
                         'غير موجود'
                     )
+
                 );
 
                 return;
@@ -3495,11 +3567,14 @@
             }
 
             alert(
+
                 '❌ تعذر الاتصال بقاعدة البيانات.\n\n' +
+
                 (
                     error.message ||
                     error
                 )
+
             );
 
             return;
@@ -3532,19 +3607,27 @@
         };
 
         localStorage.setItem(
+
             STUDENT_KEY,
+
             JSON.stringify(
                 currentStudent
             )
+
         );
 
 
         /* ================= KEEP LOCAL ACTIVITY ================= */
 
         trackActivity(
+
             'registration',
-            'تم تسجيل الطالب: ' + name,
+
+            'تم تسجيل الطالب: ' +
+            name,
+
             'registration'
+
         );
 
 
@@ -3569,7 +3652,9 @@
 
         if(!currentStudent){
 
-            showPage('registration');
+            showPage(
+                'registration'
+            );
 
             return;
 
@@ -3611,13 +3696,19 @@
 
         }
 
-        showPage('home');
+        showPage(
+            'home'
+        );
 
         trackActivity(
+
             'login',
+
             'دخول الطالب: ' +
             currentStudent.name,
+
             'home'
+
         );
 
     }
@@ -3665,19 +3756,24 @@
 
             }
 
-            showPage('registration');
+            showPage(
+                'registration'
+            );
 
             document.getElementById(
                 'studentName'
-            ).value = '';
+            ).value =
+                '';
 
             document.getElementById(
                 'studentPhone'
-            ).value = '';
+            ).value =
+                '';
 
             document.getElementById(
                 'parentPhone'
-            ).value = '';
+            ).value =
+                '';
 
         }
 
@@ -3687,9 +3783,13 @@
     /* ================= ACTIVITY ================= */
 
     async function trackActivity(
+
         action,
+
         details,
+
         page = null
+
     ){
 
         if(!currentStudent)
@@ -3698,20 +3798,25 @@
 
         /* ================= LOCAL ACTIVITY ================= */
 
-        let activities = [];
+        let activities =
+            [];
 
         try{
 
             activities =
                 JSON.parse(
+
                     localStorage.getItem(
                         ACTIVITIES_KEY
-                    ) || '[]'
+                    ) ||
+                    '[]'
+
                 );
 
         }catch(error){
 
-            activities = [];
+            activities =
+                [];
 
         }
 
@@ -3719,7 +3824,8 @@
         const activity = {
 
             activity_id:
-                'ACT-' + Date.now(),
+                'ACT-' +
+                Date.now(),
 
             student_id:
                 currentStudent.student_id,
@@ -3731,7 +3837,8 @@
                 details || '',
 
             timestamp:
-                new Date().toISOString()
+                new Date()
+                    .toISOString()
 
         };
 
@@ -3742,10 +3849,13 @@
 
 
         localStorage.setItem(
+
             ACTIVITIES_KEY,
+
             JSON.stringify(
                 activities
             )
+
         );
 
 
@@ -3754,10 +3864,13 @@
 
 
         localStorage.setItem(
+
             STUDENT_KEY,
+
             JSON.stringify(
                 currentStudent
             )
+
         );
 
 
@@ -3767,7 +3880,11 @@
 
             const { error } =
                 await supabaseClient
-                    .from('student_activities')
+
+                    .from(
+                        'student_activities'
+                    )
+
                     .insert([{
 
                         student_id:
@@ -3777,13 +3894,13 @@
                             action,
 
                         page:
-                            page || null,
+                            page ||
+                            null,
 
-                        details:
-                            {
-                                text:
-                                    details || ''
-                            },
+                        details:{
+                            text:
+                                details || ''
+                        },
 
                         created_at:
                             activity.timestamp
@@ -3794,8 +3911,11 @@
             if(error){
 
                 console.error(
+
                     'Supabase activity error:',
+
                     error
+
                 );
 
             }
@@ -3803,8 +3923,11 @@
         }catch(error){
 
             console.error(
+
                 'Supabase activity connection error:',
+
                 error
+
             );
 
         }
@@ -3814,29 +3937,38 @@
 
     /* ================= RESULTS ================= */
 
-    function saveQuizResult(
+    async function saveQuizResult(
         data
     ){
 
         if(!currentStudent)
             return;
 
-        let results = [];
+
+        /* ================= LOCAL RESULTS ================= */
+
+        let results =
+            [];
 
         try{
 
             results =
                 JSON.parse(
+
                     localStorage.getItem(
                         RESULTS_KEY
-                    ) || '[]'
+                    ) ||
+                    '[]'
+
                 );
 
         }catch(error){
 
-            results = [];
+            results =
+                [];
 
         }
+
 
         const result = {
 
@@ -3848,7 +3980,8 @@
                 currentStudent.student_id,
 
             type:
-                data.type || 'exam',
+                data.type ||
+                'exam',
 
             grade:
                 data.grade,
@@ -3869,38 +4002,132 @@
                 data.percentage,
 
             completed_at:
-                new Date().toISOString()
+                new Date()
+                    .toISOString()
 
         };
+
 
         results.push(
             result
         );
 
+
         localStorage.setItem(
+
             RESULTS_KEY,
+
             JSON.stringify(
                 results
             )
+
         );
+
+
+        /* ================= SUPABASE RESULT ================= */
+
+        try{
+
+            const { error } =
+                await supabaseClient
+
+                    .from(
+                        'student_results'
+                    )
+
+                    .insert([{
+
+                        result_id:
+                            result.result_id,
+
+                        student_id:
+                            result.student_id,
+
+                        type:
+                            result.type,
+
+                        grade:
+                            result.grade,
+
+                        unit:
+                            result.unit,
+
+                        title:
+                            result.title,
+
+                        correct:
+                            result.correct,
+
+                        total:
+                            result.total,
+
+                        percentage:
+                            result.percentage,
+
+                        completed_at:
+                            result.completed_at
+
+                    }]);
+
+
+            if(error){
+
+                console.error(
+
+                    'Supabase result error:',
+
+                    error
+
+                );
+
+            }
+
+        }catch(error){
+
+            console.error(
+
+                'Supabase result connection error:',
+
+                error
+
+            );
+
+        }
+
+
+        /* ================= ACTIVITY ================= */
 
         trackActivity(
 
-            data.type === 'homework'
-                ? 'homework_completed'
-                : 'exam_completed',
+            data.type ===
+                'homework'
+
+                ?
+
+                'homework_completed'
+
+                :
+
+                'exam_completed',
 
             data.title +
+
             ' - ' +
+
             data.percentage +
+
             '%',
 
             'quiz'
 
         );
 
+
+        /* ================= CERTIFICATE ================= */
+
         if(
-            result.percentage >= 80
+            result.percentage >=
+            80
         ){
 
             createCertificate(
@@ -3908,6 +4135,9 @@
             );
 
         }
+
+
+        /* ================= REFRESH EVALUATION ================= */
 
         renderStudentEvaluation();
 
@@ -3921,27 +4151,35 @@
         if(!currentStudent)
             return [];
 
-        let results = [];
+        let results =
+            [];
 
         try{
 
             results =
                 JSON.parse(
+
                     localStorage.getItem(
                         RESULTS_KEY
-                    ) || '[]'
+                    ) ||
+                    '[]'
+
                 );
 
         }catch(error){
 
-            results = [];
+            results =
+                [];
 
         }
 
         return results.filter(
+
             result =>
+
                 result.student_id ===
                 currentStudent.student_id
+
         );
 
     }
@@ -3956,30 +4194,44 @@
         const results =
             getStudentResults()
                 .filter(
+
                     result =>
-                        result.type === type
+                        result.type ===
+                        type
+
                 );
 
-        if(results.length === 0){
+        if(
+            results.length ===
+            0
+        ){
 
             return null;
 
         }
 
+
         const total =
             results.reduce(
+
                 (
                     sum,
                     result
                 ) =>
+
                     sum +
                     result.percentage,
+
                 0
+
             );
 
+
         return Math.round(
+
             total /
             results.length
+
         );
 
     }
@@ -3994,35 +4246,50 @@
         if(!currentStudent)
             return;
 
-        let certificates = [];
+
+        let certificates =
+            [];
+
 
         try{
 
             certificates =
                 JSON.parse(
+
                     localStorage.getItem(
                         CERTIFICATES_KEY
-                    ) || '[]'
+                    ) ||
+                    '[]'
+
                 );
 
         }catch(error){
 
-            certificates = [];
+            certificates =
+                [];
 
         }
 
+
         const alreadyExists =
             certificates.some(
+
                 certificate =>
+
                     certificate.student_id ===
                     currentStudent.student_id
+
                     &&
+
                     certificate.result_id ===
                     result.result_id
+
             );
+
 
         if(alreadyExists)
             return;
+
 
         certificates.push({
 
@@ -4064,11 +4331,15 @@
 
         });
 
+
         localStorage.setItem(
+
             CERTIFICATES_KEY,
+
             JSON.stringify(
                 certificates
             )
+
         );
 
     }
@@ -4081,39 +4352,68 @@
         if(!currentStudent)
             return;
 
+
         const examAverage =
-            calculateAverage('exam');
+            calculateAverage(
+                'exam'
+            );
+
 
         const homeworkAverage =
-            calculateAverage('homework');
+            calculateAverage(
+                'homework'
+            );
+
 
         const results =
             getStudentResults();
 
+
         const examText =
-            examAverage === null
-                ? '—'
-                : examAverage + '%';
+            examAverage ===
+            null
+
+                ?
+
+                '—'
+
+                :
+
+                examAverage +
+                '%';
+
 
         const homeworkText =
-            homeworkAverage === null
-                ? '—'
-                : homeworkAverage + '%';
+            homeworkAverage ===
+            null
+
+                ?
+
+                '—'
+
+                :
+
+                homeworkAverage +
+                '%';
+
 
         const avgExamEl =
             document.getElementById(
                 'avgExam'
             );
 
+
         const avgHomeworkEl =
             document.getElementById(
                 'avgHomework'
             );
 
+
         const totalAttemptsEl =
             document.getElementById(
                 'totalAttempts'
             );
+
 
         if(avgExamEl){
 
@@ -4122,12 +4422,14 @@
 
         }
 
+
         if(avgHomeworkEl){
 
             avgHomeworkEl.textContent =
                 homeworkText;
 
         }
+
 
         if(totalAttemptsEl){
 
@@ -4136,18 +4438,22 @@
 
         }
 
+
         const gradesPage =
             document.getElementById(
                 'grades'
             );
 
+
         if(!gradesPage)
             return;
+
 
         let oldList =
             gradesPage.querySelector(
                 '.student-results-list'
             );
+
 
         if(oldList){
 
@@ -4155,17 +4461,24 @@
 
         }
 
+
         const list =
             document.createElement(
                 'div'
             );
 
+
         list.className =
             'card student-results-list';
 
-        if(results.length === 0){
+
+        if(
+            results.length ===
+            0
+        ){
 
             list.innerHTML = `
+
                 <h3>
                     📚 النتائج
                 </h3>
@@ -4173,14 +4486,19 @@
                 <p>
                     لا توجد نتائج مسجلة بعد.
                 </p>
+
             `;
 
         }else{
 
             const items =
+
                 [...results]
+
                     .reverse()
+
                     .map(
+
                         result => `
 
                             <div
@@ -4204,9 +4522,16 @@
                                 >
 
                                     ${
-                                        result.type === 'homework'
-                                            ? 'واجب'
-                                            : 'امتحان'
+                                        result.type ===
+                                        'homework'
+
+                                            ?
+
+                                            'واجب'
+
+                                            :
+
+                                            'امتحان'
                                     }
 
                                     —
@@ -4224,8 +4549,11 @@
                             </div>
 
                         `
+
                     )
+
                     .join('');
+
 
             list.innerHTML = `
 
@@ -4239,9 +4567,11 @@
 
         }
 
+
         gradesPage.appendChild(
             list
         );
+
 
         renderCertificates();
 
@@ -4257,35 +4587,52 @@
                 'certificateContainer'
             );
 
+
         if(!container)
             return;
 
-        let certificates = [];
+
+        let certificates =
+            [];
+
 
         try{
 
             certificates =
                 JSON.parse(
+
                     localStorage.getItem(
                         CERTIFICATES_KEY
-                    ) || '[]'
+                    ) ||
+                    '[]'
+
                 );
 
         }catch(error){
 
-            certificates = [];
+            certificates =
+                [];
 
         }
 
+
         certificates =
             certificates.filter(
+
                 certificate =>
+
                     currentStudent &&
+
                     certificate.student_id ===
                     currentStudent.student_id
+
             );
 
-        if(certificates.length === 0){
+
+        if(
+            certificates.length ===
+            0
+        ){
 
             container.innerHTML = `
 
@@ -4313,6 +4660,7 @@
 
         }
 
+
         container.innerHTML = `
 
             <div
@@ -4323,8 +4671,11 @@
 
                 ${
                     certificates
+
                         .reverse()
+
                         .map(
+
                             certificate => `
 
                                 <div
@@ -4360,11 +4711,15 @@
                                         🏆 شهادة تقدير
                                     </h2>
 
-                                    <p style="margin-top:15px;">
+                                    <p
+                                        style="margin-top:15px;"
+                                    >
                                         تقدم إلى الطالب
                                     </p>
 
-                                    <h3 style="font-size:25px;">
+                                    <h3
+                                        style="font-size:25px;"
+                                    >
                                         ${certificate.student_name}
                                     </h3>
 
@@ -4384,7 +4739,9 @@
 
                                     </p>
 
-                                    <p style="margin-top:15px;">
+                                    <p
+                                        style="margin-top:15px;"
+                                    >
                                         ${certificate.message}
                                     </p>
 
@@ -4414,8 +4771,11 @@
                                 </div>
 
                             `
+
                         )
+
                         .join('')
+
                 }
 
             </div>
@@ -4430,6 +4790,7 @@
     const originalShowPage =
         showPage;
 
+
     showPage =
         function(
             pageId,
@@ -4437,8 +4798,12 @@
         ){
 
             if(
+
                 !currentStudent &&
-                pageId !== 'registration'
+
+                pageId !==
+                'registration'
+
             ){
 
                 originalShowPage(
@@ -4449,22 +4814,32 @@
 
             }
 
+
             originalShowPage(
                 pageId,
                 clickedLink
             );
 
-            if(pageId === 'grades'){
+
+            if(
+                pageId ===
+                'grades'
+            ){
 
                 renderStudentEvaluation();
 
             }
 
-            if(pageId === 'certificate'){
+
+            if(
+                pageId ===
+                'certificate'
+            ){
 
                 renderCertificates();
 
             }
+
 
             const activityNames = {
 
@@ -4500,6 +4875,7 @@
 
             };
 
+
             if(
                 activityNames[pageId]
             ){
@@ -4522,11 +4898,14 @@
     /* ================= INITIALIZATION ================= */
 
     document.addEventListener(
+
         'DOMContentLoaded',
+
         function(){
 
             const hasStudent =
                 loadStudent();
+
 
             if(hasStudent){
 
@@ -4539,6 +4918,7 @@
                         'sidebar'
                     );
 
+
                 if(sidebar){
 
                     sidebar.classList.remove(
@@ -4547,11 +4927,13 @@
 
                 }
 
+
                 showPage(
                     'registration'
                 );
 
             }
+
 
             if(currentStudent){
 
@@ -4562,6 +4944,7 @@
             }
 
         }
+
     );
 
 </script>
