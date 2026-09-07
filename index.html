@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -5,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXORA | مستر مهاب</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
         *{
             margin:0;
@@ -691,59 +693,74 @@
             body{
                 padding:12px;
             }
+
             .container{
                 flex-direction:column;
                 border-radius:24px;
             }
+
             .sidebar{
                 width:100%;
                 padding:20px;
             }
+
             .sidebar.active{
                 display:flex;
             }
+
             .main-content{
                 padding:20px;
             }
+
             .sidebar-nav{
                 display:flex;
                 flex-wrap:wrap;
                 gap:6px;
             }
+
             .sidebar-nav li{
                 flex:1 1 45%;
             }
+
             .grade-grid,
             .unit-grid,
             .content-grid,
             .code-summary{
                 grid-template-columns:1fr;
             }
+
             .content-grid{
                 grid-template-columns:repeat(2,1fr);
             }
+
             .welcome{
                 flex-direction:column;
                 text-align:center;
             }
+
             .welcome-text .quote{
                 border:none;
                 padding:0;
             }
+
             .hero-background{
                 min-height:250px;
             }
+
             .lesson-item{
                 flex-direction:column;
                 align-items:flex-start;
             }
+
             .lesson-item .lesson-actions{
                 width:100%;
             }
+
             .lesson-item .lesson-actions .btn{
                 flex:1;
                 text-align:center;
             }
+
             #registration .card{
                 margin:20px auto;
             }
@@ -753,16 +770,20 @@
             .sidebar-nav li{
                 flex:1 1 100%;
             }
+
             .hero-background{
                 min-height:180px;
             }
+
             .content-grid{
                 grid-template-columns:1fr;
             }
+
             #registration .card{
                 margin:10px auto;
                 padding:15px;
             }
+
             #registration .card h2{
                 font-size:20px;
             }
@@ -854,11 +875,9 @@
 
     </div>
 
-
     <!-- ================= MAIN CONTENT ================= -->
 
     <div class="main-content">
-
 
         <!-- ================= STUDENT REGISTRATION ================= -->
 
@@ -934,7 +953,6 @@
 
         </div>
 
-
         <!-- HOME -->
 
         <div id="home" class="page">
@@ -982,7 +1000,6 @@
             </div>
 
         </div>
-
 
         <!-- ================= CURRICULUM / GRADES ================= -->
 
@@ -1054,7 +1071,6 @@
 
         </div>
 
-
         <!-- ================= GRADE ================= -->
 
         <div id="grade" class="page">
@@ -1078,7 +1094,6 @@
             <div id="unitGrid" class="unit-grid"></div>
 
         </div>
-
 
         <!-- ================= UNIT ================= -->
 
@@ -1144,7 +1159,6 @@
 
         </div>
 
-
         <!-- ================= UNIT SECTION ================= -->
 
         <div id="unitSection" class="page">
@@ -1158,7 +1172,6 @@
             <div id="sectionContent"></div>
 
         </div>
-
 
         <!-- ================= LESSON / PDF VIEW ================= -->
 
@@ -1195,7 +1208,6 @@
 
         </div>
 
-
         <!-- ================= VIDEO VIEW ================= -->
 
         <div id="videoView" class="page">
@@ -1221,7 +1233,6 @@
 
         </div>
 
-
         <!-- ================= QUIZ ================= -->
 
         <div id="quiz" class="page">
@@ -1235,7 +1246,6 @@
             <div id="quizContainer"></div>
 
         </div>
-
 
         <!-- GRADES (تقييم الطالب) -->
 
@@ -1274,7 +1284,6 @@
 
         </div>
 
-
         <!-- CERTIFICATE -->
 
         <div id="certificate" class="page">
@@ -1295,12 +1304,22 @@
 
         </div>
 
-
     </div>
 </div>
 
+<!-- ================= SUPABASE CLIENT ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
+    /* ================= SUPABASE CONFIG ================= */
+
+    const supabaseClient = window.supabase.createClient(
+        'https://bbiflvdwardvozjvrsya.supabase.co',
+        'sb_publishable_I_7nb9Ab0--dz_5hpzq27w_G8_7b6PL'
+    );
+
 
     /* ================= GENERAL ================= */
 
@@ -1607,34 +1626,69 @@
             let videosHtml = '';
 
             if (unit.lessons && unit.lessons.length > 0) {
+
                 videosHtml = unit.lessons.map((lesson, idx) => `
+
                     <div class="lesson-item">
+
                         <div class="lesson-info">
-                            <strong>🎥 فيديو الدرس ${idx + 1}: ${lesson.title}</strong>
+
+                            <strong>
+                                🎥 فيديو الدرس ${idx + 1}: ${lesson.title}
+                            </strong>
+
                             <br>
-                            <span>فيديو شرح الدرس</span>
+
+                            <span>
+                                فيديو شرح الدرس
+                            </span>
+
                         </div>
+
                         <div class="lesson-actions">
-                            <button class="btn btn-video" onclick="openVideo(${currentUnit}, ${idx})">
-                                <i class="fas fa-play"></i> مشاهدة
+
+                            <button
+                                class="btn btn-video"
+                                onclick="openVideo(${currentUnit}, ${idx})"
+                            >
+                                <i class="fas fa-play"></i>
+                                مشاهدة
                             </button>
+
                         </div>
+
                     </div>
+
                 `).join('');
+
             } else {
+
                 videosHtml = `
                     <div class="card">
                         <p>لا توجد فيديوهات متاحة لهذه الوحدة حالياً.</p>
                     </div>
                 `;
+
             }
 
             content.innerHTML = `
+
                 <div class="card">
-                    <h3>🎬 فيديوهات شرح ${unit.title}</h3>
-                    <p>اختر الدرس لمشاهدة فيديو الشرح.</p>
+
+                    <h3>
+                        🎬 فيديوهات شرح ${unit.title}
+                    </h3>
+
+                    <p>
+                        اختر الدرس لمشاهدة فيديو الشرح.
+                    </p>
+
                 </div>
-                <div class="lesson-list">${videosHtml}</div>
+
+                <div class="lesson-list">
+                    ${videosHtml}
+                </div>
+
             `;
 
         }
@@ -1650,53 +1704,128 @@
             let homeworkHtml = '';
 
             if (unit.lessons && unit.lessons.length > 0) {
+
                 homeworkHtml = unit.lessons.map((lesson, idx) => `
+
                     <div class="lesson-item">
+
                         <div class="lesson-info">
-                            <strong>📝 واجب الدرس ${idx + 1}: ${lesson.title}</strong>
+
+                            <strong>
+                                📝 واجب الدرس ${idx + 1}: ${lesson.title}
+                            </strong>
+
                             <br>
-                            <span>واجب تدريبي على الدرس</span>
+
+                            <span>
+                                واجب تدريبي على الدرس
+                            </span>
+
                         </div>
+
                         <div class="lesson-actions">
-                            <button class="btn" onclick="startHomework(${currentUnit}, ${idx})">ابدأ الواجب</button>
+
+                            <button
+                                class="btn"
+                                onclick="startHomework(${currentUnit}, ${idx})"
+                            >
+                                ابدأ الواجب
+                            </button>
+
                         </div>
+
                     </div>
+
                 `).join('');
 
                 homeworkHtml += `
+
                     <div class="lesson-item">
+
                         <div class="lesson-info">
-                            <strong>⭐ واجب شامل على ${unit.title}</strong>
+
+                            <strong>
+                                ⭐ واجب شامل على ${unit.title}
+                            </strong>
+
                             <br>
-                            <span>واجب شامل لجميع دروس الوحدة</span>
+
+                            <span>
+                                واجب شامل لجميع دروس الوحدة
+                            </span>
+
                         </div>
+
                         <div class="lesson-actions">
-                            <button class="btn" onclick="startUnitHomework(${currentUnit})">ابدأ الواجب</button>
+
+                            <button
+                                class="btn"
+                                onclick="startUnitHomework(${currentUnit})"
+                            >
+                                ابدأ الواجب
+                            </button>
+
                         </div>
+
                     </div>
+
                 `;
 
             } else {
+
                 homeworkHtml = `
+
                     <div class="lesson-item">
+
                         <div class="lesson-info">
-                            <strong>📝 واجب ${unit.title}</strong>
+
+                            <strong>
+                                📝 واجب ${unit.title}
+                            </strong>
+
                             <br>
-                            <span>واجب تدريبي على الوحدة</span>
+
+                            <span>
+                                واجب تدريبي على الوحدة
+                            </span>
+
                         </div>
+
                         <div class="lesson-actions">
-                            <button class="btn" onclick="startUnitHomework(${currentUnit})">ابدأ الواجب</button>
+
+                            <button
+                                class="btn"
+                                onclick="startUnitHomework(${currentUnit})"
+                            >
+                                ابدأ الواجب
+                            </button>
+
                         </div>
+
                     </div>
+
                 `;
+
             }
 
             content.innerHTML = `
+
                 <div class="card">
-                    <h3>📝 واجبات ${unit.title}</h3>
-                    <p>اختر الواجب المناسب للتدريب.</p>
+
+                    <h3>
+                        📝 واجبات ${unit.title}
+                    </h3>
+
+                    <p>
+                        اختر الواجب المناسب للتدريب.
+                    </p>
+
                 </div>
-                <div class="lesson-list">${homeworkHtml}</div>
+
+                <div class="lesson-list">
+                    ${homeworkHtml}
+                </div>
+
             `;
 
         }
@@ -1712,39 +1841,93 @@
             let examsHtml = '';
 
             if (unit.lessons && unit.lessons.length > 0) {
+
                 examsHtml = unit.lessons.map((lesson, idx) => `
+
                     <div class="lesson-item">
+
                         <div class="lesson-info">
-                            <strong>📝 امتحان الدرس ${idx + 1}: ${lesson.title}</strong>
+
+                            <strong>
+                                📝 امتحان الدرس ${idx + 1}: ${lesson.title}
+                            </strong>
+
                             <br>
-                            <span>امتحان تدريبي على الدرس</span>
+
+                            <span>
+                                امتحان تدريبي على الدرس
+                            </span>
+
                         </div>
+
                         <div class="lesson-actions">
-                            <button class="btn" onclick="startExam(${currentUnit}, ${idx}, 'lesson')">ابدأ الامتحان</button>
+
+                            <button
+                                class="btn"
+                                onclick="startExam(${currentUnit}, ${idx}, 'lesson')"
+                            >
+                                ابدأ الامتحان
+                            </button>
+
                         </div>
+
                     </div>
+
                 `).join('');
+
             }
 
             examsHtml += `
+
                 <div class="lesson-item">
+
                     <div class="lesson-info">
-                        <strong>⭐ امتحان شامل على ${unit.title}</strong>
+
+                        <strong>
+                            ⭐ امتحان شامل على ${unit.title}
+                        </strong>
+
                         <br>
-                        <span>امتحان شامل لجميع دروس الوحدة</span>
+
+                        <span>
+                            امتحان شامل لجميع دروس الوحدة
+                        </span>
+
                     </div>
+
                     <div class="lesson-actions">
-                        <button class="btn" onclick="startExam(${currentUnit}, -1, 'unit')">ابدأ الامتحان</button>
+
+                        <button
+                            class="btn"
+                            onclick="startExam(${currentUnit}, -1, 'unit')"
+                        >
+                            ابدأ الامتحان
+                        </button>
+
                     </div>
+
                 </div>
+
             `;
 
             content.innerHTML = `
+
                 <div class="card">
-                    <h3>🧠 امتحانات ${unit.title}</h3>
-                    <p>اختر الامتحان المناسب للاختبار.</p>
+
+                    <h3>
+                        🧠 امتحانات ${unit.title}
+                    </h3>
+
+                    <p>
+                        اختر الامتحان المناسب للاختبار.
+                    </p>
+
                 </div>
-                <div class="lesson-list">${examsHtml}</div>
+
+                <div class="lesson-list">
+                    ${examsHtml}
+                </div>
+
             `;
 
         }
@@ -1776,8 +1959,11 @@
         document.getElementById('lessonTitle').textContent =
             '📖 مذكرة ' + unit.title;
 
-        document.getElementById('pdfFrame').src = unit.pdf;
-        document.getElementById('pdfDownload').href = unit.pdf;
+        document.getElementById('pdfFrame').src =
+            unit.pdf;
+
+        document.getElementById('pdfDownload').href =
+            unit.pdf;
 
         showPage('lessonView');
 
@@ -1788,25 +1974,38 @@
 
     function openVideo(unitNumber, lessonIndex){
 
-        const grade = gradesData[currentGrade];
-        const unit = grade.units.find(item => item.number === unitNumber);
+        const grade =
+            gradesData[currentGrade];
 
-        if (!unit || !unit.lessons || !unit.lessons[lessonIndex]) {
+        const unit =
+            grade.units.find(
+                item => item.number === unitNumber
+            );
+
+        if(!unit || !unit.lessons || !unit.lessons[lessonIndex]) {
+
             alert('فيديو الشرح غير متاح حالياً.');
+
             return;
+
         }
 
-        const lesson = unit.lessons[lessonIndex];
+        const lesson =
+            unit.lessons[lessonIndex];
 
-        if (!lesson.video) {
+        if(!lesson.video) {
+
             alert('لا يوجد فيديو لهذا الدرس حالياً.');
+
             return;
+
         }
 
         document.getElementById('videoTitle').textContent =
             '🎬 فيديو شرح: ' + lesson.title;
 
-        document.getElementById('videoFrame').src = lesson.video;
+        document.getElementById('videoFrame').src =
+            lesson.video;
 
         showPage('videoView');
 
@@ -1817,97 +2016,220 @@
 
     function startHomework(unitNumber, lessonIndex){
 
-        const grade = gradesData[currentGrade];
-        const unit = grade.units.find(item => item.number === unitNumber);
+        const grade =
+            gradesData[currentGrade];
 
-        if (!unit || !unit.lessons || !unit.lessons[lessonIndex]) {
+        const unit =
+            grade.units.find(
+                item => item.number === unitNumber
+            );
+
+        if(!unit || !unit.lessons || !unit.lessons[lessonIndex]) {
+
             alert('الواجب غير متاح حاليًا.');
+
             return;
+
         }
 
-        const lesson = unit.lessons[lessonIndex];
-        const questions = lesson.questions || [];
+        const lesson =
+            unit.lessons[lessonIndex];
 
-        if (questions.length === 0) {
+        const questions =
+            lesson.questions || [];
+
+        if(questions.length === 0) {
+
             alert('لا توجد أسئلة متاحة لهذا الواجب.');
+
             return;
+
         }
 
-        const shuffled = [...questions].sort(() => Math.random() - 0.5);
-        const selectedQuestions = shuffled.slice(0, Math.min(20, shuffled.length));
+        const shuffled =
+            [...questions].sort(
+                () => Math.random() - 0.5
+            );
 
-        const title = `📝 واجب الدرس: ${lesson.title}`;
-        startQuiz(selectedQuestions, title, 120, 'homework');
+        const selectedQuestions =
+            shuffled.slice(
+                0,
+                Math.min(20, shuffled.length)
+            );
+
+        const title =
+            `📝 واجب الدرس: ${lesson.title}`;
+
+        startQuiz(
+            selectedQuestions,
+            title,
+            120,
+            'homework'
+        );
+
     }
+
 
     function startUnitHomework(unitNumber){
 
-        const grade = gradesData[currentGrade];
-        const unit = grade.units.find(item => item.number === unitNumber);
+        const grade =
+            gradesData[currentGrade];
 
-        if (!unit) {
+        const unit =
+            grade.units.find(
+                item => item.number === unitNumber
+            );
+
+        if(!unit) {
+
             alert('الواجب غير متاح حاليًا.');
+
             return;
+
         }
 
-        const questions = unit.unitQuestions || [];
+        const questions =
+            unit.unitQuestions || [];
 
-        if (questions.length === 0) {
+        if(questions.length === 0) {
+
             alert('لا توجد أسئلة متاحة لهذا الواجب.');
+
             return;
+
         }
 
-        const shuffled = [...questions].sort(() => Math.random() - 0.5);
-        const selectedQuestions = shuffled.slice(0, Math.min(20, shuffled.length));
+        const shuffled =
+            [...questions].sort(
+                () => Math.random() - 0.5
+            );
 
-        const title = `⭐ واجب شامل على ${unit.title}`;
-        startQuiz(selectedQuestions, title, 150, 'homework');
+        const selectedQuestions =
+            shuffled.slice(
+                0,
+                Math.min(20, shuffled.length)
+            );
+
+        const title =
+            `⭐ واجب شامل على ${unit.title}`;
+
+        startQuiz(
+            selectedQuestions,
+            title,
+            150,
+            'homework'
+        );
+
     }
 
 
     /* ================= EXAM ================= */
 
-    function startExam(unitNumber, lessonIndex, type){
+    function startExam(
+        unitNumber,
+        lessonIndex,
+        type
+    ){
 
-        const grade = gradesData[currentGrade];
-        const unit = grade.units.find(item => item.number === unitNumber);
+        const grade =
+            gradesData[currentGrade];
 
-        if (!unit) {
+        const unit =
+            grade.units.find(
+                item => item.number === unitNumber
+            );
+
+        if(!unit) {
+
             alert('الامتحان غير متاح حاليًا.');
+
             return;
+
         }
 
         let questions;
+
         let title;
 
-        if (type === 'lesson' && lessonIndex >= 0 && unit.lessons && unit.lessons[lessonIndex]) {
-            const lesson = unit.lessons[lessonIndex];
-            questions = lesson.questions || [];
-            if (questions.length === 0) {
+
+        if(
+            type === 'lesson' &&
+            lessonIndex >= 0 &&
+            unit.lessons &&
+            unit.lessons[lessonIndex]
+        ){
+
+            const lesson =
+                unit.lessons[lessonIndex];
+
+            questions =
+                lesson.questions || [];
+
+            if(questions.length === 0) {
+
                 alert('لا توجد أسئلة متاحة لهذا الامتحان.');
+
                 return;
+
             }
-            const shuffled = [...questions].sort(() => Math.random() - 0.5);
-            questions = shuffled.slice(0, Math.min(30, shuffled.length));
-            title = `📝 امتحان الدرس: ${lesson.title}`;
+
+            const shuffled =
+                [...questions].sort(
+                    () => Math.random() - 0.5
+                );
+
+            questions =
+                shuffled.slice(
+                    0,
+                    Math.min(30, shuffled.length)
+                );
+
+            title =
+                `📝 امتحان الدرس: ${lesson.title}`;
+
         } else {
-            questions = unit.unitQuestions || [];
-            if (questions.length === 0) {
+
+            questions =
+                unit.unitQuestions || [];
+
+            if(questions.length === 0) {
+
                 alert('لا توجد أسئلة متاحة للامتحان الشامل.');
+
                 return;
+
             }
-            const shuffled = [...questions].sort(() => Math.random() - 0.5);
-            questions = shuffled.slice(0, Math.min(30, shuffled.length));
-            title = `⭐ امتحان شامل على ${unit.title}`;
+
+            const shuffled =
+                [...questions].sort(
+                    () => Math.random() - 0.5
+                );
+
+            questions =
+                shuffled.slice(
+                    0,
+                    Math.min(30, shuffled.length)
+                );
+
+            title =
+                `⭐ امتحان شامل على ${unit.title}`;
+
         }
 
-        startQuiz(questions, title, 180, 'exam');
+        startQuiz(
+            questions,
+            title,
+            180,
+            'exam'
+        );
+
     }
 
 
     /* ================= QUIZ SYSTEM ================= */
 
     let quizState = {
+
         questions: [],
         current: 0,
         answers: [],
@@ -1915,183 +2237,589 @@
         timeLeft: 0,
         started: false,
         type: 'exam'
+
     };
 
-    function startQuiz(questions, title, timeLimit = 60, type = 'exam') {
-        quizState.questions = questions;
-        quizState.current = 0;
-        quizState.answers = [];
-        quizState.timeLeft = timeLimit;
-        quizState.started = true;
-        quizState.type = type;
 
-        document.getElementById('quizTitle').textContent = title;
+    function startQuiz(
+        questions,
+        title,
+        timeLimit = 60,
+        type = 'exam'
+    ){
+
+        quizState.questions =
+            questions;
+
+        quizState.current =
+            0;
+
+        quizState.answers =
+            [];
+
+        quizState.timeLeft =
+            timeLimit;
+
+        quizState.started =
+            true;
+
+        quizState.type =
+            type;
+
+        document.getElementById('quizTitle').textContent =
+            title;
 
         showPage('quiz');
 
         renderQuestion();
+
         startTimer();
+
     }
 
-    function renderQuestion() {
-        const container = document.getElementById('quizContainer');
-        const q = quizState.questions[quizState.current];
-        const total = quizState.questions.length;
-        const progress = ((quizState.current + 1) / total) * 100;
+
+    function renderQuestion(){
+
+        const container =
+            document.getElementById('quizContainer');
+
+        const q =
+            quizState.questions[
+                quizState.current
+            ];
+
+        const total =
+            quizState.questions.length;
+
+        const progress =
+            ((quizState.current + 1) / total) * 100;
+
 
         let html = `
+
             <div class="card">
+
                 <div class="quiz-progress">
-                    <div class="quiz-progress-bar" style="width: ${progress}%"></div>
+
+                    <div
+                        class="quiz-progress-bar"
+                        style="width: ${progress}%"
+                    ></div>
+
                 </div>
-                <div class="quiz-timer">⏱ ${quizState.timeLeft} ثانية</div>
-                <div class="quiz-question">السؤال ${quizState.current + 1} من ${total}: ${q.q}</div>
+
+                <div class="quiz-timer">
+                    ⏱ ${quizState.timeLeft} ثانية
+                </div>
+
+                <div class="quiz-question">
+                    السؤال ${quizState.current + 1}
+                    من ${total}:
+                    ${q.q}
+                </div>
+
         `;
 
-        if (q.type === 'truefalse') {
+
+        if(q.type === 'truefalse'){
+
             html += `
-                <div class="quiz-option" onclick="selectAnswer(0)">✅ صح</div>
-                <div class="quiz-option" onclick="selectAnswer(1)">❌ خطأ</div>
-            `;
-        } else if (q.type === 'fill') {
-            html += `
-                <div style="margin-bottom: 15px;">
-                    <input type="text" id="fillAnswer" class="quiz-option" style="width: 100%; padding: 12px 18px; border: 2px solid #e7edf6; border-radius: 12px; font-size: 15px;" placeholder="اكتب الإجابة...">
+
+                <div
+                    class="quiz-option"
+                    onclick="selectAnswer(0)"
+                >
+                    ✅ صح
                 </div>
-                <button class="btn" onclick="submitFillAnswer()">تأكيد الإجابة</button>
+
+                <div
+                    class="quiz-option"
+                    onclick="selectAnswer(1)"
+                >
+                    ❌ خطأ
+                </div>
+
             `;
-        } else {
-            q.options.forEach((opt, i) => {
-                html += `
-                    <div class="quiz-option" onclick="selectAnswer(${i})">${opt}</div>
-                `;
-            });
+
+        }else if(q.type === 'fill'){
+
+            html += `
+
+                <div style="margin-bottom:15px;">
+
+                    <input
+                        type="text"
+                        id="fillAnswer"
+                        class="quiz-option"
+                        style="
+                            width:100%;
+                            padding:12px 18px;
+                            border:2px solid #e7edf6;
+                            border-radius:12px;
+                            font-size:15px;
+                        "
+                        placeholder="اكتب الإجابة..."
+                    >
+
+                </div>
+
+                <button
+                    class="btn"
+                    onclick="submitFillAnswer()"
+                >
+                    تأكيد الإجابة
+                </button>
+
+            `;
+
+        }else{
+
+            q.options.forEach(
+                (opt,i)=>{
+
+                    html += `
+
+                        <div
+                            class="quiz-option"
+                            onclick="selectAnswer(${i})"
+                        >
+                            ${opt}
+                        </div>
+
+                    `;
+
+                }
+            );
+
         }
+
 
         html += '</div>';
-        container.innerHTML = html;
+
+        container.innerHTML =
+            html;
+
     }
 
-    function selectAnswer(index) {
-        quizState.answers[quizState.current] = index;
+
+    function selectAnswer(index){
+
+        quizState.answers[
+            quizState.current
+        ] = index;
+
         nextQuestion();
+
     }
 
-    function submitFillAnswer() {
-        const input = document.getElementById('fillAnswer');
-        if (!input) return;
-        const answer = input.value.trim();
-        if (answer === '') {
-            alert('من فضلك اكتب الإجابة');
+
+    function submitFillAnswer(){
+
+        const input =
+            document.getElementById('fillAnswer');
+
+        if(!input) return;
+
+        const answer =
+            input.value.trim();
+
+        if(answer === ''){
+
+            alert('من فضلك اكتب الإجابة.');
+
             return;
+
         }
-        quizState.answers[quizState.current] = answer;
+
+        quizState.answers[
+            quizState.current
+        ] = answer;
+
         nextQuestion();
+
     }
 
-    function nextQuestion() {
-        if (quizState.current < quizState.questions.length - 1) {
+
+    function nextQuestion(){
+
+        if(
+            quizState.current <
+            quizState.questions.length - 1
+        ){
+
             quizState.current++;
+
             renderQuestion();
-        } else {
+
+        }else{
+
             finishQuiz();
+
         }
+
     }
 
-    function startTimer() {
-        if (quizState.timer) clearInterval(quizState.timer);
-        quizState.timer = setInterval(() => {
-            quizState.timeLeft--;
-            const timerEl = document.querySelector('.quiz-timer');
-            if (timerEl) timerEl.textContent = `⏱ ${quizState.timeLeft} ثانية`;
-            if (quizState.timeLeft <= 0) {
-                clearInterval(quizState.timer);
-                finishQuiz();
-            }
-        }, 1000);
+
+    function startTimer(){
+
+        if(quizState.timer){
+
+            clearInterval(
+                quizState.timer
+            );
+
+        }
+
+        quizState.timer =
+            setInterval(
+
+                () => {
+
+                    quizState.timeLeft--;
+
+                    const timerEl =
+                        document.querySelector(
+                            '.quiz-timer'
+                        );
+
+                    if(timerEl){
+
+                        timerEl.textContent =
+                            `⏱ ${quizState.timeLeft} ثانية`;
+
+                    }
+
+                    if(quizState.timeLeft <= 0){
+
+                        clearInterval(
+                            quizState.timer
+                        );
+
+                        finishQuiz();
+
+                    }
+
+                },
+
+                1000
+
+            );
+
     }
 
-    function finishQuiz() {
-        clearInterval(quizState.timer);
-        const container = document.getElementById('quizContainer');
-        const total = quizState.questions.length;
+
+    function finishQuiz(){
+
+        clearInterval(
+            quizState.timer
+        );
+
+        const container =
+            document.getElementById('quizContainer');
+
+        const total =
+            quizState.questions.length;
+
         let correct = 0;
 
-        quizState.questions.forEach((q, i) => {
-            const userAnswer = quizState.answers[i];
-            if (q.type === 'fill') {
-                if (userAnswer && userAnswer.trim().toLowerCase() === q.answer.toLowerCase()) correct++;
-            } else {
-                if (userAnswer === q.answer) correct++;
-            }
-        });
 
-        const percentage = Math.round((correct / total) * 100);
+        quizState.questions.forEach(
+            (q,i)=>{
+
+                const userAnswer =
+                    quizState.answers[i];
+
+                if(q.type === 'fill'){
+
+                    if(
+                        userAnswer &&
+                        userAnswer
+                            .trim()
+                            .toLowerCase() ===
+                        q.answer
+                            .toLowerCase()
+                    ){
+
+                        correct++;
+
+                    }
+
+                }else{
+
+                    if(
+                        userAnswer ===
+                        q.answer
+                    ){
+
+                        correct++;
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        const percentage =
+            Math.round(
+                (correct / total) * 100
+            );
+
         let message = '';
+
         let emoji = '';
-        if (percentage >= 80) { emoji = '🌟'; message = 'ممتاز! أنت عبقري!'; }
-        else if (percentage >= 60) { emoji = '💪'; message = 'جيد جدًا! استمر في التمرين.'; }
-        else if (percentage >= 40) { emoji = '📖'; message = 'جيد، لكن تحتاج مراجعة.'; }
-        else { emoji = '🔁'; message = 'لا بأس، حاول مرة أخرى.'; }
+
+
+        if(percentage >= 80){
+
+            emoji =
+                '🌟';
+
+            message =
+                'ممتاز! أنت عبقري!';
+
+        }else if(percentage >= 60){
+
+            emoji =
+                '💪';
+
+            message =
+                'جيد جدًا! استمر في التمرين.';
+
+        }else if(percentage >= 40){
+
+            emoji =
+                '📖';
+
+            message =
+                'جيد، لكن تحتاج مراجعة.';
+
+        }else{
+
+            emoji =
+                '🔁';
+
+            message =
+                'لا بأس، حاول مرة أخرى.';
+
+        }
+
 
         let reviewHtml = '';
-        quizState.questions.forEach((q, i) => {
-            const userAns = quizState.answers[i];
-            let isCorrect = false;
-            let userDisplay = '';
-            let correctDisplay = '';
 
-            if (q.type === 'fill') {
-                isCorrect = (userAns && userAns.trim().toLowerCase() === q.answer.toLowerCase());
-                userDisplay = userAns || 'لم يجب';
-                correctDisplay = q.answer;
-            } else if (q.type === 'truefalse') {
-                isCorrect = (userAns === q.answer);
-                userDisplay = (userAns === 0) ? 'صح' : (userAns === 1 ? 'خطأ' : 'لم يجب');
-                correctDisplay = (q.answer === 0) ? 'صح' : 'خطأ';
-            } else {
-                isCorrect = (userAns === q.answer);
-                userDisplay = (userAns !== undefined && q.options[userAns]) ? q.options[userAns] : 'لم يجب';
-                correctDisplay = q.options[q.answer];
+
+        quizState.questions.forEach(
+            (q,i)=>{
+
+                const userAns =
+                    quizState.answers[i];
+
+                let isCorrect =
+                    false;
+
+                let userDisplay =
+                    '';
+
+                let correctDisplay =
+                    '';
+
+
+                if(q.type === 'fill'){
+
+                    isCorrect =
+                        (
+                            userAns &&
+                            userAns
+                                .trim()
+                                .toLowerCase() ===
+                            q.answer
+                                .toLowerCase()
+                        );
+
+                    userDisplay =
+                        userAns ||
+                        'لم يجب';
+
+                    correctDisplay =
+                        q.answer;
+
+                }else if(q.type === 'truefalse'){
+
+                    isCorrect =
+                        userAns ===
+                        q.answer;
+
+                    userDisplay =
+                        userAns === 0
+                            ? 'صح'
+                            : (
+                                userAns === 1
+                                    ? 'خطأ'
+                                    : 'لم يجب'
+                            );
+
+                    correctDisplay =
+                        q.answer === 0
+                            ? 'صح'
+                            : 'خطأ';
+
+                }else{
+
+                    isCorrect =
+                        userAns ===
+                        q.answer;
+
+                    userDisplay =
+                        (
+                            userAns !== undefined &&
+                            q.options[userAns]
+                        )
+                            ? q.options[userAns]
+                            : 'لم يجب';
+
+                    correctDisplay =
+                        q.options[q.answer];
+
+                }
+
+
+                reviewHtml += `
+
+                    <div
+                        class="
+                            quiz-review-item
+                            ${isCorrect ? 'correct' : 'wrong'}
+                        "
+                    >
+
+                        <strong>
+                            السؤال ${i+1}:
+                        </strong>
+
+                        ${q.q}
+
+                        <br>
+
+                        <span>
+                            إجابتك:
+                            ${userDisplay}
+                        </span>
+
+                        <br>
+
+                        <span
+                            style="
+                                color:
+                                ${isCorrect ? '#16a673' : '#ef4444'}
+                            "
+                        >
+
+                            ${
+                                isCorrect
+                                    ? '✅ صحيح'
+                                    : '❌ خطأ - الإجابة الصحيحة: ' +
+                                      correctDisplay
+                            }
+
+                        </span>
+
+                    </div>
+
+                `;
+
             }
+        );
 
-            reviewHtml += `
-                <div class="quiz-review-item ${isCorrect ? 'correct' : 'wrong'}">
-                    <strong>السؤال ${i+1}:</strong> ${q.q}<br>
-                    <span>إجابتك: ${userDisplay}</span><br>
-                    <span style="color: ${isCorrect ? '#16a673' : '#ef4444'}">
-                        ${isCorrect ? '✅ صحيح' : '❌ خطأ - الإجابة الصحيحة: ' + correctDisplay}
-                    </span>
-                </div>
-            `;
-        });
 
-        // Save result to student system
         saveQuizResult({
-            type: quizState.type,
-            grade: currentGrade,
-            unit: currentUnit,
-            title: document.getElementById('quizTitle').textContent,
-            correct: correct,
-            total: total,
-            percentage: percentage
+
+            type:
+                quizState.type,
+
+            grade:
+                currentGrade,
+
+            unit:
+                currentUnit,
+
+            title:
+                document.getElementById(
+                    'quizTitle'
+                ).textContent,
+
+            correct:
+                correct,
+
+            total:
+                total,
+
+            percentage:
+                percentage
+
         });
+
 
         container.innerHTML = `
+
             <div class="card">
+
                 <div class="quiz-result">
-                    <div class="score">${correct} / ${total}</div>
-                    <div class="message">${emoji} ${message}</div>
-                    <div style="margin-top: 10px; font-size: 16px; color: #7b8495;">النسبة: ${percentage}%</div>
-                    <button class="btn" onclick="showPage('unit')" style="margin-top: 15px;">العودة للوحدة</button>
-                    <button class="btn" onclick="showPage('curriculum')" style="margin-top: 15px; background: #16a673;">العودة للصفوف</button>
+
+                    <div class="score">
+                        ${correct} / ${total}
+                    </div>
+
+                    <div class="message">
+                        ${emoji} ${message}
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:10px;
+                            font-size:16px;
+                            color:#7b8495;
+                        "
+                    >
+                        النسبة:
+                        ${percentage}%
+                    </div>
+
+                    <button
+                        class="btn"
+                        onclick="showPage('unit')"
+                        style="margin-top:15px;"
+                    >
+                        العودة للوحدة
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="showPage('curriculum')"
+                        style="
+                            margin-top:15px;
+                            background:#16a673;
+                        "
+                    >
+                        العودة للصفوف
+                    </button>
+
                 </div>
+
                 <div class="quiz-review">
-                    <h3 style="margin-bottom: 15px;">مراجعة الإجابات</h3>
+
+                    <h3 style="margin-bottom:15px;">
+                        مراجعة الإجابات
+                    </h3>
+
                     ${reviewHtml}
+
                 </div>
+
             </div>
+
         `;
+
     }
 
 
@@ -2100,31 +2828,52 @@
     function numberArabic(number){
 
         const numbers=[
+
             '',
+
             'الأولى',
+
             'الثانية',
+
             'الثالثة',
+
             'الرابعة',
+
             'الخامسة',
+
             'السادسة',
+
             'السابعة',
+
             'الثامنة',
+
             'التاسعة',
+
             'العاشرة'
+
         ];
 
         return numbers[number] || number;
+
     }
 
 
     /* ================= NEXORA STUDENT SYSTEM ================= */
 
-    const STUDENT_KEY = 'nexora_student';
-    const RESULTS_KEY = 'nexora_results';
-    const ACTIVITIES_KEY = 'nexora_activities';
-    const CERTIFICATES_KEY = 'nexora_certificates';
+    const STUDENT_KEY =
+        'nexora_student';
 
-    let currentStudent = null;
+    const RESULTS_KEY =
+        'nexora_results';
+
+    const ACTIVITIES_KEY =
+        'nexora_activities';
+
+    const CERTIFICATES_KEY =
+        'nexora_certificates';
+
+    let currentStudent =
+        null;
 
 
     /* ================= STUDENT ID ================= */
@@ -2132,9 +2881,17 @@
     function generateStudentId(){
 
         return 'ST-' +
-            Date.now().toString(36).toUpperCase() +
+
+            Date.now()
+                .toString(36)
+                .toUpperCase() +
+
             '-' +
-            Math.random().toString(36).substring(2,8).toUpperCase();
+
+            Math.random()
+                .toString(36)
+                .substring(2,8)
+                .toUpperCase();
 
     }
 
@@ -2146,18 +2903,36 @@
         try{
 
             const saved =
-                localStorage.getItem(STUDENT_KEY);
+                localStorage.getItem(
+                    STUDENT_KEY
+                );
 
             if(saved){
 
-                currentStudent = JSON.parse(saved);
+                currentStudent =
+                    JSON.parse(saved);
 
-                // Update sidebar with student name
-                const studentInfo = document.getElementById('studentInfo');
-                const studentNameDisplay = document.getElementById('studentNameDisplay');
-                if (studentInfo && studentNameDisplay) {
-                    studentInfo.style.display = 'block';
-                    studentNameDisplay.textContent = currentStudent.name;
+                const studentInfo =
+                    document.getElementById(
+                        'studentInfo'
+                    );
+
+                const studentNameDisplay =
+                    document.getElementById(
+                        'studentNameDisplay'
+                    );
+
+                if(
+                    studentInfo &&
+                    studentNameDisplay
+                ){
+
+                    studentInfo.style.display =
+                        'block';
+
+                    studentNameDisplay.textContent =
+                        currentStudent.name;
+
                 }
 
                 return true;
@@ -2175,23 +2950,36 @@
     }
 
 
-    /* ================= REGISTRATION ================= */
+    /* ================= REGISTRATION → SUPABASE ================= */
 
-    function registerStudent(){
+    async function registerStudent(){
 
         const name =
-            document.getElementById('studentName').value.trim();
+            document
+                .getElementById('studentName')
+                .value
+                .trim();
 
         const phone =
-            document.getElementById('studentPhone').value.trim();
+            document
+                .getElementById('studentPhone')
+                .value
+                .trim();
 
         const parentPhone =
-            document.getElementById('parentPhone').value.trim();
+            document
+                .getElementById('parentPhone')
+                .value
+                .trim();
 
-        // التحقق من الحقول الإجبارية
+
+        /* ================= VALIDATION ================= */
+
         if(!name){
 
-            alert('⚠️ من فضلك اكتب اسم الطالب.');
+            alert(
+                '⚠️ من فضلك اكتب اسم الطالب.'
+            );
 
             return;
 
@@ -2199,7 +2987,9 @@
 
         if(!phone){
 
-            alert('⚠️ من فضلك اكتب رقم هاتف الطالب.');
+            alert(
+                '⚠️ من فضلك اكتب رقم هاتف الطالب.'
+            );
 
             return;
 
@@ -2207,57 +2997,171 @@
 
         if(!parentPhone){
 
-            alert('⚠️ من فضلك اكتب رقم هاتف ولي الأمر (للمتابعة والتواصل).');
+            alert(
+                '⚠️ من فضلك اكتب رقم هاتف ولي الأمر (للمتابعة والتواصل).'
+            );
 
             return;
 
         }
 
-        // Validate student phone number (Egyptian format)
-        const phoneRegex = /^01[0125][0-9]{8}$/;
+
+        const phoneRegex =
+            /^01[0125][0-9]{8}$/;
+
+
         if(!phoneRegex.test(phone)){
-            alert('⚠️ من فضلك اكتب رقم هاتف الطالب بصيغة مصرية صحيحة (مثال: 01234567890)');
+
+            alert(
+                '⚠️ من فضلك اكتب رقم هاتف الطالب بصيغة مصرية صحيحة (مثال: 01234567890)'
+            );
+
             return;
+
         }
 
-        // Validate parent phone number (Egyptian format)
+
         if(!phoneRegex.test(parentPhone)){
-            alert('⚠️ من فضلك اكتب رقم هاتف ولي الأمر بصيغة مصرية صحيحة (مثال: 01234567890)');
+
+            alert(
+                '⚠️ من فضلك اكتب رقم هاتف ولي الأمر بصيغة مصرية صحيحة (مثال: 01234567890)'
+            );
+
             return;
+
         }
 
-        // التأكد إن رقم الطالب مختلف عن رقم ولي الأمر
+
         if(phone === parentPhone){
-            alert('⚠️ رقم هاتف الطالب ورقم هاتف ولي الأمر لا يمكن أن يكونا متماثلين.');
+
+            alert(
+                '⚠️ رقم هاتف الطالب ورقم هاتف ولي الأمر لا يمكن أن يكونا متماثلين.'
+            );
+
             return;
+
         }
+
+
+        /* ================= CREATE STUDENT ================= */
+
+        const studentId =
+            generateStudentId();
+
+        const now =
+            new Date().toISOString();
+
+
+        /* ================= INSERT INTO SUPABASE ================= */
+
+        try{
+
+            const {
+                error
+            } =
+                await supabaseClient
+
+                    .from('students')
+
+                    .insert([{
+
+                        student_id:
+                            studentId,
+
+                        name:
+                            name,
+
+                        phone:
+                            phone,
+
+                        parent_phone:
+                            parentPhone,
+
+                        created_at:
+                            now,
+
+                        last_activity:
+                            now
+
+                    }]);
+
+
+            if(error){
+
+                console.error(
+                    'Supabase registration error:',
+                    error
+                );
+
+                alert(
+                    '❌ حصل خطأ أثناء تسجيل الطالب في المنصة.\n\nلم يتم الدخول إلى المنصة. حاول مرة أخرى.'
+                );
+
+                return;
+
+            }
+
+        }catch(error){
+
+            console.error(
+                'Supabase connection error:',
+                error
+            );
+
+            alert(
+                '❌ تعذر الاتصال بقاعدة البيانات.\n\nتأكد من اتصال الإنترنت وحاول مرة أخرى.'
+            );
+
+            return;
+
+        }
+
+
+        /* ================= LOCAL COPY ================= */
 
         currentStudent = {
 
-            student_id: generateStudentId(),
+            student_id:
+                studentId,
 
-            name: name,
+            name:
+                name,
 
-            phone: phone,
+            phone:
+                phone,
 
-            parent_phone: parentPhone,
+            parent_phone:
+                parentPhone,
 
-            created_at: new Date().toISOString(),
+            created_at:
+                now,
 
-            last_activity: new Date().toISOString()
+            last_activity:
+                now
 
         };
 
 
         localStorage.setItem(
+
             STUDENT_KEY,
-            JSON.stringify(currentStudent)
+
+            JSON.stringify(
+                currentStudent
+            )
+
         );
 
 
+        /* ================= KEEP LOCAL ACTIVITY ================= */
+
         trackActivity(
+
             'registration',
-            'تم تسجيل الطالب: ' + name
+
+            'تم تسجيل الطالب: ' +
+            name
+
         );
 
 
@@ -2272,30 +3176,50 @@
 
         if(!currentStudent){
 
-            showPage('registration');
+            showPage(
+                'registration'
+            );
 
             return;
 
         }
 
 
-        // Show sidebar
         const sidebar =
-            document.getElementById('sidebar');
+            document.getElementById(
+                'sidebar'
+            );
 
         if(sidebar){
 
-            sidebar.classList.add('active');
+            sidebar.classList.add(
+                'active'
+            );
 
         }
 
 
-        // Update student name in sidebar
-        const studentInfo = document.getElementById('studentInfo');
-        const studentNameDisplay = document.getElementById('studentNameDisplay');
-        if (studentInfo && studentNameDisplay) {
-            studentInfo.style.display = 'block';
-            studentNameDisplay.textContent = currentStudent.name;
+        const studentInfo =
+            document.getElementById(
+                'studentInfo'
+            );
+
+        const studentNameDisplay =
+            document.getElementById(
+                'studentNameDisplay'
+            );
+
+        if(
+            studentInfo &&
+            studentNameDisplay
+        ){
+
+            studentInfo.style.display =
+                'block';
+
+            studentNameDisplay.textContent =
+                currentStudent.name;
+
         }
 
 
@@ -2303,8 +3227,12 @@
 
 
         trackActivity(
+
             'login',
-            'دخول الطالب: ' + currentStudent.name
+
+            'دخول الطالب: ' +
+            currentStudent.name
+
         );
 
     }
@@ -2314,28 +3242,64 @@
 
     function logoutStudent(){
 
-        if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
-            localStorage.removeItem(STUDENT_KEY);
-            currentStudent = null;
-            
-            // Hide sidebar
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar) {
-                sidebar.classList.remove('active');
+        if(
+            confirm(
+                'هل أنت متأكد من تسجيل الخروج؟'
+            )
+        ){
+
+            localStorage.removeItem(
+                STUDENT_KEY
+            );
+
+            currentStudent =
+                null;
+
+
+            const sidebar =
+                document.getElementById(
+                    'sidebar'
+                );
+
+            if(sidebar){
+
+                sidebar.classList.remove(
+                    'active'
+                );
+
             }
 
-            // Hide student info
-            const studentInfo = document.getElementById('studentInfo');
-            if (studentInfo) {
-                studentInfo.style.display = 'none';
+
+            const studentInfo =
+                document.getElementById(
+                    'studentInfo'
+                );
+
+            if(studentInfo){
+
+                studentInfo.style.display =
+                    'none';
+
             }
 
-            showPage('registration');
-            
-            // Clear registration fields
-            document.getElementById('studentName').value = '';
-            document.getElementById('studentPhone').value = '';
-            document.getElementById('parentPhone').value = '';
+
+            showPage(
+                'registration'
+            );
+
+
+            document.getElementById(
+                'studentName'
+            ).value = '';
+
+            document.getElementById(
+                'studentPhone'
+            ).value = '';
+
+            document.getElementById(
+                'parentPhone'
+            ).value = '';
+
         }
 
     }
@@ -2343,23 +3307,33 @@
 
     /* ================= ACTIVITY ================= */
 
-    function trackActivity(action, details){
+    function trackActivity(
+        action,
+        details
+    ){
 
-        if(!currentStudent) return;
+        if(!currentStudent)
+            return;
 
 
         let activities = [];
+
 
         try{
 
             activities =
                 JSON.parse(
-                    localStorage.getItem(ACTIVITIES_KEY) || '[]'
+
+                    localStorage.getItem(
+                        ACTIVITIES_KEY
+                    ) || '[]'
+
                 );
 
         }catch(error){
 
-            activities = [];
+            activities =
+                [];
 
         }
 
@@ -2367,7 +3341,8 @@
         const activity = {
 
             activity_id:
-                'ACT-' + Date.now(),
+                'ACT-' +
+                Date.now(),
 
             student_id:
                 currentStudent.student_id,
@@ -2384,12 +3359,19 @@
         };
 
 
-        activities.push(activity);
+        activities.push(
+            activity
+        );
 
 
         localStorage.setItem(
+
             ACTIVITIES_KEY,
-            JSON.stringify(activities)
+
+            JSON.stringify(
+                activities
+            )
+
         );
 
 
@@ -2398,8 +3380,13 @@
 
 
         localStorage.setItem(
+
             STUDENT_KEY,
-            JSON.stringify(currentStudent)
+
+            JSON.stringify(
+                currentStudent
+            )
+
         );
 
     }
@@ -2409,21 +3396,28 @@
 
     function saveQuizResult(data){
 
-        if(!currentStudent) return;
+        if(!currentStudent)
+            return;
 
 
         let results = [];
+
 
         try{
 
             results =
                 JSON.parse(
-                    localStorage.getItem(RESULTS_KEY) || '[]'
+
+                    localStorage.getItem(
+                        RESULTS_KEY
+                    ) || '[]'
+
                 );
 
         }catch(error){
 
-            results = [];
+            results =
+                [];
 
         }
 
@@ -2431,7 +3425,8 @@
         const result = {
 
             result_id:
-                'RES-' + Date.now(),
+                'RES-' +
+                Date.now(),
 
             student_id:
                 currentStudent.student_id,
@@ -2463,12 +3458,19 @@
         };
 
 
-        results.push(result);
+        results.push(
+            result
+        );
 
 
         localStorage.setItem(
+
             RESULTS_KEY,
-            JSON.stringify(results)
+
+            JSON.stringify(
+                results
+            )
+
         );
 
 
@@ -2486,14 +3488,17 @@
         );
 
 
-        // شهادة عند 80% فأكثر (للإمتحانات والواجبات)
-        if(result.percentage >= 80){
+        if(
+            result.percentage >= 80
+        ){
 
-            createCertificate(result);
+            createCertificate(
+                result
+            );
 
         }
 
-        // Update the grades page if it's visible
+
         renderStudentEvaluation();
 
     }
@@ -2503,21 +3508,28 @@
 
     function getStudentResults(){
 
-        if(!currentStudent) return [];
+        if(!currentStudent)
+            return [];
 
 
         let results = [];
+
 
         try{
 
             results =
                 JSON.parse(
-                    localStorage.getItem(RESULTS_KEY) || '[]'
+
+                    localStorage.getItem(
+                        RESULTS_KEY
+                    ) || '[]'
+
                 );
 
         }catch(error){
 
-            results = [];
+            results =
+                [];
 
         }
 
@@ -2539,7 +3551,10 @@
 
         const results =
             getStudentResults().filter(
-                result => result.type === type
+
+                result =>
+                    result.type === type
+
             );
 
 
@@ -2554,7 +3569,8 @@
             results.reduce(
 
                 (sum,result) =>
-                    sum + result.percentage,
+                    sum +
+                    result.percentage,
 
                 0
 
@@ -2562,7 +3578,10 @@
 
 
         return Math.round(
-            total / results.length
+
+            total /
+            results.length
+
         );
 
     }
@@ -2572,21 +3591,28 @@
 
     function createCertificate(result){
 
-        if(!currentStudent) return;
+        if(!currentStudent)
+            return;
 
 
         let certificates = [];
+
 
         try{
 
             certificates =
                 JSON.parse(
-                    localStorage.getItem(CERTIFICATES_KEY) || '[]'
+
+                    localStorage.getItem(
+                        CERTIFICATES_KEY
+                    ) || '[]'
+
                 );
 
         }catch(error){
 
-            certificates = [];
+            certificates =
+                [];
 
         }
 
@@ -2595,22 +3621,27 @@
             certificates.some(
 
                 certificate =>
+
                     certificate.student_id ===
                         currentStudent.student_id
+
                     &&
+
                     certificate.result_id ===
                         result.result_id
 
             );
 
 
-        if(alreadyExists) return;
+        if(alreadyExists)
+            return;
 
 
         certificates.push({
 
             certificate_id:
-                'CERT-' + Date.now(),
+                'CERT-' +
+                Date.now(),
 
             result_id:
                 result.result_id,
@@ -2637,7 +3668,9 @@
                 'أحسنت! استمر في التفوق والمثابرة.',
 
             date:
-                new Date().toLocaleDateString('ar-EG'),
+                new Date().toLocaleDateString(
+                    'ar-EG'
+                ),
 
             created_at:
                 new Date().toISOString()
@@ -2649,7 +3682,9 @@
 
             CERTIFICATES_KEY,
 
-            JSON.stringify(certificates)
+            JSON.stringify(
+                certificates
+            )
 
         );
 
@@ -2660,14 +3695,19 @@
 
     function renderStudentEvaluation(){
 
-        if(!currentStudent) return;
+        if(!currentStudent)
+            return;
 
 
         const examAverage =
-            calculateAverage('exam');
+            calculateAverage(
+                'exam'
+            );
 
         const homeworkAverage =
-            calculateAverage('homework');
+            calculateAverage(
+                'homework'
+            );
 
         const results =
             getStudentResults();
@@ -2676,30 +3716,53 @@
         const examText =
             examAverage === null
                 ? '—'
-                : examAverage + '%';
+                : examAverage +
+                  '%';
 
 
         const homeworkText =
             homeworkAverage === null
                 ? '—'
-                : homeworkAverage + '%';
+                : homeworkAverage +
+                  '%';
 
 
-        // Update stat cards
-        const avgExamEl = document.getElementById('avgExam');
-        const avgHomeworkEl = document.getElementById('avgHomework');
-        const totalAttemptsEl = document.getElementById('totalAttempts');
+        const avgExamEl =
+            document.getElementById(
+                'avgExam'
+            );
 
-        if (avgExamEl) avgExamEl.textContent = examText;
-        if (avgHomeworkEl) avgHomeworkEl.textContent = homeworkText;
-        if (totalAttemptsEl) totalAttemptsEl.textContent = results.length;
+        const avgHomeworkEl =
+            document.getElementById(
+                'avgHomework'
+            );
+
+        const totalAttemptsEl =
+            document.getElementById(
+                'totalAttempts'
+            );
 
 
-        // Render results list
+        if(avgExamEl)
+            avgExamEl.textContent =
+                examText;
+
+        if(avgHomeworkEl)
+            avgHomeworkEl.textContent =
+                homeworkText;
+
+        if(totalAttemptsEl)
+            totalAttemptsEl.textContent =
+                results.length;
+
+
         const gradesPage =
-            document.getElementById('grades');
+            document.getElementById(
+                'grades'
+            );
 
-        if(!gradesPage) return;
+        if(!gradesPage)
+            return;
 
 
         let oldList =
@@ -2716,7 +3779,9 @@
 
 
         const list =
-            document.createElement('div');
+            document.createElement(
+                'div'
+            );
 
         list.className =
             'card student-results-list';
@@ -2740,35 +3805,51 @@
 
             const items =
                 [...results]
+
                     .reverse()
-                    .map(result => `
 
-                        <div style="
-                            padding:14px 0;
-                            border-bottom:1px solid #eef2f7;
-                        ">
+                    .map(
+                        result => `
 
-                            <strong>
-                                ${result.title}
-                            </strong>
+                            <div style="
+                                padding:14px 0;
+                                border-bottom:1px solid #eef2f7;
+                            ">
 
-                            <br>
+                                <strong>
+                                    ${result.title}
+                                </strong>
 
-                            <span style="color:#7b8495;font-size:13px;">
-                                ${
-                                    result.type === 'homework'
-                                        ? 'واجب'
-                                        : 'امتحان'
-                                }
-                                —
-                                ${result.correct}/${result.total}
-                                —
-                                ${result.percentage}%
-                            </span>
+                                <br>
 
-                        </div>
+                                <span
+                                    style="
+                                        color:#7b8495;
+                                        font-size:13px;
+                                    "
+                                >
 
-                    `)
+                                    ${
+                                        result.type === 'homework'
+                                            ? 'واجب'
+                                            : 'امتحان'
+                                    }
+
+                                    —
+
+                                    ${result.correct}/${result.total}
+
+                                    —
+
+                                    ${result.percentage}%
+
+                                </span>
+
+                            </div>
+
+                        `
+                    )
+
                     .join('');
 
 
@@ -2785,9 +3866,11 @@
         }
 
 
-        gradesPage.appendChild(list);
+        gradesPage.appendChild(
+            list
+        );
 
-        // Update certificate page
+
         renderCertificates();
 
     }
@@ -2798,24 +3881,33 @@
     function renderCertificates(){
 
         const container =
-            document.getElementById('certificateContainer');
+            document.getElementById(
+                'certificateContainer'
+            );
 
 
-        if(!container) return;
+        if(!container)
+            return;
 
 
         let certificates = [];
+
 
         try{
 
             certificates =
                 JSON.parse(
-                    localStorage.getItem(CERTIFICATES_KEY) || '[]'
+
+                    localStorage.getItem(
+                        CERTIFICATES_KEY
+                    ) || '[]'
+
                 );
 
         }catch(error){
 
-            certificates = [];
+            certificates =
+                [];
 
         }
 
@@ -2825,6 +3917,7 @@
 
                 certificate =>
                     currentStudent &&
+
                     certificate.student_id ===
                     currentStudent.student_id
 
@@ -2835,7 +3928,13 @@
 
             container.innerHTML = `
 
-                <div style="margin-top:20px;text-align:center;padding:20px;">
+                <div
+                    style="
+                        margin-top:20px;
+                        text-align:center;
+                        padding:20px;
+                    "
+                >
 
                     <p>
                         لا توجد شهادات للطالب حتى الآن.
@@ -2856,81 +3955,106 @@
             <div style="margin-top:20px;">
 
                 ${
+
                     certificates
+
                         .reverse()
-                        .map(certificate => `
 
-                            <div style="
-                                border:2px solid #1769e0;
-                                border-radius:20px;
-                                padding:30px 20px;
-                                background:#fbfdff;
-                                text-align:center;
-                                margin-bottom:20px;
-                            ">
+                        .map(
+                            certificate => `
 
-                                <img
-                                    src="${certificate.teacher_image}"
-                                    alt="مستر مهاب"
+                                <div
                                     style="
-                                        width:75px;
-                                        height:75px;
-                                        border-radius:50%;
-                                        object-fit:cover;
-                                        margin-bottom:10px;
+                                        border:2px solid #1769e0;
+                                        border-radius:20px;
+                                        padding:30px 20px;
+                                        background:#fbfdff;
+                                        text-align:center;
+                                        margin-bottom:20px;
                                     "
                                 >
 
-                                <h2 style="
-                                    border:none;
-                                    margin:0;
-                                    padding:0;
-                                ">
-                                    🏆 شهادة تقدير
-                                </h2>
+                                    <img
+                                        src="${certificate.teacher_image}"
+                                        alt="مستر مهاب"
+                                        style="
+                                            width:75px;
+                                            height:75px;
+                                            border-radius:50%;
+                                            object-fit:cover;
+                                            margin-bottom:10px;
+                                        "
+                                    >
 
-                                <p style="margin-top:15px;">
-                                    تقدم إلى الطالب
-                                </p>
+                                    <h2
+                                        style="
+                                            border:none;
+                                            margin:0;
+                                            padding:0;
+                                        "
+                                    >
+                                        🏆 شهادة تقدير
+                                    </h2>
 
-                                <h3 style="font-size:25px;">
-                                    ${certificate.student_name}
-                                </h3>
+                                    <p style="margin-top:15px;">
+                                        تقدم إلى الطالب
+                                    </p>
 
-                                <p>
-                                    تقديرًا لتحقيقه
-                                    <strong>
-                                        ${certificate.score}%
-                                    </strong>
-                                    في
-                                    <strong>
-                                        ${certificate.assessment_name}
-                                    </strong>
-                                </p>
+                                    <h3
+                                        style="font-size:25px;"
+                                    >
+                                        ${certificate.student_name}
+                                    </h3>
 
-                                <p style="margin-top:15px;">
-                                    ${certificate.message}
-                                </p>
+                                    <p>
+                                        تقديرًا لتحقيقه
 
-                                <p style="
-                                    margin-top:15px;
-                                    font-size:13px;
-                                ">
-                                    المدرس:
-                                    ${certificate.teacher_name}
-                                </p>
+                                        <strong>
+                                            ${certificate.score}%
+                                        </strong>
 
-                                <p style="
-                                    font-size:12px;
-                                    color:#7b8495;
-                                ">
-                                    ${certificate.date}
-                                </p>
+                                        في
 
-                            </div>
+                                        <strong>
+                                            ${certificate.assessment_name}
+                                        </strong>
 
-                        `)
+                                    </p>
+
+                                    <p style="margin-top:15px;">
+                                        ${certificate.message}
+                                    </p>
+
+                                    <p
+                                        style="
+                                            margin-top:15px;
+                                            font-size:13px;
+                                        "
+                                    >
+
+                                        المدرس:
+                                        ${certificate.teacher_name}
+
+                                    </p>
+
+                                    <p
+                                        style="
+                                            font-size:12px;
+                                            color:#7b8495;
+                                        "
+                                    >
+
+                                        ${certificate.date}
+
+                                    </p>
+
+                                </div>
+
+                            `
+                        )
+
                         .join('')
+
                 }
 
             </div>
@@ -2946,85 +4070,102 @@
         showPage;
 
 
-    showPage = function(pageId, clickedLink){
+    showPage =
+        function(
+            pageId,
+            clickedLink
+        ){
 
-        if(!currentStudent && pageId !== 'registration'){
+            if(
+                !currentStudent &&
+                pageId !== 'registration'
+            ){
 
-            showPage('registration');
+                originalShowPage(
+                    'registration'
+                );
 
-            return;
+                return;
 
-        }
-
-
-        originalShowPage(pageId, clickedLink);
-
-
-        if(pageId === 'grades'){
-
-            renderStudentEvaluation();
-
-        }
-
-
-        if(pageId === 'certificate'){
-
-            renderCertificates();
-
-        }
+            }
 
 
-        const activityNames = {
-
-            home:
-                'فتح تعريف المدرس',
-
-            curriculum:
-                'فتح المنهج',
-
-            grade:
-                'فتح الصف',
-
-            unit:
-                'فتح الوحدة',
-
-            unitSection:
-                'فتح محتوى الوحدة',
-
-            lessonView:
-                'فتح المذكرة',
-
-            videoView:
-                'فتح فيديو',
-
-            quiz:
-                'فتح الاختبار',
-
-            grades:
-                'فتح تقييم الطالب',
-
-            certificate:
-                'فتح الشهادات'
-
-        };
-
-
-        if(activityNames[pageId]){
-
-            trackActivity(
-                'page_view',
-                activityNames[pageId]
+            originalShowPage(
+                pageId,
+                clickedLink
             );
 
-        }
 
-    };
+            if(pageId === 'grades'){
+
+                renderStudentEvaluation();
+
+            }
+
+
+            if(pageId === 'certificate'){
+
+                renderCertificates();
+
+            }
+
+
+            const activityNames = {
+
+                home:
+                    'فتح تعريف المدرس',
+
+                curriculum:
+                    'فتح المنهج',
+
+                grade:
+                    'فتح الصف',
+
+                unit:
+                    'فتح الوحدة',
+
+                unitSection:
+                    'فتح محتوى الوحدة',
+
+                lessonView:
+                    'فتح المذكرة',
+
+                videoView:
+                    'فتح فيديو',
+
+                quiz:
+                    'فتح الاختبار',
+
+                grades:
+                    'فتح تقييم الطالب',
+
+                certificate:
+                    'فتح الشهادات'
+
+            };
+
+
+            if(activityNames[pageId]){
+
+                trackActivity(
+
+                    'page_view',
+
+                    activityNames[pageId]
+
+                );
+
+            }
+
+        };
 
 
     /* ================= INITIALIZATION ================= */
 
     document.addEventListener(
+
         'DOMContentLoaded',
+
         function(){
 
             const hasStudent =
@@ -3037,31 +4178,41 @@
 
             }else{
 
-                // Hide sidebar
                 const sidebar =
-                    document.getElementById('sidebar');
+                    document.getElementById(
+                        'sidebar'
+                    );
 
                 if(sidebar){
 
-                    sidebar.classList.remove('active');
+                    sidebar.classList.remove(
+                        'active'
+                    );
 
                 }
 
 
-                showPage('registration');
+                showPage(
+                    'registration'
+                );
 
             }
 
-            // Render certificates if student exists
-            if (currentStudent) {
+
+            if(currentStudent){
+
                 renderCertificates();
+
                 renderStudentEvaluation();
+
             }
 
         }
+
     );
 
 </script>
 
 </body>
 </html>
+```
