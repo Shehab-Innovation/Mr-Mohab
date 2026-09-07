@@ -259,6 +259,35 @@
             padding: 30px 0 0;
         }
 
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 18px;
+            font-weight: 800;
+            color: #64748b;
+        }
+
+        .error {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .error-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .error-title {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .error-text {
+            color: #64748b;
+            font-size: 14px;
+        }
+
         @media (max-width: 700px) {
 
             .header {
@@ -387,197 +416,11 @@
         </section>
 
 
-        <section class="profile-card">
+        <section class="profile-card" id="profileCard">
 
-
-            <div class="profile-header">
-
-                <div class="student-avatar">
-                    👨‍🎓
-                </div>
-
-
-                <div>
-
-                    <div
-                        class="student-header-name"
-                        id="studentName"
-                    >
-                        شهاب
-                    </div>
-
-
-                    <div
-                        class="student-header-id"
-                        id="studentIdHeader"
-                    >
-                        ST-MTQOD79M-LZKUGU
-                    </div>
-
-                </div>
-
+            <div class="loading">
+                ⏳ جاري تحميل بيانات الطالب...
             </div>
-
-
-            <div class="details">
-
-
-                <div class="detail-card">
-
-                    <div class="detail-label">
-                        👤 اسم الطالب
-                    </div>
-
-                    <div
-                        class="detail-value"
-                        id="nameValue"
-                    >
-                        شهاب
-                    </div>
-
-                </div>
-
-
-                <div class="detail-card">
-
-                    <div class="detail-label">
-                        🆔 رقم الطالب
-                    </div>
-
-                    <div
-                        class="detail-value student-id"
-                        id="studentIdValue"
-                    >
-                        ST-MTQOD79M-LZKUGU
-                    </div>
-
-                </div>
-
-
-                <div class="detail-card">
-
-                    <div class="detail-label">
-                        📱 رقم الهاتف
-                    </div>
-
-                    <div
-                        class="detail-value phone"
-                        id="phoneValue"
-                    >
-                        01011641429
-                    </div>
-
-                </div>
-
-
-                <div class="detail-card">
-
-                    <div class="detail-label">
-                        👨‍👩‍👦 رقم ولي الأمر
-                    </div>
-
-                    <div
-                        class="detail-value phone"
-                        id="parentPhoneValue"
-                    >
-                        01280511742
-                    </div>
-
-                </div>
-
-
-                <div class="detail-card">
-
-                    <div class="detail-label">
-                        📅 تاريخ التسجيل
-                    </div>
-
-                    <div
-                        class="detail-value"
-                        id="createdValue"
-                    >
-                        ٧‏/٩‏/٢٠٢٦
-                    </div>
-
-                </div>
-
-
-                <div class="detail-card">
-
-                    <div class="detail-label">
-                        🟢 حالة الطالب
-                    </div>
-
-                    <div class="detail-value">
-
-                        <span class="status">
-                            نشط
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-            <div class="sections">
-
-
-                <div class="section-card">
-
-                    <div class="section-icon">
-                        📊
-                    </div>
-
-                    <div class="section-title">
-                        النتائج
-                    </div>
-
-                    <div class="section-text">
-                        نتائج الاختبارات والتقييمات
-                    </div>
-
-                </div>
-
-
-                <div class="section-card">
-
-                    <div class="section-icon">
-                        📚
-                    </div>
-
-                    <div class="section-title">
-                        الأنشطة
-                    </div>
-
-                    <div class="section-text">
-                        متابعة نشاط الطالب داخل المنصة
-                    </div>
-
-                </div>
-
-
-                <div class="section-card">
-
-                    <div class="section-icon">
-                        🏆
-                    </div>
-
-                    <div class="section-title">
-                        الشهادات
-                    </div>
-
-                    <div class="section-text">
-                        شهادات الإنجاز والتفوق
-                    </div>
-
-                </div>
-
-
-            </div>
-
 
         </section>
 
@@ -590,7 +433,413 @@
     </main>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
     <script>
+
+        const supabaseClient = window.supabase.createClient(
+            'https://bbiflvdwardvozjvrsya.supabase.co',
+            'sb_publishable_I_7nb9Ab0--dz_5hpzq27w_G8_7b6PL'
+        );
+
+
+        function escapeHtml(value) {
+
+            if (value === null || value === undefined) {
+                return '';
+            }
+
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+
+        }
+
+
+        function formatDate(value) {
+
+            if (!value) {
+                return 'غير متوفر';
+            }
+
+            const date = new Date(value);
+
+            if (isNaN(date.getTime())) {
+                return value;
+            }
+
+            return date.toLocaleDateString('ar-EG', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+            });
+
+        }
+
+
+        function showError(title, text) {
+
+            document.getElementById('profileCard').innerHTML = `
+
+                <div class="error">
+
+                    <div class="error-icon">
+                        ⚠️
+                    </div>
+
+                    <div class="error-title">
+                        ${escapeHtml(title)}
+                    </div>
+
+                    <div class="error-text">
+                        ${escapeHtml(text)}
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        async function loadStudent() {
+
+            try {
+
+                const params = new URLSearchParams(
+                    window.location.search
+                );
+
+                const studentId = params.get('student_id');
+
+
+                if (!studentId) {
+
+                    showError(
+                        'لم يتم تحديد الطالب',
+                        'الرابط لا يحتوي على رقم الطالب.'
+                    );
+
+                    return;
+                }
+
+
+                const sessionData = localStorage.getItem(
+                    'nexora_teacher_session'
+                );
+
+                const sessionToken = sessionStorage.getItem(
+                    'nexora_teacher_token'
+                );
+
+
+                if (!sessionData || !sessionToken) {
+
+                    window.location.href =
+                        'teacher-login.html';
+
+                    return;
+                }
+
+
+                let teacherSession;
+
+                try {
+
+                    teacherSession =
+                        JSON.parse(sessionData);
+
+                } catch (error) {
+
+                    localStorage.removeItem(
+                        'nexora_teacher_session'
+                    );
+
+                    sessionStorage.removeItem(
+                        'nexora_teacher_token'
+                    );
+
+                    window.location.href =
+                        'teacher-login.html';
+
+                    return;
+                }
+
+
+                if (
+                    !teacherSession.expires_at ||
+                    new Date(teacherSession.expires_at) <= new Date()
+                ) {
+
+                    localStorage.removeItem(
+                        'nexora_teacher_session'
+                    );
+
+                    sessionStorage.removeItem(
+                        'nexora_teacher_token'
+                    );
+
+                    window.location.href =
+                        'teacher-login.html';
+
+                    return;
+                }
+
+
+                const { data, error } =
+                    await supabaseClient.rpc(
+                        'get_teacher_student_by_session',
+                        {
+                            p_session_token: sessionToken,
+                            p_student_id: studentId
+                        }
+                    );
+
+
+                if (error) {
+
+                    console.error(
+                        'Student RPC error:',
+                        error
+                    );
+
+                    showError(
+                        'حدث خطأ',
+                        'تعذر تحميل بيانات الطالب.'
+                    );
+
+                    return;
+                }
+
+
+                if (!data || data.length === 0) {
+
+                    showError(
+                        'الطالب غير موجود',
+                        'لم يتم العثور على هذا الطالب أو انتهت جلسة تسجيل الدخول.'
+                    );
+
+                    return;
+                }
+
+
+                const student = data[0];
+
+
+                document.getElementById(
+                    'profileCard'
+                ).innerHTML = `
+
+                    <div class="profile-header">
+
+                        <div class="student-avatar">
+                            👨‍🎓
+                        </div>
+
+
+                        <div>
+
+                            <div
+                                class="student-header-name"
+                                id="studentName"
+                            >
+                                ${escapeHtml(student.name)}
+                            </div>
+
+
+                            <div
+                                class="student-header-id"
+                                id="studentIdHeader"
+                            >
+                                ${escapeHtml(student.student_id)}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="details">
+
+
+                        <div class="detail-card">
+
+                            <div class="detail-label">
+                                👤 اسم الطالب
+                            </div>
+
+                            <div
+                                class="detail-value"
+                                id="nameValue"
+                            >
+                                ${escapeHtml(student.name)}
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-card">
+
+                            <div class="detail-label">
+                                🆔 رقم الطالب
+                            </div>
+
+                            <div
+                                class="detail-value student-id"
+                                id="studentIdValue"
+                            >
+                                ${escapeHtml(student.student_id)}
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-card">
+
+                            <div class="detail-label">
+                                📱 رقم الهاتف
+                            </div>
+
+                            <div
+                                class="detail-value phone"
+                                id="phoneValue"
+                            >
+                                ${escapeHtml(student.phone)}
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-card">
+
+                            <div class="detail-label">
+                                👨‍👩‍👦 رقم ولي الأمر
+                            </div>
+
+                            <div
+                                class="detail-value phone"
+                                id="parentPhoneValue"
+                            >
+                                ${escapeHtml(student.parent_phone)}
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-card">
+
+                            <div class="detail-label">
+                                📅 تاريخ التسجيل
+                            </div>
+
+                            <div
+                                class="detail-value"
+                                id="createdValue"
+                            >
+                                ${formatDate(student.created_at)}
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-card">
+
+                            <div class="detail-label">
+                                🟢 حالة الطالب
+                            </div>
+
+                            <div class="detail-value">
+
+                                <span class="status">
+                                    نشط
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="sections">
+
+
+                        <div class="section-card">
+
+                            <div class="section-icon">
+                                📊
+                            </div>
+
+                            <div class="section-title">
+                                النتائج
+                            </div>
+
+                            <div class="section-text">
+                                نتائج الاختبارات والتقييمات
+                            </div>
+
+                        </div>
+
+
+                        <div class="section-card">
+
+                            <div class="section-icon">
+                                📚
+                            </div>
+
+                            <div class="section-title">
+                                الأنشطة
+                            </div>
+
+                            <div class="section-text">
+                                متابعة نشاط الطالب داخل المنصة
+                            </div>
+
+                        </div>
+
+
+                        <div class="section-card">
+
+                            <div class="section-icon">
+                                🏆
+                            </div>
+
+                            <div class="section-title">
+                                الشهادات
+                            </div>
+
+                            <div class="section-text">
+                                شهادات الإنجاز والتفوق
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                `;
+
+            } catch (error) {
+
+                console.error(
+                    'Unexpected error:',
+                    error
+                );
+
+                showError(
+                    'حدث خطأ غير متوقع',
+                    'تعذر تحميل ملف الطالب.'
+                );
+
+            }
+
+        }
+
 
         function goBack() {
 
@@ -598,6 +847,9 @@
                 'teacher-dashboard.html';
 
         }
+
+
+        loadStudent();
 
     </script>
 
