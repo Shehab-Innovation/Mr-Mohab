@@ -364,6 +364,7 @@
     </div>
 
     <script>
+
         const supabaseClient =
             window.supabase.createClient(
                 'https://bbiflvdwardvozjvrsya.supabase.co',
@@ -442,10 +443,10 @@
                         .value;
 
 
-                if(
+                if (
                     !username ||
                     !password
-                ){
+                ) {
 
                     showMessage(
                         'من فضلك اكتب اسم المستخدم وكلمة المرور.',
@@ -471,7 +472,7 @@
                     } =
                         await supabaseClient
                             .rpc(
-                                'verify_teacher_login',
+                                'create_teacher_session',
                                 {
                                     p_username:
                                         username,
@@ -482,10 +483,10 @@
                             );
 
 
-                    if(error){
+                    if (error) {
 
                         console.error(
-                            'Teacher login error:',
+                            'Teacher session error:',
                             error
                         );
 
@@ -498,10 +499,10 @@
                     }
 
 
-                    if(
+                    if (
                         !data ||
                         data.length === 0
-                    ){
+                    ) {
 
                         showMessage(
                             'اسم المستخدم أو كلمة المرور غير صحيحة.',
@@ -515,6 +516,15 @@
                     const teacher =
                         data[0];
 
+
+                    /*
+                     * نحفظ بيانات المدرس العامة فقط
+                     * في localStorage.
+                     *
+                     * الـ Session Token نفسه
+                     * يتحفظ في sessionStorage
+                     * وليس كلمة المرور.
+                     */
 
                     localStorage.setItem(
                         'nexora_teacher_session',
@@ -532,11 +542,20 @@
                             image:
                                 teacher.image,
 
+                            expires_at:
+                                teacher.expires_at,
+
                             login_at:
                                 new Date()
                                     .toISOString()
 
                         })
+                    );
+
+
+                    sessionStorage.setItem(
+                        'nexora_teacher_token',
+                        teacher.session_token
                     );
 
 
@@ -551,10 +570,15 @@
                         'تم تسجيل الدخول ✅';
 
 
-                } catch(error) {
+                    /*
+                     * هنضيف التحويل للوحة التحكم
+                     * بعد ما نختبر تسجيل الدخول الجديد.
+                     */
+
+                } catch (error) {
 
                     console.error(
-                        'Teacher login connection error:',
+                        'Teacher session connection error:',
                         error
                     );
 
@@ -565,10 +589,10 @@
 
                 } finally {
 
-                    if(
+                    if (
                         !messageBox.classList
                             .contains('success')
-                    ){
+                    ) {
 
                         loginButton.disabled =
                             false;
@@ -582,6 +606,7 @@
 
             }
         );
+
     </script>
 
 </body>
