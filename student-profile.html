@@ -267,7 +267,7 @@
         }
 
         /* =========================
-           محتوى النتائج
+           النتائج
         ========================= */
 
         .results-container {
@@ -389,7 +389,7 @@
         }
 
         /* =========================
-           محتوى الأنشطة
+           الأنشطة
         ========================= */
 
         .activities-container {
@@ -509,6 +509,151 @@
             font-weight: 800;
         }
 
+        /* =========================
+           الشهادات
+        ========================= */
+
+        .certificates-container {
+            display: none;
+            padding: 0 25px 25px;
+        }
+
+        .certificates-container.show {
+            display: block;
+        }
+
+        .certificates-title {
+            font-size: 21px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .certificates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .certificate-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .certificate-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .certificate-teacher-image {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .certificate-teacher-name {
+            font-size: 15px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .certificate-label {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .certificate-main {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .certificate-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .certificate-name {
+            font-size: 19px;
+            font-weight: 900;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .certificate-score {
+            font-size: 30px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .certificate-message {
+            color: #475569;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .certificate-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            text-align: right;
+        }
+
+        .certificate-info-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 11px;
+        }
+
+        .certificate-info-label {
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .certificate-info-value {
+            font-size: 13px;
+            font-weight: 900;
+            word-break: break-word;
+        }
+
+        .certificate-id {
+            direction: ltr;
+            text-align: right;
+            font-family: monospace;
+        }
+
+        .certificates-loading {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-weight: 800;
+        }
+
+        .empty-certificates {
+            border: 1px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #64748b;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
         .footer {
             text-align: center;
 
@@ -595,11 +740,9 @@
                 padding: 0 20px 20px;
             }
 
-            .results-container {
-                padding: 0 20px 20px;
-            }
-
-            .activities-container {
+            .results-container,
+            .activities-container,
+            .certificates-container {
                 padding: 0 20px 20px;
             }
 
@@ -612,6 +755,10 @@
             }
 
             .activity-info {
+                grid-template-columns: 1fr;
+            }
+
+            .certificate-info {
                 grid-template-columns: 1fr;
             }
 
@@ -817,75 +964,9 @@
         }
 
 
-        function formatActivityType(type) {
-
-            if (!type) {
-                return 'نشاط داخل المنصة';
-            }
-
-            const activityMap = {
-
-                'page_view': '👁️ مشاهدة صفحة',
-
-                'view_page': '👁️ مشاهدة صفحة',
-
-                'login': '🔐 تسجيل دخول',
-
-                'logout': '🚪 تسجيل خروج',
-
-                'exam_start': '📝 بدء اختبار',
-
-                'exam_complete': '✅ إكمال اختبار',
-
-                'lesson_start': '📖 بدء درس',
-
-                'lesson_complete': '🎯 إكمال درس',
-
-                'certificate_view': '🏆 مشاهدة شهادة',
-
-                'result_view': '📊 مشاهدة نتيجة',
-
-                'registration': '👤 تسجيل الطالب'
-
-            };
-
-            return activityMap[type] || type;
-
-        }
-
-
-        function formatActivityDetails(details) {
-
-            if (
-                details === null ||
-                details === undefined ||
-                details === ''
-            ) {
-                return '';
-            }
-
-            if (typeof details === 'object') {
-
-                try {
-
-                    return JSON.stringify(
-                        details,
-                        null,
-                        2
-                    );
-
-                } catch (error) {
-
-                    return String(details);
-
-                }
-
-            }
-
-            return String(details);
-
-        }
-
+        /* =========================
+           النتائج
+        ========================= */
 
         function renderResults(results) {
 
@@ -946,7 +1027,6 @@
 
                         <div class="result-info">
 
-
                             <div class="result-info-item">
 
                                 <div class="result-info-label">
@@ -992,7 +1072,6 @@
 
                             </div>
 
-
                         </div>
 
                     </div>
@@ -1010,7 +1089,6 @@
 
 
                 <div class="results-summary">
-
 
                     <div class="summary-card">
 
@@ -1049,7 +1127,6 @@
                         </div>
 
                     </div>
-
 
                 </div>
 
@@ -1129,29 +1206,105 @@
 
         function toggleResults() {
 
-            const resultsContainer =
+            const container =
                 document.getElementById('resultsContainer');
 
-            const resultsButton =
+            const button =
                 document.getElementById('resultsButton');
 
 
-            if (
-                resultsContainer.classList.contains('show')
-            ) {
+            if (container.classList.contains('show')) {
 
-                resultsContainer.classList.remove('show');
-
-                resultsButton.classList.remove('active');
+                container.classList.remove('show');
+                button.classList.remove('active');
 
                 return;
 
             }
 
 
-            resultsContainer.classList.add('show');
+            container.classList.add('show');
+            button.classList.add('active');
 
-            resultsButton.classList.add('active');
+        }
+
+
+        /* =========================
+           الأنشطة
+        ========================= */
+
+        function formatActivityType(type) {
+
+            if (!type) {
+                return 'نشاط داخل المنصة';
+            }
+
+
+            const activityMap = {
+
+                'page_view': '👁️ مشاهدة صفحة',
+
+                'view_page': '👁️ مشاهدة صفحة',
+
+                'login': '🔐 تسجيل دخول',
+
+                'logout': '🚪 تسجيل خروج',
+
+                'exam_start': '📝 بدء اختبار',
+
+                'exam_complete': '✅ إكمال اختبار',
+
+                'lesson_start': '📖 بدء درس',
+
+                'lesson_complete': '🎯 إكمال درس',
+
+                'certificate_view': '🏆 مشاهدة شهادة',
+
+                'result_view': '📊 مشاهدة نتيجة',
+
+                'registration': '👤 تسجيل الطالب'
+
+            };
+
+
+            return activityMap[type] || type;
+
+        }
+
+
+        function formatActivityDetails(details) {
+
+            if (
+                details === null ||
+                details === undefined ||
+                details === ''
+            ) {
+
+                return '';
+
+            }
+
+
+            if (typeof details === 'object') {
+
+                try {
+
+                    return JSON.stringify(
+                        details,
+                        null,
+                        2
+                    );
+
+                } catch (error) {
+
+                    return String(details);
+
+                }
+
+            }
+
+
+            return String(details);
 
         }
 
@@ -1200,7 +1353,6 @@
 
                         <div class="activity-info">
 
-
                             <div class="activity-info-item">
 
                                 <div class="activity-info-label">
@@ -1232,7 +1384,6 @@
                                 </div>
 
                             </div>
-
 
                         </div>
 
@@ -1344,42 +1495,325 @@
 
         function toggleActivities() {
 
-            const activitiesContainer =
+            const container =
                 document.getElementById('activitiesContainer');
 
-            const activitiesButton =
+            const button =
                 document.getElementById('activitiesButton');
 
 
-            if (
-                activitiesContainer.classList.contains('show')
-            ) {
+            if (container.classList.contains('show')) {
 
-                activitiesContainer.classList.remove('show');
-
-                activitiesButton.classList.remove('active');
+                container.classList.remove('show');
+                button.classList.remove('active');
 
                 return;
 
             }
 
 
-            activitiesContainer.classList.add('show');
-
-            activitiesButton.classList.add('active');
+            container.classList.add('show');
+            button.classList.add('active');
 
         }
 
+
+        /* =========================
+           الشهادات
+        ========================= */
+
+        function renderCertificates(certificates) {
+
+            if (!certificates || certificates.length === 0) {
+
+                return `
+
+                    <div class="empty-certificates">
+                        لا توجد شهادات مسجلة لهذا الطالب حتى الآن.
+                    </div>
+
+                `;
+
+            }
+
+
+            const certificateCards =
+                certificates.map(function (certificate) {
+
+                    const teacherImage =
+                        certificate.teacher_image ||
+                        '';
+
+
+                    return `
+
+                        <div class="certificate-card">
+
+                            <div class="certificate-header">
+
+                                ${
+                                    teacherImage
+                                        ? `
+                                            <img
+                                                class="certificate-teacher-image"
+                                                src="${escapeHtml(teacherImage)}"
+                                                alt="المدرس"
+                                            >
+                                        `
+                                        : `
+                                            <div class="certificate-teacher-image"></div>
+                                        `
+                                }
+
+
+                                <div>
+
+                                    <div class="certificate-teacher-name">
+                                        ${escapeHtml(
+                                            certificate.teacher_name ||
+                                            'المدرس'
+                                        )}
+                                    </div>
+
+                                    <div class="certificate-label">
+                                        شهادة إنجاز للطالب
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="certificate-main">
+
+                                <div class="certificate-icon">
+                                    🏆
+                                </div>
+
+
+                                <div class="certificate-name">
+                                    ${escapeHtml(
+                                        certificate.assessment_name
+                                    )}
+                                </div>
+
+
+                                <div class="certificate-score">
+                                    ${escapeHtml(certificate.score)}%
+                                </div>
+
+
+                                ${
+                                    certificate.message
+                                        ? `
+                                            <div class="certificate-message">
+                                                ${escapeHtml(
+                                                    certificate.message
+                                                )}
+                                            </div>
+                                        `
+                                        : ''
+                                }
+
+
+                                <div class="certificate-info">
+
+
+                                    <div class="certificate-info-item">
+
+                                        <div class="certificate-info-label">
+                                            الطالب
+                                        </div>
+
+                                        <div class="certificate-info-value">
+                                            ${escapeHtml(
+                                                certificate.student_name
+                                            )}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="certificate-info-item">
+
+                                        <div class="certificate-info-label">
+                                            التاريخ
+                                        </div>
+
+                                        <div class="certificate-info-value">
+                                            ${escapeHtml(
+                                                certificate.date ||
+                                                formatDate(
+                                                    certificate.created_at
+                                                )
+                                            )}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="certificate-info-item">
+
+                                        <div class="certificate-info-label">
+                                            رقم الشهادة
+                                        </div>
+
+                                        <div class="certificate-info-value certificate-id">
+                                            ${escapeHtml(
+                                                certificate.certificate_id
+                                            )}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="certificate-info-item">
+
+                                        <div class="certificate-info-label">
+                                            رقم النتيجة
+                                        </div>
+
+                                        <div class="certificate-info-value certificate-id">
+                                            ${escapeHtml(
+                                                certificate.result_id
+                                            )}
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }).join('');
+
+
+            return `
+
+                <div class="certificates-title">
+                    🏆 شهادات الطالب
+                </div>
+
+
+                <div class="certificates-list">
+
+                    ${certificateCards}
+
+                </div>
+
+            `;
+
+        }
+
+
+        async function loadStudentCertificates(
+            sessionToken,
+            studentId
+        ) {
+
+            const certificatesContainer =
+                document.getElementById('certificatesContainer');
+
+
+            certificatesContainer.innerHTML = `
+
+                <div class="certificates-title">
+                    🏆 شهادات الطالب
+                </div>
+
+                <div class="certificates-loading">
+                    ⏳ جاري تحميل الشهادات...
+                </div>
+
+            `;
+
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_teacher_student_certificates_by_session',
+                    {
+                        p_session_token: sessionToken,
+                        p_student_id: studentId
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Certificates RPC error:',
+                    error
+                );
+
+                certificatesContainer.innerHTML = `
+
+                    <div class="certificates-title">
+                        🏆 شهادات الطالب
+                    </div>
+
+                    <div class="empty-certificates">
+                        تعذر تحميل شهادات الطالب حاليًا.
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            certificatesContainer.innerHTML =
+                renderCertificates(data);
+
+        }
+
+
+        function toggleCertificates() {
+
+            const container =
+                document.getElementById('certificatesContainer');
+
+            const button =
+                document.getElementById('certificatesButton');
+
+
+            if (container.classList.contains('show')) {
+
+                container.classList.remove('show');
+                button.classList.remove('active');
+
+                return;
+
+            }
+
+
+            container.classList.add('show');
+            button.classList.add('active');
+
+        }
+
+
+        /* =========================
+           تحميل الطالب
+        ========================= */
 
         async function loadStudent() {
 
             try {
 
-                const params = new URLSearchParams(
-                    window.location.search
-                );
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
 
-                const studentId = params.get('student_id');
+
+                const studentId =
+                    params.get('student_id');
 
 
                 if (!studentId) {
@@ -1390,16 +1824,20 @@
                     );
 
                     return;
+
                 }
 
 
-                const sessionData = localStorage.getItem(
-                    'nexora_teacher_session'
-                );
+                const sessionData =
+                    localStorage.getItem(
+                        'nexora_teacher_session'
+                    );
 
-                const sessionToken = sessionStorage.getItem(
-                    'nexora_teacher_token'
-                );
+
+                const sessionToken =
+                    sessionStorage.getItem(
+                        'nexora_teacher_token'
+                    );
 
 
                 if (!sessionData || !sessionToken) {
@@ -1408,10 +1846,12 @@
                         'teacher-login.html';
 
                     return;
+
                 }
 
 
                 let teacherSession;
+
 
                 try {
 
@@ -1432,12 +1872,15 @@
                         'teacher-login.html';
 
                     return;
+
                 }
 
 
                 if (
                     !teacherSession.expires_at ||
-                    new Date(teacherSession.expires_at) <= new Date()
+                    new Date(
+                        teacherSession.expires_at
+                    ) <= new Date()
                 ) {
 
                     localStorage.removeItem(
@@ -1452,6 +1895,7 @@
                         'teacher-login.html';
 
                     return;
+
                 }
 
 
@@ -1478,6 +1922,7 @@
                     );
 
                     return;
+
                 }
 
 
@@ -1489,10 +1934,12 @@
                     );
 
                     return;
+
                 }
 
 
-                const student = data[0];
+                const student =
+                    data[0];
 
 
                 document.getElementById(
@@ -1657,7 +2104,8 @@
 
                         <div
                             class="section-card"
-                            onclick="alert('قسم الشهادات سيتم تفعيله لاحقًا 🏆')"
+                            id="certificatesButton"
+                            onclick="toggleCertificates()"
                         >
 
                             <div class="section-icon">
@@ -1691,12 +2139,19 @@
                     >
                     </div>
 
+
+                    <div
+                        class="certificates-container"
+                        id="certificatesContainer"
+                    >
+                    </div>
+
                 `;
 
 
                 /*
-                 * نجهز النتائج والأنشطة من البداية،
-                 * لكنهما يظلان مخفيين حتى الضغط على القسم.
+                 * نجهز الأقسام الثلاثة من البداية،
+                 * لكنها تظل مخفية حتى يضغط المدرس عليها.
                  */
 
                 await loadStudentResults(
@@ -1706,6 +2161,12 @@
 
 
                 await loadStudentActivities(
+                    sessionToken,
+                    student.student_id
+                );
+
+
+                await loadStudentCertificates(
                     sessionToken,
                     student.student_id
                 );
