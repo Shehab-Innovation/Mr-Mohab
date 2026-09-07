@@ -19,7 +19,7 @@
         }
 
         /* السماح بالنسخ في الحقول فقط */
-        input, textarea, [contenteditable="true"]{
+        input, textarea, select, [contenteditable="true"]{
             -webkit-user-select: text;
             -moz-user-select: text;
             -ms-user-select: text;
@@ -228,10 +228,10 @@
             font-size:14px;
         }
 
-        /* ================= REGISTRATION PAGE (45% شفافية) ================= */
+        /* ================= REGISTRATION PAGE ================= */
 
         #registration .card{
-            max-width:600px;
+            max-width:650px;
             margin:40px auto;
             text-align:center;
             position:relative;
@@ -260,7 +260,6 @@
             z-index:1;
         }
 
-        /* ✅ كل عنصر لوحده له باكجراوند شفاف 45% */
         #registration .card img{
             width:110px;
             height:110px;
@@ -270,18 +269,20 @@
             display:block;
             border:3px solid rgba(255,255,255,0.9);
             box-shadow:0 4px 20px rgba(0,0,0,0.1);
-            background:rgba(255,255,255,0.45);
-            backdrop-filter:blur(2px);
+            background:transparent;
             padding:5px;
         }
 
+        /* ===== الخط المجسم (Stroke) ===== */
         #registration .card h2{
             border:none;
             margin-bottom:6px;
-            font-size:24px;
-            color:#0b1f3a;
-            background:rgba(255,255,255,0.45);
-            backdrop-filter:blur(2px);
+            font-size:32px;
+            color:#ffffff;
+            -webkit-text-stroke: 2px #0b1f3a;
+            text-shadow: none;
+            background:transparent !important;
+            backdrop-filter:none !important;
             padding:10px 20px;
             border-radius:12px;
             display:inline-block;
@@ -292,11 +293,13 @@
 
         #registration .card .subtitle{
             margin-bottom:20px;
-            color:#0b1f3a;
-            font-size:14px;
-            background:rgba(255,255,255,0.45);
-            backdrop-filter:blur(2px);
-            padding:10px 20px;
+            font-size:18px;
+            color:#ffffff;
+            -webkit-text-stroke: 1px #0b1f3a;
+            text-shadow: none;
+            background:transparent !important;
+            backdrop-filter:none !important;
+            padding:8px 20px;
             border-radius:12px;
             display:inline-block;
             width:auto;
@@ -309,7 +312,7 @@
         }
 
         #registration .card .note{
-            background:rgba(255,255,255,0.45);
+            background:rgba(255,255,255,0.75);
             backdrop-filter:blur(4px);
             border-radius:12px;
             padding:14px 18px;
@@ -335,23 +338,36 @@
             font-weight:600;
         }
 
+        /* ===== الحقول في صف ===== */
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            text-align: right;
+        }
+
         #registration .card label{
             display:block;
-            margin-bottom:7px;
+            margin-bottom:5px;
             font-weight:600;
             text-align:right;
             font-size:14px;
-            color:#0b1f3a;
-            background:rgba(255,255,255,0.45);
-            backdrop-filter:blur(2px);
-            padding:8px 14px;
-            border-radius:10px;
+            color:#ffffff;
+            background:transparent !important;
+            backdrop-filter:none !important;
+            padding:0 !important;
+            text-shadow: 0 0 8px rgba(0,0,0,0.6);
         }
 
         #registration .card label .hint{
             font-weight:400;
-            color:#2d3748;
+            color:rgba(255,255,255,0.8);
             font-size:12px;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
 
         #registration .card label .required{
@@ -359,15 +375,16 @@
             font-weight:700;
         }
 
-        #registration .card input{
+        #registration .card input,
+        #registration .card select{
             width:100%;
-            padding:14px;
-            border:1px solid rgba(255,255,255,0.8);
+            padding:10px 14px;
+            border:2px solid rgba(255,255,255,0.9);
             border-radius:12px;
             font-size:15px;
-            margin-bottom:16px;
+            margin-bottom:0;
             transition:border .3s;
-            background:rgba(255,255,255,0.45);
+            background:rgba(255,255,255,0.85);
             backdrop-filter:blur(4px);
             color:#0b1f3a;
             font-weight:500;
@@ -377,26 +394,27 @@
             color:rgba(11,31,58,0.5);
         }
 
-        #registration .card input:focus{
+        #registration .card input:focus,
+        #registration .card select:focus{
             outline:none;
             border-color:#1769e0;
             box-shadow:0 0 0 3px rgba(23,105,224,.15);
-            background:rgba(255,255,255,0.6);
+            background:rgba(255,255,255,0.95);
         }
 
         #registration .card .btn{
             width:100%;
-            padding:14px;
-            font-size:16px;
-            margin-top:4px;
-            background:#1769e0;
+            padding:16px;
+            font-size:18px;
+            margin-top:8px;
+            background:linear-gradient(135deg, #1769e0, #0b4fa8);
             color:white;
             border:none;
             border-radius:30px;
-            font-weight:600;
+            font-weight:700;
             cursor:pointer;
             transition:.2s;
-            box-shadow:0 4px 15px rgba(23,105,224,0.3);
+            box-shadow:0 4px 20px rgba(23,105,224,0.35);
         }
 
         #registration .card .btn:hover{
@@ -414,7 +432,7 @@
         .registration-content{
             background:transparent;
             border-radius:16px;
-            padding:15px 20px 25px;
+            padding:15px 25px 30px;
             display:flex;
             flex-direction:column;
             gap:6px;
@@ -897,6 +915,19 @@
             #registration .card{
                 margin:20px auto;
             }
+
+            .form-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            #registration .card h2 {
+                font-size: 26px;
+            }
+
+            #registration .card .subtitle {
+                font-size: 16px;
+            }
         }
 
         @media(max-width:480px){
@@ -918,11 +949,16 @@
             }
 
             #registration .card h2{
-                font-size:20px;
+                font-size:22px;
             }
 
             .code-summary{
                 grid-template-columns:1fr;
+            }
+
+            #registration .card .btn {
+                font-size: 16px;
+                padding: 14px;
             }
         }
     </style>
@@ -1044,49 +1080,72 @@
                         <span class="highlight">📌 يرجى إدخال رقم هاتف الطالب ورقم هاتف ولي الأمر لضمان التواصل والمتابعة.</span>
                     </div>
 
-                    <div>
-
-                        <label>
-                            👤 اسم الطالب <span class="required">*</span>
-                            <span class="hint">(الاسم الظاهر في الشهادات)</span>
-                        </label>
-
-                        <input
-                            id="studentName"
-                            type="text"
-                            placeholder="أدخل اسم الطالب"
-                        >
-
-                        <label>
-                            📱 رقم هاتف الطالب <span class="required">*</span>
-                            <span class="hint">(للتواصل مع الطالب)</span>
-                        </label>
-
-                        <input
-                            id="studentPhone"
-                            type="tel"
-                            placeholder="مثال: 01234567890"
-                        >
-
-                        <label>
-                            📱 رقم هاتف ولي الأمر <span class="required">*</span>
-                            <span class="hint">(للمتابعة والتواصل)</span>
-                        </label>
-
-                        <input
-                            id="parentPhone"
-                            type="tel"
-                            placeholder="مثال: 01234567890"
-                        >
-
-                        <button
-                            class="btn"
-                            onclick="registerStudent()"
-                        >
-                            🚀 دخول إلى المنصة
-                        </button>
-
+                    <!-- ===== الحقول في صفين ===== -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                👤 اسم الطالب <span class="required">*</span>
+                                <span class="hint">(الاسم الظاهر في الشهادات)</span>
+                            </label>
+                            <input
+                                id="studentName"
+                                type="text"
+                                placeholder="أدخل اسم الطالب"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                🎓 اختر الصف <span class="required">*</span>
+                            </label>
+                            <select id="gradeSelect" required>
+                                <option value="">-- اختر --</option>
+                                <option value="1">الصف الأول الابتدائي</option>
+                                <option value="2">الصف الثاني الابتدائي</option>
+                                <option value="3">الصف الثالث الابتدائي</option>
+                                <option value="4">الصف الرابع الابتدائي</option>
+                                <option value="5">الصف الخامس الابتدائي</option>
+                                <option value="6">الصف السادس الابتدائي</option>
+                                <option value="7">الصف الأول الإعدادي</option>
+                                <option value="8">الصف الثاني الإعدادي</option>
+                                <option value="9">الصف الثالث الإعدادي</option>
+                                <option value="10">الصف الأول الثانوي</option>
+                                <option value="11">الصف الثاني الثانوي</option>
+                                <option value="12">الصف الثالث الثانوي</option>
+                            </select>
+                        </div>
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                📱 رقم الهاتف <span class="required">*</span>
+                                <span class="hint">(للتواصل مع الطالب)</span>
+                            </label>
+                            <input
+                                id="studentPhone"
+                                type="tel"
+                                placeholder="مثال: 01234567890"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                📱 رقم ولي الأمر <span class="required">*</span>
+                                <span class="hint">(للمتابعة والتواصل)</span>
+                            </label>
+                            <input
+                                id="parentPhone"
+                                type="tel"
+                                placeholder="مثال: 01234567890"
+                            >
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn"
+                        onclick="registerStudent()"
+                    >
+                        🚀 دخول إلى المنصة
+                    </button>
 
                 </div>
 
@@ -1464,18 +1523,27 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    /* ================= منع الكوبي والبيست بالكيبورد والماوس ================= */
+    /* ================= منع الكوبي والبيست بالكيبورد والماوس (مع السماح في الحقول) ================= */
     document.addEventListener('copy', function(e) {
+        if (e.target.closest('input') || e.target.closest('textarea') || e.target.closest('select')) {
+            return; // نسمح
+        }
         e.preventDefault();
         return false;
     });
 
     document.addEventListener('paste', function(e) {
+        if (e.target.closest('input') || e.target.closest('textarea') || e.target.closest('select')) {
+            return; // نسمح
+        }
         e.preventDefault();
         return false;
     });
 
     document.addEventListener('cut', function(e) {
+        if (e.target.closest('input') || e.target.closest('textarea') || e.target.closest('select')) {
+            return; // نسمح
+        }
         e.preventDefault();
         return false;
     });
@@ -1486,10 +1554,12 @@
     });
 
     document.addEventListener('keydown', function(e) {
-        // منع Ctrl+C, Ctrl+V, Ctrl+X
+        // منع Ctrl+C, Ctrl+V, Ctrl+X في غير الحقول
         if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'C' || e.key === 'V' || e.key === 'X')) {
-            e.preventDefault();
-            return false;
+            if (!e.target.closest('input') && !e.target.closest('textarea') && !e.target.closest('select')) {
+                e.preventDefault();
+                return false;
+            }
         }
         // منع F12
         if (e.key === 'F12') {
@@ -4324,6 +4394,16 @@
                 .trim();
 
 
+        const grade =
+            parseInt(
+                document
+                    .getElementById(
+                        'gradeSelect'
+                    )
+                    .value
+            );
+
+
         /* ================= VALIDATION ================= */
 
         if(!name){
@@ -4350,6 +4430,16 @@
 
             alert(
                 '⚠️ من فضلك اكتب رقم هاتف ولي الأمر (للمتابعة والتواصل).'
+            );
+
+            return;
+
+        }
+
+        if(!grade){
+
+            alert(
+                '⚠️ من فضلك اختر الصف الدراسي.'
             );
 
             return;
@@ -4524,6 +4614,9 @@
 
                             parent_phone:
                                 parentPhone,
+
+                            grade:
+                                grade,
 
                             created_at:
                                 now,
@@ -4720,6 +4813,9 @@
 
             parent_phone:
                 parentPhone,
+
+            grade:
+                grade,
 
             created_at:
                 now,
