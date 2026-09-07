@@ -221,6 +221,28 @@
             max-width:600px;
             margin:40px auto;
             text-align:center;
+            position:relative;
+            overflow:hidden;
+        }
+
+        #registration .card::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background-image:url('https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg');
+            background-size:cover;
+            background-position:center;
+            opacity:0.08;
+            z-index:0;
+            border-radius:18px;
+        }
+
+        #registration .card > *{
+            position:relative;
+            z-index:1;
         }
 
         #registration .card img{
@@ -300,12 +322,14 @@
             font-size:15px;
             margin-bottom:16px;
             transition:border .3s;
+            background:rgba(255,255,255,.9);
         }
 
         #registration .card input:focus{
             outline:none;
             border-color:#1769e0;
             box-shadow:0 0 0 3px rgba(23,105,224,.1);
+            background:white;
         }
 
         #registration .card .btn{
@@ -4108,7 +4132,7 @@
     }
 
 
-    /* ================= REGISTRATION → SUPABASE ================= */
+    /* ================= ✅ REGISTRATION → SUPABASE (المعدل بالكامل) ================= */
 
     async function registerStudent(){
 
@@ -4220,12 +4244,6 @@
         }
 
 
-        /* ================= CREATE STUDENT ================= */
-
-        const studentId =
-            generateStudentId();
-
-
         const now =
             new Date()
                 .toISOString();
@@ -4248,111 +4266,267 @@
         }
 
 
-        /* ================= INSERT INTO SUPABASE ================= */
+        /* ================= ✅ SEARCH FOR EXISTING STUDENT ================= */
+
+        let studentId = null;
+        let isNewStudent = false;
 
         try{
 
-            const { error } =
+            const { data, error } =
                 await supabaseClient
+                    .rpc('find_student_by_phone', {
+                        p_phone: phone,
+                        p_parent_phone: parentPhone
+                    });
 
-                    .from(
-                        'students'
-                    )
+            if (error) {
 
-                    .insert([{
-
-                        student_id:
-                            studentId,
-
-                        name:
-                            name,
-
-                        phone:
-                            phone,
-
-                        parent_phone:
-                            parentPhone,
-
-                        created_at:
-                            now,
-
-                        last_activity:
-                            now
-
-                    }]);
-
-
-            if(error){
-
-                console.error(
-                    'Supabase registration error:',
-                    error
-                );
-
+                console.error('❌ RPC error:', error);
 
                 if(button){
 
-                    button.disabled =
-                        false;
-
-                    button.textContent =
-                        '🚀 دخول إلى المنصة';
+                    button.disabled = false;
+                    button.textContent = '🚀 دخول إلى المنصة';
 
                 }
 
-
                 alert(
-
-                    '❌ Supabase رجّع خطأ\n\n' +
-
-                    'Code:\n' +
-                    (
-                        error.code ||
-                        'غير موجود'
-                    ) +
-
-                    '\n\nMessage:\n' +
-                    (
-                        error.message ||
-                        'غير موجود'
-                    ) +
-
-                    '\n\nDetails:\n' +
-                    (
-                        error.details ||
-                        'غير موجود'
-                    ) +
-
-                    '\n\nHint:\n' +
-                    (
-                        error.hint ||
-                        'غير موجود'
-                    )
-
+                    '❌ حدث خطأ أثناء البحث عن بيانات الطالب.\n\n' +
+                    'الرجاء المحاولة مرة أخرى.'
                 );
 
                 return;
 
             }
 
-        }catch(error){
+            if (data && data.length > 0) {
 
-            console.error(
-                'Supabase connection error:',
-                error
-            );
+                studentId = data[0].student_id;
+                console.log('✅ Found existing student:', studentId);
 
+            } else {
 
-            if(button){
-
-                button.disabled =
-                    false;
-
-                button.textContent =
-                    '🚀 دخول إلى المنصة';
+                console.log('ℹ️ No existing student found, will create new one');
+                studentId = generateStudentId();
+                isNewStudent = true;
 
             }
 
+        } catch(error){
+
+            console.error(
+                '❌ RPC connection error:',
+                error
+            );
+
+            if(button){
+
+                button.disabled = false;
+                button.textContent = '🚀 دخول إلى المنصة';
+
+            }
+
+            alert(
+                '❌ حدث خطأ في الاتصال بقاعدة البيانات.\n\n' +
+                'الرجاء المحاولة مرة أخرى.'
+            );
+
+            return;
+
+        }
+
+
+        /* ================= ✅ SAVE TO SUPABASE ================= */
+
+        try{
+
+            if (isNewStudent) {
+
+                const { error } =
+                    await supabaseClient
+
+                        .from(
+                            'students'
+                        )
+
+                        .insert([{
+
+                            student_id:
+                                studentId,
+
+                            name:
+                                name,
+
+                            phone:
+                                phone,
+
+                            parent_phone:
+                                parentPhone,
+
+                            created_at:
+                                now,
+
+                            last_activity:
+                                now
+
+                        }]);
+
+
+                if(error){
+
+                    console.error(
+                        '❌ Supabase insert error:',
+                        error
+                    );
+
+                    if(button){
+
+                        button.disabled = false;
+                        button.textContent = '🚀 دخول إلى المنصة';
+
+                    }
+
+                    alert(
+
+                        '❌ حدث خطأ أثناء تسجيل الطالب.\n\n' +
+
+                        'Code:\n' +
+                        (
+                            error.code ||
+                            'غير موجود'
+                        ) +
+
+                        '\n\nMessage:\n' +
+                        (
+                            error.message ||
+                            'غير موجود'
+                        ) +
+
+                        '\n\nDetails:\n' +
+                        (
+                            error.details ||
+                            'غير موجود'
+                        ) +
+
+                        '\n\nHint:\n' +
+                        (
+                            error.hint ||
+                            'غير موجود'
+                        )
+
+                    );
+
+                    return;
+
+                }
+
+                console.log('✅ New student created:', studentId);
+
+            } else {
+
+                // ✅ تحديث الطالب الموجود باستخدام RPC
+                const { data: updateSuccess, error } =
+                    await supabaseClient
+                        .rpc('update_student_by_phone', {
+
+                            p_student_id:
+                                studentId,
+
+                            p_name:
+                                name,
+
+                            p_phone:
+                                phone,
+
+                            p_parent_phone:
+                                parentPhone
+
+                        });
+
+
+                if(error){
+
+                    console.error(
+                        '❌ RPC update error:',
+                        error
+                    );
+
+                    if(button){
+
+                        button.disabled = false;
+                        button.textContent =
+                            '🚀 دخول إلى المنصة';
+
+                    }
+
+                    alert(
+
+                        '❌ حدث خطأ أثناء تحديث بيانات الطالب.\n\n' +
+
+                        'Code:\n' +
+                        (
+                            error.code ||
+                            'غير موجود'
+                        ) +
+
+                        '\n\nMessage:\n' +
+                        (
+                            error.message ||
+                            'غير موجود'
+                        )
+
+                    );
+
+                    return;
+
+                }
+
+
+                if(updateSuccess !== true){
+
+                    console.error(
+                        '❌ Student update failed: student not found or data mismatch.'
+                    );
+
+                    if(button){
+
+                        button.disabled = false;
+                        button.textContent =
+                            '🚀 دخول إلى المنصة';
+
+                    }
+
+                    alert(
+                        '❌ تعذر تحديث بيانات الطالب.\n\n' +
+                        'لم يتم العثور على بيانات الطالب المطابقة.'
+                    );
+
+                    return;
+
+                }
+
+
+                console.log(
+                    '✅ Existing student updated:',
+                    studentId
+                );
+
+            }
+
+        } catch(error){
+
+            console.error(
+                '❌ Supabase connection error:',
+                error
+            );
+
+            if(button){
+
+                button.disabled = false;
+                button.textContent = '🚀 دخول إلى المنصة';
+
+            }
 
             alert(
 
