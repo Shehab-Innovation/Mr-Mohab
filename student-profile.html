@@ -129,15 +129,20 @@
             border-radius: 50%;
 
             background: #f1f5f9;
-            color: #0f172a;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-size: 38px;
-
             flex-shrink: 0;
+
+            overflow: hidden;
+        }
+
+        .student-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .student-header-name {
@@ -577,9 +582,31 @@
             text-align: center;
         }
 
-        .certificate-icon {
-            font-size: 42px;
-            margin-bottom: 10px;
+        .certificate-brand-images {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 18px;
+        }
+
+        .certificate-brand-teacher {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e2e8f0;
+            background: white;
+        }
+
+        .certificate-brand-logo {
+            width: 90px;
+            height: 78px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            padding: 6px;
         }
 
         .certificate-name {
@@ -723,7 +750,6 @@
             .student-avatar {
                 width: 65px;
                 height: 65px;
-                font-size: 30px;
             }
 
             .student-header-name {
@@ -760,6 +786,20 @@
 
             .certificate-info {
                 grid-template-columns: 1fr;
+            }
+
+            .certificate-brand-images {
+                gap: 18px;
+            }
+
+            .certificate-brand-teacher {
+                width: 68px;
+                height: 68px;
+            }
+
+            .certificate-brand-logo {
+                width: 78px;
+                height: 68px;
             }
 
         }
@@ -841,7 +881,7 @@
         <section class="page-title">
 
             <h1>
-                👨‍🎓 ملف الطالب
+                ملف الطالب
             </h1>
 
             <p>
@@ -1542,7 +1582,7 @@
 
                     const teacherImage =
                         certificate.teacher_image ||
-                        '';
+                        'https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg';
 
 
                     return `
@@ -1551,19 +1591,11 @@
 
                             <div class="certificate-header">
 
-                                ${
-                                    teacherImage
-                                        ? `
-                                            <img
-                                                class="certificate-teacher-image"
-                                                src="${escapeHtml(teacherImage)}"
-                                                alt="المدرس"
-                                            >
-                                        `
-                                        : `
-                                            <div class="certificate-teacher-image"></div>
-                                        `
-                                }
+                                <img
+                                    class="certificate-teacher-image"
+                                    src="${escapeHtml(teacherImage)}"
+                                    alt="مستر مهاب"
+                                >
 
 
                                 <div>
@@ -1571,7 +1603,7 @@
                                     <div class="certificate-teacher-name">
                                         ${escapeHtml(
                                             certificate.teacher_name ||
-                                            'المدرس'
+                                            'مستر مهاب'
                                         )}
                                     </div>
 
@@ -1586,8 +1618,22 @@
 
                             <div class="certificate-main">
 
-                                <div class="certificate-icon">
-                                    🏆
+
+                                <div class="certificate-brand-images">
+
+                                    <img
+                                        class="certificate-brand-teacher"
+                                        src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
+                                        alt="مستر مهاب"
+                                    >
+
+
+                                    <img
+                                        class="certificate-brand-logo"
+                                        src="https://i.ibb.co/WWFMkWMZ/Whats-App-Image-2026-09-03-at-6-46-38-AM.jpg"
+                                        alt="Shihab Innovation"
+                                    >
+
                                 </div>
 
 
@@ -1949,7 +1995,12 @@
                     <div class="profile-header">
 
                         <div class="student-avatar">
-                            👨‍🎓
+
+                            <img
+                                src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
+                                alt="مستر مهاب"
+                            >
+
                         </div>
 
 
