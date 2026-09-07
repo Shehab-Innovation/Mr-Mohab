@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NEXORA | ملف الطالب</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Tahoma, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #0f172a;
+            color: white;
+            padding: 18px 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .teacher-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .teacher-image {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .teacher-name {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .brand {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 4px;
+        }
+
+        .back-button {
+            border: none;
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+
+            padding: 11px 17px;
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: auto;
+
+            padding: 30px 20px 50px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 25px rgba(15, 23, 42, 0.07);
+        }
+
+        .profile-header {
+            background: #0f172a;
+            color: white;
+
+            padding: 30px 25px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+
+            border-radius: 50%;
+
+            background: #f1f5f9;
+            color: #0f172a;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+
+            flex-shrink: 0;
+        }
+
+        .student-header-name {
+            font-size: 27px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .student-header-id {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 14px;
+
+            direction: ltr;
+            text-align: right;
+        }
+
+        .details {
+            padding: 25px;
+
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .detail-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+
+            padding: 18px;
+
+            background: #f8fafc;
+        }
+
+        .detail-label {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            font-size: 17px;
+            font-weight: 900;
+
+            word-break: break-word;
+        }
+
+        .phone {
+            direction: ltr;
+            text-align: right;
+        }
+
+        .student-id {
+            direction: ltr;
+            text-align: right;
+
+            font-family: monospace;
+        }
+
+        .status {
+            display: inline-block;
+
+            background: #dcfce7;
+            color: #166534;
+
+            padding: 7px 12px;
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .sections {
+            padding: 0 25px 25px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .section-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 17px;
+
+            padding: 20px;
+
+            background: white;
+
+            text-align: center;
+        }
+
+        .section-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+
+        .section-text {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 700;
+
+            padding: 30px 0 0;
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 15px;
+            }
+
+            .teacher-name {
+                font-size: 17px;
+            }
+
+            .teacher-image {
+                width: 48px;
+                height: 48px;
+            }
+
+            .container {
+                padding: 22px 12px 40px;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+            .profile-header {
+                padding: 25px 20px;
+            }
+
+            .student-avatar {
+                width: 65px;
+                height: 65px;
+                font-size: 30px;
+            }
+
+            .student-header-name {
+                font-size: 22px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .sections {
+                grid-template-columns: 1fr;
+                padding: 0 20px 20px;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .header {
+                align-items: flex-start;
+            }
+
+            .back-button {
+                padding: 9px 12px;
+                font-size: 13px;
+            }
+
+            .profile-header {
+                gap: 14px;
+            }
+
+            .student-header-id {
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <header class="header">
+
+        <div class="teacher-info">
+
+            <img
+                class="teacher-image"
+                src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
+                alt="المدرس"
+            >
+
+            <div>
+
+                <div class="teacher-name">
+                    مستر مهاب
+                </div>
+
+                <div class="brand">
+                    NEXORA | Shihab Innovation
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="back-button"
+            onclick="goBack()"
+        >
+            ← العودة للطلاب
+        </button>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <section class="page-title">
+
+            <h1>
+                👨‍🎓 ملف الطالب
+            </h1>
+
+            <p>
+                بيانات الطالب الأساسية
+            </p>
+
+        </section>
+
+
+        <section class="profile-card">
+
+
+            <div class="profile-header">
+
+                <div class="student-avatar">
+                    👨‍🎓
+                </div>
+
+
+                <div>
+
+                    <div
+                        class="student-header-name"
+                        id="studentName"
+                    >
+                        شهاب
+                    </div>
+
+
+                    <div
+                        class="student-header-id"
+                        id="studentIdHeader"
+                    >
+                        ST-MTQOD79M-LZKUGU
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="details">
+
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        👤 اسم الطالب
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="nameValue"
+                    >
+                        شهاب
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        🆔 رقم الطالب
+                    </div>
+
+                    <div
+                        class="detail-value student-id"
+                        id="studentIdValue"
+                    >
+                        ST-MTQOD79M-LZKUGU
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        📱 رقم الهاتف
+                    </div>
+
+                    <div
+                        class="detail-value phone"
+                        id="phoneValue"
+                    >
+                        01011641429
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        👨‍👩‍👦 رقم ولي الأمر
+                    </div>
+
+                    <div
+                        class="detail-value phone"
+                        id="parentPhoneValue"
+                    >
+                        01280511742
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        📅 تاريخ التسجيل
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="createdValue"
+                    >
+                        ٧‏/٩‏/٢٠٢٦
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-label">
+                        🟢 حالة الطالب
+                    </div>
+
+                    <div class="detail-value">
+
+                        <span class="status">
+                            نشط
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="sections">
+
+
+                <div class="section-card">
+
+                    <div class="section-icon">
+                        📊
+                    </div>
+
+                    <div class="section-title">
+                        النتائج
+                    </div>
+
+                    <div class="section-text">
+                        نتائج الاختبارات والتقييمات
+                    </div>
+
+                </div>
+
+
+                <div class="section-card">
+
+                    <div class="section-icon">
+                        📚
+                    </div>
+
+                    <div class="section-title">
+                        الأنشطة
+                    </div>
+
+                    <div class="section-text">
+                        متابعة نشاط الطالب داخل المنصة
+                    </div>
+
+                </div>
+
+
+                <div class="section-card">
+
+                    <div class="section-icon">
+                        🏆
+                    </div>
+
+                    <div class="section-title">
+                        الشهادات
+                    </div>
+
+                    <div class="section-text">
+                        شهادات الإنجاز والتفوق
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <div class="footer">
+            NEXORA | Shihab Innovation
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+        function goBack() {
+
+            window.location.href =
+                'teacher-dashboard.html';
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
