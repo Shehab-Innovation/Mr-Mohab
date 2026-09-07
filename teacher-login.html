@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NEXORA | دخول المدرس</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Tahoma, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(59, 130, 246, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom left,
+                    rgba(139, 92, 246, 0.16),
+                    transparent 35%
+                ),
+                #0f172a;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    rgba(15, 23, 42, 0.32),
+                    rgba(15, 23, 42, 0.32)
+                ),
+                url('https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg');
+
+            background-size: cover;
+            background-position: center;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 32px 26px;
+
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand-logo {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 16px;
+            border: 3px solid rgba(255, 255, 255, 0.20);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.30);
+        }
+
+        .brand h1 {
+            font-size: 25px;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+        }
+
+        .brand p {
+            color: #e2e8f0;
+            font-size: 14px;
+            text-shadow: 0 2px 7px rgba(0, 0, 0, 0.50);
+        }
+
+        .teacher-badge {
+            text-align: center;
+            margin: 0 auto 25px;
+            padding: 11px 15px;
+            border-radius: 14px;
+
+            background: rgba(15, 23, 42, 0.48);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+
+            color: #fff;
+            font-size: 14px;
+
+            backdrop-filter: blur(6px);
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.45);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            opacity: 0.90;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            height: 52px;
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 14px;
+            outline: none;
+
+            background: rgba(15, 23, 42, 0.58);
+            color: #fff;
+
+            padding: 0 45px 0 14px;
+            font-size: 16px;
+
+            transition: 0.2s;
+
+            backdrop-filter: blur(7px);
+        }
+
+        .input-wrap input::placeholder {
+            color: #cbd5e1;
+        }
+
+        .input-wrap input:focus {
+            border-color: rgba(147, 197, 253, 0.90);
+
+            background: rgba(15, 23, 42, 0.72);
+
+            box-shadow:
+                0 0 0 3px rgba(59, 130, 246, 0.16),
+                0 8px 20px rgba(0, 0, 0, 0.16);
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 54px;
+
+            border: none;
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: #fff;
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                opacity 0.2s,
+                box-shadow 0.2s;
+
+            margin-top: 6px;
+
+            box-shadow:
+                0 10px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow:
+                0 12px 28px rgba(0, 0, 0, 0.32);
+        }
+
+        .login-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+            transform: none;
+        }
+
+        .message {
+            display: none;
+            margin-top: 17px;
+            padding: 13px 14px;
+            border-radius: 13px;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .message.error {
+            display: block;
+
+            background: rgba(127, 29, 29, 0.55);
+            border: 1px solid rgba(248, 113, 113, 0.35);
+
+            color: #fecaca;
+
+            backdrop-filter: blur(6px);
+        }
+
+        .message.success {
+            display: block;
+
+            background: rgba(20, 83, 45, 0.55);
+            border: 1px solid rgba(74, 222, 128, 0.35);
+
+            color: #bbf7d0;
+
+            backdrop-filter: blur(6px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+
+            color: #e2e8f0;
+            font-size: 12px;
+
+            text-shadow:
+                0 2px 6px rgba(0, 0, 0, 0.55);
+        }
+
+        @media (max-width: 480px) {
+
+            .login-card {
+                padding: 26px 18px;
+                border-radius: 20px;
+            }
+
+            .brand h1 {
+                font-size: 22px;
+            }
+
+            .brand-logo {
+                width: 75px;
+                height: 75px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <div class="brand">
+
+            <img
+                class="brand-logo"
+                src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
+                alt="مستر مهاب"
+            >
+
+            <h1>NEXORA</h1>
+
+            <p>لوحة تحكم المدرس</p>
+
+        </div>
+
+        <div class="teacher-badge">
+            🔐 تسجيل دخول المدرس
+        </div>
+
+        <form id="teacherLoginForm">
+
+            <div class="form-group">
+
+                <label for="username">
+                    اسم المستخدم
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        👤
+                    </span>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="أدخل اسم المستخدم"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">
+                    كلمة المرور
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="أدخل كلمة المرور"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginButton"
+            >
+                تسجيل الدخول
+            </button>
+
+        </form>
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+        <div class="footer">
+            NEXORA | Shihab Innovation
+        </div>
+
+    </div>
+
+    <script>
+        const supabaseClient =
+            window.supabase.createClient(
+                'https://bbiflvdwardvozjvrsya.supabase.co',
+                'sb_publishable_I_7nb9Ab0--dz_5hpzq27w_G8_7b6PL'
+            );
+
+
+        const loginForm =
+            document.getElementById(
+                'teacherLoginForm'
+            );
+
+
+        const usernameInput =
+            document.getElementById(
+                'username'
+            );
+
+
+        const passwordInput =
+            document.getElementById(
+                'password'
+            );
+
+
+        const loginButton =
+            document.getElementById(
+                'loginButton'
+            );
+
+
+        const messageBox =
+            document.getElementById(
+                'message'
+            );
+
+
+        function showMessage(
+            text,
+            type
+        ) {
+
+            messageBox.textContent =
+                text;
+
+            messageBox.className =
+                'message ' + type;
+        }
+
+
+        function clearMessage() {
+
+            messageBox.textContent = '';
+
+            messageBox.className =
+                'message';
+
+        }
+
+
+        loginForm.addEventListener(
+            'submit',
+            async function(event) {
+
+                event.preventDefault();
+
+                clearMessage();
+
+                const username =
+                    usernameInput
+                        .value
+                        .trim();
+
+                const password =
+                    passwordInput
+                        .value;
+
+
+                if(
+                    !username ||
+                    !password
+                ){
+
+                    showMessage(
+                        'من فضلك اكتب اسم المستخدم وكلمة المرور.',
+                        'error'
+                    );
+
+                    return;
+                }
+
+
+                loginButton.disabled =
+                    true;
+
+                loginButton.textContent =
+                    'جاري التحقق...';
+
+
+                try {
+
+                    const {
+                        data,
+                        error
+                    } =
+                        await supabaseClient
+                            .rpc(
+                                'verify_teacher_login',
+                                {
+                                    p_username:
+                                        username,
+
+                                    p_password:
+                                        password
+                                }
+                            );
+
+
+                    if(error){
+
+                        console.error(
+                            'Teacher login error:',
+                            error
+                        );
+
+                        showMessage(
+                            'حدث خطأ أثناء الاتصال بالنظام. حاول مرة أخرى.',
+                            'error'
+                        );
+
+                        return;
+                    }
+
+
+                    if(
+                        !data ||
+                        data.length === 0
+                    ){
+
+                        showMessage(
+                            'اسم المستخدم أو كلمة المرور غير صحيحة.',
+                            'error'
+                        );
+
+                        return;
+                    }
+
+
+                    const teacher =
+                        data[0];
+
+
+                    localStorage.setItem(
+                        'nexora_teacher_session',
+                        JSON.stringify({
+
+                            teacher_id:
+                                teacher.teacher_id,
+
+                            username:
+                                teacher.username,
+
+                            name:
+                                teacher.name,
+
+                            image:
+                                teacher.image,
+
+                            login_at:
+                                new Date()
+                                    .toISOString()
+
+                        })
+                    );
+
+
+                    showMessage(
+                        'تم تسجيل الدخول بنجاح ✅ أهلاً بك ' +
+                        teacher.name,
+                        'success'
+                    );
+
+
+                    loginButton.textContent =
+                        'تم تسجيل الدخول ✅';
+
+
+                } catch(error) {
+
+                    console.error(
+                        'Teacher login connection error:',
+                        error
+                    );
+
+                    showMessage(
+                        'تعذر الاتصال بـ Supabase. تأكد من الإنترنت وحاول مرة أخرى.',
+                        'error'
+                    );
+
+                } finally {
+
+                    if(
+                        !messageBox.classList
+                            .contains('success')
+                    ){
+
+                        loginButton.disabled =
+                            false;
+
+                        loginButton.textContent =
+                            'تسجيل الدخول';
+
+                    }
+
+                }
+
+            }
+        );
+    </script>
+
+</body>
+
+</html>
