@@ -220,7 +220,7 @@
             padding: 0 25px 25px;
 
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
 
             gap: 15px;
         }
@@ -386,6 +386,212 @@
             padding: 25px;
             color: #64748b;
             font-weight: 800;
+        }
+
+        /* =========================
+           التقييمات
+        ========================= */
+
+        .evaluations-container {
+            display: none;
+            padding: 0 25px 25px;
+        }
+
+        .evaluations-container.show {
+            display: block;
+        }
+
+        .evaluations-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .evaluations-title {
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+        .add-evaluation-button {
+            border: none;
+            background: #0f172a;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 11px;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .add-evaluation-button:hover {
+            opacity: 0.9;
+        }
+
+        .evaluations-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .evaluation-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: #f8fafc;
+        }
+
+        .evaluation-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .evaluation-card-title {
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 1.6;
+        }
+
+        .evaluation-date {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .evaluation-text {
+            color: #475569;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            margin-bottom: 12px;
+        }
+
+        .evaluation-score {
+            display: inline-block;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .empty-evaluations {
+            border: 1px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #64748b;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .evaluations-loading {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-weight: 800;
+        }
+
+        .evaluation-form {
+            display: none;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: white;
+            margin-bottom: 15px;
+        }
+
+        .evaluation-form.show {
+            display: block;
+        }
+
+        .evaluation-form-title {
+            font-size: 17px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 13px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 900;
+            color: #475569;
+            margin-bottom: 7px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 11px;
+            padding: 11px 12px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            background: #f8fafc;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: #0f172a;
+            background: white;
+        }
+
+        .form-textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .score-fields {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .save-evaluation-button,
+        .cancel-evaluation-button {
+            border: none;
+            padding: 11px 15px;
+            border-radius: 11px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .save-evaluation-button {
+            background: #0f172a;
+            color: white;
+        }
+
+        .cancel-evaluation-button {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .evaluation-message {
+            margin-top: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1.6;
         }
 
         /* =========================
@@ -693,6 +899,14 @@
             font-size: 14px;
         }
 
+        @media (max-width: 800px) {
+
+            .sections {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
         @media (max-width: 700px) {
 
             .header {
@@ -741,6 +955,7 @@
             }
 
             .results-container,
+            .evaluations-container,
             .activities-container,
             .certificates-container {
                 padding: 0 20px 20px;
@@ -760,6 +975,11 @@
 
             .certificate-info {
                 grid-template-columns: 1fr;
+            }
+
+            .evaluations-header {
+                align-items: flex-start;
+                flex-direction: column;
             }
 
         }
@@ -787,7 +1007,19 @@
                 flex-direction: column;
             }
 
+            .evaluation-top {
+                flex-direction: column;
+            }
+
             .activity-top {
+                flex-direction: column;
+            }
+
+            .score-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
                 flex-direction: column;
             }
 
@@ -879,6 +1111,10 @@
         );
 
 
+        let currentStudentId = null;
+        let currentSessionToken = null;
+
+
         function escapeHtml(value) {
 
             if (value === null || value === undefined) {
@@ -960,6 +1196,575 @@
                 </div>
 
             `;
+
+        }
+
+
+        /* =========================
+           التقييمات
+        ========================= */
+
+        function renderEvaluations(evaluations) {
+
+            if (!evaluations || evaluations.length === 0) {
+
+                return `
+
+                    <div class="evaluations-header">
+
+                        <div class="evaluations-title">
+                            📝 تقييمات الطالب
+                        </div>
+
+                        <button
+                            class="add-evaluation-button"
+                            onclick="toggleEvaluationForm()"
+                        >
+                            ＋ إضافة تقييم
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="evaluation-form"
+                        id="evaluationForm"
+                    >
+
+                        ${renderEvaluationForm()}
+
+                    </div>
+
+
+                    <div class="empty-evaluations">
+                        لا توجد تقييمات مسجلة لهذا الطالب حتى الآن.
+                    </div>
+
+                `;
+
+            }
+
+
+            const evaluationCards =
+                evaluations.map(function (evaluation) {
+
+                    let scoreHtml = '';
+
+                    if (
+                        evaluation.score !== null &&
+                        evaluation.score !== undefined
+                    ) {
+
+                        if (
+                            evaluation.max_score !== null &&
+                            evaluation.max_score !== undefined
+                        ) {
+
+                            scoreHtml = `
+                                <div class="evaluation-score">
+                                    الدرجة:
+                                    ${escapeHtml(evaluation.score)}
+                                    /
+                                    ${escapeHtml(evaluation.max_score)}
+                                </div>
+                            `;
+
+                        } else {
+
+                            scoreHtml = `
+                                <div class="evaluation-score">
+                                    الدرجة:
+                                    ${escapeHtml(evaluation.score)}
+                                </div>
+                            `;
+
+                        }
+
+                    }
+
+
+                    return `
+
+                        <div class="evaluation-card">
+
+                            <div class="evaluation-top">
+
+                                <div class="evaluation-card-title">
+                                    ${escapeHtml(evaluation.title)}
+                                </div>
+
+                                <div class="evaluation-date">
+                                    ${formatDateTime(
+                                        evaluation.created_at
+                                    )}
+                                </div>
+
+                            </div>
+
+
+                            <div class="evaluation-text">
+                                ${escapeHtml(evaluation.evaluation)}
+                            </div>
+
+
+                            ${scoreHtml}
+
+                        </div>
+
+                    `;
+
+                }).join('');
+
+
+            return `
+
+                <div class="evaluations-header">
+
+                    <div class="evaluations-title">
+                        📝 تقييمات الطالب
+                    </div>
+
+                    <button
+                        class="add-evaluation-button"
+                        onclick="toggleEvaluationForm()"
+                    >
+                        ＋ إضافة تقييم
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="evaluation-form"
+                    id="evaluationForm"
+                >
+
+                    ${renderEvaluationForm()}
+
+                </div>
+
+
+                <div class="evaluations-list">
+
+                    ${evaluationCards}
+
+                </div>
+
+            `;
+
+        }
+
+
+        function renderEvaluationForm() {
+
+            return `
+
+                <div class="evaluation-form-title">
+                    إضافة تقييم جديد
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        عنوان التقييم
+                    </label>
+
+                    <input
+                        class="form-input"
+                        id="evaluationTitle"
+                        type="text"
+                        placeholder="مثال: تقييم مستوى الطالب"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        التقييم
+                    </label>
+
+                    <textarea
+                        class="form-textarea"
+                        id="evaluationText"
+                        placeholder="اكتب ملاحظاتك وتقييمك للطالب..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="score-fields">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            الدرجة
+                        </label>
+
+                        <input
+                            class="form-input"
+                            id="evaluationScore"
+                            type="number"
+                            min="0"
+                            placeholder="اختياري"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            من
+                        </label>
+
+                        <input
+                            class="form-input"
+                            id="evaluationMaxScore"
+                            type="number"
+                            min="1"
+                            placeholder="اختياري"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="evaluation-message"
+                    id="evaluationMessage"
+                ></div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="save-evaluation-button"
+                        id="saveEvaluationButton"
+                        onclick="createEvaluation()"
+                    >
+                        حفظ التقييم
+                    </button>
+
+
+                    <button
+                        class="cancel-evaluation-button"
+                        onclick="toggleEvaluationForm(false)"
+                    >
+                        إلغاء
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+
+
+        async function loadStudentEvaluations(
+            sessionToken,
+            studentId
+        ) {
+
+            const evaluationsContainer =
+                document.getElementById('evaluationsContainer');
+
+
+            evaluationsContainer.innerHTML = `
+
+                <div class="evaluations-title">
+                    📝 تقييمات الطالب
+                </div>
+
+                <div class="evaluations-loading">
+                    ⏳ جاري تحميل التقييمات...
+                </div>
+
+            `;
+
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_teacher_student_evaluations_by_session',
+                    {
+                        p_session_token: sessionToken,
+                        p_student_id: studentId
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Evaluations RPC error:',
+                    error
+                );
+
+                evaluationsContainer.innerHTML = `
+
+                    <div class="evaluations-title">
+                        📝 تقييمات الطالب
+                    </div>
+
+                    <div class="empty-evaluations">
+                        تعذر تحميل تقييمات الطالب حاليًا.
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            evaluationsContainer.innerHTML =
+                renderEvaluations(data);
+
+        }
+
+
+        function toggleEvaluationForm(forceState) {
+
+            const form =
+                document.getElementById('evaluationForm');
+
+
+            if (!form) {
+                return;
+            }
+
+
+            if (typeof forceState === 'boolean') {
+
+                form.classList.toggle(
+                    'show',
+                    forceState
+                );
+
+                return;
+
+            }
+
+
+            form.classList.toggle('show');
+
+        }
+
+
+        async function createEvaluation() {
+
+            if (
+                !currentSessionToken ||
+                !currentStudentId
+            ) {
+
+                return;
+
+            }
+
+
+            const titleInput =
+                document.getElementById('evaluationTitle');
+
+            const textInput =
+                document.getElementById('evaluationText');
+
+            const scoreInput =
+                document.getElementById('evaluationScore');
+
+            const maxScoreInput =
+                document.getElementById('evaluationMaxScore');
+
+            const saveButton =
+                document.getElementById('saveEvaluationButton');
+
+            const message =
+                document.getElementById('evaluationMessage');
+
+
+            if (
+                !titleInput ||
+                !textInput ||
+                !scoreInput ||
+                !maxScoreInput ||
+                !saveButton ||
+                !message
+            ) {
+
+                return;
+
+            }
+
+
+            const title =
+                titleInput.value.trim();
+
+            const evaluation =
+                textInput.value.trim();
+
+
+            const scoreValue =
+                scoreInput.value.trim();
+
+            const maxScoreValue =
+                maxScoreInput.value.trim();
+
+
+            if (!title) {
+
+                message.textContent =
+                    'اكتب عنوان التقييم أولًا.';
+
+                return;
+
+            }
+
+
+            if (!evaluation) {
+
+                message.textContent =
+                    'اكتب ملاحظات التقييم أولًا.';
+
+                return;
+
+            }
+
+
+            let score =
+                scoreValue === ''
+                    ? null
+                    : Number(scoreValue);
+
+
+            let maxScore =
+                maxScoreValue === ''
+                    ? null
+                    : Number(maxScoreValue);
+
+
+            if (
+                score !== null &&
+                (!Number.isFinite(score) || score < 0)
+            ) {
+
+                message.textContent =
+                    'الدرجة غير صحيحة.';
+
+                return;
+
+            }
+
+
+            if (
+                maxScore !== null &&
+                (!Number.isFinite(maxScore) || maxScore <= 0)
+            ) {
+
+                message.textContent =
+                    'الدرجة القصوى غير صحيحة.';
+
+                return;
+
+            }
+
+
+            if (
+                score !== null &&
+                maxScore !== null &&
+                score > maxScore
+            ) {
+
+                message.textContent =
+                    'الدرجة لا يمكن أن تكون أكبر من الدرجة القصوى.';
+
+                return;
+
+            }
+
+
+            saveButton.disabled = true;
+            saveButton.textContent = 'جاري الحفظ...';
+
+            message.textContent = '';
+
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'create_teacher_evaluation_by_session',
+                    {
+                        p_session_token: currentSessionToken,
+                        p_student_id: currentStudentId,
+                        p_title: title,
+                        p_evaluation: evaluation,
+                        p_score: score,
+                        p_max_score: maxScore
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Create evaluation RPC error:',
+                    error
+                );
+
+                message.textContent =
+                    'تعذر حفظ التقييم حاليًا.';
+
+                saveButton.disabled = false;
+                saveButton.textContent = 'حفظ التقييم';
+
+                return;
+
+            }
+
+
+            if (!data || data.length === 0) {
+
+                message.textContent =
+                    'تعذر حفظ التقييم. قد تكون جلسة المدرس منتهية.';
+
+                saveButton.disabled = false;
+                saveButton.textContent = 'حفظ التقييم';
+
+                return;
+
+            }
+
+
+            await loadStudentEvaluations(
+                currentSessionToken,
+                currentStudentId
+            );
+
+        }
+
+
+        function toggleEvaluations() {
+
+            const container =
+                document.getElementById('evaluationsContainer');
+
+            const button =
+                document.getElementById('evaluationsButton');
+
+
+            if (container.classList.contains('show')) {
+
+                container.classList.remove('show');
+                button.classList.remove('active');
+
+                return;
+
+            }
+
+
+            container.classList.add('show');
+            button.classList.add('active');
 
         }
 
@@ -1942,6 +2747,13 @@
                     data[0];
 
 
+                currentStudentId =
+                    student.student_id;
+
+                currentSessionToken =
+                    sessionToken;
+
+
                 document.getElementById(
                     'profileCard'
                 ).innerHTML = `
@@ -2075,7 +2887,28 @@
                             </div>
 
                             <div class="section-text">
-                                اضغط لعرض نتائج الاختبارات والتقييمات
+                                اضغط لعرض نتائج الاختبارات
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="section-card"
+                            id="evaluationsButton"
+                            onclick="toggleEvaluations()"
+                        >
+
+                            <div class="section-icon">
+                                📝
+                            </div>
+
+                            <div class="section-title">
+                                التقييمات
+                            </div>
+
+                            <div class="section-text">
+                                تقييمات وملاحظات المدرس على مستوى الطالب
                             </div>
 
                         </div>
@@ -2134,6 +2967,13 @@
 
 
                     <div
+                        class="evaluations-container"
+                        id="evaluationsContainer"
+                    >
+                    </div>
+
+
+                    <div
                         class="activities-container"
                         id="activitiesContainer"
                     >
@@ -2150,11 +2990,17 @@
 
 
                 /*
-                 * نجهز الأقسام الثلاثة من البداية،
+                 * نجهز الأقسام الأربعة من البداية،
                  * لكنها تظل مخفية حتى يضغط المدرس عليها.
                  */
 
                 await loadStudentResults(
+                    sessionToken,
+                    student.student_id
+                );
+
+
+                await loadStudentEvaluations(
                     sessionToken,
                     student.student_id
                 );
