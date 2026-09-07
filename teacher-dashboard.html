@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -138,11 +137,16 @@
             font-weight: 900;
         }
 
-        .students-card {
+        .students-card,
+        .groups-card {
             background: white;
             border-radius: 20px;
             box-shadow: 0 5px 25px rgba(15, 23, 42, 0.06);
             overflow: hidden;
+        }
+
+        .groups-card {
+            margin-top: 25px;
         }
 
         .section-header {
@@ -159,7 +163,14 @@
             font-weight: 900;
         }
 
-        .refresh-button {
+        .section-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .refresh-button,
+        .primary-button {
             border: none;
             background: #0f172a;
             color: white;
@@ -170,7 +181,12 @@
             font-weight: 800;
         }
 
-        .refresh-button:disabled {
+        .primary-button {
+            background: #2563eb;
+        }
+
+        .refresh-button:disabled,
+        .primary-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
@@ -243,6 +259,16 @@
             font-weight: 900;
         }
 
+        .group-status {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
         .empty-state {
             text-align: center;
             padding: 50px 20px;
@@ -273,6 +299,229 @@
             display: none;
         }
 
+        .success-box {
+            margin: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f0fdf4;
+            color: #166534;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.7;
+            display: none;
+        }
+
+        .group-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .group-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: #ffffff;
+            transition: 0.2s;
+        }
+
+        .group-item:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 5px 15px rgba(15, 23, 42, 0.05);
+        }
+
+        .group-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .group-name {
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .group-id {
+            color: #64748b;
+            font-family: monospace;
+            font-size: 12px;
+            direction: ltr;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .group-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .group-tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 6px 9px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .group-open-button {
+            width: 100%;
+            border: none;
+            background: #0f172a;
+            color: white;
+            padding: 11px;
+            border-radius: 11px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .group-open-button:hover {
+            background: #1e293b;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .close-button {
+            border: none;
+            background: #f1f5f9;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 900;
+            color: #334155;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 11px;
+            padding: 12px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: #2563eb;
+        }
+
+        .modal-footer {
+            padding: 16px 20px 20px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        .secondary-button {
+            border: none;
+            background: #e2e8f0;
+            color: #334155;
+            padding: 11px 16px;
+            border-radius: 11px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .group-students-list {
+            margin-top: 15px;
+        }
+
+        .group-student-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .group-student-name {
+            font-weight: 900;
+        }
+
+        .group-student-id {
+            color: #64748b;
+            font-size: 11px;
+            font-family: monospace;
+            direction: ltr;
+        }
+
+        .remove-student-button {
+            border: none;
+            background: #fef2f2;
+            color: #b91c1c;
+            padding: 8px 10px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
         .footer {
             text-align: center;
             color: #94a3b8;
@@ -282,7 +531,12 @@
         }
 
         @media (max-width: 800px) {
+
             .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .group-list {
                 grid-template-columns: 1fr;
             }
 
@@ -301,9 +555,23 @@
             .welcome h1 {
                 font-size: 23px;
             }
+
+            .section-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .section-actions {
+                width: 100%;
+            }
+
+            .section-actions button {
+                flex: 1;
+            }
         }
 
         @media (max-width: 500px) {
+
             .header {
                 align-items: flex-start;
             }
@@ -321,692 +589,2055 @@
             .section-header {
                 padding: 16px;
             }
+
+            .modal-overlay {
+                padding: 10px;
+            }
+
+            .modal {
+                max-height: 95vh;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <header class="header">
+<header class="header">
 
-        <div class="teacher-info">
+    <div class="teacher-info">
 
-            <img
-                id="teacherImage"
-                class="teacher-image"
-                src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
-                alt="المدرس"
+        <img
+            id="teacherImage"
+            class="teacher-image"
+            src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
+            alt="المدرس"
+        >
+
+        <div>
+
+            <div
+                class="teacher-name"
+                id="teacherName"
             >
+                مستر مهاب
+            </div>
 
-            <div>
-                <div
-                    class="teacher-name"
-                    id="teacherName"
-                >
-                    مستر مهاب
-                </div>
-
-                <div class="brand">
-                    NEXORA | Shihab Innovation
-                </div>
+            <div class="brand">
+                NEXORA | Shihab Innovation
             </div>
 
         </div>
 
-        <button
-            class="logout-button"
-            id="logoutButton"
+    </div>
+
+    <button
+        class="logout-button"
+        id="logoutButton"
+    >
+        تسجيل الخروج
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <section class="welcome">
+
+        <h1>
+            أهلاً بك <span id="welcomeName">مستر مهاب</span> 👋
+        </h1>
+
+        <p>
+            من هنا تقدر تتابع طلابك وبياناتهم.
+        </p>
+
+    </section>
+
+
+    <section class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👨‍🎓
+            </div>
+
+            <div>
+
+                <div class="stat-title">
+                    إجمالي الطلاب
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="totalStudents"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📚
+            </div>
+
+            <div>
+
+                <div class="stat-title">
+                    طلاب مسجلون
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="registeredStudents"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🟢
+            </div>
+
+            <div>
+
+                <div class="stat-title">
+                    حالة النظام
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="systemStatus"
+                    style="font-size: 18px;"
+                >
+                    متصل
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== الطلاب ==================== -->
+
+    <section class="students-card">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                👨‍🎓 الطلاب
+            </div>
+
+            <button
+                class="refresh-button"
+                id="refreshButton"
+            >
+                🔄 تحديث
+            </button>
+
+        </div>
+
+
+        <div
+            class="error-box"
+            id="errorBox"
+        ></div>
+
+
+        <div
+            class="loading"
+            id="loading"
         >
-            تسجيل الخروج
-        </button>
-
-    </header>
+            جاري تحميل بيانات الطلاب...
+        </div>
 
 
-    <main class="container">
+        <div
+            class="empty-state"
+            id="emptyState"
+            style="display:none;"
+        >
 
-        <section class="welcome">
-
-            <h1>
-                أهلاً بك <span id="welcomeName">مستر مهاب</span> 👋
-            </h1>
-
-            <p>
-                من هنا تقدر تتابع طلابك وبياناتهم.
-            </p>
-
-        </section>
-
-
-        <section class="stats">
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    👨‍🎓
-                </div>
-
-                <div>
-
-                    <div class="stat-title">
-                        إجمالي الطلاب
-                    </div>
-
-                    <div
-                        class="stat-value"
-                        id="totalStudents"
-                    >
-                        0
-                    </div>
-
-                </div>
-
+            <div class="empty-icon">
+                👨‍🎓
             </div>
 
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    📚
-                </div>
-
-                <div>
-
-                    <div class="stat-title">
-                        طلاب مسجلون
-                    </div>
-
-                    <div
-                        class="stat-value"
-                        id="registeredStudents"
-                    >
-                        0
-                    </div>
-
-                </div>
-
+            <div>
+                لا يوجد طلاب مسجلون حتى الآن.
             </div>
 
+        </div>
 
-            <div class="stat-card">
 
-                <div class="stat-icon">
-                    🟢
-                </div>
+        <div
+            class="table-wrapper"
+            id="tableWrapper"
+            style="display:none;"
+        >
 
-                <div>
+            <table>
 
-                    <div class="stat-title">
-                        حالة النظام
-                    </div>
+                <thead>
 
-                    <div
-                        class="stat-value"
-                        id="systemStatus"
-                        style="font-size: 18px;"
-                    >
-                        متصل
-                    </div>
+                    <tr>
+                        <th>الطالب</th>
+                        <th>رقم الطالب</th>
+                        <th>رقم الهاتف</th>
+                        <th>ولي الأمر</th>
+                        <th>التسجيل</th>
+                        <th>الحالة</th>
+                    </tr>
 
-                </div>
+                </thead>
 
+                <tbody id="studentsTableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== المجموعات ==================== -->
+
+    <section class="groups-card">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                📚 المجموعات
             </div>
 
-        </section>
-
-
-        <section class="students-card">
-
-            <div class="section-header">
-
-                <div class="section-title">
-                    👨‍🎓 الطلاب
-                </div>
+            <div class="section-actions">
 
                 <button
                     class="refresh-button"
-                    id="refreshButton"
+                    id="refreshGroupsButton"
                 >
                     🔄 تحديث
                 </button>
 
+                <button
+                    class="primary-button"
+                    id="createGroupButton"
+                >
+                    ＋ مجموعة جديدة
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="error-box"
+            id="groupsErrorBox"
+        ></div>
+
+
+        <div
+            class="success-box"
+            id="groupsSuccessBox"
+        ></div>
+
+
+        <div
+            class="loading"
+            id="groupsLoading"
+        >
+            جاري تحميل المجموعات...
+        </div>
+
+
+        <div
+            class="empty-state"
+            id="groupsEmptyState"
+            style="display:none;"
+        >
+
+            <div class="empty-icon">
+                📚
+            </div>
+
+            <div>
+                لا توجد مجموعات حتى الآن.
+            </div>
+
+        </div>
+
+
+        <div
+            class="group-list"
+            id="groupsList"
+            style="display:none;"
+        ></div>
+
+    </section>
+
+
+    <div class="footer">
+        NEXORA | Shihab Innovation
+    </div>
+
+</main>
+
+
+<!-- ==================== إنشاء مجموعة ==================== -->
+
+<div
+    class="modal-overlay"
+    id="createGroupModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                إنشاء مجموعة جديدة
+            </div>
+
+            <button
+                class="close-button"
+                id="closeCreateGroupButton"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    اسم المجموعة
+                </label>
+
+                <input
+                    type="text"
+                    class="form-input"
+                    id="groupNameInput"
+                    placeholder="مثال: مجموعة الصف الأول"
+                >
+
             </div>
 
 
+            <div class="form-group">
+
+                <label class="form-label">
+                    الصف الدراسي
+                </label>
+
+                <input
+                    type="number"
+                    class="form-input"
+                    id="groupGradeInput"
+                    placeholder="مثال: 1"
+                    min="1"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    المادة
+                </label>
+
+                <input
+                    type="text"
+                    class="form-input"
+                    id="groupSubjectInput"
+                    placeholder="مثال: اللغة العربية"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-button"
+                id="cancelCreateGroupButton"
+            >
+                إلغاء
+            </button>
+
+            <button
+                class="primary-button"
+                id="saveGroupButton"
+            >
+                إنشاء المجموعة
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================== تفاصيل المجموعة ==================== -->
+
+<div
+    class="modal-overlay"
+    id="groupDetailsModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+
+                <div
+                    class="modal-title"
+                    id="groupDetailsTitle"
+                >
+                    المجموعة
+                </div>
+
+                <div
+                    class="group-id"
+                    id="groupDetailsId"
+                ></div>
+
+            </div>
+
+            <button
+                class="close-button"
+                id="closeGroupDetailsButton"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
             <div
-                class="error-box"
-                id="errorBox"
+                class="group-info"
+                id="groupDetailsInfo"
             ></div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    إضافة طالب للمجموعة
+                </label>
+
+                <select
+                    class="form-select"
+                    id="studentSelect"
+                >
+
+                    <option value="">
+                        اختر الطالب
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                id="addStudentButton"
+                style="width:100%;"
+            >
+                إضافة الطالب
+            </button>
 
 
             <div
                 class="loading"
-                id="loading"
+                id="groupStudentsLoading"
+                style="display:none;padding:25px 10px;"
             >
-                جاري تحميل بيانات الطلاب...
+                جاري تحميل طلاب المجموعة...
             </div>
 
 
             <div
-                class="empty-state"
-                id="emptyState"
-                style="display:none;"
-            >
+                class="group-students-list"
+                id="groupStudentsList"
+            ></div>
 
-                <div class="empty-icon">
-                    👨‍🎓
-                </div>
-
-                <div>
-                    لا يوجد طلاب مسجلون حتى الآن.
-                </div>
-
-            </div>
-
-
-            <div
-                class="table-wrapper"
-                id="tableWrapper"
-                style="display:none;"
-            >
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>الطالب</th>
-                            <th>رقم الطالب</th>
-                            <th>رقم الهاتف</th>
-                            <th>ولي الأمر</th>
-                            <th>التسجيل</th>
-                            <th>الحالة</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="studentsTableBody"></tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <div class="footer">
-            NEXORA | Shihab Innovation
         </div>
 
-    </main>
+    </div>
+
+</div>
 
 
-    <script>
+<script>
 
-        const supabaseClient = window.supabase.createClient(
-            'https://bbiflvdwardvozjvrsya.supabase.co',
-            'sb_publishable_I_7nb9Ab0--dz_5hpzq27w_G8_7b6PL'
+    const supabaseClient = window.supabase.createClient(
+        'https://bbiflvdwardvozjvrsya.supabase.co',
+        'sb_publishable_I_7nb9Ab0--dz_5hpzq27w_G8_7b6PL'
+    );
+
+
+    const teacherSessionKey =
+        'nexora_teacher_session';
+
+    const teacherTokenKey =
+        'nexora_teacher_token';
+
+
+    const teacherNameElement =
+        document.getElementById('teacherName');
+
+    const welcomeNameElement =
+        document.getElementById('welcomeName');
+
+    const teacherImageElement =
+        document.getElementById('teacherImage');
+
+    const totalStudentsElement =
+        document.getElementById('totalStudents');
+
+    const registeredStudentsElement =
+        document.getElementById('registeredStudents');
+
+    const systemStatusElement =
+        document.getElementById('systemStatus');
+
+    const studentsTableBody =
+        document.getElementById('studentsTableBody');
+
+    const loadingElement =
+        document.getElementById('loading');
+
+    const emptyStateElement =
+        document.getElementById('emptyState');
+
+    const tableWrapperElement =
+        document.getElementById('tableWrapper');
+
+    const errorBoxElement =
+        document.getElementById('errorBox');
+
+    const refreshButton =
+        document.getElementById('refreshButton');
+
+    const logoutButton =
+        document.getElementById('logoutButton');
+
+
+    const refreshGroupsButton =
+        document.getElementById('refreshGroupsButton');
+
+    const createGroupButton =
+        document.getElementById('createGroupButton');
+
+    const groupsLoadingElement =
+        document.getElementById('groupsLoading');
+
+    const groupsEmptyStateElement =
+        document.getElementById('groupsEmptyState');
+
+    const groupsListElement =
+        document.getElementById('groupsList');
+
+    const groupsErrorBoxElement =
+        document.getElementById('groupsErrorBox');
+
+    const groupsSuccessBoxElement =
+        document.getElementById('groupsSuccessBox');
+
+
+    const createGroupModal =
+        document.getElementById('createGroupModal');
+
+    const closeCreateGroupButton =
+        document.getElementById('closeCreateGroupButton');
+
+    const cancelCreateGroupButton =
+        document.getElementById('cancelCreateGroupButton');
+
+    const saveGroupButton =
+        document.getElementById('saveGroupButton');
+
+    const groupNameInput =
+        document.getElementById('groupNameInput');
+
+    const groupGradeInput =
+        document.getElementById('groupGradeInput');
+
+    const groupSubjectInput =
+        document.getElementById('groupSubjectInput');
+
+
+    const groupDetailsModal =
+        document.getElementById('groupDetailsModal');
+
+    const closeGroupDetailsButton =
+        document.getElementById('closeGroupDetailsButton');
+
+    const groupDetailsTitle =
+        document.getElementById('groupDetailsTitle');
+
+    const groupDetailsId =
+        document.getElementById('groupDetailsId');
+
+    const groupDetailsInfo =
+        document.getElementById('groupDetailsInfo');
+
+    const studentSelect =
+        document.getElementById('studentSelect');
+
+    const addStudentButton =
+        document.getElementById('addStudentButton');
+
+    const groupStudentsLoading =
+        document.getElementById('groupStudentsLoading');
+
+    const groupStudentsList =
+        document.getElementById('groupStudentsList');
+
+
+    let allStudents = [];
+
+    let currentGroups = [];
+
+    let currentGroup = null;
+
+
+    function redirectToLogin() {
+
+        window.location.href =
+            'teacher-login.html';
+
+    }
+
+
+    function getTeacherSession() {
+
+        const raw =
+            localStorage.getItem(
+                teacherSessionKey
+            );
+
+        if (!raw) {
+            return null;
+        }
+
+        try {
+
+            return JSON.parse(raw);
+
+        } catch (error) {
+
+            console.error(
+                'Session parse error:',
+                error
+            );
+
+            return null;
+        }
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+
+    }
+
+
+    function formatDate(dateValue) {
+
+        if (!dateValue) {
+            return '-';
+        }
+
+        const date =
+            new Date(dateValue);
+
+        if (Number.isNaN(date.getTime())) {
+            return '-';
+        }
+
+        return date.toLocaleDateString(
+            'ar-EG',
+            {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+            }
+        );
+
+    }
+
+
+    function showError(text) {
+
+        errorBoxElement.textContent =
+            text;
+
+        errorBoxElement.style.display =
+            'block';
+
+        systemStatusElement.textContent =
+            'خطأ';
+
+    }
+
+
+    function hideError() {
+
+        errorBoxElement.textContent =
+            '';
+
+        errorBoxElement.style.display =
+            'none';
+
+    }
+
+
+    function showGroupsError(text) {
+
+        groupsErrorBoxElement.textContent =
+            text;
+
+        groupsErrorBoxElement.style.display =
+            'block';
+
+    }
+
+
+    function hideGroupsError() {
+
+        groupsErrorBoxElement.textContent =
+            '';
+
+        groupsErrorBoxElement.style.display =
+            'none';
+
+    }
+
+
+    function showGroupsSuccess(text) {
+
+        groupsSuccessBoxElement.textContent =
+            text;
+
+        groupsSuccessBoxElement.style.display =
+            'block';
+
+        setTimeout(function() {
+
+            groupsSuccessBoxElement.style.display =
+                'none';
+
+        }, 3000);
+
+    }
+
+
+    function renderStudents(students) {
+
+        studentsTableBody.innerHTML =
+            '';
+
+
+        if (!students || students.length === 0) {
+
+            tableWrapperElement.style.display =
+                'none';
+
+            emptyStateElement.style.display =
+                'block';
+
+            totalStudentsElement.textContent =
+                '0';
+
+            registeredStudentsElement.textContent =
+                '0';
+
+            return;
+        }
+
+
+        emptyStateElement.style.display =
+            'none';
+
+        tableWrapperElement.style.display =
+            'block';
+
+
+        totalStudentsElement.textContent =
+            students.length;
+
+        registeredStudentsElement.textContent =
+            students.length;
+
+
+        allStudents =
+            students;
+
+
+        students.forEach(function(student) {
+
+            const row =
+                document.createElement('tr');
+
+
+            row.innerHTML = `
+
+                <td>
+                    <div class="student-name">
+                        <a
+                            href="student-profile.html?student_id=${encodeURIComponent(student.student_id)}"
+                        >
+                            ${escapeHtml(student.name)}
+                        </a>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="student-id">
+                        ${escapeHtml(student.student_id)}
+                    </div>
+                </td>
+
+                <td>
+                    <div class="phone">
+                        ${escapeHtml(student.phone)}
+                    </div>
+                </td>
+
+                <td>
+                    <div class="phone">
+                        ${escapeHtml(student.parent_phone)}
+                    </div>
+                </td>
+
+                <td>
+                    ${escapeHtml(formatDate(student.created_at))}
+                </td>
+
+                <td>
+                    <span class="status">
+                        نشط
+                    </span>
+                </td>
+
+            `;
+
+
+            studentsTableBody.appendChild(row);
+
+        });
+
+    }
+
+
+    async function loadStudents() {
+
+        hideError();
+
+        loadingElement.style.display =
+            'block';
+
+        tableWrapperElement.style.display =
+            'none';
+
+        emptyStateElement.style.display =
+            'none';
+
+        refreshButton.disabled =
+            true;
+
+        refreshButton.textContent =
+            'جاري التحديث...';
+
+
+        const teacherSession =
+            getTeacherSession();
+
+        const teacherToken =
+            sessionStorage.getItem(
+                teacherTokenKey
+            );
+
+
+        if (!teacherSession || !teacherToken) {
+
+            redirectToLogin();
+
+            return;
+        }
+
+
+        if (
+            teacherSession.expires_at &&
+            new Date(teacherSession.expires_at) <= new Date()
+        ) {
+
+            localStorage.removeItem(
+                teacherSessionKey
+            );
+
+            sessionStorage.removeItem(
+                teacherTokenKey
+            );
+
+            redirectToLogin();
+
+            return;
+        }
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_teacher_students_by_session',
+                    {
+                        p_session_token:
+                            teacherToken
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Students RPC Error:',
+                    error
+                );
+
+                showError(
+                    'حدث خطأ أثناء تحميل بيانات الطلاب.'
+                );
+
+                loadingElement.style.display =
+                    'none';
+
+                return;
+            }
+
+
+            systemStatusElement.textContent =
+                'متصل';
+
+
+            renderStudents(
+                data || []
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Error:',
+                error
+            );
+
+            showError(
+                'حدث خطأ غير متوقع أثناء تحميل البيانات.'
+            );
+
+        } finally {
+
+            loadingElement.style.display =
+                'none';
+
+            refreshButton.disabled =
+                false;
+
+            refreshButton.textContent =
+                '🔄 تحديث';
+
+        }
+
+    }
+
+
+    async function loadGroups() {
+
+        hideGroupsError();
+
+        groupsLoadingElement.style.display =
+            'block';
+
+        groupsListElement.style.display =
+            'none';
+
+        groupsEmptyStateElement.style.display =
+            'none';
+
+        refreshGroupsButton.disabled =
+            true;
+
+        createGroupButton.disabled =
+            true;
+
+
+        const teacherSession =
+            getTeacherSession();
+
+        const teacherToken =
+            sessionStorage.getItem(
+                teacherTokenKey
+            );
+
+
+        if (!teacherSession || !teacherToken) {
+
+            redirectToLogin();
+
+            return;
+        }
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_teacher_groups_by_session',
+                    {
+                        p_session_token:
+                            teacherToken
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Groups RPC Error:',
+                    error
+                );
+
+                showGroupsError(
+                    'حدث خطأ أثناء تحميل المجموعات.'
+                );
+
+                return;
+            }
+
+
+            currentGroups =
+                data || [];
+
+
+            renderGroups(
+                currentGroups
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Groups Error:',
+                error
+            );
+
+            showGroupsError(
+                'حدث خطأ غير متوقع أثناء تحميل المجموعات.'
+            );
+
+        } finally {
+
+            groupsLoadingElement.style.display =
+                'none';
+
+            refreshGroupsButton.disabled =
+                false;
+
+            createGroupButton.disabled =
+                false;
+
+        }
+
+    }
+
+
+    function renderGroups(groups) {
+
+        groupsListElement.innerHTML =
+            '';
+
+
+        if (!groups || groups.length === 0) {
+
+            groupsListElement.style.display =
+                'none';
+
+            groupsEmptyStateElement.style.display =
+                'block';
+
+            return;
+        }
+
+
+        groupsEmptyStateElement.style.display =
+            'none';
+
+        groupsListElement.style.display =
+            'grid';
+
+
+        groups.forEach(function(group) {
+
+            const item =
+                document.createElement('div');
+
+            item.className =
+                'group-item';
+
+
+            const gradeText =
+                group.grade
+                    ? 'الصف ' + group.grade
+                    : 'بدون صف';
+
+            const subjectText =
+                group.subject
+                    ? group.subject
+                    : 'بدون مادة';
+
+
+            item.innerHTML = `
+
+                <div class="group-top">
+
+                    <div>
+
+                        <div class="group-name">
+                            ${escapeHtml(group.name)}
+                        </div>
+
+                        <div class="group-id">
+                            ${escapeHtml(group.group_id)}
+                        </div>
+
+                    </div>
+
+                    <span class="group-status">
+                        نشطة
+                    </span>
+
+                </div>
+
+
+                <div class="group-info">
+
+                    <span class="group-tag">
+                        ${escapeHtml(gradeText)}
+                    </span>
+
+                    <span class="group-tag">
+                        ${escapeHtml(subjectText)}
+                    </span>
+
+                    <span class="group-tag">
+                        ${escapeHtml(formatDate(group.created_at))}
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="group-open-button"
+                    data-group-id="${escapeHtml(group.id)}"
+                >
+                    فتح المجموعة
+                </button>
+
+            `;
+
+
+            const openButton =
+                item.querySelector(
+                    '.group-open-button'
+                );
+
+
+            openButton.addEventListener(
+                'click',
+                function() {
+
+                    openGroupDetails(
+                        group
+                    );
+
+                }
+            );
+
+
+            groupsListElement.appendChild(item);
+
+        });
+
+    }
+
+
+    function openCreateGroupModal() {
+
+        groupNameInput.value =
+            '';
+
+        groupGradeInput.value =
+            '';
+
+        groupSubjectInput.value =
+            '';
+
+        createGroupModal.classList.add(
+            'show'
+        );
+
+        setTimeout(function() {
+
+            groupNameInput.focus();
+
+        }, 100);
+
+    }
+
+
+    function closeCreateGroupModal() {
+
+        createGroupModal.classList.remove(
+            'show'
+        );
+
+    }
+
+
+    async function createGroup() {
+
+        const groupName =
+            groupNameInput.value.trim();
+
+        const gradeValue =
+            groupGradeInput.value.trim();
+
+        const subjectValue =
+            groupSubjectInput.value.trim();
+
+
+        if (!groupName) {
+
+            alert(
+                'اكتب اسم المجموعة أولاً.'
+            );
+
+            return;
+        }
+
+
+        let grade = null;
+
+
+        if (gradeValue) {
+
+            grade =
+                Number(gradeValue);
+
+            if (
+                !Number.isInteger(grade) ||
+                grade < 1
+            ) {
+
+                alert(
+                    'الصف الدراسي يجب أن يكون رقمًا صحيحًا.'
+                );
+
+                return;
+            }
+
+        }
+
+
+        const teacherToken =
+            sessionStorage.getItem(
+                teacherTokenKey
+            );
+
+
+        if (!teacherToken) {
+
+            redirectToLogin();
+
+            return;
+        }
+
+
+        saveGroupButton.disabled =
+            true;
+
+        saveGroupButton.textContent =
+            'جاري الإنشاء...';
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'create_teacher_group_by_session',
+                    {
+                        p_session_token:
+                            teacherToken,
+
+                        p_name:
+                            groupName,
+
+                        p_grade:
+                            grade,
+
+                        p_subject:
+                            subjectValue || null
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Create Group RPC Error:',
+                    error
+                );
+
+                alert(
+                    'حدث خطأ أثناء إنشاء المجموعة.'
+                );
+
+                return;
+            }
+
+
+            if (!data || data.length === 0) {
+
+                alert(
+                    'لم يتم إنشاء المجموعة. تأكد من صلاحية الجلسة.'
+                );
+
+                return;
+            }
+
+
+            closeCreateGroupModal();
+
+            showGroupsSuccess(
+                'تم إنشاء المجموعة بنجاح ✅'
+            );
+
+
+            await loadGroups();
+
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Create Group Error:',
+                error
+            );
+
+            alert(
+                'حدث خطأ غير متوقع أثناء إنشاء المجموعة.'
+            );
+
+        } finally {
+
+            saveGroupButton.disabled =
+                false;
+
+            saveGroupButton.textContent =
+                'إنشاء المجموعة';
+
+        }
+
+    }
+
+
+    async function openGroupDetails(group) {
+
+        currentGroup =
+            group;
+
+
+        groupDetailsTitle.textContent =
+            group.name;
+
+        groupDetailsId.textContent =
+            group.group_id;
+
+
+        groupDetailsInfo.innerHTML = `
+
+            <span class="group-tag">
+                ${escapeHtml(
+                    group.grade
+                        ? 'الصف ' + group.grade
+                        : 'بدون صف'
+                )}
+            </span>
+
+            <span class="group-tag">
+                ${escapeHtml(
+                    group.subject ||
+                    'بدون مادة'
+                )}
+            </span>
+
+            <span class="group-tag">
+                ${escapeHtml(
+                    formatDate(group.created_at)
+                )}
+            </span>
+
+        `;
+
+
+        populateStudentSelect();
+
+
+        groupDetailsModal.classList.add(
+            'show'
         );
 
 
-        const teacherSessionKey =
-            'nexora_teacher_session';
+        await loadGroupStudents(
+            group.id
+        );
 
-        const teacherTokenKey =
-            'nexora_teacher_token';
-
-
-        const teacherNameElement =
-            document.getElementById('teacherName');
-
-        const welcomeNameElement =
-            document.getElementById('welcomeName');
-
-        const teacherImageElement =
-            document.getElementById('teacherImage');
-
-        const totalStudentsElement =
-            document.getElementById('totalStudents');
-
-        const registeredStudentsElement =
-            document.getElementById('registeredStudents');
-
-        const systemStatusElement =
-            document.getElementById('systemStatus');
-
-        const studentsTableBody =
-            document.getElementById('studentsTableBody');
-
-        const loadingElement =
-            document.getElementById('loading');
-
-        const emptyStateElement =
-            document.getElementById('emptyState');
-
-        const tableWrapperElement =
-            document.getElementById('tableWrapper');
-
-        const errorBoxElement =
-            document.getElementById('errorBox');
-
-        const refreshButton =
-            document.getElementById('refreshButton');
-
-        const logoutButton =
-            document.getElementById('logoutButton');
+    }
 
 
-        function redirectToLogin() {
+    function closeGroupDetailsModal() {
+
+        groupDetailsModal.classList.remove(
+            'show'
+        );
+
+        currentGroup =
+            null;
+
+    }
+
+
+    function populateStudentSelect() {
+
+        studentSelect.innerHTML =
+            '<option value="">اختر الطالب</option>';
+
+
+        if (!allStudents || allStudents.length === 0) {
+            return;
+        }
+
+
+        allStudents.forEach(function(student) {
+
+            const option =
+                document.createElement('option');
+
+            option.value =
+                student.student_id;
+
+            option.textContent =
+                student.name +
+                ' — ' +
+                student.student_id;
+
+            studentSelect.appendChild(
+                option
+            );
+
+        });
+
+    }
+
+
+    async function loadGroupStudents(groupId) {
+
+        const teacherToken =
+            sessionStorage.getItem(
+                teacherTokenKey
+            );
+
+
+        if (!teacherToken) {
+
+            redirectToLogin();
+
+            return;
+        }
+
+
+        groupStudentsLoading.style.display =
+            'block';
+
+        groupStudentsList.innerHTML =
+            '';
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_teacher_group_students_by_session',
+                    {
+                        p_session_token:
+                            teacherToken,
+
+                        p_group_id:
+                            groupId
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Group Students RPC Error:',
+                    error
+                );
+
+                groupStudentsList.innerHTML = `
+                    <div class="error-box" style="display:block;margin:0;">
+                        حدث خطأ أثناء تحميل طلاب المجموعة.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            renderGroupStudents(
+                data || []
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Group Students Error:',
+                error
+            );
+
+            groupStudentsList.innerHTML = `
+                <div class="error-box" style="display:block;margin:0;">
+                    حدث خطأ غير متوقع.
+                </div>
+            `;
+
+        } finally {
+
+            groupStudentsLoading.style.display =
+                'none';
+
+        }
+
+    }
+
+
+    function renderGroupStudents(students) {
+
+        groupStudentsList.innerHTML =
+            '';
+
+
+        if (!students || students.length === 0) {
+
+            groupStudentsList.innerHTML = `
+                <div class="empty-state" style="padding:25px 10px;">
+                    <div class="empty-icon" style="font-size:35px;">
+                        👨‍🎓
+                    </div>
+                    <div>
+                        لا يوجد طلاب في هذه المجموعة حتى الآن.
+                    </div>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        students.forEach(function(student) {
+
+            const row =
+                document.createElement('div');
+
+            row.className =
+                'group-student-row';
+
+
+            row.innerHTML = `
+
+                <div>
+
+                    <div class="group-student-name">
+                        ${escapeHtml(student.name)}
+                    </div>
+
+                    <div class="group-student-id">
+                        ${escapeHtml(student.student_id)}
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="remove-student-button"
+                >
+                    حذف
+                </button>
+
+            `;
+
+
+            const removeButton =
+                row.querySelector(
+                    '.remove-student-button'
+                );
+
+
+            removeButton.addEventListener(
+                'click',
+                function() {
+
+                    removeStudentFromGroup(
+                        student.student_id
+                    );
+
+                }
+            );
+
+
+            groupStudentsList.appendChild(
+                row
+            );
+
+        });
+
+    }
+
+
+    async function addStudentToGroup() {
+
+        if (!currentGroup) {
+            return;
+        }
+
+
+        const studentId =
+            studentSelect.value;
+
+
+        if (!studentId) {
+
+            alert(
+                'اختر الطالب أولاً.'
+            );
+
+            return;
+        }
+
+
+        const teacherToken =
+            sessionStorage.getItem(
+                teacherTokenKey
+            );
+
+
+        if (!teacherToken) {
+
+            redirectToLogin();
+
+            return;
+        }
+
+
+        addStudentButton.disabled =
+            true;
+
+        addStudentButton.textContent =
+            'جاري الإضافة...';
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'add_student_to_teacher_group',
+                    {
+                        p_session_token:
+                            teacherToken,
+
+                        p_group_id:
+                            currentGroup.id,
+
+                        p_student_id:
+                            studentId
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Add Student RPC Error:',
+                    error
+                );
+
+                alert(
+                    'حدث خطأ أثناء إضافة الطالب.'
+                );
+
+                return;
+            }
+
+
+            if (data !== true) {
+
+                alert(
+                    'لم تتم إضافة الطالب. تأكد من الجلسة والمجموعة والطالب.'
+                );
+
+                return;
+            }
+
+
+            studentSelect.value =
+                '';
+
+
+            await loadGroupStudents(
+                currentGroup.id
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Add Student Error:',
+                error
+            );
+
+            alert(
+                'حدث خطأ غير متوقع أثناء إضافة الطالب.'
+            );
+
+        } finally {
+
+            addStudentButton.disabled =
+                false;
+
+            addStudentButton.textContent =
+                'إضافة الطالب';
+
+        }
+
+    }
+
+
+    async function removeStudentFromGroup(studentId) {
+
+        if (!currentGroup) {
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                'هل أنت متأكد من حذف الطالب من المجموعة؟'
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        const teacherToken =
+            sessionStorage.getItem(
+                teacherTokenKey
+            );
+
+
+        if (!teacherToken) {
+
+            redirectToLogin();
+
+            return;
+        }
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'remove_student_from_teacher_group',
+                    {
+                        p_session_token:
+                            teacherToken,
+
+                        p_group_id:
+                            currentGroup.id,
+
+                        p_student_id:
+                            studentId
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Remove Student RPC Error:',
+                    error
+                );
+
+                alert(
+                    'حدث خطأ أثناء حذف الطالب من المجموعة.'
+                );
+
+                return;
+            }
+
+
+            if (data !== true) {
+
+                alert(
+                    'لم يتم حذف الطالب.'
+                );
+
+                return;
+            }
+
+
+            await loadGroupStudents(
+                currentGroup.id
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Remove Student Error:',
+                error
+            );
+
+            alert(
+                'حدث خطأ غير متوقع أثناء الحذف.'
+            );
+
+        }
+
+    }
+
+
+    function loadTeacherProfile() {
+
+        const teacherSession =
+            getTeacherSession();
+
+
+        if (!teacherSession) {
+
+            redirectToLogin();
+
+            return false;
+        }
+
+
+        if (
+            teacherSession.expires_at &&
+            new Date(teacherSession.expires_at) <= new Date()
+        ) {
+
+            localStorage.removeItem(
+                teacherSessionKey
+            );
+
+            sessionStorage.removeItem(
+                teacherTokenKey
+            );
+
+            redirectToLogin();
+
+            return false;
+        }
+
+
+        const teacherName =
+            teacherSession.name ||
+            'المدرس';
+
+
+        teacherNameElement.textContent =
+            teacherName;
+
+        welcomeNameElement.textContent =
+            teacherName;
+
+
+        if (teacherSession.image) {
+
+            teacherImageElement.src =
+                teacherSession.image;
+
+        }
+
+
+        return true;
+
+    }
+
+
+    logoutButton.addEventListener(
+        'click',
+        function() {
+
+            localStorage.removeItem(
+                teacherSessionKey
+            );
+
+            sessionStorage.removeItem(
+                teacherTokenKey
+            );
 
             window.location.href =
                 'teacher-login.html';
 
         }
+    );
 
 
-        function getTeacherSession() {
+    refreshButton.addEventListener(
+        'click',
+        loadStudents
+    );
 
-            const raw =
-                localStorage.getItem(
-                    teacherSessionKey
-                );
 
-            if (!raw) {
-                return null;
-            }
+    refreshGroupsButton.addEventListener(
+        'click',
+        loadGroups
+    );
 
-            try {
 
-                return JSON.parse(raw);
+    createGroupButton.addEventListener(
+        'click',
+        openCreateGroupModal
+    );
 
-            } catch (error) {
 
-                console.error(
-                    'Session parse error:',
-                    error
-                );
+    closeCreateGroupButton.addEventListener(
+        'click',
+        closeCreateGroupModal
+    );
 
-                return null;
-            }
-        }
 
+    cancelCreateGroupButton.addEventListener(
+        'click',
+        closeCreateGroupModal
+    );
 
-        function escapeHtml(value) {
 
-            return String(value ?? '')
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
+    saveGroupButton.addEventListener(
+        'click',
+        createGroup
+    );
 
-        }
 
+    closeGroupDetailsButton.addEventListener(
+        'click',
+        closeGroupDetailsModal
+    );
 
-        function formatDate(dateValue) {
 
-            if (!dateValue) {
-                return '-';
-            }
+    addStudentButton.addEventListener(
+        'click',
+        addStudentToGroup
+    );
 
-            const date =
-                new Date(dateValue);
 
-            if (Number.isNaN(date.getTime())) {
-                return '-';
-            }
-
-            return date.toLocaleDateString(
-                'ar-EG',
-                {
-                    day: 'numeric',
-                    month: 'numeric',
-                    year: 'numeric'
-                }
-            );
-
-        }
-
-
-        function showError(text) {
-
-            errorBoxElement.textContent =
-                text;
-
-            errorBoxElement.style.display =
-                'block';
-
-            systemStatusElement.textContent =
-                'خطأ';
-
-        }
-
-
-        function hideError() {
-
-            errorBoxElement.textContent =
-                '';
-
-            errorBoxElement.style.display =
-                'none';
-
-        }
-
-
-        function renderStudents(students) {
-
-            studentsTableBody.innerHTML =
-                '';
-
-
-            if (!students || students.length === 0) {
-
-                tableWrapperElement.style.display =
-                    'none';
-
-                emptyStateElement.style.display =
-                    'block';
-
-                totalStudentsElement.textContent =
-                    '0';
-
-                registeredStudentsElement.textContent =
-                    '0';
-
-                return;
-            }
-
-
-            emptyStateElement.style.display =
-                'none';
-
-            tableWrapperElement.style.display =
-                'block';
-
-
-            totalStudentsElement.textContent =
-                students.length;
-
-            registeredStudentsElement.textContent =
-                students.length;
-
-
-            students.forEach(function(student) {
-
-                const row =
-                    document.createElement('tr');
-
-
-                row.innerHTML = `
-
-                    <td>
-                        <div class="student-name">
-                            <a
-                                href="student-profile.html?student_id=${encodeURIComponent(student.student_id)}"
-                            >
-                                ${escapeHtml(student.name)}
-                            </a>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="student-id">
-                            ${escapeHtml(student.student_id)}
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="phone">
-                            ${escapeHtml(student.phone)}
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="phone">
-                            ${escapeHtml(student.parent_phone)}
-                        </div>
-                    </td>
-
-                    <td>
-                        ${escapeHtml(formatDate(student.created_at))}
-                    </td>
-
-                    <td>
-                        <span class="status">
-                            نشط
-                        </span>
-                    </td>
-
-                `;
-
-
-                studentsTableBody.appendChild(row);
-
-            });
-
-        }
-
-
-        async function loadStudents() {
-
-            hideError();
-
-            loadingElement.style.display =
-                'block';
-
-            tableWrapperElement.style.display =
-                'none';
-
-            emptyStateElement.style.display =
-                'none';
-
-            refreshButton.disabled =
-                true;
-
-            refreshButton.textContent =
-                'جاري التحديث...';
-
-
-            const teacherSession =
-                getTeacherSession();
-
-            const teacherToken =
-                sessionStorage.getItem(
-                    teacherTokenKey
-                );
-
-
-            if (!teacherSession || !teacherToken) {
-
-                redirectToLogin();
-
-                return;
-            }
-
+    createGroupModal.addEventListener(
+        'click',
+        function(event) {
 
             if (
-                teacherSession.expires_at &&
-                new Date(teacherSession.expires_at) <= new Date()
+                event.target ===
+                createGroupModal
             ) {
 
-                localStorage.removeItem(
-                    teacherSessionKey
-                );
+                closeCreateGroupModal();
 
-                sessionStorage.removeItem(
-                    teacherTokenKey
-                );
+            }
 
-                redirectToLogin();
+        }
+    );
 
+
+    groupDetailsModal.addEventListener(
+        'click',
+        function(event) {
+
+            if (
+                event.target ===
+                groupDetailsModal
+            ) {
+
+                closeGroupDetailsModal();
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        async function() {
+
+            if (!loadTeacherProfile()) {
                 return;
             }
 
+            await loadStudents();
 
-            try {
-
-                const { data, error } =
-                    await supabaseClient.rpc(
-                        'get_teacher_students_by_session',
-                        {
-                            p_session_token:
-                                teacherToken
-                        }
-                    );
-
-
-                if (error) {
-
-                    console.error(
-                        'Students RPC Error:',
-                        error
-                    );
-
-                    showError(
-                        'حدث خطأ أثناء تحميل بيانات الطلاب.'
-                    );
-
-                    loadingElement.style.display =
-                        'none';
-
-                    return;
-                }
-
-
-                systemStatusElement.textContent =
-                    'متصل';
-
-
-                renderStudents(
-                    data || []
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    'Unexpected Error:',
-                    error
-                );
-
-                showError(
-                    'حدث خطأ غير متوقع أثناء تحميل البيانات.'
-                );
-
-            } finally {
-
-                loadingElement.style.display =
-                    'none';
-
-                refreshButton.disabled =
-                    false;
-
-                refreshButton.textContent =
-                    '🔄 تحديث';
-
-            }
+            await loadGroups();
 
         }
+    );
 
-
-        function loadTeacherProfile() {
-
-            const teacherSession =
-                getTeacherSession();
-
-
-            if (!teacherSession) {
-
-                redirectToLogin();
-
-                return false;
-            }
-
-
-            if (
-                teacherSession.expires_at &&
-                new Date(teacherSession.expires_at) <= new Date()
-            ) {
-
-                localStorage.removeItem(
-                    teacherSessionKey
-                );
-
-                sessionStorage.removeItem(
-                    teacherTokenKey
-                );
-
-                redirectToLogin();
-
-                return false;
-            }
-
-
-            const teacherName =
-                teacherSession.name ||
-                'المدرس';
-
-
-            teacherNameElement.textContent =
-                teacherName;
-
-            welcomeNameElement.textContent =
-                teacherName;
-
-
-            if (teacherSession.image) {
-
-                teacherImageElement.src =
-                    teacherSession.image;
-
-            }
-
-
-            return true;
-
-        }
-
-
-        logoutButton.addEventListener(
-            'click',
-            function() {
-
-                localStorage.removeItem(
-                    teacherSessionKey
-                );
-
-                sessionStorage.removeItem(
-                    teacherTokenKey
-                );
-
-                window.location.href =
-                    'teacher-login.html';
-
-            }
-        );
-
-
-        refreshButton.addEventListener(
-            'click',
-            loadStudents
-        );
-
-
-        document.addEventListener(
-            'DOMContentLoaded',
-            function() {
-
-                if (!loadTeacherProfile()) {
-                    return;
-                }
-
-                loadStudents();
-
-            }
-        );
-
-    </script>
+</script>
 
 </body>
 </html>
-```
