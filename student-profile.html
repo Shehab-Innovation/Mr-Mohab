@@ -212,6 +212,10 @@
             font-weight: 900;
         }
 
+        /* =========================
+           الأقسام
+        ========================= */
+
         .sections {
             padding: 0 25px 25px;
 
@@ -230,6 +234,19 @@
             background: white;
 
             text-align: center;
+
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .section-card.active {
+            border-color: #0f172a;
+            background: #f8fafc;
         }
 
         .section-icon {
@@ -250,11 +267,16 @@
         }
 
         /* =========================
-           النتائج
+           محتوى النتائج
         ========================= */
 
-        .results-section {
+        .results-container {
+            display: none;
             padding: 0 25px 25px;
+        }
+
+        .results-container.show {
+            display: block;
         }
 
         .results-title {
@@ -452,7 +474,7 @@
                 padding: 0 20px 20px;
             }
 
-            .results-section {
+            .results-container {
                 padding: 0 20px 20px;
             }
 
@@ -645,17 +667,9 @@
 
                 return `
 
-                    <section class="results-section">
-
-                        <div class="results-title">
-                            📊 نتائج الطالب
-                        </div>
-
-                        <div class="empty-results">
-                            لا توجد نتائج اختبارات مسجلة لهذا الطالب حتى الآن.
-                        </div>
-
-                    </section>
+                    <div class="empty-results">
+                        لا توجد نتائج اختبارات مسجلة لهذا الطالب حتى الآن.
+                    </div>
 
                 `;
 
@@ -729,9 +743,12 @@
                                 </div>
 
                                 <div class="result-info-value">
-                                    ${result.grade !== null && result.grade !== undefined
-                                        ? escapeHtml(result.grade)
-                                        : 'غير محدد'}
+                                    ${
+                                        result.grade !== null &&
+                                        result.grade !== undefined
+                                            ? escapeHtml(result.grade)
+                                            : 'غير محدد'
+                                    }
                                 </div>
 
                             </div>
@@ -761,65 +778,61 @@
 
             return `
 
-                <section class="results-section">
-
-                    <div class="results-title">
-                        📊 نتائج الطالب
-                    </div>
+                <div class="results-title">
+                    📊 نتائج الطالب
+                </div>
 
 
-                    <div class="results-summary">
+                <div class="results-summary">
 
 
-                        <div class="summary-card">
+                    <div class="summary-card">
 
-                            <div class="summary-label">
-                                إجمالي الاختبارات
-                            </div>
-
-                            <div class="summary-value">
-                                ${totalResults}
-                            </div>
-
+                        <div class="summary-label">
+                            إجمالي الاختبارات
                         </div>
 
-
-                        <div class="summary-card">
-
-                            <div class="summary-label">
-                                متوسط النتائج
-                            </div>
-
-                            <div class="summary-value">
-                                ${averagePercentage}%
-                            </div>
-
+                        <div class="summary-value">
+                            ${totalResults}
                         </div>
-
-
-                        <div class="summary-card">
-
-                            <div class="summary-label">
-                                أعلى نتيجة
-                            </div>
-
-                            <div class="summary-value">
-                                ${highestPercentage}%
-                            </div>
-
-                        </div>
-
 
                     </div>
 
 
-                    <div class="results-list">
+                    <div class="summary-card">
 
-                        ${resultCards}
+                        <div class="summary-label">
+                            متوسط النتائج
+                        </div>
+
+                        <div class="summary-value">
+                            ${averagePercentage}%
+                        </div>
 
                     </div>
 
-                </section>
+
+                    <div class="summary-card">
+
+                        <div class="summary-label">
+                            أعلى نتيجة
+                        </div>
+
+                        <div class="summary-value">
+                            ${highestPercentage}%
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="results-list">
+
+                    ${resultCards}
+
+                </div>
 
             `;
 
@@ -830,6 +843,23 @@
             sessionToken,
             studentId
         ) {
+
+            const resultsContainer =
+                document.getElementById('resultsContainer');
+
+
+            resultsContainer.innerHTML = `
+
+                <div class="results-title">
+                    📊 نتائج الطالب
+                </div>
+
+                <div class="results-loading">
+                    ⏳ جاري تحميل النتائج...
+                </div>
+
+            `;
+
 
             const { data, error } =
                 await supabaseClient.rpc(
@@ -848,26 +878,54 @@
                     error
                 );
 
-                return `
+                resultsContainer.innerHTML = `
 
-                    <section class="results-section">
+                    <div class="results-title">
+                        📊 نتائج الطالب
+                    </div>
 
-                        <div class="results-title">
-                            📊 نتائج الطالب
-                        </div>
-
-                        <div class="empty-results">
-                            تعذر تحميل نتائج الطالب حاليًا.
-                        </div>
-
-                    </section>
+                    <div class="empty-results">
+                        تعذر تحميل نتائج الطالب حاليًا.
+                    </div>
 
                 `;
+
+                return;
 
             }
 
 
-            return renderResults(data);
+            resultsContainer.innerHTML =
+                renderResults(data);
+
+        }
+
+
+        function toggleResults() {
+
+            const resultsContainer =
+                document.getElementById('resultsContainer');
+
+            const resultsButton =
+                document.getElementById('resultsButton');
+
+
+            if (
+                resultsContainer.classList.contains('show')
+            ) {
+
+                resultsContainer.classList.remove('show');
+
+                resultsButton.classList.remove('active');
+
+                return;
+
+            }
+
+
+            resultsContainer.classList.add('show');
+
+            resultsButton.classList.add('active');
 
         }
 
@@ -996,9 +1054,6 @@
                 const student = data[0];
 
 
-                /*
-                 * نعرض بيانات الطالب أولًا
-                 */
                 document.getElementById(
                     'profileCard'
                 ).innerHTML = `
@@ -1012,18 +1067,12 @@
 
                         <div>
 
-                            <div
-                                class="student-header-name"
-                                id="studentName"
-                            >
+                            <div class="student-header-name">
                                 ${escapeHtml(student.name)}
                             </div>
 
 
-                            <div
-                                class="student-header-id"
-                                id="studentIdHeader"
-                            >
+                            <div class="student-header-id">
                                 ${escapeHtml(student.student_id)}
                             </div>
 
@@ -1041,10 +1090,7 @@
                                 👤 اسم الطالب
                             </div>
 
-                            <div
-                                class="detail-value"
-                                id="nameValue"
-                            >
+                            <div class="detail-value">
                                 ${escapeHtml(student.name)}
                             </div>
 
@@ -1057,10 +1103,7 @@
                                 🆔 رقم الطالب
                             </div>
 
-                            <div
-                                class="detail-value student-id"
-                                id="studentIdValue"
-                            >
+                            <div class="detail-value student-id">
                                 ${escapeHtml(student.student_id)}
                             </div>
 
@@ -1073,10 +1116,7 @@
                                 📱 رقم الهاتف
                             </div>
 
-                            <div
-                                class="detail-value phone"
-                                id="phoneValue"
-                            >
+                            <div class="detail-value phone">
                                 ${escapeHtml(student.phone)}
                             </div>
 
@@ -1089,10 +1129,7 @@
                                 👨‍👩‍👦 رقم ولي الأمر
                             </div>
 
-                            <div
-                                class="detail-value phone"
-                                id="parentPhoneValue"
-                            >
+                            <div class="detail-value phone">
                                 ${escapeHtml(student.parent_phone)}
                             </div>
 
@@ -1105,10 +1142,7 @@
                                 📅 تاريخ التسجيل
                             </div>
 
-                            <div
-                                class="detail-value"
-                                id="createdValue"
-                            >
+                            <div class="detail-value">
                                 ${formatDate(student.created_at)}
                             </div>
 
@@ -1138,7 +1172,11 @@
                     <div class="sections">
 
 
-                        <div class="section-card">
+                        <div
+                            class="section-card"
+                            id="resultsButton"
+                            onclick="toggleResults()"
+                        >
 
                             <div class="section-icon">
                                 📊
@@ -1149,13 +1187,16 @@
                             </div>
 
                             <div class="section-text">
-                                نتائج الاختبارات والتقييمات
+                                اضغط لعرض نتائج الاختبارات والتقييمات
                             </div>
 
                         </div>
 
 
-                        <div class="section-card">
+                        <div
+                            class="section-card"
+                            onclick="alert('قسم الأنشطة سيتم تفعيله لاحقًا 📚')"
+                        >
 
                             <div class="section-icon">
                                 📚
@@ -1172,7 +1213,10 @@
                         </div>
 
 
-                        <div class="section-card">
+                        <div
+                            class="section-card"
+                            onclick="alert('قسم الشهادات سيتم تفعيله لاحقًا 🏆')"
+                        >
 
                             <div class="section-icon">
                                 🏆
@@ -1192,39 +1236,23 @@
                     </div>
 
 
-                    <div id="resultsContainer">
-
-                        <div class="results-section">
-
-                            <div class="results-title">
-                                📊 نتائج الطالب
-                            </div>
-
-                            <div class="results-loading">
-                                ⏳ جاري تحميل النتائج...
-                            </div>
-
-                        </div>
-
+                    <div
+                        class="results-container"
+                        id="resultsContainer"
+                    >
                     </div>
 
                 `;
 
 
                 /*
-                 * بعد ظهور ملف الطالب،
-                 * نجلب نتائجه الحقيقية
+                 * نجهز النتائج من البداية،
+                 * لكنها تظل مخفية حتى الضغط على زر النتائج.
                  */
-                const resultsHtml =
-                    await loadStudentResults(
-                        sessionToken,
-                        student.student_id
-                    );
-
-
-                document.getElementById(
-                    'resultsContainer'
-                ).innerHTML = resultsHtml;
+                await loadStudentResults(
+                    sessionToken,
+                    student.student_id
+                );
 
 
             } catch (error) {
