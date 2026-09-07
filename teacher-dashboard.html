@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,35 +16,27 @@
         }
 
         body {
-            min-height: 100vh;
             font-family: Arial, Tahoma, sans-serif;
             background: #f1f5f9;
             color: #0f172a;
+            min-height: 100vh;
         }
 
-        .topbar {
-            background:
-                linear-gradient(
-                    135deg,
-                    #2563eb,
-                    #7c3aed
-                );
-
+        .header {
+            background: #0f172a;
             color: white;
             padding: 18px 25px;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            gap: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            gap: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
         }
 
         .teacher-info {
             display: flex;
             align-items: center;
-            gap: 13px;
+            gap: 14px;
         }
 
         .teacher-image {
@@ -53,140 +44,137 @@
             height: 55px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.7);
+            border: 3px solid rgba(255, 255, 255, 0.8);
         }
 
-        .teacher-info h1 {
+        .teacher-name {
             font-size: 20px;
-            margin-bottom: 4px;
+            font-weight: 900;
         }
 
-        .teacher-info p {
-            font-size: 13px;
-            opacity: 0.9;
+        .brand {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 4px;
         }
 
-        .logout-btn {
-            border: 1px solid rgba(255,255,255,0.35);
-            background: rgba(255,255,255,0.12);
+        .logout-button {
+            border: none;
+            background: rgba(255, 255, 255, 0.12);
             color: white;
-            padding: 10px 15px;
-            border-radius: 10px;
+            padding: 11px 17px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
             cursor: pointer;
-            font-weight: bold;
+            transition: 0.2s;
         }
 
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.2);
+        .logout-button:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .container {
             width: 100%;
             max-width: 1200px;
             margin: auto;
-            padding: 25px 18px 40px;
+            padding: 30px 20px 50px;
         }
 
         .welcome {
-            margin-bottom: 22px;
+            margin-bottom: 25px;
         }
 
-        .welcome h2 {
-            font-size: 25px;
-            margin-bottom: 7px;
+        .welcome h1 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 8px;
         }
 
         .welcome p {
             color: #64748b;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 18px;
+            margin-bottom: 30px;
         }
 
         .stat-card {
             background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(15,23,42,0.07);
-            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .stat-icon {
-            font-size: 27px;
-            margin-bottom: 10px;
-        }
-
-        .stat-number {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 5px;
+            width: 52px;
+            height: 52px;
+            border-radius: 15px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            flex-shrink: 0;
         }
 
         .stat-title {
             color: #64748b;
             font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
 
-        .students-section {
+        .stat-value {
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .students-card {
             background: white;
-            border-radius: 18px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 15px rgba(15,23,42,0.07);
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(15, 23, 42, 0.06);
             overflow: hidden;
         }
 
         .section-header {
-            padding: 20px;
-            border-bottom: 1px solid #e2e8f0;
-
+            padding: 20px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 15px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .section-header h3 {
-            font-size: 19px;
+        .section-title {
+            font-size: 20px;
+            font-weight: 900;
         }
 
-        .refresh-btn {
+        .refresh-button {
             border: none;
-            background: #eff6ff;
-            color: #2563eb;
-            padding: 9px 13px;
-            border-radius: 9px;
+            background: #0f172a;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 11px;
             cursor: pointer;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 800;
         }
 
-        .loading {
-            text-align: center;
-            padding: 45px 20px;
-            color: #64748b;
+        .refresh-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
-        .error {
-            margin: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #b91c1c;
-            line-height: 1.7;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 45px 20px;
-            color: #64748b;
-        }
-
-        .table-wrap {
+        .table-wrapper {
             width: 100%;
             overflow-x: auto;
         }
@@ -194,40 +182,37 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 750px;
-        }
-
-        th,
-        td {
-            padding: 14px 15px;
-            text-align: right;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 14px;
+            min-width: 850px;
         }
 
         th {
             background: #f8fafc;
             color: #475569;
             font-size: 13px;
+            font-weight: 900;
+            padding: 16px 14px;
+            text-align: right;
+            white-space: nowrap;
         }
 
         td {
-            color: #334155;
+            padding: 16px 14px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 14px;
+            white-space: nowrap;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        tbody tr:hover {
+            background: #f8fafc;
         }
 
         .student-name {
-            font-weight: bold;
-            color: #0f172a;
+            font-weight: 900;
         }
 
         .student-id {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 4px;
+            color: #475569;
+            font-family: monospace;
             direction: ltr;
             text-align: right;
         }
@@ -239,29 +224,77 @@
 
         .status {
             display: inline-block;
-            padding: 5px 9px;
-            border-radius: 20px;
             background: #dcfce7;
             color: #166534;
+            padding: 6px 10px;
+            border-radius: 20px;
             font-size: 12px;
-            font-weight: bold;
+            font-weight: 900;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #64748b;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .error-box {
+            margin: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #fef2f2;
+            color: #991b1b;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.7;
+            display: none;
         }
 
         .footer {
             text-align: center;
             color: #94a3b8;
-            font-size: 12px;
-            margin-top: 25px;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 30px 0 0;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
 
-            .topbar {
+            .header {
                 padding: 15px;
             }
 
-            .teacher-info h1 {
+            .teacher-name {
                 font-size: 17px;
+            }
+
+            .container {
+                padding: 22px 12px 40px;
+            }
+
+            .welcome h1 {
+                font-size: 23px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .header {
+                align-items: flex-start;
             }
 
             .teacher-image {
@@ -269,17 +302,13 @@
                 height: 48px;
             }
 
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .welcome h2 {
-                font-size: 21px;
+            .logout-button {
+                padding: 9px 12px;
+                font-size: 13px;
             }
 
             .section-header {
-                align-items: flex-start;
-                flex-direction: column;
+                padding: 16px;
             }
         }
     </style>
@@ -287,31 +316,34 @@
 
 <body>
 
-    <header class="topbar">
+    <header class="header">
 
         <div class="teacher-info">
 
             <img
                 id="teacherImage"
                 class="teacher-image"
-                src=""
+                src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
                 alt="المدرس"
             >
 
             <div>
-                <h1 id="teacherName">
-                    لوحة تحكم المدرس
-                </h1>
+                <div
+                    class="teacher-name"
+                    id="teacherName"
+                >
+                    مستر مهاب
+                </div>
 
-                <p>
+                <div class="brand">
                     NEXORA | Shihab Innovation
-                </p>
+                </div>
             </div>
 
         </div>
 
         <button
-            class="logout-btn"
+            class="logout-button"
             id="logoutButton"
         >
             تسجيل الخروج
@@ -324,9 +356,9 @@
 
         <section class="welcome">
 
-            <h2 id="welcomeTitle">
-                أهلاً بك 👋
-            </h2>
+            <h1>
+                أهلاً بك <span id="welcomeName">مستر مهاب</span> 👋
+            </h1>
 
             <p>
                 من هنا تقدر تتابع طلابك وبياناتهم.
@@ -343,15 +375,19 @@
                     👨‍🎓
                 </div>
 
-                <div
-                    class="stat-number"
-                    id="studentsCount"
-                >
-                    0
-                </div>
+                <div>
 
-                <div class="stat-title">
-                    إجمالي الطلاب
+                    <div class="stat-title">
+                        إجمالي الطلاب
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="totalStudents"
+                    >
+                        0
+                    </div>
+
                 </div>
 
             </div>
@@ -363,15 +399,19 @@
                     📚
                 </div>
 
-                <div
-                    class="stat-number"
-                    id="activeStudentsCount"
-                >
-                    0
-                </div>
+                <div>
 
-                <div class="stat-title">
-                    طلاب مسجلون
+                    <div class="stat-title">
+                        طلاب مسجلون
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="registeredStudents"
+                    >
+                        0
+                    </div>
+
                 </div>
 
             </div>
@@ -383,15 +423,20 @@
                     🟢
                 </div>
 
-                <div
-                    class="stat-number"
-                    id="onlineStatus"
-                >
-                    متصل
-                </div>
+                <div>
 
-                <div class="stat-title">
-                    حالة النظام
+                    <div class="stat-title">
+                        حالة النظام
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="systemStatus"
+                        style="font-size: 18px;"
+                    >
+                        متصل
+                    </div>
+
                 </div>
 
             </div>
@@ -399,16 +444,16 @@
         </section>
 
 
-        <section class="students-section">
+        <section class="students-card">
 
             <div class="section-header">
 
-                <h3>
+                <div class="section-title">
                     👨‍🎓 الطلاب
-                </h3>
+                </div>
 
                 <button
-                    class="refresh-btn"
+                    class="refresh-button"
                     id="refreshButton"
                 >
                     🔄 تحديث
@@ -418,10 +463,61 @@
 
 
             <div
-                id="studentsContent"
+                class="error-box"
+                id="errorBox"
+            ></div>
+
+
+            <div
                 class="loading"
+                id="loading"
             >
-                جاري تحميل الطلاب...
+                جاري تحميل بيانات الطلاب...
+            </div>
+
+
+            <div
+                class="empty-state"
+                id="emptyState"
+                style="display:none;"
+            >
+
+                <div class="empty-icon">
+                    👨‍🎓
+                </div>
+
+                <div>
+                    لا يوجد طلاب مسجلون حتى الآن.
+                </div>
+
+            </div>
+
+
+            <div
+                class="table-wrapper"
+                id="tableWrapper"
+                style="display:none;"
+            >
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>الطالب</th>
+                            <th>رقم الطالب</th>
+                            <th>رقم الهاتف</th>
+                            <th>ولي الأمر</th>
+                            <th>التسجيل</th>
+                            <th>الحالة</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="studentsTableBody"></tbody>
+
+                </table>
+
             </div>
 
         </section>
@@ -436,74 +532,57 @@
 
     <script>
 
-        const supabaseClient =
-            window.supabase.createClient(
-                'https://bbiflvdwardvozjvrsya.supabase.co',
-                'sb_publishable_I_7nb9Ab0--dz_5hpzq27w_G8_7b6PL'
-            );
+        const supabaseClient = window.supabase.createClient(
+            'https://bbiflvdwardvozjvrsya.supabase.co',
+            'sb_publishable_I_7nb9Ab0--dz_5hpzq27w_G8_7b6PL'
+        );
 
 
-        const teacherSession =
-            localStorage.getItem(
-                'nexora_teacher_session'
-            );
+        const teacherSessionKey =
+            'nexora_teacher_session';
+
+        const teacherTokenKey =
+            'nexora_teacher_token';
 
 
-        const teacherToken =
-            sessionStorage.getItem(
-                'nexora_teacher_token'
-            );
+        const teacherNameElement =
+            document.getElementById('teacherName');
 
+        const welcomeNameElement =
+            document.getElementById('welcomeName');
 
-        const teacherName =
-            document.getElementById(
-                'teacherName'
-            );
+        const teacherImageElement =
+            document.getElementById('teacherImage');
 
+        const totalStudentsElement =
+            document.getElementById('totalStudents');
 
-        const teacherImage =
-            document.getElementById(
-                'teacherImage'
-            );
+        const registeredStudentsElement =
+            document.getElementById('registeredStudents');
 
+        const systemStatusElement =
+            document.getElementById('systemStatus');
 
-        const welcomeTitle =
-            document.getElementById(
-                'welcomeTitle'
-            );
+        const studentsTableBody =
+            document.getElementById('studentsTableBody');
 
+        const loadingElement =
+            document.getElementById('loading');
 
-        const studentsContent =
-            document.getElementById(
-                'studentsContent'
-            );
+        const emptyStateElement =
+            document.getElementById('emptyState');
 
+        const tableWrapperElement =
+            document.getElementById('tableWrapper');
 
-        const studentsCount =
-            document.getElementById(
-                'studentsCount'
-            );
-
-
-        const activeStudentsCount =
-            document.getElementById(
-                'activeStudentsCount'
-            );
-
-
-        const logoutButton =
-            document.getElementById(
-                'logoutButton'
-            );
-
+        const errorBoxElement =
+            document.getElementById('errorBox');
 
         const refreshButton =
-            document.getElementById(
-                'refreshButton'
-            );
+            document.getElementById('refreshButton');
 
-
-        let teacher = null;
+        const logoutButton =
+            document.getElementById('logoutButton');
 
 
         function redirectToLogin() {
@@ -514,101 +593,197 @@
         }
 
 
-        function loadTeacherSession() {
+        function getTeacherSession() {
 
-            if (
-                !teacherSession ||
-                !teacherToken
-            ) {
+            const raw =
+                localStorage.getItem(
+                    teacherSessionKey
+                );
 
-                redirectToLogin();
-
-                return false;
+            if (!raw) {
+                return null;
             }
-
 
             try {
 
-                teacher =
-                    JSON.parse(
-                        teacherSession
-                    );
+                return JSON.parse(raw);
 
             } catch (error) {
 
                 console.error(
-                    'Invalid teacher session:',
+                    'Session parse error:',
                     error
                 );
 
-                redirectToLogin();
-
-                return false;
+                return null;
             }
-
-
-            if (
-                teacher.expires_at &&
-                new Date(
-                    teacher.expires_at
-                ) <= new Date()
-            ) {
-
-                sessionStorage.removeItem(
-                    'nexora_teacher_token'
-                );
-
-                localStorage.removeItem(
-                    'nexora_teacher_session'
-                );
-
-                redirectToLogin();
-
-                return false;
-            }
-
-
-            teacherName.textContent =
-                teacher.name ||
-                'لوحة تحكم المدرس';
-
-
-            welcomeTitle.textContent =
-                'أهلاً بك ' +
-                (
-                    teacher.name ||
-                    ''
-                ) +
-                ' 👋';
-
-
-            if (teacher.image) {
-
-                teacherImage.src =
-                    teacher.image;
-
-            }
-
-            return true;
         }
 
 
-        async function loadStudents() {
+        function escapeHtml(value) {
 
-            if (!teacherToken) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
 
-                redirectToLogin();
+        }
+
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+                return '-';
+            }
+
+            const date =
+                new Date(dateValue);
+
+            if (Number.isNaN(date.getTime())) {
+                return '-';
+            }
+
+            return date.toLocaleDateString(
+                'ar-EG',
+                {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                }
+            );
+
+        }
+
+
+        function showError(text) {
+
+            errorBoxElement.textContent =
+                text;
+
+            errorBoxElement.style.display =
+                'block';
+
+            systemStatusElement.textContent =
+                'خطأ';
+
+        }
+
+
+        function hideError() {
+
+            errorBoxElement.textContent =
+                '';
+
+            errorBoxElement.style.display =
+                'none';
+
+        }
+
+
+        function renderStudents(students) {
+
+            studentsTableBody.innerHTML =
+                '';
+
+
+            if (!students || students.length === 0) {
+
+                tableWrapperElement.style.display =
+                    'none';
+
+                emptyStateElement.style.display =
+                    'block';
+
+                totalStudentsElement.textContent =
+                    '0';
+
+                registeredStudentsElement.textContent =
+                    '0';
 
                 return;
             }
 
 
-            studentsContent.className =
-                'loading';
+            emptyStateElement.style.display =
+                'none';
 
-            studentsContent.innerHTML =
-                'جاري تحميل الطلاب...';
+            tableWrapperElement.style.display =
+                'block';
 
+
+            totalStudentsElement.textContent =
+                students.length;
+
+            registeredStudentsElement.textContent =
+                students.length;
+
+
+            students.forEach(function(student) {
+
+                const row =
+                    document.createElement('tr');
+
+
+                row.innerHTML = `
+
+                    <td>
+                        <div class="student-name">
+                            ${escapeHtml(student.name)}
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="student-id">
+                            ${escapeHtml(student.student_id)}
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="phone">
+                            ${escapeHtml(student.phone)}
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="phone">
+                            ${escapeHtml(student.parent_phone)}
+                        </div>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(formatDate(student.created_at))}
+                    </td>
+
+                    <td>
+                        <span class="status">
+                            نشط
+                        </span>
+                    </td>
+
+                `;
+
+
+                studentsTableBody.appendChild(row);
+
+            });
+
+        }
+
+
+        async function loadStudents() {
+
+            hideError();
+
+            loadingElement.style.display =
+                'block';
+
+            tableWrapperElement.style.display =
+                'none';
+
+            emptyStateElement.style.display =
+                'none';
 
             refreshButton.disabled =
                 true;
@@ -617,213 +792,96 @@
                 'جاري التحديث...';
 
 
+            const teacherSession =
+                getTeacherSession();
+
+            const teacherToken =
+                sessionStorage.getItem(
+                    teacherTokenKey
+                );
+
+
+            if (!teacherSession || !teacherToken) {
+
+                redirectToLogin();
+
+                return;
+            }
+
+
+            if (
+                teacherSession.expires_at &&
+                new Date(teacherSession.expires_at) <= new Date()
+            ) {
+
+                localStorage.removeItem(
+                    teacherSessionKey
+                );
+
+                sessionStorage.removeItem(
+                    teacherTokenKey
+                );
+
+                redirectToLogin();
+
+                return;
+            }
+
+
             try {
 
-                const {
-                    data,
-                    error
-                } =
-                    await supabaseClient
-                        .rpc(
-                            'get_teacher_students_by_session',
-                            {
-                                p_session_token:
-                                    teacherToken
-                            }
-                        );
+                const { data, error } =
+                    await supabaseClient.rpc(
+                        'get_teacher_students_by_session',
+                        {
+                            p_session_token:
+                                teacherToken
+                        }
+                    );
 
 
                 if (error) {
 
                     console.error(
-                        'Students loading error:',
+                        'Students RPC Error:',
                         error
                     );
 
-                    studentsContent.className =
-                        'error';
+                    showError(
+                        'حدث خطأ أثناء تحميل بيانات الطلاب.'
+                    );
 
-                    studentsContent.textContent =
-                        'حدث خطأ أثناء تحميل الطلاب. حاول مرة أخرى.';
-
-                    return;
-                }
-
-
-                if (
-                    !data ||
-                    data.length === 0
-                ) {
-
-                    studentsCount.textContent =
-                        '0';
-
-                    activeStudentsCount.textContent =
-                        '0';
-
-                    studentsContent.className =
-                        'empty';
-
-                    studentsContent.innerHTML =
-                        `
-                            <div style="font-size:35px;margin-bottom:10px;">
-                                👨‍🎓
-                            </div>
-
-                            لا يوجد طلاب مسجلون حاليًا.
-                        `;
+                    loadingElement.style.display =
+                        'none';
 
                     return;
                 }
 
 
-                studentsCount.textContent =
-                    data.length;
+                systemStatusElement.textContent =
+                    'متصل';
 
 
-                activeStudentsCount.textContent =
-                    data.length;
-
-
-                let html = `
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-
-                                    <th>
-                                        الطالب
-                                    </th>
-
-                                    <th>
-                                        رقم الطالب
-                                    </th>
-
-                                    <th>
-                                        رقم الطالب
-                                    </th>
-
-                                    <th>
-                                        ولي الأمر
-                                    </th>
-
-                                    <th>
-                                        التسجيل
-                                    </th>
-
-                                    <th>
-                                        الحالة
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-                `;
-
-
-                data.forEach(
-                    function(student) {
-
-                        const createdDate =
-                            student.created_at
-                                ? new Date(
-                                    student.created_at
-                                ).toLocaleDateString(
-                                    'ar-EG'
-                                )
-                                : '—';
-
-
-                        html += `
-                            <tr>
-
-                                <td>
-                                    <div class="student-name">
-                                        ${escapeHtml(
-                                            student.name ||
-                                            'بدون اسم'
-                                        )}
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="student-id">
-                                        ${escapeHtml(
-                                            student.student_id ||
-                                            '—'
-                                        )}
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="phone">
-                                        ${escapeHtml(
-                                            student.phone ||
-                                            '—'
-                                        )}
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="phone">
-                                        ${escapeHtml(
-                                            student.parent_phone ||
-                                            '—'
-                                        )}
-                                    </div>
-                                </td>
-
-                                <td>
-                                    ${createdDate}
-                                </td>
-
-                                <td>
-                                    <span class="status">
-                                        نشط
-                                    </span>
-                                </td>
-
-                            </tr>
-                        `;
-
-                    }
+                renderStudents(
+                    data || []
                 );
 
-
-                html += `
-                            </tbody>
-
-                        </table>
-
-                    </div>
-                `;
-
-
-                studentsContent.className =
-                    '';
-
-                studentsContent.innerHTML =
-                    html;
 
             } catch (error) {
 
                 console.error(
-                    'Students connection error:',
+                    'Unexpected Error:',
                     error
                 );
 
-                studentsContent.className =
-                    'error';
-
-                studentsContent.textContent =
-                    'تعذر الاتصال بالنظام. تأكد من الإنترنت وحاول مرة أخرى.';
+                showError(
+                    'حدث خطأ غير متوقع أثناء تحميل البيانات.'
+                );
 
             } finally {
+
+                loadingElement.style.display =
+                    'none';
 
                 refreshButton.disabled =
                     false;
@@ -836,29 +894,60 @@
         }
 
 
-        function escapeHtml(value) {
+        function loadTeacherProfile() {
 
-            return String(value)
-                .replace(
-                    /&/g,
-                    '&amp;'
-                )
-                .replace(
-                    /</g,
-                    '&lt;'
-                )
-                .replace(
-                    />/g,
-                    '&gt;'
-                )
-                .replace(
-                    /"/g,
-                    '&quot;'
-                )
-                .replace(
-                    /'/g,
-                    '&#039;'
+            const teacherSession =
+                getTeacherSession();
+
+
+            if (!teacherSession) {
+
+                redirectToLogin();
+
+                return false;
+            }
+
+
+            if (
+                teacherSession.expires_at &&
+                new Date(teacherSession.expires_at) <= new Date()
+            ) {
+
+                localStorage.removeItem(
+                    teacherSessionKey
                 );
+
+                sessionStorage.removeItem(
+                    teacherTokenKey
+                );
+
+                redirectToLogin();
+
+                return false;
+            }
+
+
+            const teacherName =
+                teacherSession.name ||
+                'المدرس';
+
+
+            teacherNameElement.textContent =
+                teacherName;
+
+            welcomeNameElement.textContent =
+                teacherName;
+
+
+            if (teacherSession.image) {
+
+                teacherImageElement.src =
+                    teacherSession.image;
+
+            }
+
+
+            return true;
 
         }
 
@@ -867,15 +956,16 @@
             'click',
             function() {
 
-                sessionStorage.removeItem(
-                    'nexora_teacher_token'
-                );
-
                 localStorage.removeItem(
-                    'nexora_teacher_session'
+                    teacherSessionKey
                 );
 
-                redirectToLogin();
+                sessionStorage.removeItem(
+                    teacherTokenKey
+                );
+
+                window.location.href =
+                    'teacher-login.html';
 
             }
         );
@@ -887,14 +977,20 @@
         );
 
 
-        if (loadTeacherSession()) {
+        document.addEventListener(
+            'DOMContentLoaded',
+            function() {
 
-            loadStudents();
+                if (!loadTeacherProfile()) {
+                    return;
+                }
 
-        }
+                loadStudents();
+
+            }
+        );
 
     </script>
 
 </body>
-
 </html>
