@@ -249,6 +249,123 @@
             line-height: 1.6;
         }
 
+        /* =========================
+           النتائج
+        ========================= */
+
+        .results-section {
+            padding: 0 25px 25px;
+        }
+
+        .results-title {
+            font-size: 21px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .results-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .summary-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .summary-label {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        .summary-value {
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .result-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: #f8fafc;
+        }
+
+        .result-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 14px;
+        }
+
+        .result-title {
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 1.6;
+        }
+
+        .result-percentage {
+            font-size: 20px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .result-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .result-info-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 11px;
+        }
+
+        .result-info-label {
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .result-info-value {
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .empty-results {
+            border: 1px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #64748b;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .results-loading {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-weight: 800;
+        }
+
         .footer {
             text-align: center;
 
@@ -335,6 +452,18 @@
                 padding: 0 20px 20px;
             }
 
+            .results-section {
+                padding: 0 20px 20px;
+            }
+
+            .results-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .result-info {
+                grid-template-columns: 1fr;
+            }
+
         }
 
         @media (max-width: 450px) {
@@ -354,6 +483,10 @@
 
             .student-header-id {
                 font-size: 12px;
+            }
+
+            .result-top {
+                flex-direction: column;
             }
 
         }
@@ -506,6 +639,239 @@
         }
 
 
+        function renderResults(results) {
+
+            if (!results || results.length === 0) {
+
+                return `
+
+                    <section class="results-section">
+
+                        <div class="results-title">
+                            📊 نتائج الطالب
+                        </div>
+
+                        <div class="empty-results">
+                            لا توجد نتائج اختبارات مسجلة لهذا الطالب حتى الآن.
+                        </div>
+
+                    </section>
+
+                `;
+
+            }
+
+
+            const totalResults = results.length;
+
+
+            const averagePercentage =
+                Math.round(
+                    results.reduce(
+                        function (sum, result) {
+                            return sum + Number(result.percentage || 0);
+                        },
+                        0
+                    ) / totalResults
+                );
+
+
+            const highestPercentage =
+                Math.max.apply(
+                    null,
+                    results.map(function (result) {
+                        return Number(result.percentage || 0);
+                    })
+                );
+
+
+            const resultCards = results.map(function (result) {
+
+                return `
+
+                    <div class="result-card">
+
+                        <div class="result-top">
+
+                            <div class="result-title">
+                                ${escapeHtml(result.title)}
+                            </div>
+
+                            <div class="result-percentage">
+                                ${escapeHtml(result.percentage)}%
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-info">
+
+
+                            <div class="result-info-item">
+
+                                <div class="result-info-label">
+                                    الدرجة
+                                </div>
+
+                                <div class="result-info-value">
+                                    ${escapeHtml(result.correct)}
+                                    /
+                                    ${escapeHtml(result.total)}
+                                </div>
+
+                            </div>
+
+
+                            <div class="result-info-item">
+
+                                <div class="result-info-label">
+                                    الصف
+                                </div>
+
+                                <div class="result-info-value">
+                                    ${result.grade !== null && result.grade !== undefined
+                                        ? escapeHtml(result.grade)
+                                        : 'غير محدد'}
+                                </div>
+
+                            </div>
+
+
+                            <div class="result-info-item">
+
+                                <div class="result-info-label">
+                                    التاريخ
+                                </div>
+
+                                <div class="result-info-value">
+                                    ${formatDate(result.completed_at)}
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }).join('');
+
+
+            return `
+
+                <section class="results-section">
+
+                    <div class="results-title">
+                        📊 نتائج الطالب
+                    </div>
+
+
+                    <div class="results-summary">
+
+
+                        <div class="summary-card">
+
+                            <div class="summary-label">
+                                إجمالي الاختبارات
+                            </div>
+
+                            <div class="summary-value">
+                                ${totalResults}
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <div class="summary-label">
+                                متوسط النتائج
+                            </div>
+
+                            <div class="summary-value">
+                                ${averagePercentage}%
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <div class="summary-label">
+                                أعلى نتيجة
+                            </div>
+
+                            <div class="summary-value">
+                                ${highestPercentage}%
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="results-list">
+
+                        ${resultCards}
+
+                    </div>
+
+                </section>
+
+            `;
+
+        }
+
+
+        async function loadStudentResults(
+            sessionToken,
+            studentId
+        ) {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_teacher_student_results_by_session',
+                    {
+                        p_session_token: sessionToken,
+                        p_student_id: studentId
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    'Results RPC error:',
+                    error
+                );
+
+                return `
+
+                    <section class="results-section">
+
+                        <div class="results-title">
+                            📊 نتائج الطالب
+                        </div>
+
+                        <div class="empty-results">
+                            تعذر تحميل نتائج الطالب حاليًا.
+                        </div>
+
+                    </section>
+
+                `;
+
+            }
+
+
+            return renderResults(data);
+
+        }
+
+
         async function loadStudent() {
 
             try {
@@ -630,6 +996,9 @@
                 const student = data[0];
 
 
+                /*
+                 * نعرض بيانات الطالب أولًا
+                 */
                 document.getElementById(
                     'profileCard'
                 ).innerHTML = `
@@ -822,7 +1191,41 @@
 
                     </div>
 
+
+                    <div id="resultsContainer">
+
+                        <div class="results-section">
+
+                            <div class="results-title">
+                                📊 نتائج الطالب
+                            </div>
+
+                            <div class="results-loading">
+                                ⏳ جاري تحميل النتائج...
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 `;
+
+
+                /*
+                 * بعد ظهور ملف الطالب،
+                 * نجلب نتائجه الحقيقية
+                 */
+                const resultsHtml =
+                    await loadStudentResults(
+                        sessionToken,
+                        student.student_id
+                    );
+
+
+                document.getElementById(
+                    'resultsContainer'
+                ).innerHTML = resultsHtml;
+
 
             } catch (error) {
 
