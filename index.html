@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="nexora-config.js" defer></script>
+    <!-- Phase 4: BLOCKING on purpose (tiny pure-data file) so window.NEXORA_CONTENT
+         exists before the main inline script below evaluates gradesData. -->
+    <script src="nexora-content.js"></script>
     <script src="ui-enhance.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -2960,7 +2963,14 @@
 
     /* ================= DATA ================= */
 
-    const gradesData = {
+    /* Phase 4: curriculum lives in nexora-content.js (per-tenant data file).
+       The object below is kept as an INLINE FALLBACK so the site works
+       even if that file fails to load. Content: unchanged. */
+
+    const gradesData =
+        (window.NEXORA_CONTENT && window.NEXORA_CONTENT.gradesData)
+            ? window.NEXORA_CONTENT.gradesData
+            : {
 
         1: {
 
