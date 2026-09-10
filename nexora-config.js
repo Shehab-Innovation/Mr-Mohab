@@ -23,7 +23,7 @@
         /* Tenant identity — must match the `teachers` row
            (`teacher_id` / `username`) created in Phase 1 migration. */
         teacher: {
-            teacher_id: 'T-MRMOHAB',
+            teacher_id: 'T-MOHAB-001',
             username:   'mr-mohab',
 
             /* Display identity */
