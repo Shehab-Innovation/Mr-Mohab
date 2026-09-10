@@ -1889,10 +1889,11 @@
         html[data-theme="light"]{
             color-scheme:light;
 
-            --primary:#A8841C;
-            --primary-strong:#8C6D1F;
-            --primary-soft:rgba(168,132,28,.10);
-            --primary-ring:rgba(168,132,28,.22);
+            /* Gold deepened so icons/labels/buttons stay readable on white */
+            --primary:#9A7A15;
+            --primary-strong:#7A5F16;
+            --primary-soft:rgba(154,122,21,.12);
+            --primary-ring:rgba(154,122,21,.30);
 
             --accent:#B8922A;
             --accent-deep:#7A5F16;
@@ -1903,29 +1904,31 @@
             --surface:#FFFFFF;
             --surface-2:#FAF8F3;
             --surface-3:#F1EDE3;
-            --border:#E5DFD2;
-            --border-strong:#D3CBBA;
+            --border:#DBD3C3;
+            --border-strong:#C9BFAC;
 
             --text:#1C1A16;
             --text-2:#44403A;
-            --muted:#6E6862;
-            --faint:#8F887E;
+            --muted:#5D5750;
+            --faint:#6E675C;
 
-            --success:#1E9E6A;
-            --success-soft:rgba(30,158,106,.10);
-            --warning:#B8922A;
-            --warning-soft:rgba(184,146,42,.12);
-            --error:#D64545;
-            --error-soft:rgba(214,69,69,.10);
+            --success:#157A50;
+            --success-soft:rgba(21,122,80,.10);
+            --warning:#A8841C;
+            --warning-soft:rgba(168,132,28,.12);
+            --error:#C03A3A;
+            --error-soft:rgba(192,58,58,.10);
 
+            /* navy aliases style the cinematic sidebar in BOTH themes —
+               they must stay light-toned in light mode or sidebar text vanishes */
             --navy-900:#2A2620;
             --navy-800:#332E27;
             --navy-700:#3D3730;
-            --navy-100:#57503F;
-            --navy-300:#6E6862;
-            --navy-400:#8F887E;
+            --navy-100:#F2EBDA;
+            --navy-300:#C9C2B2;
+            --navy-400:#A79F8D;
 
-            --gold-grad:linear-gradient(135deg,#C9A227 0%,#A8841C 50%,#8C6D1F 100%);
+            --gold-grad:linear-gradient(135deg,#A8841C 0%,#9A7A15 50%,#7A5F16 100%);
             --gold-grad-soft:linear-gradient(135deg,rgba(201,162,39,.14),rgba(140,109,31,.05));
 
             --shadow-xs:0 1px 2px rgba(60,50,20,.06);
@@ -2205,13 +2208,13 @@
         }
 
         html[data-theme="light"] .theme-switch{
-            background:rgba(0,0,0,.05);
-            border-color:rgba(0,0,0,.07);
+            background:rgba(255,255,255,.07);
+            border-color:rgba(255,255,255,.12);
         }
 
         html[data-theme="light"] .theme-switch button:hover{
-            background:rgba(0,0,0,.06);
-            color:var(--text);
+            background:rgba(255,255,255,.10);
+            color:#F5F1E6;
         }
 
         .theme-switch button i{
