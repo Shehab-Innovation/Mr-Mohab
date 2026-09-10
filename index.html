@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="nexora-config.js" defer></script>
     <script src="ui-enhance.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -32,6 +33,10 @@
 
         :root{
             --font-ar:'Cairo','Segoe UI',Tahoma,sans-serif;
+
+            /* Teacher branding images (Phase 1 single-source; fallbacks = current URLs) */
+            --teacher-img:url('https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg');
+            --teacher-img-hero:url('https://i.ibb.co/xtmG53Lr/Whats-App-Image-2026-09-03-at-3-34-26-AM-1.jpg');
 
             /* Black / Gold / Silver premium identity */
             --primary:#C9A227;
@@ -515,7 +520,7 @@
             content:'';
             position:absolute;
             inset:0;
-            background-image:url('https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg');
+            background-image:var(--teacher-img);
             background-size:cover;
             background-position:center;
             z-index:0;
@@ -891,7 +896,7 @@
         .hero-background{
             background-image:
                 linear-gradient(180deg,rgba(10,10,12,.30),rgba(10,10,12,.55)),
-                url('https://i.ibb.co/xtmG53Lr/Whats-App-Image-2026-09-03-at-3-34-26-AM-1.jpg');
+                var(--teacher-img-hero);
             background-size:cover;
             background-position:center;
             min-height:420px;
@@ -1954,7 +1959,7 @@
         html[data-theme="light"] .hero-background{
             background-image:
                 linear-gradient(180deg,rgba(33,29,24,.20),rgba(33,29,24,.45)),
-                url('https://i.ibb.co/xtmG53Lr/Whats-App-Image-2026-09-03-at-3-34-26-AM-1.jpg');
+                var(--teacher-img-hero);
         }
 
         html[data-theme="light"] body{
@@ -2225,13 +2230,14 @@
 
 <body>
 
-<div class="container">
+<div class="container" data-nexora-hydrate>
 
     <!-- ================= SIDEBAR ================= -->        <div class="sidebar" id="sidebar">
 
             <div class="sidebar-header">
 
                 <img
+                    data-nexora-hydrate="image"
                     src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg"
                     alt="مستر مهاب"
                     class="teacher-img"
@@ -2239,8 +2245,8 @@
 
                 <div class="sidebar-identity">
 
-                    <h2>مستر مهاب</h2>
-                    <p>مدرس رياضيات – المرحلة الابتدائية</p>
+                    <h2 data-nexora-hydrate="name">مستر مهاب</h2>
+                    <p data-nexora-hydrate="subject-stage">مدرس رياضيات – المرحلة الابتدائية</p>
 
                 </div>
 
@@ -2292,7 +2298,7 @@
             </ul>
 
             <a
-                href="https://wa.me/+201289958954"
+                href="https://wa.me/+201289958954" data-nexora-hydrate="whatsapp"
                 target="_blank"
                 class="whatsapp-btn"
             >
@@ -2301,7 +2307,7 @@
             </a>
 
             <a
-                href="https://www.facebook.com/share/1Dup2hS5YH/"
+                href="https://www.facebook.com/share/1Dup2hS5YH/" data-nexora-hydrate="facebook"
                 target="_blank"
                 class="facebook-btn"
             >
@@ -6868,10 +6874,14 @@
                 currentStudent.name,
 
             teacher_name:
-                'مستر مهاب',
+                (window.NEXORA_CONFIG ?
+                    NEXORA_CONFIG.teacher.certificate.teacher_name :
+                    'مستر مهاب'),
 
             teacher_image:
-                'https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg',
+                (window.NEXORA_CONFIG ?
+                    NEXORA_CONFIG.teacher.certificate.teacher_image :
+                    'https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg'),
 
             assessment_name:
                 result.title,
@@ -6880,7 +6890,9 @@
                 result.percentage,
 
             message:
-                'أحسنت! استمر في التفوق والمثابرة.',
+                (window.NEXORA_CONFIG ?
+                    NEXORA_CONFIG.teacher.certificate.message :
+                    'أحسنت! استمر في التفوق والمثابرة.'),
 
             date:
                 new Date()
