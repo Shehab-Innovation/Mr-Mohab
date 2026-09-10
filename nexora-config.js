@@ -29,6 +29,10 @@
             /* Display identity */
             name:      'مستر مهاب',
             subject:   'الرياضيات',
+
+            /* short form used in the sidebar line (مدرس رياضيات) */
+            subject_short: 'رياضيات',
+
             stage:     'المرحلة الابتدائية',
 
             /* Grades offered (keys match gradesData + gradeSelect) */
@@ -39,6 +43,7 @@
             hero_image: 'https://i.ibb.co/xtmG53Lr/Whats-App-Image-2026-09-03-at-3-34-26-AM-1.jpg',
 
             /* Contact */
+            phone:    '01289958954',
             whatsapp: 'https://wa.me/+201289958954',
             facebook: 'https://www.facebook.com/share/1Dup2hS5YH/',
 
@@ -83,6 +88,24 @@
 
         }
 
+        /* Branding images as CSS variables (presentation-only):
+           registration card + hero backgrounds read these vars in
+           BOTH themes, so they become config-driven too. */
+
+        if (document.documentElement && document.documentElement.style) {
+
+            document.documentElement.style.setProperty(
+                '--teacher-img',
+                "url('" + t.image + "')"
+            );
+
+            document.documentElement.style.setProperty(
+                '--teacher-img-hero',
+                "url('" + t.hero_image + "')"
+            );
+
+        }
+
         var root =
             document.querySelector('[data-nexora-hydrate]');
 
@@ -116,7 +139,22 @@
                 t.hero_image,
 
             'subject-stage':
-                'مدرس ' + t.subject + ' – ' + t.stage,
+                'مدرس ' + (t.subject_short || t.subject) + ' – ' + t.stage,
+
+            'platform-name':
+                'منصة ' + t.name,
+
+            'welcome-heading':
+                'أهلاً بك في منصة ' + t.name + ' التعليمية',
+
+            'learn-line':
+                'تعلم ' + t.subject + ' بسهولة مع ' + t.name,
+
+            'about-line':
+                'نظام تعليمي رقمي خاص بـ' + t.name + '، يجمع المذكرات والفيديوهات والواجبات والامتحانات والتقييم والشهادات في مكان واحد.',
+
+            phone:
+                t.phone,
 
             'cert-name':
                 t.certificate.teacher_name,
@@ -158,6 +196,9 @@
                         return;
 
                     el.src = value;
+
+                    /* keep alt text identity-accurate too */
+                    el.alt = t.name;
 
                     return;
 
