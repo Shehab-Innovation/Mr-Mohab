@@ -47,6 +47,11 @@
             whatsapp: 'https://wa.me/+201289958954',
             facebook: 'https://www.facebook.com/share/1Dup2hS5YH/',
 
+            /* Enrollment key (X.4-B): sent to register_student /
+               update_student_scoped RPCs. Must match the value
+               assigned to this teacher in the database (X.4-A). */
+            registration_code: 'NX-MOHAB-2026',
+
             /* Certificate identity (student site) */
             certificate: {
                 teacher_name:  'مستر مهاب',

@@ -5853,23 +5853,28 @@
         }
 
 
-        /* ================= ✅ SEARCH FOR EXISTING STUDENT ================= */
+        /* ================= X.4-B: OWNERSHIP-SAFE REGISTRATION ================= */
 
         let studentId = null;
         let isNewStudent = false;
 
         try{
 
-            const { data, error } =
-                await supabaseClient
-                    .rpc('find_student_by_phone', {
-                        p_phone: phone,
-                        p_parent_phone: parentPhone
-                    });
+            /* Enrollment key is read from the tenant config at call
+               time. The server resolves the teacher from this code —
+               no client-side teacher_id is ever sent. */
+            const registrationCode =
+                window.NEXORA_CONFIG &&
+                window.NEXORA_CONFIG.teacher &&
+                window.NEXORA_CONFIG.teacher.registration_code
+                    ? window.NEXORA_CONFIG.teacher.registration_code
+                    : null;
 
-            if (error) {
+            if(!registrationCode){
 
-                console.error('❌ RPC error:', error);
+                console.error(
+                    '❌ registration_code is missing in nexora-config.js'
+                );
 
                 if(button){
 
@@ -5879,7 +5884,7 @@
                 }
 
                 alert(
-                    '❌ حدث خطأ أثناء البحث عن بيانات الطالب.\n\n' +
+                    '❌ تعذر قراءة كود التسجيل من إعدادات الموقع.\n\n' +
                     'الرجاء المحاولة مرة أخرى.'
                 );
 
@@ -5887,85 +5892,110 @@
 
             }
 
-            if (data && data.length > 0) {
+            /* One server-side RPC owns the whole decision:
+               - new student → created with a server-resolved teacher_id
+               - existing    → the same student_id is returned (is_new=false) */
+            const { data, error } =
+                await supabaseClient
+                    .rpc('register_student', {
+                        p_name: name,
+                        p_phone: phone,
+                        p_parent_phone: parentPhone,
+                        p_registration_code: registrationCode
+                    });
 
-                studentId = data[0].student_id;
-                console.log('✅ Found existing student:', studentId);
+            if(error){
 
-            } else {
+                console.error('❌ register_student RPC error:', error);
 
-                console.log('ℹ️ No existing student found, will create new one');
-                studentId = generateStudentId();
-                isNewStudent = true;
+                if(button){
+
+                    button.disabled = false;
+                    button.textContent = '🚀 دخول إلى المنصة';
+
+                }
+
+                alert(
+                    '❌ حدث خطأ أثناء تسجيل الطالب.\n\n' +
+                    'Code:\n' +
+                    (
+                        error.code ||
+                        'غير موجود'
+                    ) +
+
+                    '\n\nMessage:\n' +
+                    (
+                        error.message ||
+                        'غير موجود'
+                    ) +
+
+                    '\n\nHint:\n' +
+                    (
+                        error.hint ||
+                        'غير موجود'
+                    )
+                );
+
+                return;
 
             }
 
-        } catch(error){
+            const row =
+                (data && data.length > 0)
+                    ? data[0]
+                    : null;
 
-            console.error(
-                '❌ RPC connection error:',
-                error
-            );
+            if(!row || !row.student_id){
 
-            if(button){
+                console.error(
+                    '❌ register_student returned no student data.'
+                );
 
-                button.disabled = false;
-                button.textContent = '🚀 دخول إلى المنصة';
+                if(button){
+
+                    button.disabled = false;
+                    button.textContent = '🚀 دخول إلى المنصة';
+
+                }
+
+                alert(
+                    '❌ حدث خطأ أثناء تسجيل الطالب.\n\n' +
+                    'الرجاء المحاولة مرة أخرى.'
+                );
+
+                return;
 
             }
 
-            alert(
-                '❌ حدث خطأ في الاتصال بقاعدة البيانات.\n\n' +
-                'الرجاء المحاولة مرة أخرى.'
+            studentId = row.student_id;
+            isNewStudent = (row.is_new === true);
+
+            console.log(
+                isNewStudent
+                    ? '✅ New student created by server:'
+                    : '✅ Existing student resolved:',
+                studentId
             );
 
-            return;
+            /* Returning student: apply the submitted updates, scoped
+               server-side to the teacher resolved from the code. */
+            if(!isNewStudent){
 
-        }
-
-
-        /* ================= ✅ SAVE TO SUPABASE ================= */
-
-        try{
-
-            if (isNewStudent) {
-
-                const { error } =
+                const { data: updateSuccess, error: updateError } =
                     await supabaseClient
+                        .rpc('update_student_scoped', {
+                            p_registration_code: registrationCode,
+                            p_student_id: studentId,
+                            p_name: name,
+                            p_phone: phone,
+                            p_parent_phone: parentPhone
+                        });
 
-                        .from(
-                            'students'
-                        )
-
-                        .insert([{
-
-                            student_id:
-                                studentId,
-
-                            name:
-                                name,
-
-                            phone:
-                                phone,
-
-                            parent_phone:
-                                parentPhone,
-
-
-                            created_at:
-                                now,
-
-                            last_activity:
-                                now
-
-                        }]);
-
-
-                if(error){
+                if(updateError){
 
                     console.error(
-                        '❌ Supabase insert error:',
-                        error
+                        '❌ update_student_scoped RPC error:',
+                        updateError
                     );
 
                     if(button){
@@ -5976,112 +6006,34 @@
                     }
 
                     alert(
-
-                        '❌ حدث خطأ أثناء تسجيل الطالب.\n\n' +
-
-                        'Code:\n' +
-                        (
-                            error.code ||
-                            'غير موجود'
-                        ) +
-
-                        '\n\nMessage:\n' +
-                        (
-                            error.message ||
-                            'غير موجود'
-                        ) +
-
-                        '\n\nDetails:\n' +
-                        (
-                            error.details ||
-                            'غير موجود'
-                        ) +
-
-                        '\n\nHint:\n' +
-                        (
-                            error.hint ||
-                            'غير موجود'
-                        )
-
-                    );
-
-                    return;
-
-                }
-
-                console.log('✅ New student created:', studentId);
-
-            } else {
-
-                // ✅ تحديث الطالب الموجود باستخدام RPC
-                const { data: updateSuccess, error } =
-                    await supabaseClient
-                        .rpc('update_student_by_phone', {
-
-                            p_student_id:
-                                studentId,
-
-                            p_name:
-                                name,
-
-                            p_phone:
-                                phone,
-
-                            p_parent_phone:
-                                parentPhone
-
-                        });
-
-
-                if(error){
-
-                    console.error(
-                        '❌ RPC update error:',
-                        error
-                    );
-
-                    if(button){
-
-                        button.disabled = false;
-                        button.textContent =
-                            '🚀 دخول إلى المنصة';
-
-                    }
-
-                    alert(
-
                         '❌ حدث خطأ أثناء تحديث بيانات الطالب.\n\n' +
-
                         'Code:\n' +
                         (
-                            error.code ||
+                            updateError.code ||
                             'غير موجود'
                         ) +
 
                         '\n\nMessage:\n' +
                         (
-                            error.message ||
+                            updateError.message ||
                             'غير موجود'
                         )
-
                     );
 
                     return;
 
                 }
-
 
                 if(updateSuccess !== true){
 
                     console.error(
-                        '❌ Student update failed: student not found or data mismatch.'
+                        '❌ Student update failed: student not found in this teacher scope.'
                     );
 
                     if(button){
 
                         button.disabled = false;
-                        button.textContent =
-                            '🚀 دخول إلى المنصة';
+                        button.textContent = '🚀 دخول إلى المنصة';
 
                     }
 
@@ -6093,7 +6045,6 @@
                     return;
 
                 }
-
 
                 console.log(
                     '✅ Existing student updated:',
@@ -6117,14 +6068,11 @@
             }
 
             alert(
-
                 '❌ تعذر الاتصال بقاعدة البيانات.\n\n' +
-
                 (
                     error.message ||
                     error
                 )
-
             );
 
             return;
