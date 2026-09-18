@@ -8,6 +8,53 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        /* NEXORA theme sync — presentation only.
+           Reads the same 'themePreference' key the Student UI owns,
+           so the dashboard follows Light/Dark/System with it. */
+        (function () {
+            'use strict';
+
+            function systemDark() {
+                return !!(window.matchMedia &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches);
+            }
+
+            function apply() {
+                var preference = 'dark';
+                try {
+                    var value = localStorage.getItem('themePreference');
+                    if (value === 'light' || value === 'dark' || value === 'system')
+                        preference = value;
+                } catch (error) { /* storage unavailable — keep default */ }
+
+                var effective = preference === 'system'
+                    ? (systemDark() ? 'dark' : 'light')
+                    : preference;
+
+                document.documentElement.setAttribute('data-theme', effective);
+            }
+
+            apply();
+
+            try {
+                var media = window.matchMedia('(prefers-color-scheme: dark)');
+                var onChange = function () {
+                    var preference = null;
+                    try { preference = localStorage.getItem('themePreference'); } catch (e) {}
+                    if (preference === 'system') apply();
+                };
+                if (media.addEventListener) media.addEventListener('change', onChange);
+                else if (media.addListener) media.addListener(onChange);
+            } catch (error) { /* matchMedia unavailable */ }
+        })();
+    </script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -15,22 +62,101 @@
             padding: 0;
         }
 
+        /* ============================================================
+           NEXORA shared identity tokens — source of truth: Student UI.
+           Same Cairo type, gold-on-warm-charcoal palette, radius and
+           shadow scale. Light/Dark/System follow themePreference.
+           Presentation only — no logic selectors are renamed.
+           ============================================================ */
+        :root {
+            --font-ar: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+
+            --primary: #C9A227;
+            --primary-strong: #A8841C;
+            --primary-soft: rgba(201, 162, 39, .12);
+            --primary-ring: rgba(201, 162, 39, .28);
+
+            --bg: #F4F1EA;
+            --surface: #FFFFFF;
+            --surface-2: #FAF8F3;
+            --surface-3: #F1EDE3;
+            --border: #DBD3C3;
+            --border-strong: #C9BFAC;
+
+            --text: #1C1A16;
+            --text-2: #44403A;
+            --muted: #5D5750;
+            --faint: #6E675C;
+
+            --success: #157A50;
+            --success-soft: rgba(21, 122, 80, .10);
+            --warning: #A8841C;
+            --warning-soft: rgba(168, 132, 28, .12);
+            --error: #C03A3A;
+            --error-soft: rgba(192, 58, 58, .10);
+
+            --shadow-sm: 0 2px 4px rgba(60, 50, 20, .05), 0 8px 22px rgba(60, 50, 20, .07);
+            --shadow-md: 0 4px 10px rgba(60, 50, 20, .06), 0 18px 40px rgba(60, 50, 20, .10);
+            --shadow-primary: 0 6px 20px rgba(168, 132, 28, .25);
+
+            --ease-out: cubic-bezier(.22, .61, .36, 1);
+            --dur-fast: 150ms;
+            --dur: 240ms;
+
+            color-scheme: light;
+        }
+
+        html[data-theme="dark"] {
+            color-scheme: dark;
+
+            --primary: #C9A227;
+            --primary-strong: #A8841C;
+            --primary-soft: rgba(201, 162, 39, .12);
+            --primary-ring: rgba(201, 162, 39, .28);
+
+            --bg: #0A0A0C;
+            --surface: #141417;
+            --surface-2: #1A1A1F;
+            --surface-3: #222228;
+            --border: #2A2A31;
+            --border-strong: #3A3A44;
+
+            --text: #F5F1E6;
+            --text-2: #D8D2C2;
+            --muted: #A09A8C;
+            --faint: #7A7468;
+
+            --success: #3ECF8E;
+            --success-soft: rgba(62, 207, 142, .12);
+            --warning: #E3B84B;
+            --warning-soft: rgba(227, 184, 75, .12);
+            --error: #F06060;
+            --error-soft: rgba(240, 96, 96, .12);
+
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, .35), 0 8px 24px rgba(0, 0, 0, .35);
+            --shadow-md: 0 4px 10px rgba(0, 0, 0, .4), 0 20px 44px rgba(0, 0, 0, .45);
+            --shadow-primary: 0 6px 22px rgba(201, 162, 39, .30);
+        }
+
         body {
-            font-family: Arial, Tahoma, sans-serif;
-            background: #f1f5f9;
-            color: #0f172a;
+            font-family: var(--font-ar);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
         .header {
-            background: #0f172a;
-            color: white;
+            background: linear-gradient(180deg, #211D18 0%, #282219 60%, #2E2820 100%);
+            color: #F5F1E6;
             padding: 18px 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.18);
+            border-bottom: 1px solid rgba(201, 162, 39, .25);
         }
 
         .teacher-info {
@@ -44,7 +170,7 @@
             height: 55px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid rgba(255, 255, 255, 0.8);
+            border: 3px solid rgba(201, 162, 39, 0.55);
         }
 
         .teacher-name {
@@ -54,7 +180,7 @@
 
         .brand {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
+            color: #C9A227;
             margin-top: 4px;
         }
 
@@ -71,7 +197,7 @@
         }
 
         .logout-button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(201, 162, 39, 0.25);
         }
 
         .container {
@@ -92,7 +218,7 @@
         }
 
         .welcome p {
-            color: #64748b;
+            color: var(--muted);
             font-size: 15px;
         }
 
@@ -104,29 +230,39 @@
         }
 
         .stat-card {
-            background: white;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 18px;
             padding: 22px;
-            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.06);
+            box-shadow: var(--shadow-sm);
             display: flex;
             align-items: center;
             gap: 15px;
+            transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-md);
         }
 
         .stat-icon {
             width: 52px;
             height: 52px;
             border-radius: 15px;
-            background: #f1f5f9;
+            background: var(--primary-soft);
+            border: 1px solid var(--border-strong);
+            color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 25px;
+            font-size: 22px;
             flex-shrink: 0;
         }
 
         .stat-title {
-            color: #64748b;
+            color: var(--muted);
             font-size: 13px;
             font-weight: 700;
             margin-bottom: 5px;
@@ -139,9 +275,10 @@
 
         .students-card,
         .groups-card {
-            background: white;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 20px;
-            box-shadow: 0 5px 25px rgba(15, 23, 42, 0.06);
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
         }
 
@@ -155,7 +292,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--border);
         }
 
         .section-title {
@@ -172,17 +309,22 @@
         .refresh-button,
         .primary-button {
             border: none;
-            background: #0f172a;
-            color: white;
+            background: var(--primary);
+            color: #fff;
             padding: 10px 15px;
-            border-radius: 11px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 800;
+            font-family: var(--font-ar);
+            transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
         }
 
-        .primary-button {
-            background: #2563eb;
+        .refresh-button:hover,
+        .primary-button:hover {
+            background: var(--primary-strong);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
         }
 
         .refresh-button:disabled,
@@ -203,8 +345,8 @@
         }
 
         th {
-            background: #f8fafc;
-            color: #475569;
+            background: var(--surface-3);
+            color: var(--text-2);
             font-size: 13px;
             font-weight: 900;
             padding: 16px 14px;
@@ -214,13 +356,13 @@
 
         td {
             padding: 16px 14px;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--border);
             font-size: 14px;
             white-space: nowrap;
         }
 
         tbody tr:hover {
-            background: #f8fafc;
+            background: var(--surface-2);
         }
 
         .student-name {
@@ -238,7 +380,7 @@
         }
 
         .student-id {
-            color: #475569;
+            color: var(--muted);
             font-family: monospace;
             direction: ltr;
             text-align: right;
@@ -251,8 +393,8 @@
 
         .status {
             display: inline-block;
-            background: #dcfce7;
-            color: #166534;
+            background: var(--success-soft);
+            color: var(--success);
             padding: 6px 10px;
             border-radius: 20px;
             font-size: 12px;
@@ -261,8 +403,8 @@
 
         .group-status {
             display: inline-block;
-            background: #dbeafe;
-            color: #1d4ed8;
+            background: var(--primary-soft);
+            color: var(--primary);
             padding: 6px 10px;
             border-radius: 20px;
             font-size: 12px;
@@ -272,7 +414,7 @@
         .empty-state {
             text-align: center;
             padding: 50px 20px;
-            color: #64748b;
+            color: var(--muted);
         }
 
         .empty-icon {
@@ -283,7 +425,7 @@
         .loading {
             text-align: center;
             padding: 50px 20px;
-            color: #64748b;
+            color: var(--muted);
             font-weight: 700;
         }
 
@@ -291,8 +433,8 @@
             margin: 20px;
             padding: 15px;
             border-radius: 12px;
-            background: #fef2f2;
-            color: #991b1b;
+            background: var(--error-soft);
+            color: var(--error);
             font-size: 14px;
             font-weight: 700;
             line-height: 1.7;
@@ -303,8 +445,8 @@
             margin: 20px;
             padding: 15px;
             border-radius: 12px;
-            background: #f0fdf4;
-            color: #166534;
+            background: var(--success-soft);
+            color: var(--success);
             font-size: 14px;
             font-weight: 700;
             line-height: 1.7;
@@ -319,16 +461,17 @@
         }
 
         .group-item {
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 18px;
-            background: #ffffff;
-            transition: 0.2s;
+            background: var(--surface);
+            transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
         }
 
         .group-item:hover {
-            border-color: #cbd5e1;
-            box-shadow: 0 5px 15px rgba(15, 23, 42, 0.05);
+            border-color: var(--border-strong);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
         }
 
         .group-top {
@@ -345,7 +488,7 @@
         }
 
         .group-id {
-            color: #64748b;
+            color: var(--muted);
             font-family: monospace;
             font-size: 12px;
             direction: ltr;
@@ -361,8 +504,8 @@
         }
 
         .group-tag {
-            background: #f1f5f9;
-            color: #475569;
+            background: var(--surface-3);
+            color: var(--text-2);
             padding: 6px 9px;
             border-radius: 9px;
             font-size: 12px;
@@ -372,17 +515,21 @@
         .group-open-button {
             width: 100%;
             border: none;
-            background: #0f172a;
+            background: var(--primary);
             color: white;
             padding: 11px;
-            border-radius: 11px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 800;
+            font-family: var(--font-ar);
+            transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
         }
 
         .group-open-button:hover {
-            background: #1e293b;
+            background: var(--primary-strong);
+            box-shadow: var(--shadow-primary);
+            transform: translateY(-1px);
         }
 
         .modal-overlay {
@@ -405,14 +552,15 @@
             max-width: 650px;
             max-height: 90vh;
             overflow-y: auto;
-            background: white;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
         }
 
         .modal-header {
             padding: 20px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -426,7 +574,8 @@
 
         .close-button {
             border: none;
-            background: #f1f5f9;
+            background: var(--surface-3);
+            color: var(--text);
             width: 38px;
             height: 38px;
             border-radius: 10px;
@@ -448,23 +597,26 @@
             margin-bottom: 7px;
             font-size: 13px;
             font-weight: 900;
-            color: #334155;
+            color: var(--text-2);
         }
 
         .form-input,
         .form-select {
             width: 100%;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border-strong);
             border-radius: 11px;
             padding: 12px;
             font-size: 14px;
             outline: none;
-            background: white;
+            background: var(--surface);
+            color: var(--text);
+            font-family: var(--font-ar);
         }
 
         .form-input:focus,
         .form-select:focus {
-            border-color: #2563eb;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-ring);
         }
 
         .modal-footer {
@@ -476,13 +628,14 @@
 
         .secondary-button {
             border: none;
-            background: #e2e8f0;
-            color: #334155;
+            background: var(--surface-3);
+            color: var(--text);
             padding: 11px 16px;
             border-radius: 11px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 800;
+            font-family: var(--font-ar);
         }
 
         .group-students-list {
@@ -495,7 +648,7 @@
             justify-content: space-between;
             gap: 10px;
             padding: 12px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border);
             border-radius: 12px;
             margin-bottom: 8px;
         }
@@ -505,7 +658,7 @@
         }
 
         .group-student-id {
-            color: #64748b;
+            color: var(--muted);
             font-size: 11px;
             font-family: monospace;
             direction: ltr;
@@ -513,26 +666,1041 @@
 
         .remove-student-button {
             border: none;
-            background: #fef2f2;
-            color: #b91c1c;
+            background: var(--error-soft);
+            color: var(--error);
             padding: 8px 10px;
             border-radius: 9px;
             cursor: pointer;
             font-size: 12px;
             font-weight: 900;
+            font-family: var(--font-ar);
         }
 
         .footer {
             text-align: center;
-            color: #94a3b8;
+            color: var(--muted);
             font-size: 13px;
             font-weight: 700;
-            padding: 30px 0 0;
+            padding: 34px 0 0;
+            margin-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer .branding-name {
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: .2px;
+        }
+
+        .footer .branding-line,
+        .footer .branding-cta {
+            margin: 6px 0 0;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-2);
+        }
+
+        .footer .branding-facebook-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            padding: 10px 22px;
+            border-radius: 14px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid var(--primary-ring);
+            font-weight: 800;
+            font-size: 13.5px;
+            font-family: var(--font-ar);
+            text-decoration: none;
+            transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+        }
+
+        .footer .branding-facebook-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        /* ============================================================
+           APP SHELL — sidebar + column layout (NEXORA identity)
+           ============================================================ */
+        .app-shell {
+            display: flex;
+            align-items: stretch;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 0;
+            width: 250px;
+            flex-shrink: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #211D18 0%, #282219 60%, #2E2820 100%);
+            border-left: 1px solid rgba(201, 162, 39, .18);
+            padding: 20px 14px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 60;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 10px 16px;
+            border-bottom: 1px solid rgba(201, 162, 39, .16);
+            margin-bottom: 12px;
+        }
+
+        .sidebar-brand-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            box-shadow: var(--shadow-primary);
+        }
+
+        .sidebar-brand-text {
+            color: #F5F1E6;
+            font-weight: 900;
+            font-size: 15.5px;
+            line-height: 1.3;
+        }
+
+        .sidebar-brand-text span {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: #C9A227;
+            letter-spacing: .3px;
+        }
+
+        .sidebar-section {
+            margin: 12px 10px 6px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .6px;
+            color: rgba(245, 241, 230, .45);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: rgba(245, 241, 230, .82);
+            font-family: var(--font-ar);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 11px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: right;
+            transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 15px;
+            color: rgba(201, 162, 39, .85);
+        }
+
+        .nav-item:hover {
+            background: rgba(201, 162, 39, .12);
+            color: #F5F1E6;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+            color: #fff;
+            box-shadow: var(--shadow-primary);
+        }
+
+        .nav-item.active i {
+            color: #fff;
+        }
+
+        .nav-item.nav-logout {
+            margin-top: auto;
+            color: rgba(245, 241, 230, .65);
+        }
+
+        /* Sidebar layout guarantee: strictly vertical rows, one item per line,
+           no horizontal wrapping, on every screen width (desktop/tablet/mobile). */
+        .sidebar,
+        .sidebar.open {
+            flex-direction: column !important;
+            flex-wrap: nowrap;
+        }
+
+        .sidebar .nav-item {
+            width: 100%;
+            flex: 0 0 auto;
+            flex-wrap: nowrap;
+        }
+
+        .nav-soon {
+            margin-right: auto;
+            margin-left: 0;
+            font-size: 10px;
+            padding: 3px 8px;
+        }
+
+        .sec-ico {
+            color: var(--primary);
+            font-size: 17px;
+        }
+
+        .welcome-spark {
+            color: var(--primary);
+            font-size: 22px;
+        }
+
+        .teacher-profile-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 14px;
+        }
+
+        .profile-brand {
+            color: var(--muted);
+        }
+
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 12, .55);
+            z-index: 55;
+        }
+
+        .sidebar-backdrop.show {
+            display: block;
+        }
+
+        .app-column {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hamburger {
+            display: none;
+            border: 1px solid rgba(201, 162, 39, .35);
+            background: rgba(201, 162, 39, .12);
+            color: #F5F1E6;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 17px;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--dur-fast) var(--ease-out);
+        }
+
+        .hamburger:hover {
+            background: rgba(201, 162, 39, .25);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(201, 162, 39, .3);
+            border-radius: var(--radius-full, 999px);
+            padding: 4px;
+        }
+
+        .ts-btn {
+            border: none;
+            background: transparent;
+            color: rgba(245, 241, 230, .75);
+            font-family: var(--font-ar);
+            font-size: 12.5px;
+            font-weight: 800;
+            padding: 7px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+        }
+
+        .ts-btn:hover {
+            color: #F5F1E6;
+        }
+
+        .ts-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .ts-btn:focus-visible,
+        .nav-item:focus-visible,
+        .hamburger:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* ---------- Page system ---------- */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: pageIn var(--dur) var(--ease-out);
+        }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        .page-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 220px;
+            border: 1px solid var(--border-strong);
+            border-radius: 12px;
+            padding: 11px 14px 11px 38px;
+            font-size: 14px;
+            font-family: var(--font-ar);
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            top: 50%;
+            left: 13px;
+            transform: translateY(-50%);
+            color: var(--faint);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .search-wrap .search-input {
+            width: 100%;
+            padding-left: 38px;
+        }
+
+        .sort-select {
+            border: 1px solid var(--border-strong);
+            border-radius: 12px;
+            padding: 11px 12px;
+            font-size: 13.5px;
+            font-family: var(--font-ar);
+            font-weight: 700;
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .sort-select:focus,
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-ring);
+        }
+
+        .results-count {
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* ---------- Overview ---------- */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+
+        .overview-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow-sm);
+            padding: 20px;
+        }
+
+        .overview-card .card-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .overview-card .card-head i {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--primary-soft);
+            border: 1px solid var(--border-strong);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .overview-card .card-head h3 {
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .mini-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mini-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface-2);
+        }
+
+        .mini-row .mini-name {
+            font-weight: 800;
+            font-size: 13.5px;
+        }
+
+        .mini-row .mini-meta {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .pending-card {
+            border-style: dashed;
+            background: var(--surface-2);
+        }
+
+        .pending-card .pending-note {
+            color: var(--muted);
+            font-size: 12.5px;
+            font-weight: 600;
+            line-height: 1.7;
+        }
+
+        .badge-soft {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid var(--primary-ring);
+            border-radius: 999px;
+            padding: 5px 11px;
+            font-size: 11.5px;
+            font-weight: 800;
+        }
+
+        .percent-chip {
+            display: inline-block;
+            min-width: 52px;
+            text-align: center;
+            background: var(--success-soft);
+            color: var(--success);
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .percent-chip.warn {
+            background: var(--warning-soft);
+            color: var(--warning);
+        }
+
+        .table-link {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 13px;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--primary-ring);
+            transition: color var(--dur-fast) var(--ease-out);
+        }
+
+        .table-link:hover {
+            color: var(--primary-strong);
+        }
+
+        /* ---------- Notifications / Profile / Settings ---------- */
+        .notif-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--surface);
+            margin-bottom: 10px;
+        }
+
+        .notif-item i {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: var(--primary-soft);
+            border: 1px solid var(--border-strong);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .notif-item .notif-title {
+            font-weight: 800;
+            font-size: 13.5px;
+            margin-bottom: 3px;
+        }
+
+        .notif-item .notif-meta {
+            color: var(--muted);
+            font-size: 12.5px;
+            font-weight: 600;
+        }
+
+        .profile-rows {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 6px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .profile-row .pr-label {
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .profile-row .pr-value {
+            font-weight: 800;
+            font-size: 13.5px;
+            direction: ltr;
+        }
+
+        .profile-row .pr-value.rtl {
+            direction: rtl;
+        }
+
+        .settings-note {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: var(--surface-2);
+            border: 1px dashed var(--border-strong);
+            border-radius: 14px;
+            padding: 14px 16px;
+            color: var(--muted);
+            font-size: 12.5px;
+            font-weight: 600;
+            line-height: 1.8;
+            margin-top: 14px;
+        }
+
+        .settings-note i {
+            color: var(--warning);
+            margin-top: 3px;
+        }
+
+        .inline-theme-switch {
+            display: inline-flex;
+            background: var(--surface-3);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 4px;
+        }
+
+        .inline-theme-switch .ts-btn {
+            color: var(--text-2);
+        }
+
+        .inline-theme-switch .ts-btn:hover {
+            color: var(--text);
+        }
+
+        .inline-theme-switch .ts-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 6px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-row .sr-label {
+            font-weight: 800;
+            font-size: 13.5px;
+        }
+
+        .settings-row .sr-sub {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .select-inline {
+            border: 1px solid var(--border-strong);
+            border-radius: 11px;
+            padding: 10px 12px;
+            font-size: 13.5px;
+            font-family: var(--font-ar);
+            font-weight: 700;
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .select-inline:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-ring);
+        }
+
+        /* ---------- Review-2 additions: membership, multi-select, settings ---------- */
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .member-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid var(--primary-ring);
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 11.5px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .member-chip .fa-triangle-exclamation {
+            color: var(--warning);
+        }
+
+        .member-none {
+            color: var(--faint);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .nav-badge {
+            margin-right: auto;
+            margin-left: 0;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 999px;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            font-size: 10.5px;
+            font-weight: 900;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-badge.show {
+            display: inline-flex;
+        }
+
+        .group-add-list {
+            max-height: 260px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 6px;
+            margin-bottom: 10px;
+            background: var(--surface-2);
+        }
+
+        .group-add-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 10px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: background var(--dur-fast) var(--ease-out);
+        }
+
+        .group-add-row:hover {
+            background: var(--primary-soft);
+        }
+
+        .group-add-row input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .group-add-row .ga-name {
+            font-weight: 800;
+            font-size: 13.5px;
+            flex: 1;
+        }
+
+        .group-add-row .ga-id {
+            color: var(--faint);
+            font-size: 11px;
+            font-family: monospace;
+            direction: ltr;
+        }
+
+        .ga-tools {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .ga-count {
+            margin-right: auto;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 12.5px;
+        }
+
+        .grade-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .grade-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+        }
+
+        .grade-chip i {
+            color: rgba(201, 162, 39, .85);
+            font-size: 12px;
+        }
+
+        .grade-chip:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .grade-chip.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+            border-color: transparent;
+            color: #fff;
+            box-shadow: var(--shadow-primary);
+        }
+
+        .grade-chip.active i {
+            color: #fff;
+        }
+
+        .grade-chip:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .ga-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ga-actions .primary-button {
+            flex: 1;
+        }
+
+        .ga-toolbar {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+            margin-bottom: 10px;
+
+        }
+
+        .ga-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .ga-btn {
+
+            border: 1px solid var(--border);
+
+            background: var(--surface-2);
+
+            color: var(--text);
+
+            border-radius: 10px;
+
+            padding: 7px 12px;
+
+            font: inherit;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            transition: var(--transition-fast);
+
+        }
+
+        .ga-btn:hover {
+
+            border-color: var(--primary);
+
+            color: var(--primary);
+
+        }
+
+        .ga-selected-count {
+
+            font-size: 13px;
+
+            color: var(--text-2);
+
+            font-weight: 600;
+
+        }
+
+        .ga-list {
+
+            max-height: 260px;
+
+            overflow-y: auto;
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            margin-bottom: 10px;
+
+        }
+
+        .ga-progress.ok {
+
+            color: var(--primary);
+
+        }
+
+        .ga-progress.error {
+
+            color: #e5484d;
+
+        }
+
+        .ga-progress {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--muted);
+            margin: 10px 0 0;
+        }
+
+        .ga-progress.error {
+            color: var(--error);
+            font-weight: 800;
+        }
+
+        .ga-progress.ok {
+            color: var(--success);
+            font-weight: 800;
+        }
+
+        .profile-field {
+            margin-bottom: 16px;
+        }
+
+        .profile-field .future-tag {
+            background: var(--surface-3);
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+        }
+
+        .profile-field input[disabled] {
+            background: var(--surface-3);
+            color: var(--muted);
+            cursor: not-allowed;
+            opacity: .8;
+        }
+
+        .settings-h2 {
+            font-size: 14.5px;
+            font-weight: 900;
+            color: var(--text);
+            margin: 26px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .settings-h2:first-of-type {
+            margin-top: 4px;
+        }
+
+        .settings-h2 i {
+            color: var(--primary);
+            font-size: 13px;
+        }
+
+        .settings-h2 .future-tag {
+            margin-right: 4px;
+        }
+
+        .security-note {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: var(--warning-soft);
+            border: 1px solid rgba(168, 132, 28, .35);
+            border-radius: 14px;
+            padding: 14px 16px;
+            color: var(--text-2);
+            font-size: 12.5px;
+            font-weight: 600;
+            line-height: 1.8;
+        }
+
+        .security-note i {
+            color: var(--warning);
+            margin-top: 3px;
         }
 
         @media (max-width: 800px) {
 
+            .sidebar {
+                position: fixed;
+                top: 0;
+                right: 0;
+                transform: translateX(105%);
+                transition: transform var(--dur) var(--ease-out);
+                box-shadow: -18px 0 44px rgba(0, 0, 0, .35);
+            }
+
+            .sidebar.open {
+                transform: none;
+            }
+
+            .sidebar,
+            .sidebar.open {
+                flex-direction: column;
+                flex-wrap: nowrap;
+            }
+
+            .hamburger {
+                display: inline-flex;
+            }
+
             .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -576,6 +1744,14 @@
                 align-items: flex-start;
             }
 
+            .theme-switch .ts-btn span {
+                display: none;
+            }
+
+            .theme-switch .ts-btn {
+                padding: 7px 10px;
+            }
+
             .teacher-image {
                 width: 48px;
                 height: 48px;
@@ -599,13 +1775,106 @@
             }
         }
     </style>
-</head>
+</head><div class="app-shell">
 
-<body>
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="sidebar-brand-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+
+        <div class="sidebar-brand-text">
+            NEXORA
+            <span>Shehab Innovation</span>
+        </div>
+
+    </div>
+
+    <div class="sidebar-section">الرئيسية</div>
+
+    <button class="nav-item active" data-page="overview">
+        <i class="fas fa-chart-line"></i>
+        Overview
+    </button>
+
+    <div class="sidebar-section">الطلاب</div>
+
+    <button class="nav-item" data-page="students">
+        <i class="fas fa-user-graduate"></i>
+        الطلاب
+    </button>
+
+    <button class="nav-item" data-page="groups">
+        <i class="fas fa-users"></i>
+        المجموعات
+    </button>
+
+    <div class="sidebar-section">المتابعة الأكاديمية</div>
+
+    <button class="nav-item" data-page="assignments">
+        <i class="fas fa-pen-nib"></i>
+        الواجبات
+    </button>
+
+    <button class="nav-item" data-page="exams">
+        <i class="fas fa-brain"></i>
+        الاختبارات
+    </button>
+
+    <button class="nav-item" data-page="results">
+        <i class="fas fa-clipboard-check"></i>
+        النتائج
+    </button>
+
+    <button class="nav-item" data-page="certificates">
+        <i class="fas fa-award"></i>
+        الشهادات
+    </button>
+
+    <button class="nav-item" data-page="evaluations">
+        <i class="fas fa-star-half-stroke"></i>
+        التقييمات
+        <span class="badge-soft nav-soon">قريبًا</span>
+    </button>
+
+    <div class="sidebar-section">النظام</div>
+
+    <button class="nav-item" data-page="notifications">
+        <i class="fas fa-bell"></i>
+        الإشعارات
+        <span class="nav-badge" id="notificationsNavBadge">0</span>
+    </button>
+
+    <button class="nav-item" data-page="profile">
+        <i class="fas fa-id-badge"></i>
+        Teacher Profile
+    </button>
+
+    <button class="nav-item" data-page="settings">
+        <i class="fas fa-gear"></i>
+        Settings
+    </button>
+
+    <button class="nav-item nav-logout" id="logoutButton">
+        <i class="fas fa-arrow-right-from-bracket"></i>
+        تسجيل الخروج
+    </button>
+
+</aside>
+
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<div class="app-column">
 
 <header class="header">
 
     <div class="teacher-info">
+
+        <button class="hamburger" id="hamburgerButton" aria-label="فتح القائمة">
+            <i class="fas fa-bars"></i>
+        </button>
 
         <img
             id="teacherImage"
@@ -624,130 +1893,215 @@
             </div>
 
             <div class="brand">
-                NEXORA | Shihab Innovation
+                NEXORA | Shehab Innovation
             </div>
 
         </div>
 
     </div>
 
-    <button
-        class="logout-button"
-        id="logoutButton"
-    >
-        تسجيل الخروج
-    </button>
+    <div class="header-controls">
+
+        <div class="theme-switch" id="themeSwitch" role="group" aria-label="تبديل المظهر">
+
+            <button class="ts-btn" data-theme-option="light" title="مظهر فاتح">
+                <i class="fas fa-sun"></i><span> فاتح</span>
+            </button>
+
+            <button class="ts-btn" data-theme-option="dark" title="مظهر داكن">
+                <i class="fas fa-moon"></i><span> داكن</span>
+            </button>
+
+            <button class="ts-btn" data-theme-option="system" title="حسب إعداد النظام">
+                <i class="fas fa-desktop"></i><span> النظام</span>
+            </button>
+
+        </div>
+
+        <button
+            class="logout-button"
+            id="logoutButtonTop"
+        >
+            تسجيل الخروج
+        </button>
+
+    </div>
 
 </header>
 
 
 <main class="container">
 
-    <section class="welcome">
+    <!-- ==================== OVERVIEW ==================== -->
 
-        <h1>
-            أهلاً بك <span id="welcomeName">مستر مهاب</span> 👋
-        </h1>
+    <section class="page active" id="page-overview">
 
-        <p>
-            من هنا تقدر تتابع طلابك وبياناتهم.
-        </p>
+        <section class="welcome">
+
+            <h1>
+                <i class="fas fa-wand-magic-sparkles welcome-spark"></i> أهلاً بك <span id="welcomeName">مستر مهاب</span>
+            </h1>
+
+            <p>
+                من هنا تقدر تتابع طلابك وبياناتهم.
+            </p>
+
+        </section>
+
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+
+                <div>
+
+                    <div class="stat-title">
+                        إجمالي الطلاب
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="totalStudents"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+
+                <div>
+
+                    <div class="stat-title">
+                        طلاب مسجلون
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="registeredStudents"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fas fa-circle-check"></i>
+                </div>
+
+                <div>
+
+                    <div class="stat-title">
+                        حالة النظام
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="systemStatus"
+                        style="font-size: 18px;"
+                    >
+                        متصل
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="overview-grid">
+
+            <div class="overview-card">
+
+                <div class="card-head">
+                    <i class="fas fa-chart-simple"></i>
+                    <h3>آخر النتائج</h3>
+                </div>
+
+                <div class="mini-list" id="overviewLatestResults">
+                    <div class="mini-row"><span class="mini-meta">جاري التحميل…</span></div>
+                </div>
+
+            </div>
+
+            <div class="overview-card">
+
+                <div class="card-head">
+                    <i class="fas fa-bell"></i>
+                    <h3>إشعارات مهمة</h3>
+                </div>
+
+                <div class="mini-list" id="overviewNotifs">
+                    <div class="mini-row"><span class="mini-meta">جاري التحميل…</span></div>
+                </div>
+
+            </div>
+
+            <div class="overview-card pending-card">
+
+                <div class="card-head">
+                    <i class="fas fa-list-check"></i>
+                    <h3>واجبات تحتاج متابعة</h3>
+                </br>
+                </div>
+
+                <p class="pending-note">
+                    متابعة الواجبات وتصحيحها تحتاج Backend خاص بـTeacher للواجبات — غير متاح حاليًا في النظام. سيُربط تلقائيًا عند توفره.
+                </p>
+
+            </div>
+
+            <div class="overview-card pending-card">
+
+                <div class="card-head">
+                    <i class="fas fa-brain"></i>
+                    <h3>اختبارات تحتاج مراجعة</h3>
+                </div>
+
+                <p class="pending-note">
+                    مراجعة محاولات الاختبارات تحتاج Backend لعرض محاولات الصف كاملة — غير متاح حاليًا (النتائج متاحة لكل طالب على حدة من صفحة الطلاب). سيُربط تلقائيًا عند توفره.
+                </p>
+
+            </div>
+
+        </div>
 
     </section>
 
+    <!-- ==================== STUDENTS ==================== -->
 
-    <section class="stats">
+    <section class="page" id="page-students">
 
-        <div class="stat-card">
-
-            <div class="stat-icon">
-                👨‍🎓
-            </div>
-
-            <div>
-
-                <div class="stat-title">
-                    إجمالي الطلاب
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="totalStudents"
-                >
-                    0
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-                📚
-            </div>
-
-            <div>
-
-                <div class="stat-title">
-                    طلاب مسجلون
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="registeredStudents"
-                >
-                    0
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-                🟢
-            </div>
-
-            <div>
-
-                <div class="stat-title">
-                    حالة النظام
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="systemStatus"
-                    style="font-size: 18px;"
-                >
-                    متصل
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ==================== الطلاب ==================== -->
-
-    <section class="students-card">
+        <section class="students-card">
 
         <div class="section-header">
 
             <div class="section-title">
-                👨‍🎓 الطلاب
+                <i class="fas fa-user-graduate sec-ico"></i> الطلاب
             </div>
 
             <button
                 class="refresh-button"
                 id="refreshButton"
             >
-                🔄 تحديث
+                <i class="fas fa-rotate"></i> تحديث
             </button>
 
         </div>
@@ -774,7 +2128,7 @@
         >
 
             <div class="empty-icon">
-                👨‍🎓
+                <i class="fas fa-user-graduate"></i>
             </div>
 
             <div>
@@ -790,6 +2144,55 @@
             style="display:none;"
         >
 
+            <div class="page-toolbar" style="padding: 16px 18px 0;">
+
+                <div class="search-wrap">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="studentSearchInput"
+                        placeholder="ابحث بالاسم أو رقم الطالب أو الهاتف…"
+                    >
+                </div>
+
+                <select class="sort-select" id="studentSortSelect">
+                    <option value="recent">الأحدث تسجيلًا</option>
+                    <option value="name">الاسم (أ–ي)</option>
+                    <option value="id">رقم الطالب</option>
+                </select>
+
+                <span class="results-count" id="studentsResultsCount"></span>
+
+                <div class="filter-row" style="width:100%;">
+
+                    <select class="sort-select" id="studentGroupFilter">
+                        <option value="all">كل المجموعات</option>
+                        <option value="unassigned">غير المصنفين في مجموعة</option>
+                    </select>
+
+                    <select class="sort-select" id="studentGradeFilter">
+                        <option value="all">كل الصفوف</option>
+                    </select>
+
+                    <span class="results-count" id="studentsClassifyInfo"></span>
+
+                </div>
+
+                <div class="grade-strip" id="gradeStrip" role="tablist" aria-label="تصفية الطلاب حسب الصف">
+
+                    <button type="button" class="grade-chip active" data-grade="all">
+                        <i class="fas fa-users"></i> كل الطلاب
+                    </button>
+
+                    <button type="button" class="grade-chip" data-grade="__none__">
+                        <i class="fas fa-user-slash"></i> بدون صف
+                    </button>
+
+                </div>
+
+            </div>
+
             <table>
 
                 <thead>
@@ -800,6 +2203,7 @@
                         <th>رقم الهاتف</th>
                         <th>ولي الأمر</th>
                         <th>التسجيل</th>
+                        <th>المجموعة</th>
                         <th>الحالة</th>
                     </tr>
 
@@ -813,15 +2217,19 @@
 
     </section>
 
+    </section>
 
-    <!-- ==================== المجموعات ==================== -->
+
+    <!-- ==================== GROUPS ==================== -->
+
+    <section class="page" id="page-groups">
 
     <section class="groups-card">
 
         <div class="section-header">
 
             <div class="section-title">
-                📚 المجموعات
+                <i class="fas fa-users sec-ico"></i> المجموعات
             </div>
 
             <div class="section-actions">
@@ -830,14 +2238,14 @@
                     class="refresh-button"
                     id="refreshGroupsButton"
                 >
-                    🔄 تحديث
+                    <i class="fas fa-rotate"></i> تحديث
                 </button>
 
                 <button
                     class="primary-button"
                     id="createGroupButton"
                 >
-                    ＋ مجموعة جديدة
+                    <i class="fas fa-plus"></i> مجموعة جديدة
                 </button>
 
             </div>
@@ -872,7 +2280,7 @@
         >
 
             <div class="empty-icon">
-                📚
+                <i class="fas fa-users"></i>
             </div>
 
             <div>
@@ -890,12 +2298,437 @@
 
     </section>
 
+    </section>
+
+    <!-- ==================== ASSIGNMENTS (pending backend) ==================== -->
+
+    <section class="page" id="page-assignments">
+
+        <section class="students-card">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    <i class="fas fa-pen-nib sec-ico"></i> الواجبات
+                </div>
+
+            </div>
+
+            <div class="empty-state" style="padding: 60px 20px;">
+
+                <div class="empty-icon"><i class="fas fa-pen-nib"></i></div>
+
+                <div>متابعة الواجبات على مستوى الصف تحتاج Backend غير متاح حاليًا.</div>
+
+                <p class="pending-note" style="max-width: 480px; margin: 10px auto 0;">
+                    نتائج الواجبات المتاحة تظهر لكل طالب داخل صفحته، ومن قسم النتائج هنا. سيُربط هذا القسم عند توفر RPC للواجبات.
+                </p>
+
+            </div>
+
+        </section>
+
+    </section>
+
+    <!-- ==================== EXAMS (pending backend) ==================== -->
+
+    <section class="page" id="page-exams">
+
+        <section class="students-card">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    <i class="fas fa-brain sec-ico"></i> الاختبارات
+                </div>
+
+            </div>
+
+            <div class="empty-state" style="padding: 60px 20px;">
+
+                <div class="empty-icon"><i class="fas fa-brain"></i></div>
+
+                <div>مراجعة محاولات الاختبارات على مستوى الصف تحتاج Backend غير متاح حاليًا.</div>
+
+                <p class="pending-note" style="max-width: 480px; margin: 10px auto 0;">
+                    نتائج الاختبارات المتاحة تظهر لكل طالب داخل صفحته، ومن قسم النتائج هنا. سيُربط هذا القسم عند توفر RPC للمحاولات.
+                </p>
+
+            </div>
+
+        </section>
+
+    </section>
+
+    <!-- ==================== RESULTS ==================== -->
+
+    <section class="page" id="page-results">
+
+        <section class="students-card">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    <i class="fas fa-clipboard-check sec-ico"></i> نتائج الطلاب
+                </div>
+
+                <button class="refresh-button" id="refreshResultsButton">
+                    <i class="fas fa-rotate"></i> تحديث
+                </button>
+
+            </div>
+
+            <div class="error-box" id="resultsErrorBox"></div>
+
+            <div class="loading" id="resultsLoading">جاري تحميل النتائج…</div>
+
+            <div class="empty-state" id="resultsEmptyState" style="display:none;">
+                <div class="empty-icon"><i class="fas fa-clipboard-check"></i></div>
+                <div>لا توجد نتائج مسجلة حتى الآن.</div>
+            </div>
+
+            <div class="table-wrapper" id="resultsTableWrapper" style="display:none;">
+
+                <div class="page-toolbar" style="padding: 16px 18px 0;">
+
+                    <div class="search-wrap">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <input type="text" class="search-input" id="resultsSearchInput" placeholder="ابحث بالطالب أو الاختبار…">
+                    </div>
+
+                    <span class="results-count" id="resultsResultsCount"></span>
+
+                </div>
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>الطالب</th>
+                            <th>الاختبار / الواجب</th>
+                            <th>النوع</th>
+                            <th>الدرجة</th>
+                            <th>النسبة</th>
+                            <th>التاريخ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="resultsTableBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </section>
+
+    <!-- ==================== CERTIFICATES ==================== -->
+
+    <section class="page" id="page-certificates">
+
+        <section class="students-card">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    <i class="fas fa-award sec-ico"></i> شهادات الطلاب
+                </div>
+
+                <button class="refresh-button" id="refreshCertificatesButton">
+                    <i class="fas fa-rotate"></i> تحديث
+                </button>
+
+            </div>
+
+            <div class="error-box" id="certificatesErrorBox"></div>
+
+            <div class="loading" id="certificatesLoading">جاري تحميل الشهادات…</div>
+
+            <div class="empty-state" id="certificatesEmptyState" style="display:none;">
+                <div class="empty-icon"><i class="fas fa-award"></i></div>
+                <div>لا توجد شهادات صادرة حتى الآن. تُمنح الشهادة تلقائيًا عند تحقيق 80% أو أكثر.</div>
+            </div>
+
+            <div class="table-wrapper" id="certificatesTableWrapper" style="display:none;">
+
+                <div class="page-toolbar" style="padding: 16px 18px 0;">
+
+                    <div class="search-wrap">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <input type="text" class="search-input" id="certificatesSearchInput" placeholder="ابحث بالطالب أو التقييم…">
+                    </div>
+
+                    <span class="results-count" id="certificatesResultsCount"></span>
+
+                </div>
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>الطالب</th>
+                            <th>الشهادة</th>
+                            <th>التقييم</th>
+                            <th>الدرجة</th>
+                            <th>التاريخ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="certificatesTableBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </section>
+
+    <!-- ==================== EVALUATIONS ==================== -->
+
+    <section class="page" id="page-evaluations">
+
+        <section class="students-card">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    <i class="fas fa-star-half-stroke sec-ico"></i> تقييمات الطلاب
+                </div>
+
+            </div>
+
+            <div class="empty-state" style="padding: 60px 20px;">
+                <div class="empty-icon"><i class="fas fa-star-half-stroke"></i></div>
+                <div>لا يوجد Backend لعرض التقييمات على مستوى الصف حتى الآن.</div>
+                <p class="pending-note" style="max-width: 480px; margin: 10px auto 0;">التقييمات متاحة حاليًا من صفحة كل طالب على حدة. قسم عرض التقييمات للصف كامل مسجل كمتطلب Backend مستقبلي (Teacher-level evaluations RPC).</p>
+            </div>
+
+        </section>
+
+    </section>
+
+    <!-- ==================== NOTIFICATIONS ==================== -->
+
+    <section class="page" id="page-notifications">
+
+        <section class="students-card">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    <i class="fas fa-bell sec-ico"></i> الإشعارات
+                </div>
+
+            </div>
+
+            <div style="padding: 20px;" id="notificationsList"></div>
+
+            <p class="pending-note" style="padding: 0 20px 20px; margin:0;">
+                هذه الإشعارات مشتقة من بياناتك الحالية (طلاب، مجموعات، نتائج، شهادات) — وستُربط لاحقًا بمركز إشعارات فعلي عند توفر Backend له.
+            </p>
+
+        </section>
+
+    </section>
+
+    <!-- ==================== TEACHER PROFILE ==================== -->
+
+    <section class="page" id="page-profile">
+
+        <section class="students-card">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    <i class="fas fa-id-badge sec-ico"></i> Teacher Profile
+                </div>
+
+            </div>
+
+            <div style="padding: 22px;">
+
+                <div class="teacher-profile-head">
+
+                    <img id="profileImage" class="teacher-image" style="width:64px;height:64px;" src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg" alt="المدرس">
+
+                    <div>
+                        <div class="teacher-name" id="profileName" style="font-size:18px;">مستر مهاب</div>
+                        <div class="brand profile-brand">NEXORA | Shehab Innovation</div>
+                    </div>
+
+                </div>
+
+                <div class="profile-rows" style="margin-top: 14px;">
+
+                    <div class="profile-row">
+                        <span class="pr-label">الاسم</span>
+                        <span class="pr-value rtl" id="profileNameRow">—</span>
+                    </div>
+
+                    <div class="profile-row">
+                        <span class="pr-label">حالة الحساب</span>
+                        <span class="pr-value rtl"><span class="status">نشط</span></span>
+                    </div>
+
+                    <div class="profile-row">
+                        <span class="pr-label">آخر دخول</span>
+                        <span class="pr-value rtl" id="profileLastLogin">—</span>
+                    </div>
+
+                    <div class="profile-row">
+                        <span class="pr-label">انتهاء الجلسة</span>
+                        <span class="pr-value rtl" id="profileSessionExpiry">—</span>
+                    </div>
+
+                </div>
+
+                <div class="settings-note" style="margin-top: 14px;">
+
+                    <i class="fas fa-circle-info"></i>
+
+                    <span>
+                        انتهاء الجلسة يعني انتهاء صلاحية تسجيل الدخول الحالية فقط: سيُطلب منك تسجيل الدخول من جديد عند انتهائها، ولا يُحذف أي شيء — الطلاب والمجموعات والنتائج والشهادات تبقى محفوظة.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+
+    <!-- ==================== SETTINGS ==================== -->
+
+    <section class="page" id="page-settings">
+
+        <section class="students-card">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    <i class="fas fa-gear sec-ico"></i> Settings
+                </div>
+
+            </div>
+
+            <div style="padding: 22px;">
+
+                <h3 class="settings-h2"><i class="fas fa-palette"></i> المظهر</h3>
+
+                <div class="settings-row">
+
+                    <div>
+                        <div class="sr-label">وضع العرض</div>
+                        <div class="sr-sub">نفس إعداد واجهة الطالب — يُحفظ تلقائيًا</div>
+                    </div>
+
+                    <div class="inline-theme-switch" id="themeSwitchSettings" role="group" aria-label="تبديل المظهر">
+
+                        <button class="ts-btn" data-theme-option="light"><i class="fas fa-sun"></i><span> Light</span></button>
+                        <button class="ts-btn" data-theme-option="dark"><i class="fas fa-moon"></i><span> Dark</span></button>
+                        <button class="ts-btn" data-theme-option="system"><i class="fas fa-desktop"></i><span> System</span></button>
+
+                    </div>
+
+                </div>
+
+                <h3 class="settings-h2"><i class="fas fa-id-badge"></i> إعدادات المدرس <span class="future-tag">تحتاج Backend</span></h3>
+
+                <div class="profile-field">
+                    <label class="form-label">صورة المدرس</label>
+                    <input type="text" class="form-input" value="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg" disabled>
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">اسم المدرس</label>
+                    <input type="text" class="form-input" id="settingsNameInput" disabled>
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">رقم التواصل الظاهر</label>
+                    <input type="text" class="form-input" placeholder="— يتطلب Backend لتحديث بيانات المدرس —" disabled>
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">رابط WhatsApp</label>
+                    <input type="text" class="form-input" placeholder="— يتطلب Backend —" disabled>
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">رابط Facebook</label>
+                    <input type="text" class="form-input" placeholder="— يتطلب Backend —" disabled>
+                </div>
+
+                <div class="settings-note">
+                    <i class="fas fa-circle-info"></i>
+                    <span>
+                        تحديث بيانات المدرس (الصورة والاسم وبيانات التواصل) يحتاج واجهة Backend آمنة للتحديث — غير متاحة حاليًا وسيُربط عند توفرها.
+                    </span>
+                </div>
+
+                <h3 class="settings-h2" id="securitySection"><i class="fas fa-shield-halved"></i> الأمان <span class="future-tag">تحتاج Backend</span></h3>
+
+                <div class="settings-row">
+
+                    <div>
+                        <div class="sr-label">تغيير كلمة المرور</div>
+                        <div class="sr-sub">غير متاح حاليًا</div>
+                    </div>
+
+                </div>
+
+                <div class="security-note">
+
+                    <i class="fas fa-key"></i>
+
+                    <span>
+                        تغيير كلمة المرور يحتاج تفعيل مسار مصادقة آمن من NEXORA Admin/Backend. نظام تسجيل الدخول الحالي لا يوفر مسار تغيير آمن بعد، ولم يُنفذ أي بديل مؤقت حفاظًا على أمان الحساب.
+                    </span>
+
+                </div>
+
+<h3 class="settings-h2"><i class="fas fa-folder-open"></i> إدارة المحتوى التعليمي</h3>
+
+                <div class="settings-note">
+                    <i class="fas fa-circle-info"></i>
+                    <span>
+                        محتوى المنهج والفيديوهات والمذكرات والاختبارات يتم إدارته مركزيًا بواسطة NEXORA Admin.
+                    </span>
+                </div>
+
+
+
+            </div>
+
+        </section>
+
+    </section>
 
     <div class="footer">
-        NEXORA | Shihab Innovation
+
+        <div class="branding-name">Shehab Innovation</div>
+
+        <p class="branding-line">إنشاء منصات تعليمية ومواقع وحلول رقمية مخصصة.</p>
+
+        <p class="branding-cta">عايز تعمل موقع أو منصة خاصة بيك؟ تواصل مع Shehab Innovation</p>
+
+        <a href="https://www.facebook.com/share/1HtnAsv3AF/" target="_blank" rel="noopener" class="branding-facebook-btn">
+            <i class="fab fa-facebook"></i>
+            تواصل معنا على Facebook
+        </a>
+
     </div>
 
 </main>
+
+</div>
+
+</div>
 
 
 <!-- ==================== إنشاء مجموعة ==================== -->
@@ -1047,19 +2880,37 @@
             <div class="form-group">
 
                 <label class="form-label">
-                    إضافة طالب للمجموعة
+                    إضافة طلاب للمجموعة
                 </label>
 
-                <select
-                    class="form-select"
-                    id="studentSelect"
-                >
+                <div class="ga-toolbar">
 
-                    <option value="">
-                        اختر الطالب
-                    </option>
+                    <input
+                        type="text"
+                        class="form-input"
+                        id="groupAddSearchInput"
+                        placeholder="ابحث بالاسم أو رقم الطالب..."
+                    >
 
-                </select>
+                    <div class="ga-actions">
+
+                        <button type="button" class="ga-btn" id="gaSelectAllButton">
+                            <i class="fas fa-check-double"></i> تحديد الكل
+                        </button>
+
+                        <button type="button" class="ga-btn" id="gaClearButton">
+                            <i class="fas fa-eraser"></i> إلغاء التحديد
+                        </button>
+
+                    </div>
+
+                    <div class="ga-count" id="gaSelectedCount" aria-live="polite">0 محدد</div>
+
+                </div>
+
+                <div class="ga-list" id="groupAddList"></div>
+
+                <div class="ga-progress" id="gaProgress" style="display:none;"></div>
 
             </div>
 
@@ -1069,7 +2920,8 @@
                 id="addStudentButton"
                 style="width:100%;"
             >
-                إضافة الطالب
+                <i class="fas fa-user-plus"></i>
+                إضافة الطلاب المحددين
             </button>
 
 
@@ -1208,9 +3060,6 @@
     const groupDetailsInfo =
         document.getElementById('groupDetailsInfo');
 
-    const studentSelect =
-        document.getElementById('studentSelect');
-
     const addStudentButton =
         document.getElementById('addStudentButton');
 
@@ -1223,9 +3072,13 @@
 
     let allStudents = [];
 
+    let studentNameById = {};
+
     let currentGroups = [];
 
     let currentGroup = null;
+
+    let currentGroupMemberIds = [];
 
 
     function redirectToLogin() {
@@ -1406,6 +3259,17 @@
         allStudents =
             students;
 
+        studentNameById = {};
+
+        allStudents.forEach(function(student) {
+
+            studentNameById[student.student_id] =
+                student.name || '';
+
+        });
+
+        updateStudentsClassifyInfo();
+
 
         students.forEach(function(student) {
 
@@ -1448,6 +3312,10 @@
                 </td>
 
                 <td>
+                    ${membershipCellHtml(student.student_id)}
+                </td>
+
+                <td>
                     <span class="status">
                         نشط
                     </span>
@@ -1479,8 +3347,8 @@
         refreshButton.disabled =
             true;
 
-        refreshButton.textContent =
-            'جاري التحديث...';
+        refreshButton.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> جاري التحديث...';
 
 
         const teacherSession =
@@ -1577,8 +3445,8 @@
             refreshButton.disabled =
                 false;
 
-            refreshButton.textContent =
-                '🔄 تحديث';
+            refreshButton.innerHTML =
+                '<i class="fas fa-rotate"></i> تحديث';
 
         }
 
@@ -1656,6 +3524,16 @@
             renderGroups(
                 currentGroups
             );
+
+            populateGroupFilters();
+
+            loadAllGroupMemberships().then(function() {
+
+                updateGroupCounts();
+
+                refreshMembershipDependentViews();
+
+            });
 
 
         } catch (error) {
@@ -1761,6 +3639,11 @@
 
                     <span class="group-tag">
                         ${escapeHtml(subjectText)}
+                    </span>
+
+                    <span class="group-tag" data-count-for="${escapeHtml(group.id)}">
+                        <i class="fas fa-user-group"></i>
+                        <span class="count-text">—</span>
                     </span>
 
                     <span class="group-tag">
@@ -1953,7 +3836,7 @@
             closeCreateGroupModal();
 
             showGroupsSuccess(
-                'تم إنشاء المجموعة بنجاح ✅'
+                'تم إنشاء المجموعة بنجاح'
             );
 
 
@@ -2023,7 +3906,16 @@
         `;
 
 
-        populateStudentSelect();
+        groupAddSearchInput.value =
+            '';
+
+        gaProgressElement.style.display =
+            'none';
+
+        gaProgressElement.textContent =
+            '';
+
+        renderGroupAddList();
 
 
         groupDetailsModal.classList.add(
@@ -2050,37 +3942,161 @@
     }
 
 
-    function populateStudentSelect() {
+    /* ---------- Multi-select add-students (single-student RPC, sequential safe calls) ---------- */
 
-        studentSelect.innerHTML =
-            '<option value="">اختر الطالب</option>';
+    const groupAddSearchInput =
+        document.getElementById('groupAddSearchInput');
 
+    const groupAddListElement =
+        document.getElementById('groupAddList');
+
+    const gaSelectedCountElement =
+        document.getElementById('gaSelectedCount');
+
+    const gaSelectAllButton =
+        document.getElementById('gaSelectAllButton');
+
+    const gaClearButton =
+        document.getElementById('gaClearButton');
+
+    const gaProgressElement =
+        document.getElementById('gaProgress');
+
+
+    function currentGroupMemberIdSet() {
+
+        return new Set(currentGroupMemberIds);
+
+    }
+
+
+    function renderGroupAddList() {
+
+        groupAddListElement.innerHTML =
+            '';
 
         if (!allStudents || allStudents.length === 0) {
+
+            groupAddListElement.innerHTML =
+                '<div class="member-none" style="padding:10px;">لا يوجد طلاب لعرضهم.</div>';
+
+            updateGaCount();
+
             return;
+
         }
 
+        const memberIds =
+            currentGroupMemberIdSet();
+
+        const query =
+            (groupAddSearchInput.value || '').trim().toLowerCase();
+
+        let listed = 0;
 
         allStudents.forEach(function(student) {
 
-            const option =
-                document.createElement('option');
+            if (memberIds.has(student.student_id)) {
+                return;
+            }
 
-            option.value =
-                student.student_id;
+            if (
+                query &&
+                (student.name || '').toLowerCase().indexOf(query) === -1 &&
+                (student.student_id || '').toLowerCase().indexOf(query) === -1
+            ) {
+                return;
+            }
 
-            option.textContent =
-                student.name +
-                ' — ' +
-                student.student_id;
+            const rowLabel =
+                document.createElement('label');
 
-            studentSelect.appendChild(
-                option
+            rowLabel.className =
+                'group-add-row';
+
+            rowLabel.innerHTML = `
+                <input type="checkbox" value="${escapeHtml(student.student_id)}">
+                <span class="ga-name">${escapeHtml(student.name)}</span>
+                <span class="ga-id">${escapeHtml(student.student_id)}</span>
+            `;
+
+            rowLabel.querySelector('input').addEventListener(
+                'change',
+                updateGaCount
             );
+
+            groupAddListElement.appendChild(rowLabel);
+
+            listed += 1;
 
         });
 
+        if (listed === 0) {
+
+            groupAddListElement.innerHTML =
+                '<div class="member-none" style="padding:10px;">لا يوجد طلاب متاحون للإضافة (الكل منضم بالفعل أو لا نتائج بحث).</div>';
+
+        }
+
+        updateGaCount();
+
     }
+
+
+    function updateGaCount() {
+
+        const checked =
+            groupAddListElement.querySelectorAll('input[type="checkbox"]:checked').length;
+
+        gaSelectedCountElement.textContent =
+            checked + ' محدد';
+
+        addStudentButton.disabled =
+            checked === 0;
+
+    }
+
+
+    gaSelectAllButton.addEventListener(
+        'click',
+        function() {
+
+            groupAddListElement.querySelectorAll('.group-add-row').forEach(function(row) {
+
+                if (row.style.display !== 'none') {
+
+                    row.querySelector('input').checked = true;
+
+                }
+
+            });
+
+            updateGaCount();
+
+        }
+    );
+
+
+    gaClearButton.addEventListener(
+        'click',
+        function() {
+
+            groupAddListElement.querySelectorAll('input[type="checkbox"]').forEach(function(box) {
+
+                box.checked = false;
+
+            });
+
+            updateGaCount();
+
+        }
+    );
+
+
+    groupAddSearchInput.addEventListener(
+        'input',
+        renderGroupAddList
+    );
 
 
     async function loadGroupStudents(groupId) {
@@ -2138,6 +4154,13 @@
             }
 
 
+            currentGroupMemberIds =
+                (data || []).map(function(row) {
+
+                    return row.student_id;
+
+                });
+
             renderGroupStudents(
                 data || []
             );
@@ -2177,7 +4200,7 @@
             groupStudentsList.innerHTML = `
                 <div class="empty-state" style="padding:25px 10px;">
                     <div class="empty-icon" style="font-size:35px;">
-                        👨‍🎓
+                        <i class="fas fa-user-graduate"></i>
                     </div>
                     <div>
                         لا يوجد طلاب في هذه المجموعة حتى الآن.
@@ -2256,14 +4279,51 @@
         }
 
 
-        const studentId =
-            studentSelect.value;
+        const selectedIds = [];
+
+        groupAddListElement.querySelectorAll('input[type="checkbox"]:checked').forEach(function(box) {
+
+            selectedIds.push(box.value);
+
+        });
 
 
-        if (!studentId) {
+        if (selectedIds.length === 0) {
 
             alert(
-                'اختر الطالب أولاً.'
+                'حدد طالبًا واحدًا على الأقل.'
+            );
+
+            return;
+        }
+
+
+        const alreadyMembers =
+            currentGroupMemberIdSet();
+
+        const toAdd = [];
+
+        const skippedExisting = [];
+
+        selectedIds.forEach(function(id) {
+
+            if (alreadyMembers.has(id)) {
+
+                skippedExisting.push(id);
+
+            } else {
+
+                toAdd.push(id);
+
+            }
+
+        });
+
+
+        if (toAdd.length === 0) {
+
+            alert(
+                'الطلاب المحددون منضمون بالفعل إلى هذه المجموعة.'
             );
 
             return;
@@ -2287,56 +4347,131 @@
         addStudentButton.disabled =
             true;
 
-        addStudentButton.textContent =
-            'جاري الإضافة...';
+        addStudentButton.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> جاري الإضافة...';
+
+        gaProgressElement.style.display =
+            'block';
+
+        gaProgressElement.className =
+            'ga-progress';
+
+        gaProgressElement.textContent =
+            'جاري الإضافة: 0 من ' + toAdd.length + '…';
 
 
         try {
 
-            const { data, error } =
-                await supabaseClient.rpc(
-                    'add_student_to_teacher_group',
-                    {
-                        p_session_token:
-                            teacherToken,
+            let added = 0;
 
-                        p_group_id:
-                            currentGroup.id,
+            const failed = [];
 
-                        p_student_id:
-                            studentId
+            for (let i = 0; i < toAdd.length; i++) {
+
+                const studentId = toAdd[i];
+
+                gaProgressElement.textContent =
+                    'جاري الإضافة: ' + (i + 1) + ' من ' + toAdd.length + '…';
+
+                try {
+
+                    const { data, error } =
+                        await supabaseClient.rpc(
+                            'add_student_to_teacher_group',
+                            {
+                                p_session_token:
+                                    teacherToken,
+
+                                p_group_id:
+                                    currentGroup.id,
+
+                                p_student_id:
+                                    studentId
+                            }
+                        );
+
+
+                    if (error) {
+
+                        console.error(
+                            'Add Student RPC Error:',
+                            error
+                        );
+
+                        failed.push(studentId);
+
+                        continue;
                     }
-                );
 
 
-            if (error) {
+                    if (data !== true) {
 
-                console.error(
-                    'Add Student RPC Error:',
-                    error
-                );
+                        failed.push(studentId);
 
-                alert(
-                    'حدث خطأ أثناء إضافة الطالب.'
-                );
+                        continue;
+                    }
 
-                return;
+
+                    added += 1;
+
+                    currentGroupMemberIds.push(studentId);
+
+                } catch (loopError) {
+
+                    console.error(
+                        'Unexpected Add Student Error:',
+                        loopError
+                    );
+
+                    failed.push(studentId);
+
+                }
+
             }
 
 
-            if (data !== true) {
+            if (skippedExisting.length > 0) {
 
-                alert(
-                    'لم تتم إضافة الطالب. تأكد من الجلسة والمجموعة والطالب.'
-                );
+                gaProgressElement.className =
+                    'ga-progress';
 
-                return;
+                gaProgressElement.textContent =
+                    'تم تخطي ' + skippedExisting.length + ' طالب منضم بالفعل.';
+
             }
 
 
-            studentSelect.value =
-                '';
+            if (added > 0) {
 
+                showGroupsSuccess(
+                    'تم إضافة ' + added + ' طالب للمجموعة'
+                );
+
+                gaProgressElement.className =
+                    'ga-progress ok';
+
+                gaProgressElement.textContent =
+                    'تمت إضافة ' + added + ' طالب بنجاح.';
+
+            }
+
+
+            if (failed.length > 0) {
+
+                gaProgressElement.className =
+                    'ga-progress error';
+
+                gaProgressElement.textContent =
+                    'تعذر إضافة ' + failed.length + ' طالب. تحقق من الجلسة وحاول مجددًا.';
+
+            }
+
+
+            renderGroupAddList();
+
+            updateGroupCounts();
+
+            refreshMembershipDependentViews();
 
             await loadGroupStudents(
                 currentGroup.id
@@ -2356,11 +4491,7 @@
 
         } finally {
 
-            addStudentButton.disabled =
-                false;
-
-            addStudentButton.textContent =
-                'إضافة الطالب';
+            updateGaCount();
 
         }
 
@@ -2521,6 +4652,1593 @@
     }
 
 
+    /* ============================================================
+       NEXORA — Teacher Dashboard Shell (presentation layer)
+       - Theme switcher reuses the Student UI's localStorage key
+         ('themePreference', owned by ui-enhance.js) — additive only.
+       - Sidebar navigation is purely visual routing between existing
+         sections. No RPC, ID, or business-logic changes.
+       ============================================================ */
+
+    function getStoredTheme() {
+
+        try {
+
+            const value =
+                localStorage.getItem('themePreference');
+
+            return (
+                value === 'light' ||
+                value === 'dark' ||
+                value === 'system'
+            )
+                ? value
+                : 'dark';
+
+        } catch (error) {
+
+            return 'dark';
+
+        }
+
+    }
+
+
+    function systemPrefersDark() {
+
+        return !!(
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+        );
+
+    }
+
+
+    function applyTheme(preference) {
+
+        const effective =
+            preference === 'system'
+                ? (systemPrefersDark() ? 'dark' : 'light')
+                : preference;
+
+        document.documentElement.setAttribute(
+            'data-theme',
+            effective
+        );
+
+        document.querySelectorAll('[data-theme-option]').forEach(function(button) {
+
+            button.classList.toggle(
+                'active',
+                button.getAttribute('data-theme-option') === preference
+            );
+
+        });
+
+    }
+
+
+    document.querySelectorAll('#themeSwitch, #themeSwitchSettings').forEach(function(sw) {
+
+        sw.addEventListener(
+            'click',
+            function(event) {
+
+                const button =
+                    event.target.closest('[data-theme-option]');
+
+                if (!button) {
+                    return;
+                }
+
+                const preference =
+                    button.getAttribute('data-theme-option');
+
+                try {
+
+                    localStorage.setItem('themePreference', preference);
+
+                } catch (error) {
+
+                    /* storage unavailable — theme still applies this visit */
+                }
+
+                applyTheme(preference);
+
+            }
+        );
+
+    });
+
+
+    /* ---------- Sidebar navigation ---------- */
+
+    const sidebarElement =
+        document.getElementById('sidebar');
+
+    const sidebarBackdrop =
+        document.getElementById('sidebarBackdrop');
+
+    const hamburgerButton =
+        document.getElementById('hamburgerButton');
+
+
+    function closeSidebar() {
+
+        sidebarElement.classList.remove('open');
+
+        sidebarBackdrop.classList.remove('show');
+
+    }
+
+
+    function showPage(pageId) {
+
+        document.querySelectorAll('.page').forEach(function(page) {
+
+            page.classList.toggle(
+                'active',
+                page.id === 'page-' + pageId
+            );
+
+        });
+
+        document.querySelectorAll('.nav-item').forEach(function(item) {
+
+            item.classList.toggle(
+                'active',
+                item.getAttribute('data-page') === pageId
+            );
+
+        });
+
+        if (window.innerWidth <= 800) {
+            closeSidebar();
+        }
+
+    }
+
+
+    document.querySelectorAll('.nav-item[data-page]').forEach(function(item) {
+
+        item.addEventListener(
+            'click',
+            function() {
+
+                showPage(
+                    item.getAttribute('data-page')
+                );
+
+            }
+        );
+
+    });
+
+
+    hamburgerButton.addEventListener(
+        'click',
+        function() {
+
+            sidebarElement.classList.toggle('open');
+
+            sidebarBackdrop.classList.toggle(
+                'show',
+                sidebarElement.classList.contains('open')
+            );
+
+        }
+    );
+
+
+    sidebarBackdrop.addEventListener(
+        'click',
+        closeSidebar
+    );
+
+
+    /* ---------- Group membership (derived ONLY from existing group RPCs) ---------- */
+
+    let groupMembersByGroup = {};
+
+    let studentMembership = {};
+
+    let groupGradeByName = {};
+
+    let membershipLoadFailed = false;
+
+
+    async function loadAllGroupMemberships() {
+
+        groupMembersByGroup =
+            {};
+
+        studentMembership =
+            {};
+
+        groupGradeByName =
+            {};
+
+        membershipLoadFailed =
+            false;
+
+        const teacherToken =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!teacherToken || !currentGroups || currentGroups.length === 0) {
+
+            return;
+
+        }
+
+        for (const group of currentGroups) {
+
+            try {
+
+                const { data, error } =
+                    await supabaseClient.rpc(
+                        'get_teacher_group_students_by_session',
+                        {
+                            p_session_token: teacherToken,
+                            p_group_id: group.id
+                        }
+                    );
+
+
+                if (error) {
+
+                    console.error(
+                        'Group Membership RPC Error:',
+                        error
+                    );
+
+                    membershipLoadFailed =
+                        true;
+
+                    continue;
+                }
+
+
+                const rows =
+                    data || [];
+
+                groupMembersByGroup[group.id] =
+                    rows;
+
+                rows.forEach(function(row) {
+
+                    if (!studentMembership[row.student_id]) {
+
+                        studentMembership[row.student_id] =
+                            [];
+
+                    }
+
+                    studentMembership[row.student_id].push(
+                        group.name
+                    );
+
+                });
+
+                groupGradeByName[group.name] =
+                    group.grade
+                        ? 'الصف ' + group.grade
+                        : 'بدون صف';
+
+            } catch (loopError) {
+
+                console.error(
+                    'Unexpected Membership Error:',
+                    loopError
+                );
+
+                membershipLoadFailed =
+                    true;
+
+            }
+
+        }
+
+    }
+
+
+    function membershipCellHtml(studentId) {
+
+        const memberships =
+            studentMembership[studentId] || [];
+
+        if (memberships.length === 0) {
+
+            if (membershipLoadFailed) {
+
+                return '<span class="member-none"><i class="fas fa-triangle-exclamation"></i> غير متأكد</span>';
+
+            }
+
+            return '<span class="member-none">غير مصنف</span>';
+
+        }
+
+        const shown =
+            memberships.slice(0, 2);
+
+        const extra =
+            memberships.length - shown.length;
+
+        let html =
+            shown.map(function(groupName) {
+
+                return '<span class="member-chip">' + escapeHtml(groupName) + '</span>';
+
+            }).join(' ');
+
+        if (extra > 0) {
+
+            html +=
+                ' <span class="member-chip">+' + extra + '</span>';
+
+        }
+
+        return html;
+
+    }
+
+
+    function populateGroupFilters() {
+
+        const previousGroup =
+            studentGroupFilterSelect.value;
+
+        const previousGrade =
+            studentGradeFilterSelect.value;
+
+        let groupOptions =
+            '<option value="all">كل المجموعات</option>' +
+            '<option value="unassigned">غير المصنفين في مجموعة</option>';
+
+        currentGroups.forEach(function(group) {
+
+            groupOptions +=
+                '<option value="' + escapeHtml(group.name) + '">' +
+                escapeHtml(group.name) +
+                '</option>';
+
+        });
+
+        studentGroupFilterSelect.innerHTML =
+            groupOptions;
+
+        const grades =
+            [];
+
+        currentGroups.forEach(function(group) {
+
+            if (!group.grade) {
+                return;
+            }
+
+            const label =
+                'الصف ' + group.grade;
+
+            if (grades.indexOf(label) === -1) {
+
+                grades.push(label);
+
+            }
+
+        });
+
+        grades.sort(function(a, b) {
+            return a.localeCompare(b, 'ar', { numeric: true });
+        });
+
+        let gradeOptions =
+            '<option value="all">كل الصفوف</option>' +
+            '<option value="ungraded">بدون صف</option>';
+
+        grades.forEach(function(label) {
+
+            gradeOptions +=
+                '<option value="' + escapeHtml(label) + '">' +
+                escapeHtml(label) +
+                '</option>';
+
+        });
+
+        studentGradeFilterSelect.innerHTML =
+            gradeOptions;
+
+        let hasPrevious =
+            false;
+
+        Array.prototype.forEach.call(studentGroupFilterSelect.options, function(option) {
+
+            if (option.value === previousGroup) {
+
+                hasPrevious = true;
+
+            }
+
+        });
+
+        if (hasPrevious) {
+
+            studentGroupFilterSelect.value =
+                previousGroup;
+
+        }
+
+        hasPrevious =
+            false;
+
+        Array.prototype.forEach.call(studentGradeFilterSelect.options, function(option) {
+
+            if (option.value === previousGrade) {
+
+                hasPrevious = true;
+
+            }
+
+        });
+
+        if (hasPrevious) {
+
+            studentGradeFilterSelect.value =
+                previousGrade;
+
+        }
+
+        renderGradeStrip();
+
+    }
+
+
+    function updateStudentsClassifyInfo() {
+
+        const info =
+            document.getElementById('studentsClassifyInfo');
+
+        if (!info) {
+            return;
+        }
+
+        let assigned =
+            0;
+
+        allStudents.forEach(function(student) {
+
+            if ((studentMembership[student.student_id] || []).length > 0) {
+
+                assigned += 1;
+
+            }
+
+        });
+
+        const unassigned =
+            allStudents.length - assigned;
+
+        info.textContent =
+            allStudents.length === 0
+                ? ''
+                : (assigned + ' مصنفون — ' + unassigned + ' غير مصنفين' + (membershipLoadFailed ? ' (عضويات ناقصة: تعذر تحميل بعض المجموعات)' : ''));
+
+    }
+
+
+    function refreshMembershipDependentViews() {
+
+        renderStudentRows();
+
+        updateStudentsClassifyInfo();
+
+    }
+
+
+    function updateGroupCounts() {
+
+        document.querySelectorAll('#groupsList [data-count-for]').forEach(function(tag) {
+
+            const groupId =
+                tag.getAttribute('data-count-for');
+
+            if (!(groupId in groupMembersByGroup)) {
+                return;
+            }
+
+            const rows =
+                groupMembersByGroup[groupId] || [];
+
+            const text =
+                tag.querySelector('.count-text');
+
+            if (text) {
+
+                text.textContent =
+                    rows.length === 1
+                        ? 'طالب واحد'
+                        : rows.length + ' طالب';
+
+            }
+
+        });
+
+    }
+
+
+    /* ---------- Students: search + sort (presentation filter only) ---------- */
+
+    const studentSearchInput =
+        document.getElementById('studentSearchInput');
+
+    const studentGroupFilterSelect =
+        document.getElementById('studentGroupFilter');
+
+    const studentGradeFilterSelect =
+        document.getElementById('studentGradeFilter');
+
+    const studentSortSelect =
+        document.getElementById('studentSortSelect');
+
+    const studentsResultsCount =
+        document.getElementById('studentsResultsCount');
+
+
+    function renderStudentRows() {
+
+        if (!allStudents || allStudents.length === 0) {
+            return;
+        }
+
+        const groupFilter =
+            studentGroupFilterSelect.value;
+
+        const gradeFilter =
+            studentGradeFilterSelect.value;
+
+        const query =
+            (studentSearchInput.value || '').trim().toLowerCase();
+
+        let rows =
+            allStudents.slice();
+
+        if (groupFilter === 'unassigned') {
+
+            rows = rows.filter(function(student) {
+
+                return (studentMembership[student.student_id] || []).length === 0;
+
+            });
+
+        } else if (groupFilter !== 'all') {
+
+            rows = rows.filter(function(student) {
+
+                return (studentMembership[student.student_id] || []).indexOf(groupFilter) !== -1;
+
+            });
+
+        }
+
+        if (gradeFilter === 'ungraded') {
+
+            rows = rows.filter(function(student) {
+
+                const memberships =
+                    studentMembership[student.student_id] || [];
+
+                const documented =
+                    memberships.map(function(groupName) {
+
+                        return groupGradeByName[groupName];
+
+                    }).filter(Boolean);
+
+                return documented.length === 0;
+
+            });
+
+        } else if (gradeFilter !== 'all') {
+
+            rows = rows.filter(function(student) {
+
+                const memberships =
+                    studentMembership[student.student_id] || [];
+
+                const grades =
+                    memberships.map(function(groupName) {
+
+                        return groupGradeByName[groupName];
+
+                    });
+
+                return grades.indexOf(gradeFilter) !== -1;
+
+            });
+
+        }
+
+        if (query) {
+
+            rows = rows.filter(function(student) {
+
+                return (
+                    (student.name || '').toLowerCase().indexOf(query) !== -1 ||
+                    (student.student_id || '').toLowerCase().indexOf(query) !== -1 ||
+                    (student.phone || '').indexOf(query) !== -1 ||
+                    (student.parent_phone || '').indexOf(query) !== -1
+                );
+
+            });
+
+        }
+
+        const sortMode =
+            studentSortSelect.value;
+
+        if (sortMode === 'name') {
+
+            rows.sort(function(a, b) {
+                return (a.name || '').localeCompare(b.name || '', 'ar');
+            });
+
+        } else if (sortMode === 'id') {
+
+            rows.sort(function(a, b) {
+                return (a.student_id || '').localeCompare(b.student_id || '');
+            });
+
+        } else {
+
+            rows.sort(function(a, b) {
+                return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+            });
+
+        }
+
+        studentsTableBody.innerHTML =
+            '';
+
+        rows.forEach(function(student) {
+
+            const row =
+                document.createElement('tr');
+
+            row.innerHTML = `
+
+                <td>
+                    <div class="student-name">
+                        <a
+                            href="student-profile.html?student_id=${encodeURIComponent(student.student_id)}"
+                        >
+                            ${escapeHtml(student.name)}
+                        </a>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="student-id">
+                        ${escapeHtml(student.student_id)}
+                    </div>
+                </td>
+
+                <td>
+                    <div class="phone">
+                        ${escapeHtml(student.phone)}
+                    </div>
+                </td>
+
+                <td>
+                    <div class="phone">
+                        ${escapeHtml(student.parent_phone)}
+                    </div>
+                </td>
+
+                <td>
+                    ${escapeHtml(formatDate(student.created_at))}
+                </td>
+
+                <td>
+                    ${membershipCellHtml(student.student_id)}
+                </td>
+
+                <td>
+                    <span class="status">
+                        نشط
+                    </span>
+                </td>
+
+            `;
+
+            studentsTableBody.appendChild(row);
+
+        });
+
+        studentsResultsCount.textContent =
+            (query || sortMode !== 'recent' || groupFilter !== 'all' || gradeFilter !== 'all')
+                ? (rows.length + ' من ' + allStudents.length + ' طالب')
+                : '';
+
+    }
+
+
+    studentSearchInput.addEventListener('input', renderStudentRows);
+
+    studentSortSelect.addEventListener('change', renderStudentRows);
+
+    studentGroupFilterSelect.addEventListener('change', renderStudentRows);
+
+    studentGradeFilterSelect.addEventListener('change', renderStudentRows);
+
+
+    /* ---------- Students: real-grade strip (groups.grade = the only documented student grade) ---------- */
+
+    function renderGradeStrip() {
+
+        const strip =
+            document.getElementById('gradeStrip');
+
+        if (!strip) {
+            return;
+        }
+
+        const grades = [];
+
+        currentGroups.forEach(function(group) {
+
+            if (!group.grade) {
+                return;
+            }
+
+            const label =
+                'الصف ' + group.grade;
+
+            if (grades.indexOf(label) === -1) {
+
+                grades.push(label);
+
+            }
+
+        });
+
+        grades.sort(function(a, b) {
+            return a.localeCompare(b, 'ar', { numeric: true });
+        });
+
+        strip.querySelectorAll('.grade-chip[data-grade-chip]').forEach(function(chip) {
+
+            chip.remove();
+
+        });
+
+        grades.forEach(function(label) {
+
+            const chip =
+                document.createElement('button');
+
+            chip.type = 'button';
+
+            chip.className = 'grade-chip';
+
+            chip.setAttribute('data-grade', label);
+
+            chip.setAttribute('data-grade-chip', '1');
+
+            chip.innerHTML =
+                '<i class="fas fa-graduation-cap"></i> ' + escapeHtml(label);
+
+            strip.appendChild(chip);
+
+        });
+
+        syncGradeStripActive();
+
+    }
+
+
+    function syncGradeStripActive() {
+
+        const strip =
+            document.getElementById('gradeStrip');
+
+        if (!strip) {
+            return;
+        }
+
+        const selected =
+            studentGradeFilterSelect.value;
+
+        strip.querySelectorAll('.grade-chip').forEach(function(chip) {
+
+            const value =
+                chip.getAttribute('data-grade');
+
+            let active;
+
+            if (selected === 'all') {
+
+                active = value === 'all';
+
+            } else if (selected === 'ungraded') {
+
+                active = value === '__none__';
+
+            } else {
+
+                active = value === selected;
+
+            }
+
+            chip.classList.toggle('active', active);
+
+        });
+
+    }
+
+
+    (function bindGradeStrip() {
+
+        const strip =
+            document.getElementById('gradeStrip');
+
+        if (!strip) {
+            return;
+        }
+
+        strip.addEventListener('click', function(event) {
+
+            const chip =
+                event.target.closest('.grade-chip');
+
+            if (!chip) {
+                return;
+            }
+
+            const value =
+                chip.getAttribute('data-grade');
+
+            if (value === 'all') {
+
+                studentGradeFilterSelect.value = 'all';
+
+                studentGroupFilterSelect.value = 'all';
+
+            } else if (value === '__none__') {
+
+                studentGradeFilterSelect.value = 'ungraded';
+
+                studentGroupFilterSelect.value = 'all';
+
+            } else {
+
+                studentGradeFilterSelect.value = value;
+
+            }
+
+            renderStudentRows();
+
+            syncGradeStripActive();
+
+        });
+
+    })();
+
+
+    /* ---------- Results page (existing per-student RPCs, teacher-scoped) ---------- */
+
+    const refreshResultsButton =
+        document.getElementById('refreshResultsButton');
+
+    const resultsLoadingElement =
+        document.getElementById('resultsLoading');
+
+    const resultsEmptyStateElement =
+        document.getElementById('resultsEmptyState');
+
+    const resultsTableWrapperElement =
+        document.getElementById('resultsTableWrapper');
+
+    const resultsTableBody =
+        document.getElementById('resultsTableBody');
+
+    const resultsErrorBoxElement =
+        document.getElementById('resultsErrorBox');
+
+    const resultsSearchInput =
+        document.getElementById('resultsSearchInput');
+
+    const resultsResultsCount =
+        document.getElementById('resultsResultsCount');
+
+    const overviewLatestResults =
+        document.getElementById('overviewLatestResults');
+
+    let allResults = [];
+
+    let resultsLoaded = false;
+
+
+    async function loadAllResults() {
+
+        resultsErrorBoxElement.textContent = '';
+
+        resultsErrorBoxElement.style.display = 'none';
+
+        resultsLoadingElement.style.display = 'block';
+
+        resultsTableWrapperElement.style.display = 'none';
+
+        resultsEmptyStateElement.style.display = 'none';
+
+        refreshResultsButton.disabled = true;
+
+        refreshResultsButton.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> جاري التحديث...';
+
+        const teacherToken =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!teacherToken) {
+
+            redirectToLogin();
+
+            return;
+
+        }
+
+        try {
+
+            allResults = [];
+
+            const sources =
+                allStudents.map(function(student) {
+
+                    return supabaseClient.rpc(
+                        'get_teacher_student_results_by_session',
+                        {
+                            p_session_token: teacherToken,
+                            p_student_id: student.student_id
+                        }
+                    );
+
+                });
+
+            const settled =
+                await Promise.allSettled(sources);
+
+            settled.forEach(function(outcome) {
+
+                if (
+                    outcome.status === 'fulfilled' &&
+                    outcome.value &&
+                    outcome.value.data
+                ) {
+
+                    allResults = allResults.concat(outcome.value.data);
+
+                }
+
+            });
+
+            allResults.sort(function(a, b) {
+                return new Date(b.completed_at || 0) - new Date(a.completed_at || 0);
+            });
+
+            resultsLoaded = true;
+
+            renderResults();
+
+            renderOverview();
+
+        } catch (error) {
+
+            console.error('Unexpected Results Error:', error);
+
+            resultsErrorBoxElement.textContent =
+                'حدث خطأ غير متوقع أثناء تحميل النتائج.';
+
+            resultsErrorBoxElement.style.display = 'block';
+
+        } finally {
+
+            resultsLoadingElement.style.display = 'none';
+
+            refreshResultsButton.disabled = false;
+
+            refreshResultsButton.innerHTML =
+                '<i class="fas fa-rotate"></i> تحديث';
+
+        }
+
+    }
+
+
+    function renderResults() {
+
+        resultsTableBody.innerHTML = '';
+
+        if (allResults.length === 0) {
+
+            resultsTableWrapperElement.style.display = 'none';
+
+            resultsEmptyStateElement.style.display = 'block';
+
+            resultsResultsCount.textContent = '';
+
+            return;
+
+        }
+
+        resultsEmptyStateElement.style.display = 'none';
+
+        resultsTableWrapperElement.style.display = 'block';
+
+        const query =
+            (resultsSearchInput.value || '').trim().toLowerCase();
+
+        let rows =
+            allResults.slice();
+
+        if (query) {
+
+            rows = rows.filter(function(r) {
+
+                const student =
+                    studentNameById[r.student_id] || '';
+
+                return (
+                    student.toLowerCase().indexOf(query) !== -1 ||
+                    (r.title || '').toLowerCase().indexOf(query) !== -1 ||
+                    (r.type || '').toLowerCase().indexOf(query) !== -1
+                );
+
+            });
+
+        }
+
+        rows.forEach(function(r) {
+
+            const typeLabel =
+                r.type === 'exam'
+                    ? 'امتحان'
+                    : r.type === 'assignment'
+                        ? 'واجب'
+                        : escapeHtml(r.type || '-');
+
+            const chipClass =
+                (r.percentage || 0) >= 50
+                    ? 'percent-chip'
+                    : 'percent-chip warn';
+
+            const row =
+                document.createElement('tr');
+
+            row.innerHTML = `
+
+                <td>
+                    <div class="student-name">
+                        ${escapeHtml(studentNameById[r.student_id] || r.student_id)}
+                    </div>
+                </td>
+
+                <td>
+                    ${escapeHtml(r.title || '-')}
+                </td>
+
+                <td>
+                    ${typeLabel}
+                </td>
+
+                <td>
+                    ${escapeHtml(String(r.correct ?? '-'))} / ${escapeHtml(String(r.total ?? '-'))}
+                </td>
+
+                <td>
+                    <span class="${chipClass}">${escapeHtml(String(r.percentage ?? 0))}%</span>
+                </td>
+
+                <td>
+                    ${escapeHtml(formatDate(r.completed_at))}
+                </td>
+
+                <td>
+                    <a
+                        class="table-link"
+                        href="student-profile.html?student_id=${encodeURIComponent(r.student_id)}"
+                    >الملف</a>
+                </td>
+
+            `;
+
+            resultsTableBody.appendChild(row);
+
+        });
+
+        resultsResultsCount.textContent =
+            query
+                ? (rows.length + ' من ' + allResults.length + ' نتيجة')
+                : '';
+
+    }
+
+
+    resultsSearchInput.addEventListener('input', renderResults);
+
+
+    refreshResultsButton.addEventListener('click', loadAllResults);
+
+
+    /* ---------- Certificates page (existing per-student RPC, teacher-scoped) ---------- */
+
+    const refreshCertificatesButton =
+        document.getElementById('refreshCertificatesButton');
+
+    const certificatesLoadingElement =
+        document.getElementById('certificatesLoading');
+
+    const certificatesEmptyStateElement =
+        document.getElementById('certificatesEmptyState');
+
+    const certificatesTableWrapperElement =
+        document.getElementById('certificatesTableWrapper');
+
+    const certificatesTableBody =
+        document.getElementById('certificatesTableBody');
+
+    const certificatesErrorBoxElement =
+        document.getElementById('certificatesErrorBox');
+
+    const certificatesSearchInput =
+        document.getElementById('certificatesSearchInput');
+
+    const certificatesResultsCount =
+        document.getElementById('certificatesResultsCount');
+
+    let allCertificates = [];
+
+
+    async function loadAllCertificates() {
+
+        certificatesErrorBoxElement.textContent = '';
+
+        certificatesErrorBoxElement.style.display = 'none';
+
+        certificatesLoadingElement.style.display = 'block';
+
+        certificatesTableWrapperElement.style.display = 'none';
+
+        certificatesEmptyStateElement.style.display = 'none';
+
+        refreshCertificatesButton.disabled = true;
+
+        refreshCertificatesButton.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> جاري التحديث...';
+
+        const teacherToken =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!teacherToken) {
+
+            redirectToLogin();
+
+            return;
+
+        }
+
+        try {
+
+            allCertificates = [];
+
+            const sources =
+                allStudents.map(function(student) {
+
+                    return supabaseClient.rpc(
+                        'get_teacher_student_certificates_by_session',
+                        {
+                            p_session_token: teacherToken,
+                            p_student_id: student.student_id
+                        }
+                    );
+
+                });
+
+            const settled =
+                await Promise.allSettled(sources);
+
+            settled.forEach(function(outcome) {
+
+                if (
+                    outcome.status === 'fulfilled' &&
+                    outcome.value &&
+                    outcome.value.data
+                ) {
+
+                    allCertificates = allCertificates.concat(outcome.value.data);
+
+                }
+
+            });
+
+            allCertificates.sort(function(a, b) {
+                return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+            });
+
+            renderCertificates();
+
+        } catch (error) {
+
+            console.error('Unexpected Certificates Error:', error);
+
+            certificatesErrorBoxElement.textContent =
+                'حدث خطأ غير متوقع أثناء تحميل الشهادات.';
+
+            certificatesErrorBoxElement.style.display = 'block';
+
+        } finally {
+
+            certificatesLoadingElement.style.display = 'none';
+
+            refreshCertificatesButton.disabled = false;
+
+            refreshCertificatesButton.innerHTML =
+                '<i class="fas fa-rotate"></i> تحديث';
+
+        }
+
+    }
+
+
+    function renderCertificates() {
+
+        certificatesTableBody.innerHTML = '';
+
+        if (allCertificates.length === 0) {
+
+            certificatesTableWrapperElement.style.display = 'none';
+
+            certificatesEmptyStateElement.style.display = 'block';
+
+            certificatesResultsCount.textContent = '';
+
+            return;
+
+        }
+
+        certificatesEmptyStateElement.style.display = 'none';
+
+        certificatesTableWrapperElement.style.display = 'block';
+
+        const query =
+            (certificatesSearchInput.value || '').trim().toLowerCase();
+
+        let rows =
+            allCertificates.slice();
+
+        if (query) {
+
+            rows = rows.filter(function(c) {
+
+                return (
+                    (c.student_name || '').toLowerCase().indexOf(query) !== -1 ||
+                    (c.assessment_name || '').toLowerCase().indexOf(query) !== -1
+                );
+
+            });
+
+        }
+
+        rows.forEach(function(c) {
+
+            const row =
+                document.createElement('tr');
+
+            row.innerHTML = `
+
+                <td>
+                    <div class="student-name">
+                        ${escapeHtml(c.student_name || studentNameById[c.student_id] || c.student_id)}
+                    </div>
+                </td>
+
+                <td>
+                    ${escapeHtml(c.certificate_id || '-')}
+                </td>
+
+                <td>
+                    ${escapeHtml(c.assessment_name || '-')}
+                </td>
+
+                <td>
+                    ${escapeHtml(String(c.score ?? '-'))}
+                </td>
+
+                <td>
+                    ${escapeHtml(c.date || formatDate(c.created_at))}
+                </td>
+
+                <td>
+                    <a
+                        class="table-link"
+                        href="student-profile.html?student_id=${encodeURIComponent(c.student_id)}"
+                    >الملف</a>
+                </td>
+
+            `;
+
+            certificatesTableBody.appendChild(row);
+
+        });
+
+        certificatesResultsCount.textContent =
+            query
+                ? (rows.length + ' من ' + allCertificates.length + ' شهادة')
+                : '';
+
+    }
+
+
+    certificatesSearchInput.addEventListener('input', renderCertificates);
+
+
+    refreshCertificatesButton.addEventListener('click', loadAllCertificates);
+
+
+    /* ---------- Notifications (derived from live data — no invented backend) ---------- */
+
+    const notificationsListElement =
+        document.getElementById('notificationsList');
+
+    const overviewNotifsElement =
+        document.getElementById('overviewNotifs');
+
+
+    function buildNotifications() {
+
+        const notifs = [];
+
+        if (allStudents.length === 0) {
+
+            notifs.push({
+                icon: 'fa-user-graduate',
+                title: 'لا يوجد طلاب مسجلون بعد',
+                meta: 'عند تسجيل أول طالب ستجد بياناته هنا تلقائيًا.'
+            });
+
+        } else {
+
+            notifs.push({
+                icon: 'fa-circle-check',
+                title: 'بيانات الطلاب محدثة — ' + allStudents.length + ' طالب',
+                meta: 'آخر مزامنة مع قاعدة البيانات تمت بنجاح.'
+            });
+
+        }
+
+        if (currentGroups.length === 0) {
+
+            notifs.push({
+                icon: 'fa-users',
+                title: 'لا توجد مجموعات',
+                meta: 'أنشئ أول مجموعة من قسم المجموعات.'
+            });
+
+        } else {
+
+            notifs.push({
+                icon: 'fa-users',
+                title: 'المجموعات: ' + currentGroups.length,
+                meta: 'إدارة المجموعات متاحة من القسم المخصص.'
+            });
+
+        }
+
+        allResults.slice(0, 3).forEach(function(r) {
+
+            notifs.push({
+                icon: 'fa-clipboard-check',
+                title: (studentNameById[r.student_id] || r.student_id) + ' — ' + (r.title || 'نتيجة جديدة'),
+                meta: (r.percentage ?? '-') + '% — ' + formatDate(r.completed_at)
+            });
+
+        });
+
+        allCertificates.slice(0, 2).forEach(function(c) {
+
+            notifs.push({
+                icon: 'fa-award',
+                title: 'شهادة جديدة — ' + (c.student_name || c.student_id),
+                meta: (c.assessment_name || '') + ' — ' + (c.date || formatDate(c.created_at))
+            });
+
+        });
+
+        return notifs;
+
+    }
+
+
+    function renderNotifications() {
+
+        const notifs =
+            buildNotifications();
+
+        notificationsListElement.innerHTML =
+            '';
+
+        notifs.forEach(function(n) {
+
+            const item =
+                document.createElement('div');
+
+            item.className = 'notif-item';
+
+            item.innerHTML = `
+
+                <i class="fas ${n.icon}"></i>
+
+                <div>
+
+                    <div class="notif-title">${escapeHtml(n.title)}</div>
+
+                    <div class="notif-meta">${escapeHtml(n.meta)}</div>
+
+                </div>
+
+            `;
+
+            notificationsListElement.appendChild(item);
+
+        });
+
+        overviewNotifsElement.innerHTML =
+            '';
+
+        notifs.slice(0, 4).forEach(function(n) {
+
+            const row =
+                document.createElement('div');
+
+            row.className = 'mini-row';
+
+            row.innerHTML = `
+                <div>
+                    <div class="mini-name">${escapeHtml(n.title)}</div>
+                    <div class="mini-meta">${escapeHtml(n.meta)}</div>
+                </div>
+                <i class="fas ${n.icon}" style="color: var(--primary);"></i>
+            `;
+
+            overviewNotifsElement.appendChild(row);
+
+        });
+
+        const badge =
+            document.getElementById('notificationsNavBadge');
+
+        if (badge) {
+
+            badge.textContent =
+                String(notifs.length);
+
+            badge.classList.toggle(
+                'show',
+                notifs.length > 0
+            );
+
+        }
+
+    }
+
+
+    /* ---------- Overview assembly ---------- */
+
+    function renderOverview() {
+
+        overviewLatestResults.innerHTML =
+            '';
+
+        if (allResults.length === 0) {
+
+            overviewLatestResults.innerHTML =
+                '<div class="mini-row"><span class="mini-meta">لا توجد نتائج مسجلة بعد.</span></div>';
+
+            return;
+
+        }
+
+        allResults.slice(0, 5).forEach(function(r) {
+
+            const row =
+                document.createElement('div');
+
+            row.className = 'mini-row';
+
+            row.innerHTML = `
+                <div>
+                    <div class="mini-name">${escapeHtml(studentNameById[r.student_id] || r.student_id)}</div>
+                    <div class="mini-meta">${escapeHtml(r.title || 'نتيجة')} — ${escapeHtml(formatDate(r.completed_at))}</div>
+                </div>
+                <span class="percent-chip">${escapeHtml(String(r.percentage ?? 0))}%</span>
+            `;
+
+            overviewLatestResults.appendChild(row);
+
+        });
+
+    }
+
+
+    /* ---------- Teacher Profile page (session metadata only — no secrets) ---------- */
+
+    function renderProfile() {
+
+        const session =
+            getTeacherSession();
+
+        if (!session) {
+            return;
+        }
+
+        const name =
+            session.name || 'المدرس';
+
+        document.getElementById('profileName').textContent =
+            name;
+
+        document.getElementById('profileNameRow').textContent =
+            name;
+
+        const settingsNameInput =
+            document.getElementById('settingsNameInput');
+
+        if (settingsNameInput) {
+
+            settingsNameInput.value =
+                name;
+
+        }
+
+        if (session.image) {
+
+            document.getElementById('profileImage').src =
+                session.image;
+
+        }
+
+        document.getElementById('profileLastLogin').textContent =
+            session.login_at
+                ? formatDate(session.login_at)
+                : '—';
+
+        document.getElementById('profileSessionExpiry').textContent =
+            session.expires_at
+                ? formatDate(session.expires_at)
+                : '—';
+
+    }
+
+
+    const logoutButtonTop =
+        document.getElementById('logoutButtonTop');
+
+    if (logoutButtonTop) {
+
+        logoutButtonTop.addEventListener(
+            'click',
+            function() {
+
+                localStorage.removeItem(teacherSessionKey);
+
+                sessionStorage.removeItem(teacherTokenKey);
+
+                window.location.href =
+                    'teacher-login.html';
+
+            }
+        );
+
+    }
+
+
     logoutButton.addEventListener(
         'click',
         function() {
@@ -2633,6 +6351,15 @@
             await loadStudents();
 
             await loadGroups();
+
+            renderProfile();
+
+            applyTheme(getStoredTheme());
+
+            Promise.all([
+                loadAllResults(),
+                loadAllCertificates()
+            ]).then(renderNotifications);
 
         }
     );

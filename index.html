@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXORA | مستر مهاب</title>
+    <title>NEXORA | مستر مهاب — Shehab Innovation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -221,6 +221,15 @@
 
         .sidebar-nav li{
             margin-bottom:0;
+        }
+
+        .sidebar-nav .nav-section{
+            margin:16px 8px 2px;
+            font-size:10.5px;
+            font-weight:800;
+            letter-spacing:.14em;
+            color:var(--navy-300);
+            opacity:.75;
         }
 
         .sidebar-nav a{
@@ -1582,13 +1591,15 @@
 
             .sidebar-nav{
                 display:flex;
-                flex-wrap:wrap;
+                flex-direction:column;
+                flex-wrap:nowrap;
                 gap:6px;
                 padding:0;
             }
 
             .sidebar-nav li{
-                flex:1 1 45%;
+                flex:0 0 auto;
+                width:100%;
             }
 
             .sidebar-nav a{
@@ -1685,7 +1696,8 @@
 
         @media(max-width:480px){
             .sidebar-nav li{
-                flex:1 1 100%;
+                flex:0 0 auto;
+                width:100%;
             }
 
             .hero-background{
@@ -1894,6 +1906,52 @@
         /* ================= LIGHT THEME (Premium Warm Light) ================= */
         /* Same layout, same components — token-level re-skin only. */
 
+        /* ================= BRANDING — merged into the About card (Shehab Innovation) =================
+           Lives inside the existing "عن نظام NEXORA" card — no standalone block. */
+
+        .about-brand{
+            margin-top:18px;
+            padding-top:16px;
+            border-top:1px dashed var(--border-strong);
+        }
+
+        .about-brand .about-brand-name{
+            font-weight:900;
+            font-size:14.5px;
+            color:var(--primary);
+            letter-spacing:.2px;
+        }
+
+        .about-brand p{
+            margin-top:6px;
+            font-size:13.5px;
+            color:var(--text-2);
+            font-weight:600;
+        }
+
+        .about-brand .about-facebook-btn{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            margin-top:12px;
+            padding:9px 20px;
+            border-radius:var(--radius-full);
+            background:var(--primary-soft);
+            color:var(--primary);
+            border:1px solid var(--primary-ring);
+            font-weight:800;
+            font-size:13px;
+            text-decoration:none;
+            transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out);
+        }
+
+        .about-brand .about-facebook-btn:hover{
+            background:var(--primary);
+            color:#fff;
+            transform:translateY(-2px);
+            box-shadow:var(--shadow-primary);
+        }
+
         html[data-theme="light"]{
             color-scheme:light;
 
@@ -1979,6 +2037,11 @@
         }
 
         /* ---- Light: welcome hero stays cinematic but lifted, text stays warm-white ---- */
+        html[data-theme="light"] .welcome-text h2{
+            color:#F2EBDA;
+            opacity:1;
+        }
+
         html[data-theme="light"] .welcome-text p{
             color:#F2EBDA;
             opacity:1;
@@ -2228,6 +2291,117 @@
         .theme-switch button i{
             font-size:11px;
         }
+
+        /* ================= SIDEBAR DRAWER (added: mobile-first, desktop compact) ================= */
+
+        .sidebar-toggle{
+            display:flex;
+            position:fixed;
+            top:14px;
+            inset-inline-start:14px;
+            z-index:60;
+            width:46px;
+            height:46px;
+            border-radius:14px;
+            border:1px solid var(--border-strong);
+            background:var(--surface);
+            color:var(--primary);
+            box-shadow:var(--shadow-lg);
+            cursor:pointer;
+            font-size:18px;
+            transition:var(--dur-fast) var(--ease-out);
+        }
+
+        .sidebar-toggle:hover{
+            border-color:var(--primary);
+            transform:translateY(-1px);
+        }
+
+        .sidebar-toggle:focus-visible{
+            outline:3px solid var(--primary-ring);
+            outline-offset:2px;
+        }
+
+        .sidebar-backdrop{
+            display:none;
+            position:fixed;
+            inset:0;
+            z-index:54;
+            background:rgba(15,23,42,.45);
+            backdrop-filter:blur(2px);
+            opacity:0;
+            transition:opacity var(--dur-fast) var(--ease-out);
+        }
+
+        .sidebar-backdrop.active{
+            opacity:1;
+        }
+
+        @media(max-width:1024px){
+            .sidebar.active{
+                position:fixed;
+                top:0;
+                inset-inline-start:0;
+                width:min(300px,84vw);
+                height:100vh;
+                height:100dvh;
+                z-index:55;
+                overflow-y:auto;
+                box-shadow:var(--shadow-lg);
+                border-radius:0;
+            }
+
+            .sidebar-toggle{
+                display:flex;
+                align-items:center;
+                justify-content:center;
+            }
+
+            body.sidebar-open .sidebar-backdrop{
+                display:block;
+            }
+
+            body.sidebar-open{
+                overflow:hidden;
+            }
+        }
+
+        @media(min-width:1025px){
+            body:not(.sidebar-open) .sidebar{
+                display:none;
+            }
+
+            body.sidebar-open .sidebar{
+                position:fixed;
+                inset-inline-start:16px;
+                top:16px;
+                width:282px;
+                max-height:calc(100vh - 32px);
+                z-index:55;
+                overflow-y:auto;
+                border-radius:var(--radius-xl);
+                box-shadow:var(--shadow-xl, var(--shadow-lg));
+            }
+        }
+
+        /* Registration page: sidebar mechanism fully absent (no toggle, no drawer, no backdrop) */
+        body:has(#registration.active) .sidebar,
+        body:has(#registration.active) .sidebar-toggle,
+        body:has(#registration.active) .sidebar-backdrop{
+            display:none !important;
+        }
+
+        /* Student sidebar items: strictly vertical — one item per full-width row (desktop + tablet + mobile) */
+        .sidebar-nav,
+        .sidebar-nav.open{
+            flex-direction:column !important;
+            flex-wrap:nowrap !important;
+        }
+
+        .sidebar-nav li{
+            flex:0 0 auto !important;
+            width:100% !important;
+        }
     </style>
 </head>
 
@@ -2262,37 +2436,40 @@
 
             <ul class="sidebar-nav">
 
+                <li class="nav-section">التنقل</li>
+
                 <li>
-                    <a class="active" onclick="showPage('home',this)">
+                    <a class="active nav-close" onclick="showPage('home',this)">
                         <i class="fas fa-house-chimney"></i>
-                        تعريف المدرس
+                        الرئيسية
                     </a>
                 </li>
 
                 <li>
-                    <a onclick="showPage('curriculum',this)">
+                    <a class="nav-close" onclick="showPage('curriculum',this)">
                         <i class="fas fa-book-open"></i>
-                        المنهج
+                        المنهج والمواد
                     </a>
                 </li>
 
                 <li>
-                    <a onclick="showPage('grades',this)">
+                    <a class="nav-close" onclick="showPage('grades',this)">
                         <i class="fas fa-chart-line"></i>
                         تقييم الطالب
                     </a>
                 </li>
 
                 <li>
-                    <a onclick="showPage('certificate',this)">
+                    <a class="nav-close" onclick="showPage('certificate',this)">
                         <i class="fas fa-award"></i>
                         الشهادات
                     </a>
-
                 </li>
 
+                <li class="nav-section">الحساب</li>
+
                 <li class="logout">
-                    <a onclick="logoutStudent()">
+                    <a class="nav-close" onclick="logoutStudent()">
                         <i class="fas fa-arrow-right-from-bracket"></i>
                         تسجيل خروج
                     </a>
@@ -2338,6 +2515,14 @@
             </div>
 
         </div>
+
+    <!-- ================= SIDEBAR TOGGLE (mobile / compact) ================= -->
+
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="sidebar">
+
+        <i class="fas fa-bars"></i>
+
+    </button>
 
     <!-- ================= MAIN CONTENT ================= -->
 
@@ -2523,8 +2708,23 @@
                 <h3>عن نظام NEXORA</h3>
 
                 <p>
-                    <span data-nexora-hydrate="about-line">نظام تعليمي رقمي خاص بمستر مهاب، يجمع المذكرات والفيديوهات والواجبات والامتحانات والتقييم والشهادات في مكان واحد.</span>
+                    <span data-nexora-hydrate="about-line">نظام نكسورا هو نظام تعليمي رقمي من Shehab Innovation، يجمع مذكرات وفيديوهات وواجبات وامتحانات وتقييمات وشهادات الطالب في مكان واحد.</span>
                 </p>
+
+                <div class="about-brand">
+
+                    <p class="about-brand-name">Shehab Innovation</p>
+
+                    <p>إنشاء منصات تعليمية ومواقع وحلول رقمية مخصصة.</p>
+
+                    <p>عايز تعمل موقع أو منصة خاصة بيك؟ تواصل مع Shehab Innovation.</p>
+
+                    <a href="https://www.facebook.com/share/1HtnAsv3AF/" target="_blank" rel="noopener" class="about-facebook-btn">
+                        <i class="fab fa-facebook"></i>
+                        تواصل معنا على Facebook
+                    </a>
+
+                </div>
 
             </div>
 
@@ -2534,7 +2734,7 @@
 
         <div id="curriculum" class="page">
 
-            <h2>📚 المنهج</h2>
+            <h2><span class="head-ico"><i class="fas fa-book-open"></i></span> المنهج والمواد</h2>
 
             <div class="card">
 
@@ -2760,7 +2960,7 @@
 
         <div id="grades" class="page">
 
-            <h2>📊 تقييم الطالب</h2>
+            <h2><span class="head-ico"><i class="fas fa-chart-line"></i></span> تقييم الطالب</h2>
 
             <div class="card">
 
@@ -2827,7 +3027,7 @@
 
         <div id="certificate" class="page">
 
-            <h2>🏆 الشهادات</h2>
+            <h2><span class="head-ico"><i class="fas fa-award"></i></span> الشهادات</h2>
 
             <div class="card">
 
@@ -6172,11 +6372,16 @@
 
         if(sidebar){
 
-            sidebar.classList.add(
+            sidebar.classList.remove(
                 'active'
             );
 
         }
+
+
+        document.body.classList.remove(
+            'sidebar-open'
+        );
 
 
         const studentInfo =
@@ -6241,6 +6446,9 @@
 
             currentStudent =
                 null;
+
+
+            document.body.classList.remove('sidebar-open');
 
 
             const sidebar =
@@ -7567,6 +7775,168 @@
         }
 
     );
+
+    /* ================= SIDEBAR DRAWER ENGINE (added: behavior only) ================= */
+
+    (function() {
+
+        const sidebar =
+            document.getElementById('sidebar');
+
+        const toggleButton =
+            document.getElementById('sidebarToggle');
+
+        let backdrop =
+            document.querySelector('.sidebar-backdrop');
+
+        if (!sidebar || !toggleButton) {
+            return;
+        }
+
+        if (!backdrop) {
+
+            backdrop =
+                document.createElement('div');
+
+            backdrop.className =
+                'sidebar-backdrop';
+
+            document.body.appendChild(
+                backdrop
+            );
+
+        }
+
+
+        function syncSidebarState() {
+
+            const isDesktop =
+                window.matchMedia('(min-width: 1025px)').matches;
+
+            const isOpen =
+                document.body.classList.contains('sidebar-open');
+
+            if (isDesktop) {
+
+                sidebar.classList.toggle('active', isOpen);
+
+                toggleButton.setAttribute(
+                    'aria-expanded',
+                    String(isOpen)
+                );
+
+            } else {
+
+                sidebar.classList.toggle(
+                    'active',
+                    isOpen
+                );
+
+                toggleButton.setAttribute(
+                    'aria-expanded',
+                    String(isOpen)
+                );
+
+            }
+
+            if (backdrop) {
+
+                backdrop.classList.toggle(
+                    'active',
+                    isOpen && !isDesktop
+                );
+
+            }
+
+        }
+
+
+        function openSidebar() {
+
+            document.body.classList.add('sidebar-open');
+
+            syncSidebarState();
+
+        }
+
+
+        function closeSidebar() {
+
+            document.body.classList.remove('sidebar-open');
+
+            syncSidebarState();
+
+        }
+
+
+        toggleButton.addEventListener(
+            'click',
+            function() {
+
+                if (document.body.classList.contains('sidebar-open')) {
+
+                    closeSidebar();
+
+                } else {
+
+                    openSidebar();
+
+                }
+
+            }
+        );
+
+
+        backdrop.addEventListener(
+            'click',
+            closeSidebar
+        );
+
+
+        document.addEventListener(
+            'keydown',
+            function(event) {
+
+                if (
+                    event.key === 'Escape' &&
+                    document.body.classList.contains('sidebar-open')
+                ) {
+
+                    closeSidebar();
+
+                }
+
+            }
+        );
+
+
+        document.querySelectorAll('.sidebar .nav-close').forEach(function(link) {
+
+            link.addEventListener(
+                'click',
+                function() {
+
+                    if (!window.matchMedia('(min-width: 1025px)').matches) {
+
+                        closeSidebar();
+
+                    }
+
+                }
+            );
+
+        });
+
+
+        window.addEventListener(
+            'resize',
+            syncSidebarState
+        );
+
+
+        syncSidebarState();
+
+    })();
 
 </script>
 
