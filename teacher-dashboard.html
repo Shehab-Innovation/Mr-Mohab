@@ -1491,6 +1491,103 @@
             outline-offset: 2px;
         }
 
+        .grade-stage-nav {
+            padding: 14px 18px 18px;
+        }
+
+        .stage-block {
+            margin-bottom: 14px;
+        }
+
+        .stage-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .stage-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--muted);
+            margin-bottom: 9px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .stage-title i.chev {
+            transition: transform var(--dur-fast) var(--ease-out);
+        }
+
+        .stage-block.open .stage-title i.chev {
+            transform: rotate(90deg);
+        }
+
+        .stage-grades {
+            display: none;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .stage-block.open .stage-grades {
+            display: flex;
+        }
+
+        .grade-chip.danger:hover {
+            border-color: var(--error);
+            color: var(--error);
+        }
+
+        .btn-del-student {
+            border: 1px solid var(--error);
+            background: var(--error-soft);
+            color: var(--error);
+            padding: 7px 13px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 12.5px;
+            font-weight: 800;
+            font-family: var(--font-ar);
+            white-space: nowrap;
+            transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+        }
+
+        .btn-del-student:hover {
+            background: var(--error);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(190, 30, 45, .22);
+        }
+
+        .btn-del-group {
+            border: 1px solid var(--error);
+            background: transparent;
+            color: var(--error);
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 12.5px;
+            font-weight: 800;
+            font-family: var(--font-ar);
+            transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+        }
+
+        .btn-del-group:hover {
+            background: var(--error);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .group-actions-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .group-actions-row .group-open-button {
+            flex: 1;
+        }
+
         .ga-actions {
             display: flex;
             align-items: center;
@@ -2138,11 +2235,13 @@
         </div>
 
 
-        <div
-            class="table-wrapper"
-            id="tableWrapper"
-            style="display:none;"
-        >
+        <div class="students-card-inner">
+
+            <div class="grade-stage-nav" id="gradeStageNav" aria-label="تصفية الطلاب حسب المرحلة والصف"></div>
+
+        </div>
+
+        <div class="table-wrapper" id="gradeTableWrapper" style="display:none;">
 
             <div class="page-toolbar" style="padding: 16px 18px 0;">
 
@@ -2151,45 +2250,12 @@
                     <input
                         type="text"
                         class="search-input"
-                        id="studentSearchInput"
-                        placeholder="ابحث بالاسم أو رقم الطالب أو الهاتف…"
+                        id="gradeSearchInput"
+                        placeholder="ابحث داخل الصف بالاسم أو رقم الطالب أو الهاتف…"
                     >
                 </div>
 
-                <select class="sort-select" id="studentSortSelect">
-                    <option value="recent">الأحدث تسجيلًا</option>
-                    <option value="name">الاسم (أ–ي)</option>
-                    <option value="id">رقم الطالب</option>
-                </select>
-
-                <span class="results-count" id="studentsResultsCount"></span>
-
-                <div class="filter-row" style="width:100%;">
-
-                    <select class="sort-select" id="studentGroupFilter">
-                        <option value="all">كل المجموعات</option>
-                        <option value="unassigned">غير المصنفين في مجموعة</option>
-                    </select>
-
-                    <select class="sort-select" id="studentGradeFilter">
-                        <option value="all">كل الصفوف</option>
-                    </select>
-
-                    <span class="results-count" id="studentsClassifyInfo"></span>
-
-                </div>
-
-                <div class="grade-strip" id="gradeStrip" role="tablist" aria-label="تصفية الطلاب حسب الصف">
-
-                    <button type="button" class="grade-chip active" data-grade="all">
-                        <i class="fas fa-users"></i> كل الطلاب
-                    </button>
-
-                    <button type="button" class="grade-chip" data-grade="__none__">
-                        <i class="fas fa-user-slash"></i> بدون صف
-                    </button>
-
-                </div>
+                <span class="results-count" id="gradeResultsCount"></span>
 
             </div>
 
@@ -2201,17 +2267,27 @@
                         <th>الطالب</th>
                         <th>رقم الطالب</th>
                         <th>رقم الهاتف</th>
-                        <th>ولي الأمر</th>
                         <th>التسجيل</th>
-                        <th>المجموعة</th>
-                        <th>الحالة</th>
+                        <th>إجراء</th>
                     </tr>
 
                 </thead>
 
-                <tbody id="studentsTableBody"></tbody>
+                <tbody id="gradeStudentsTableBody"></tbody>
 
             </table>
+
+        </div>
+
+        <div class="empty-state" id="gradeEmptyState" style="display:none;">
+
+            <div class="empty-icon">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+
+            <div id="gradeEmptyText">
+                لا يوجد طلاب مسجلون في هذا الصف حتى الآن.
+            </div>
 
         </div>
 
@@ -2979,17 +3055,11 @@
     const systemStatusElement =
         document.getElementById('systemStatus');
 
-    const studentsTableBody =
-        document.getElementById('studentsTableBody');
 
     const loadingElement =
         document.getElementById('loading');
 
-    const emptyStateElement =
-        document.getElementById('emptyState');
 
-    const tableWrapperElement =
-        document.getElementById('tableWrapper');
 
     const errorBoxElement =
         document.getElementById('errorBox');
@@ -3220,33 +3290,10 @@
 
     function renderStudents(students) {
 
-        studentsTableBody.innerHTML =
-            '';
-
-
-        if (!students || students.length === 0) {
-
-            tableWrapperElement.style.display =
-                'none';
-
-            emptyStateElement.style.display =
-                'block';
-
-            totalStudentsElement.textContent =
-                '0';
-
-            registeredStudentsElement.textContent =
-                '0';
-
-            return;
+        if (!students) {
+            students =
+                [];
         }
-
-
-        emptyStateElement.style.display =
-            'none';
-
-        tableWrapperElement.style.display =
-            'block';
 
 
         totalStudentsElement.textContent =
@@ -3268,65 +3315,11 @@
 
         });
 
-        updateStudentsClassifyInfo();
+        buildGradeStageNav();
 
-
-        students.forEach(function(student) {
-
-            const row =
-                document.createElement('tr');
-
-
-            row.innerHTML = `
-
-                <td>
-                    <div class="student-name">
-                        <a
-                            href="student-profile.html?student_id=${encodeURIComponent(student.student_id)}"
-                        >
-                            ${escapeHtml(student.name)}
-                        </a>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="student-id">
-                        ${escapeHtml(student.student_id)}
-                    </div>
-                </td>
-
-                <td>
-                    <div class="phone">
-                        ${escapeHtml(student.phone)}
-                    </div>
-                </td>
-
-                <td>
-                    <div class="phone">
-                        ${escapeHtml(student.parent_phone)}
-                    </div>
-                </td>
-
-                <td>
-                    ${escapeHtml(formatDate(student.created_at))}
-                </td>
-
-                <td>
-                    ${membershipCellHtml(student.student_id)}
-                </td>
-
-                <td>
-                    <span class="status">
-                        نشط
-                    </span>
-                </td>
-
-            `;
-
-
-            studentsTableBody.appendChild(row);
-
-        });
+        if (selectedGrade) {
+            renderGradeStudents();
+        }
 
     }
 
@@ -3337,12 +3330,6 @@
 
         loadingElement.style.display =
             'block';
-
-        tableWrapperElement.style.display =
-            'none';
-
-        emptyStateElement.style.display =
-            'none';
 
         refreshButton.disabled =
             true;
@@ -3409,9 +3396,6 @@
                 showError(
                     'حدث خطأ أثناء تحميل بيانات الطلاب.'
                 );
-
-                loadingElement.style.display =
-                    'none';
 
                 return;
             }
@@ -3525,13 +3509,10 @@
                 currentGroups
             );
 
-            populateGroupFilters();
-
             loadAllGroupMemberships().then(function() {
 
                 updateGroupCounts();
 
-                refreshMembershipDependentViews();
 
             });
 
@@ -3653,12 +3634,25 @@
                 </div>
 
 
-                <button
-                    class="group-open-button"
-                    data-group-id="${escapeHtml(group.id)}"
-                >
-                    فتح المجموعة
-                </button>
+                <div class="group-actions-row">
+
+                    <button
+                        class="group-open-button"
+                        data-group-id="${escapeHtml(group.id)}"
+                    >
+                        فتح المجموعة
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-del-group"
+                        data-del-group="${escapeHtml(group.id)}"
+                        data-name="${escapeHtml(group.name)}"
+                    >
+                        <i class="fas fa-trash-can"></i> حذف
+                    </button>
+
+                </div>
 
             `;
 
@@ -3674,6 +3668,24 @@
                 function() {
 
                     openGroupDetails(
+                        group
+                    );
+
+                }
+            );
+
+
+            const deleteButton =
+                item.querySelector(
+                    '.btn-del-group'
+                );
+
+
+            deleteButton.addEventListener(
+                'click',
+                function() {
+
+                    deleteTeacherGroup(
                         group
                     );
 
@@ -4471,7 +4483,6 @@
 
             updateGroupCounts();
 
-            refreshMembershipDependentViews();
 
             await loadGroupStudents(
                 currentGroup.id
@@ -4593,6 +4604,90 @@
 
     }
 
+
+    async function deleteTeacherGroup(group) {
+
+        const confirmed =
+            confirm(
+                'أنت على وشك حذف مجموعة ' + group.name + '.\n' +
+                'لن يتم حذف أي طلاب — سيتم فقط إزالة انتماء الطلاب لهذه المجموعة.\n\n' +
+                'هل أنت متأكد من الحذف؟'
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        const teacherToken =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!teacherToken) {
+
+            redirectToLogin();
+
+            return;
+
+        }
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'delete_teacher_group_by_session',
+                    {
+                        p_session_token: teacherToken,
+                        p_group_id: group.id
+                    }
+                );
+
+            if (error) {
+
+                console.error(
+                    'Delete Group RPC Error:',
+                    error
+                );
+
+                showGroupsError(
+                    'حدث خطأ أثناء حذف المجموعة.'
+                );
+
+                return;
+
+            }
+
+            const removed =
+                (typeof data === 'number') ? data : 0;
+
+            if (removed === 0) {
+
+                showGroupsError(
+                    'تعذر حذف المجموعة (غير موجودة ضمن مجموعاتك).'
+                );
+
+                return;
+
+            }
+
+            showGroupsSuccess(
+                'تم حذف المجموعة: ' + group.name
+            );
+
+            await loadGroups();
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Delete Group Error:',
+                error
+            );
+
+            showGroupsError(
+                'حدث خطأ غير متوقع أثناء حذف المجموعة.'
+            );
+
+        }
+
+    }
 
     function loadTeacherProfile() {
 
@@ -4842,8 +4937,6 @@
 
     let studentMembership = {};
 
-    let groupGradeByName = {};
-
     let membershipLoadFailed = false;
 
 
@@ -4853,9 +4946,6 @@
             {};
 
         studentMembership =
-            {};
-
-        groupGradeByName =
             {};
 
         membershipLoadFailed =
@@ -4919,10 +5009,6 @@
 
                 });
 
-                groupGradeByName[group.name] =
-                    group.grade
-                        ? 'الصف ' + group.grade
-                        : 'بدون صف';
 
             } catch (loopError) {
 
@@ -4939,201 +5025,6 @@
         }
 
     }
-
-
-    function membershipCellHtml(studentId) {
-
-        const memberships =
-            studentMembership[studentId] || [];
-
-        if (memberships.length === 0) {
-
-            if (membershipLoadFailed) {
-
-                return '<span class="member-none"><i class="fas fa-triangle-exclamation"></i> غير متأكد</span>';
-
-            }
-
-            return '<span class="member-none">غير مصنف</span>';
-
-        }
-
-        const shown =
-            memberships.slice(0, 2);
-
-        const extra =
-            memberships.length - shown.length;
-
-        let html =
-            shown.map(function(groupName) {
-
-                return '<span class="member-chip">' + escapeHtml(groupName) + '</span>';
-
-            }).join(' ');
-
-        if (extra > 0) {
-
-            html +=
-                ' <span class="member-chip">+' + extra + '</span>';
-
-        }
-
-        return html;
-
-    }
-
-
-    function populateGroupFilters() {
-
-        const previousGroup =
-            studentGroupFilterSelect.value;
-
-        const previousGrade =
-            studentGradeFilterSelect.value;
-
-        let groupOptions =
-            '<option value="all">كل المجموعات</option>' +
-            '<option value="unassigned">غير المصنفين في مجموعة</option>';
-
-        currentGroups.forEach(function(group) {
-
-            groupOptions +=
-                '<option value="' + escapeHtml(group.name) + '">' +
-                escapeHtml(group.name) +
-                '</option>';
-
-        });
-
-        studentGroupFilterSelect.innerHTML =
-            groupOptions;
-
-        const grades =
-            [];
-
-        currentGroups.forEach(function(group) {
-
-            if (!group.grade) {
-                return;
-            }
-
-            const label =
-                'الصف ' + group.grade;
-
-            if (grades.indexOf(label) === -1) {
-
-                grades.push(label);
-
-            }
-
-        });
-
-        grades.sort(function(a, b) {
-            return a.localeCompare(b, 'ar', { numeric: true });
-        });
-
-        let gradeOptions =
-            '<option value="all">كل الصفوف</option>' +
-            '<option value="ungraded">بدون صف</option>';
-
-        grades.forEach(function(label) {
-
-            gradeOptions +=
-                '<option value="' + escapeHtml(label) + '">' +
-                escapeHtml(label) +
-                '</option>';
-
-        });
-
-        studentGradeFilterSelect.innerHTML =
-            gradeOptions;
-
-        let hasPrevious =
-            false;
-
-        Array.prototype.forEach.call(studentGroupFilterSelect.options, function(option) {
-
-            if (option.value === previousGroup) {
-
-                hasPrevious = true;
-
-            }
-
-        });
-
-        if (hasPrevious) {
-
-            studentGroupFilterSelect.value =
-                previousGroup;
-
-        }
-
-        hasPrevious =
-            false;
-
-        Array.prototype.forEach.call(studentGradeFilterSelect.options, function(option) {
-
-            if (option.value === previousGrade) {
-
-                hasPrevious = true;
-
-            }
-
-        });
-
-        if (hasPrevious) {
-
-            studentGradeFilterSelect.value =
-                previousGrade;
-
-        }
-
-        renderGradeStrip();
-
-    }
-
-
-    function updateStudentsClassifyInfo() {
-
-        const info =
-            document.getElementById('studentsClassifyInfo');
-
-        if (!info) {
-            return;
-        }
-
-        let assigned =
-            0;
-
-        allStudents.forEach(function(student) {
-
-            if ((studentMembership[student.student_id] || []).length > 0) {
-
-                assigned += 1;
-
-            }
-
-        });
-
-        const unassigned =
-            allStudents.length - assigned;
-
-        info.textContent =
-            allStudents.length === 0
-                ? ''
-                : (assigned + ' مصنفون — ' + unassigned + ' غير مصنفين' + (membershipLoadFailed ? ' (عضويات ناقصة: تعذر تحميل بعض المجموعات)' : ''));
-
-    }
-
-
-    function refreshMembershipDependentViews() {
-
-        renderStudentRows();
-
-        updateStudentsClassifyInfo();
-
-    }
-
-
     function updateGroupCounts() {
 
         document.querySelectorAll('#groupsList [data-count-for]').forEach(function(tag) {
@@ -5167,95 +5058,175 @@
 
     /* ---------- Students: search + sort (presentation filter only) ---------- */
 
-    const studentSearchInput =
-        document.getElementById('studentSearchInput');
-
-    const studentGroupFilterSelect =
-        document.getElementById('studentGroupFilter');
-
-    const studentGradeFilterSelect =
-        document.getElementById('studentGradeFilter');
-
-    const studentSortSelect =
-        document.getElementById('studentSortSelect');
-
-    const studentsResultsCount =
-        document.getElementById('studentsResultsCount');
 
 
-    function renderStudentRows() {
+    /* ---------- Students: grade-mode (students.grade is the only source) ---------- */
 
-        if (!allStudents || allStudents.length === 0) {
+    const GRADE_LABELS = {
+        1:  'الصف الأول الابتدائي',
+        2:  'الصف الثاني الابتدائي',
+        3:  'الصف الثالث الابتدائي',
+        4:  'الصف الرابع الابتدائي',
+        5:  'الصف الخامس الابتدائي',
+        6:  'الصف السادس الابتدائي',
+        7:  'الصف الأول الإعدادي',
+        8:  'الصف الثاني الإعدادي',
+        9:  'الصف الثالث الإعدادي',
+        10: 'الصف الأول الثانوي',
+        11: 'الصف الثاني الثانوي',
+        12: 'الصف الثالث الثانوي'
+    };
+
+    const GRADE_STAGES = [
+        { key: 'primary',   label: 'المرحلة الابتدائية', icon: 'fa-school',        grades: [1, 2, 3, 4, 5, 6] },
+        { key: 'prep',      label: 'المرحلة الإعدادية',  icon: 'fa-book-open',     grades: [7, 8, 9] },
+        { key: 'secondary', label: 'المرحلة الثانوية',   icon: 'fa-graduation-cap', grades: [10, 11, 12] }
+    ];
+
+    const gradeStageNav =
+        document.getElementById('gradeStageNav');
+
+    const gradeTableWrapper =
+        document.getElementById('gradeTableWrapper');
+
+    const gradeStudentsTableBody =
+        document.getElementById('gradeStudentsTableBody');
+
+    const gradeSearchInput =
+        document.getElementById('gradeSearchInput');
+
+    const gradeResultsCount =
+        document.getElementById('gradeResultsCount');
+
+    const gradeEmptyState =
+        document.getElementById('gradeEmptyState');
+
+    const gradeEmptyText =
+        document.getElementById('gradeEmptyText');
+
+    let selectedGrade =
+        null;
+
+    function gradeCount(gradeNumber) {
+
+        if (!allStudents) {
+            return 0;
+        }
+
+        return allStudents.filter(function(student) {
+            return student.grade === gradeNumber;
+        }).length;
+
+    }
+
+    function buildGradeStageNav() {
+
+        if (!gradeStageNav) {
             return;
         }
 
-        const groupFilter =
-            studentGroupFilterSelect.value;
+        gradeStageNav.innerHTML =
+            '';
 
-        const gradeFilter =
-            studentGradeFilterSelect.value;
+        GRADE_STAGES.forEach(function(stage) {
+
+            const block =
+                document.createElement('div');
+
+            block.className =
+                'stage-block' + (stage.key === 'primary' ? ' open' : '');
+
+            const title =
+                document.createElement('div');
+
+            title.className =
+                'stage-title';
+
+            title.innerHTML =
+                '<i class="fas ' + stage.icon + '"></i>' +
+                '<span>' + escapeHtml(stage.label) + '</span>' +
+                '<i class="fas fa-chevron-left chev"></i>';
+
+            const gradesWrap =
+                document.createElement('div');
+
+            gradesWrap.className =
+                'stage-grades';
+
+            stage.grades.forEach(function(gradeNumber) {
+
+                const chip =
+                    document.createElement('button');
+
+                chip.type =
+                    'button';
+
+                chip.className =
+                    'grade-chip' + (gradeNumber === selectedGrade ? ' active' : '');
+
+                chip.setAttribute('data-grade', String(gradeNumber));
+
+                chip.innerHTML =
+                    '<i class="fas fa-graduation-cap"></i> ' +
+                    escapeHtml(GRADE_LABELS[gradeNumber]) +
+                    ' <span class="grade-count">(' + gradeCount(gradeNumber) + ')</span>';
+
+                chip.addEventListener(
+                    'click',
+                    function() {
+                        selectGrade(gradeNumber);
+                    }
+                );
+
+                gradesWrap.appendChild(chip);
+
+            });
+
+            title.addEventListener(
+                'click',
+                function() {
+                    block.classList.toggle('open');
+                }
+            );
+
+            block.appendChild(title);
+            block.appendChild(gradesWrap);
+            gradeStageNav.appendChild(block);
+
+        });
+
+    }
+
+    function selectGrade(gradeNumber) {
+
+        selectedGrade =
+            gradeNumber;
+
+        buildGradeStageNav();
+
+        renderGradeStudents();
+
+    }
+
+    function renderGradeStudents() {
+
+        if (
+            !selectedGrade ||
+            !allStudents
+        ) {
+            return;
+        }
+
+        const gradeLabel =
+            GRADE_LABELS[selectedGrade];
 
         const query =
-            (studentSearchInput.value || '').trim().toLowerCase();
+            (gradeSearchInput.value || '').trim().toLowerCase();
 
         let rows =
-            allStudents.slice();
-
-        if (groupFilter === 'unassigned') {
-
-            rows = rows.filter(function(student) {
-
-                return (studentMembership[student.student_id] || []).length === 0;
-
+            allStudents.filter(function(student) {
+                return student.grade === selectedGrade;
             });
-
-        } else if (groupFilter !== 'all') {
-
-            rows = rows.filter(function(student) {
-
-                return (studentMembership[student.student_id] || []).indexOf(groupFilter) !== -1;
-
-            });
-
-        }
-
-        if (gradeFilter === 'ungraded') {
-
-            rows = rows.filter(function(student) {
-
-                const memberships =
-                    studentMembership[student.student_id] || [];
-
-                const documented =
-                    memberships.map(function(groupName) {
-
-                        return groupGradeByName[groupName];
-
-                    }).filter(Boolean);
-
-                return documented.length === 0;
-
-            });
-
-        } else if (gradeFilter !== 'all') {
-
-            rows = rows.filter(function(student) {
-
-                const memberships =
-                    studentMembership[student.student_id] || [];
-
-                const grades =
-                    memberships.map(function(groupName) {
-
-                        return groupGradeByName[groupName];
-
-                    });
-
-                return grades.indexOf(gradeFilter) !== -1;
-
-            });
-
-        }
 
         if (query) {
 
@@ -5264,38 +5235,25 @@
                 return (
                     (student.name || '').toLowerCase().indexOf(query) !== -1 ||
                     (student.student_id || '').toLowerCase().indexOf(query) !== -1 ||
-                    (student.phone || '').indexOf(query) !== -1 ||
-                    (student.parent_phone || '').indexOf(query) !== -1
+                    (student.phone || '').indexOf(query) !== -1
                 );
 
             });
 
         }
 
-        const sortMode =
-            studentSortSelect.value;
+        gradeEmptyState.style.display =
+            rows.length === 0 ? 'block' : 'none';
 
-        if (sortMode === 'name') {
+        gradeEmptyText.textContent =
+            query
+                ? 'لا توجد نتائج مطابقة داخل ' + gradeLabel + '.'
+                : 'لا يوجد طلاب مسجلون في ' + gradeLabel + ' حتى الآن.';
 
-            rows.sort(function(a, b) {
-                return (a.name || '').localeCompare(b.name || '', 'ar');
-            });
+        gradeTableWrapper.style.display =
+            rows.length === 0 ? 'none' : 'block';
 
-        } else if (sortMode === 'id') {
-
-            rows.sort(function(a, b) {
-                return (a.student_id || '').localeCompare(b.student_id || '');
-            });
-
-        } else {
-
-            rows.sort(function(a, b) {
-                return new Date(b.created_at || 0) - new Date(a.created_at || 0);
-            });
-
-        }
-
-        studentsTableBody.innerHTML =
+        gradeStudentsTableBody.innerHTML =
             '';
 
         rows.forEach(function(student) {
@@ -5328,200 +5286,158 @@
                 </td>
 
                 <td>
-                    <div class="phone">
-                        ${escapeHtml(student.parent_phone)}
-                    </div>
-                </td>
-
-                <td>
                     ${escapeHtml(formatDate(student.created_at))}
                 </td>
 
                 <td>
-                    ${membershipCellHtml(student.student_id)}
-                </td>
-
-                <td>
-                    <span class="status">
-                        نشط
-                    </span>
+                    <button
+                        type="button"
+                        class="btn-del-student"
+                        data-del-student="${escapeHtml(student.student_id)}"
+                        data-name="${escapeHtml(student.name)}"
+                    >
+                        <i class="fas fa-user-minus"></i> حذف الطالب
+                    </button>
                 </td>
 
             `;
 
-            studentsTableBody.appendChild(row);
+            gradeStudentsTableBody.appendChild(row);
 
         });
 
-        studentsResultsCount.textContent =
-            (query || sortMode !== 'recent' || groupFilter !== 'all' || gradeFilter !== 'all')
-                ? (rows.length + ' من ' + allStudents.length + ' طالب')
-                : '';
+        gradeResultsCount.textContent =
+            query
+                ? (rows.length + ' من ' + gradeCount(selectedGrade) + ' طالب')
+                : (rows.length + ' طالب');
 
     }
 
+    async function deleteTeacherStudent(studentId, studentName) {
 
-    studentSearchInput.addEventListener('input', renderStudentRows);
+        const confirmed =
+            confirm(
+                'أنت على وشك حذف الطالب: ' + studentName + '\n' +
+                'سيتم حذفه نهائيًا من المنصة مع نتائجه وأنشطته وشهاداته.\n\n' +
+                'هل أنت متأكد من الحذف؟'
+            );
 
-    studentSortSelect.addEventListener('change', renderStudentRows);
-
-    studentGroupFilterSelect.addEventListener('change', renderStudentRows);
-
-    studentGradeFilterSelect.addEventListener('change', renderStudentRows);
-
-
-    /* ---------- Students: real-grade strip (groups.grade = the only documented student grade) ---------- */
-
-    function renderGradeStrip() {
-
-        const strip =
-            document.getElementById('gradeStrip');
-
-        if (!strip) {
+        if (!confirmed) {
             return;
         }
 
-        const grades = [];
+        const teacherToken =
+            sessionStorage.getItem(teacherTokenKey);
 
-        currentGroups.forEach(function(group) {
+        if (!teacherToken) {
 
-            if (!group.grade) {
+            redirectToLogin();
+
+            return;
+
+        }
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'delete_teacher_student_by_session',
+                    {
+                        p_session_token: teacherToken,
+                        p_student_id: studentId
+                    }
+                );
+
+            if (error) {
+
+                console.error(
+                    'Delete Student RPC Error:',
+                    error
+                );
+
+                showError(
+                    'حدث خطأ أثناء حذف الطالب.'
+                );
+
+                return;
+
+            }
+
+            const removed =
+                (typeof data === 'number') ? data : 0;
+
+            if (removed === 0) {
+
+                showError(
+                    'تعذر حذف الطالب (غير موجود ضمن طلابك).'
+                );
+
+                return;
+
+            }
+
+            alert(
+                'تم حذف الطالب: ' + studentName
+            );
+
+            allStudents =
+                allStudents.filter(function(student) {
+                    return student.student_id !== studentId;
+                });
+
+            totalStudentsElement.textContent =
+                allStudents.length;
+
+            registeredStudentsElement.textContent =
+                allStudents.length;
+
+            renderStudents(
+                allStudents
+            );
+
+
+            buildGradeStageNav();
+
+            renderGradeStudents();
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Delete Student Error:',
+                error
+            );
+
+            showError(
+                'حدث خطأ غير متوقع أثناء حذف الطالب.'
+            );
+
+        }
+
+    }
+
+    gradeSearchInput.addEventListener(
+        'input',
+        renderGradeStudents
+    );
+
+    gradeStudentsTableBody.addEventListener(
+        'click',
+        function(event) {
+
+            const button =
+                event.target.closest('.btn-del-student');
+
+            if (!button) {
                 return;
             }
 
-            const label =
-                'الصف ' + group.grade;
+            deleteTeacherStudent(
+                button.getAttribute('data-del-student'),
+                button.getAttribute('data-name')
+            );
 
-            if (grades.indexOf(label) === -1) {
-
-                grades.push(label);
-
-            }
-
-        });
-
-        grades.sort(function(a, b) {
-            return a.localeCompare(b, 'ar', { numeric: true });
-        });
-
-        strip.querySelectorAll('.grade-chip[data-grade-chip]').forEach(function(chip) {
-
-            chip.remove();
-
-        });
-
-        grades.forEach(function(label) {
-
-            const chip =
-                document.createElement('button');
-
-            chip.type = 'button';
-
-            chip.className = 'grade-chip';
-
-            chip.setAttribute('data-grade', label);
-
-            chip.setAttribute('data-grade-chip', '1');
-
-            chip.innerHTML =
-                '<i class="fas fa-graduation-cap"></i> ' + escapeHtml(label);
-
-            strip.appendChild(chip);
-
-        });
-
-        syncGradeStripActive();
-
-    }
-
-
-    function syncGradeStripActive() {
-
-        const strip =
-            document.getElementById('gradeStrip');
-
-        if (!strip) {
-            return;
         }
-
-        const selected =
-            studentGradeFilterSelect.value;
-
-        strip.querySelectorAll('.grade-chip').forEach(function(chip) {
-
-            const value =
-                chip.getAttribute('data-grade');
-
-            let active;
-
-            if (selected === 'all') {
-
-                active = value === 'all';
-
-            } else if (selected === 'ungraded') {
-
-                active = value === '__none__';
-
-            } else {
-
-                active = value === selected;
-
-            }
-
-            chip.classList.toggle('active', active);
-
-        });
-
-    }
-
-
-    (function bindGradeStrip() {
-
-        const strip =
-            document.getElementById('gradeStrip');
-
-        if (!strip) {
-            return;
-        }
-
-        strip.addEventListener('click', function(event) {
-
-            const chip =
-                event.target.closest('.grade-chip');
-
-            if (!chip) {
-                return;
-            }
-
-            const value =
-                chip.getAttribute('data-grade');
-
-            if (value === 'all') {
-
-                studentGradeFilterSelect.value = 'all';
-
-                studentGroupFilterSelect.value = 'all';
-
-            } else if (value === '__none__') {
-
-                studentGradeFilterSelect.value = 'ungraded';
-
-                studentGroupFilterSelect.value = 'all';
-
-            } else {
-
-                studentGradeFilterSelect.value = value;
-
-            }
-
-            renderStudentRows();
-
-            syncGradeStripActive();
-
-        });
-
-    })();
-
+    );
 
     /* ---------- Results page (existing per-student RPCs, teacher-scoped) ---------- */
 
