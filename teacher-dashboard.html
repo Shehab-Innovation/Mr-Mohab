@@ -5107,6 +5107,11 @@
     let selectedGrade =
         null;
 
+    // Open/closed state of the grade stages (survives re-renders).
+    // No stage is open by default; selecting a grade opens its own stage.
+    const openStages =
+        new Set();
+
     function gradeCount(gradeNumber) {
 
         if (!allStudents) {
@@ -5134,7 +5139,7 @@
                 document.createElement('div');
 
             block.className =
-                'stage-block' + (stage.key === 'primary' ? ' open' : '');
+                'stage-block' + (openStages.has(stage.key) ? ' open' : '');
 
             const title =
                 document.createElement('div');
@@ -5185,7 +5190,16 @@
             title.addEventListener(
                 'click',
                 function() {
-                    block.classList.toggle('open');
+
+                    const isOpen =
+                        block.classList.toggle('open');
+
+                    if (isOpen) {
+                        openStages.add(stage.key);
+                    } else {
+                        openStages.delete(stage.key);
+                    }
+
                 }
             );
 
