@@ -3873,6 +3873,32 @@
         gradeNumber
     ){
 
+        /* X.7: a student can only open their own grade. Cards for
+           other grades never exist in the DOM — this guard also
+           covers programmatic/console calls. */
+        const myGrade =
+            currentStudent
+                ? parseInt(currentStudent.grade, 10)
+                : null;
+
+        if(
+            myGrade !== null &&
+            gradeNumber !== myGrade
+        ){
+            return;
+        }
+
+        /* X.7: grades 7-12 have no content in gradesData yet. */
+        if(!gradesData[gradeNumber]){
+
+            showGradeContentUnavailable(
+                gradeNumber
+            );
+
+            return;
+
+        }
+
         currentGrade =
             gradeNumber;
 
@@ -5843,6 +5869,96 @@
     }
 
 
+    /* ================= X.7: SERVER-SIDE GRADE SYNC ================= */
+
+    /* Re-syncs the student's grade from Supabase (server = source of
+       truth) and keeps localStorage updated as the offline fallback.
+       Fire-and-forget: page always renders from the locally cached
+       grade first; the server value wins once it arrives. */
+
+    async function syncStudentGradeFromServer(){
+
+        if(
+            !currentStudent ||
+            !currentStudent.phone ||
+            !currentStudent.parent_phone ||
+            typeof supabaseClient === 'undefined' ||
+            typeof supabaseClient.rpc !== 'function'
+        ){
+            return;
+        }
+
+        const registrationCode =
+            window.NEXORA_CONFIG &&
+            window.NEXORA_CONFIG.teacher &&
+            window.NEXORA_CONFIG.teacher.registration_code
+                ? window.NEXORA_CONFIG.teacher.registration_code
+                : null;
+
+        if(!registrationCode){
+            return;
+        }
+
+        try{
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_student_grade_by_phone',
+                    {
+                        p_registration_code: registrationCode,
+                        p_phone: currentStudent.phone,
+                        p_parent_phone: currentStudent.parent_phone
+                    }
+                );
+
+            if(error){
+
+                console.warn(
+                    'grade sync skipped:',
+                    error.message
+                );
+
+                return;
+
+            }
+
+            const row =
+                (data && data.length > 0)
+                    ? data[0]
+                    : null;
+
+            if(
+                row &&
+                row.grade &&
+                row.grade !== currentStudent.grade
+            ){
+
+                currentStudent.grade = row.grade;
+
+                localStorage.setItem(
+                    STUDENT_KEY,
+                    JSON.stringify(currentStudent)
+                );
+
+                if(document.getElementById('gradeInfo')){
+                    document.getElementById('gradeInfo').textContent =
+                        currentStudent.grade;
+                }
+
+            }
+
+        }catch(syncError){
+
+            console.warn(
+                'grade sync failed:',
+                syncError
+            );
+
+        }
+
+    }
+
+
     /* ================= LOAD STUDENT ================= */
 
     function loadStudent(){
@@ -6101,7 +6217,8 @@
                         p_name: name,
                         p_phone: phone,
                         p_parent_phone: parentPhone,
-                        p_registration_code: registrationCode
+                        p_registration_code: registrationCode,
+                        p_grade: grade
                     });
 
             if(error){
@@ -6188,7 +6305,8 @@
                             p_student_id: studentId,
                             p_name: name,
                             p_phone: phone,
-                            p_parent_phone: parentPhone
+                            p_parent_phone: parentPhone,
+                            p_grade: grade
                         });
 
                 if(updateError){
@@ -6415,6 +6533,11 @@
         );
 
 
+        /* X.7: grade gating — the student sees ONLY their own grade.
+           Applied on every entry so it survives grade changes. */
+        applyGradeGating();
+
+
         trackActivity(
 
             'login',
@@ -6424,6 +6547,161 @@
 
             'home'
 
+        );
+
+    }
+
+
+    /* ================= X.7: GRADE GATING ================= */
+
+    const GRADE_LABELS = {
+        1:  'الصف الأول الابتدائي',
+        2:  'الصف الثاني الابتدائي',
+        3:  'الصف الثالث الابتدائي',
+        4:  'الصف الرابع الابتدائي',
+        5:  'الصف الخامس الابتدائي',
+        6:  'الصف السادس الابتدائي',
+        7:  'الصف الأول الإعدادي',
+        8:  'الصف الثاني الإعدادي',
+        9:  'الصف الثالث الإعدادي',
+        10: 'الصف الأول الثانوي',
+        11: 'الصف الثاني الثانوي',
+        12: 'الصف الثالث الثانوي'
+    };
+
+    const GRADE_NOTE_ID = 'gradeContentNote';
+
+    /* Rebuilds the curriculum grade grid so it contains exactly one
+       card — the student's own grade. Cards for other grades never
+       exist in the DOM, so they cannot be opened at all. Grades 7-12
+       have no content in gradesData yet: the card is still shown and
+       clicking it opens a clear "content not available" message
+       instead of empty units. Design tokens are untouched (the
+       existing .grade-card styles are reused as-is). */
+
+    function applyGradeGating(){
+
+        const grid =
+            document.querySelector('.grade-grid');
+
+        if(!grid || !currentStudent || !currentStudent.grade){
+            return;
+        }
+
+        const myGrade =
+            parseInt(currentStudent.grade, 10);
+
+        if(!(myGrade >= 1 && myGrade <= 12)){
+            return;
+        }
+
+        grid.innerHTML =
+            '';
+
+        const card =
+            document.createElement('div');
+
+        card.className =
+            'grade-card';
+
+        card.setAttribute(
+            'onclick',
+            'openGrade(' + myGrade + ')'
+        );
+
+        card.innerHTML =
+            '<div class="grade-icon">' +
+            '<i class="fas fa-graduation-cap"></i>' +
+            '</div>' +
+            '<h3>' + (GRADE_LABELS[myGrade] || ('الصف ' + myGrade)) + '</h3>' +
+            '<p>وحداتي ومذكراتي وواجباتي وامتحاناتي</p>';
+
+        grid.appendChild(card);
+
+        let note =
+            document.getElementById(GRADE_NOTE_ID);
+
+        if(!note){
+
+            note =
+                document.createElement('p');
+
+            note.id =
+                GRADE_NOTE_ID;
+
+            note.className =
+                'grade-note';
+
+            const cardEl =
+                document.querySelector('.card');
+
+            if(
+                cardEl &&
+                cardEl.parentNode === grid.parentNode
+            ){
+                grid.parentNode.insertBefore(
+                    note,
+                    grid
+                );
+            }
+
+        }
+
+        note.textContent =
+            'أنت مسجل في ' +
+            (GRADE_LABELS[myGrade] || ('الصف ' + myGrade)) +
+            ' — هذا هو المحتوى المتاح لك.';
+
+    }
+
+
+    /* X.7: grades 7-12 have no content yet — show a clear message
+       instead of an empty units grid. Called from openGrade(). */
+
+    function showGradeContentUnavailable(
+        gradeNumber
+    ){
+
+        const unitGrid =
+            document.getElementById('unitGrid');
+
+        const gradeTitle =
+            document.getElementById('gradeTitle');
+
+        if(gradeTitle){
+
+            gradeTitle.textContent =
+                (GRADE_LABELS[gradeNumber] || ('الصف ' + gradeNumber)) +
+                ' — المحتوى غير متاح حاليًا';
+
+        }
+
+        if(unitGrid){
+
+            unitGrid.innerHTML =
+                '';
+
+            const msg =
+                document.createElement('p');
+
+            msg.style.padding =
+                '24px';
+
+            msg.style.textAlign =
+                'center';
+
+            msg.style.fontSize =
+                '15px';
+
+            msg.textContent =
+                'محتوى هذا الصف غير متاح حاليًا. سيتم إضافته قريبًا — يمكنك متابعة استخدام بقية أقسام المنصة.';
+
+            unitGrid.appendChild(msg);
+
+        }
+
+        showPage(
+            'grade'
         );
 
     }
@@ -7739,6 +8017,11 @@
             if(hasStudent){
 
                 enterStudentSite();
+
+                /* X.7: server is the source of truth for grade —
+                   re-sync from Supabase on every load (fire-and-forget;
+                   localStorage remains the offline fallback). */
+                syncStudentGradeFromServer();
 
             }else{
 
