@@ -2524,19 +2524,30 @@
 
             <div class="empty-state" id="certificatesEmptyState" style="display:none;">
                 <div class="empty-icon"><i class="fas fa-award"></i></div>
-                <div>لا توجد شهادات صادرة حتى الآن. تُمنح الشهادة تلقائيًا عند تحقيق 80% أو أكثر.</div>
+                <div>اختر صفًا لعرض شهادات طلابه.</div>
             </div>
 
-            <div class="table-wrapper" id="certificatesTableWrapper" style="display:none;">
+            <div class="students-card-inner">
+
+                <div class="grade-stage-nav" id="certGradeStageNav" aria-label="تصفية الشهادات حسب المرحلة والصف"></div>
+
+            </div>
+
+            <div class="empty-state" id="certGradeEmptyState" style="display:none;">
+                <div class="empty-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div id="certGradeEmptyText">اختر صفًا لعرض شهادات طلابه.</div>
+            </div>
+
+            <div class="table-wrapper" id="certGradeTableWrapper" style="display:none;">
 
                 <div class="page-toolbar" style="padding: 16px 18px 0;">
 
                     <div class="search-wrap">
                         <i class="fas fa-magnifying-glass"></i>
-                        <input type="text" class="search-input" id="certificatesSearchInput" placeholder="ابحث بالطالب أو التقييم…">
+                        <input type="text" class="search-input" id="certGradeSearchInput" placeholder="ابحث داخل الصف بالطالب أو التقييم…">
                     </div>
 
-                    <span class="results-count" id="certificatesResultsCount"></span>
+                    <span class="results-count" id="certGradeResultsCount"></span>
 
                 </div>
 
@@ -2553,15 +2564,11 @@
                         </tr>
                     </thead>
 
-                    <tbody id="certificatesTableBody"></tbody>
+                    <tbody id="certGradeTableBody"></tbody>
 
                 </table>
 
             </div>
-
-        </section>
-
-    </section>
 
     <!-- ==================== EVALUATIONS ==================== -->
 
@@ -5708,22 +5715,27 @@
     const certificatesEmptyStateElement =
         document.getElementById('certificatesEmptyState');
 
-    const certificatesTableWrapperElement =
-        document.getElementById('certificatesTableWrapper');
-
-    const certificatesTableBody =
-        document.getElementById('certificatesTableBody');
-
     const certificatesErrorBoxElement =
         document.getElementById('certificatesErrorBox');
 
-    const certificatesSearchInput =
-        document.getElementById('certificatesSearchInput');
-
-    const certificatesResultsCount =
-        document.getElementById('certificatesResultsCount');
-
     let allCertificates = [];
+
+    function studentIdToGrade() {
+
+        const map =
+            {};
+
+        if (allStudents) {
+
+            allStudents.forEach(function(student) {
+                map[student.student_id] = student.grade;
+            });
+
+        }
+
+        return map;
+
+    }
 
 
     async function loadAllCertificates() {
@@ -5733,8 +5745,6 @@
         certificatesErrorBoxElement.style.display = 'none';
 
         certificatesLoadingElement.style.display = 'block';
-
-        certificatesTableWrapperElement.style.display = 'none';
 
         certificatesEmptyStateElement.style.display = 'none';
 
@@ -5792,7 +5802,9 @@
                 return new Date(b.created_at || 0) - new Date(a.created_at || 0);
             });
 
-            renderCertificates();
+            buildCertGradeStageNav();
+
+            renderCertGradeCertificates();
 
         } catch (error) {
 
@@ -5817,44 +5829,304 @@
     }
 
 
-    function renderCertificates() {
+    /* ---------- Certificate delete (teacher-scoped RPC, deletes only this certificate) ---------- */
 
-        certificatesTableBody.innerHTML = '';
+    async function deleteTeacherCertificate(certificateId, studentName) {
 
-        if (allCertificates.length === 0) {
+        const confirmed =
+            confirm(
+                'أنت على وشك حذف شهادة الطالب: ' + (studentName || '') + '\n' +
+                'سيتم حذف الشهادة نهائيًا من قاعدة البيانات.\n\n' +
+                'هل أنت متأكد من الحذف؟'
+            );
 
-            certificatesTableWrapperElement.style.display = 'none';
+        if (!confirmed) {
+            return;
+        }
 
-            certificatesEmptyStateElement.style.display = 'block';
+        const teacherToken =
+            sessionStorage.getItem(teacherTokenKey);
 
-            certificatesResultsCount.textContent = '';
+        if (!teacherToken) {
+
+            redirectToLogin();
 
             return;
 
         }
 
-        certificatesEmptyStateElement.style.display = 'none';
+        try {
 
-        certificatesTableWrapperElement.style.display = 'block';
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'delete_teacher_certificate_by_session',
+                    {
+                        p_session_token: teacherToken,
+                        p_certificate_id: certificateId
+                    }
+                );
+
+            if (error) {
+
+                console.error(
+                    'Delete Certificate RPC Error:',
+                    error
+                );
+
+                showError(
+                    'حدث خطأ أثناء حذف الشهادة.'
+                );
+
+                return;
+
+            }
+
+            const removed =
+                (typeof data === 'number') ? data : 0;
+
+            if (removed === 0) {
+
+                showError(
+                    'تعذر حذف الشهادة (غير موجودة ضمن شهادات طلابك).'
+                );
+
+                return;
+
+            }
+
+            allCertificates =
+                allCertificates.filter(function(c) {
+                    return c.certificate_id !== certificateId;
+                });
+
+            buildCertGradeStageNav();
+
+            renderCertGradeCertificates();
+
+        } catch (error) {
+
+            console.error(
+                'Unexpected Delete Certificate Error:',
+                error
+            );
+
+            showError(
+                'حدث خطأ غير متوقع أثناء حذف الشهادة.'
+            );
+
+        }
+
+    }
+
+    document.addEventListener(
+        'click',
+        function(event) {
+
+            const button =
+                event.target.closest('[data-del-cert]');
+
+            if (!button) {
+                return;
+            }
+
+            deleteTeacherCertificate(
+                button.getAttribute('data-del-cert'),
+                button.getAttribute('data-del-cert-name') || ''
+            );
+
+        }
+    );
+
+
+    /* ---------- Certificates by grade (same pattern as Students; students.grade is the only source of truth) ---------- */
+
+    const certGradeNavElement =
+        document.getElementById('certGradeStageNav');
+
+    const certGradeTableWrapper =
+        document.getElementById('certGradeTableWrapper');
+
+    const certGradeTableBody =
+        document.getElementById('certGradeTableBody');
+
+    const certGradeSearchInput =
+        document.getElementById('certGradeSearchInput');
+
+    const certGradeResultsCount =
+        document.getElementById('certGradeResultsCount');
+
+    const certGradeEmptyState =
+        document.getElementById('certGradeEmptyState');
+
+    const certGradeEmptyText =
+        document.getElementById('certGradeEmptyText');
+
+    let selectedCertGrade =
+        null;
+
+    // Open/closed stage state survives re-renders (no stage open by default).
+    const certOpenStages =
+        new Set();
+
+    function certGradeCount(gradeNumber) {
+
+        if (!allStudents) {
+            return 0;
+        }
+
+        return allStudents.filter(function(student) {
+            return student.grade === gradeNumber;
+        }).length;
+
+    }
+
+    function buildCertGradeStageNav() {
+
+        if (!certGradeNavElement) {
+            return;
+        }
+
+        certGradeNavElement.innerHTML =
+            '';
+
+        GRADE_STAGES.forEach(function(stage) {
+
+            const block =
+                document.createElement('div');
+
+            block.className =
+                'stage-block' + (certOpenStages.has(stage.key) ? ' open' : '');
+
+            const title =
+                document.createElement('div');
+
+            title.className =
+                'stage-title';
+
+            title.innerHTML =
+                '<i class="fas ' + stage.icon + '"></i>' +
+                '<span>' + escapeHtml(stage.label) + '</span>' +
+                '<i class="fas fa-chevron-left chev"></i>';
+
+            const gradesWrap =
+                document.createElement('div');
+
+            gradesWrap.className =
+                'stage-grades';
+
+            stage.grades.forEach(function(gradeNumber) {
+
+                const chip =
+                    document.createElement('button');
+
+                chip.type =
+                    'button';
+
+                chip.className =
+                    'grade-chip' + (gradeNumber === selectedCertGrade ? ' active' : '');
+
+                chip.setAttribute('data-grade', String(gradeNumber));
+
+                chip.innerHTML =
+                    '<i class="fas fa-graduation-cap"></i> ' +
+                    escapeHtml(GRADE_LABELS[gradeNumber]) +
+                    ' <span class="grade-count">(' + certGradeCount(gradeNumber) + ')</span>';
+
+                chip.addEventListener(
+                    'click',
+                    function() {
+                        selectCertGrade(gradeNumber);
+                    }
+                );
+
+                gradesWrap.appendChild(chip);
+
+            });
+
+            title.addEventListener(
+                'click',
+                function() {
+
+                    const isOpen =
+                        block.classList.toggle('open');
+
+                    if (isOpen) {
+                        certOpenStages.add(stage.key);
+                    } else {
+                        certOpenStages.delete(stage.key);
+                    }
+
+                }
+            );
+
+            block.appendChild(title);
+            block.appendChild(gradesWrap);
+            certGradeNavElement.appendChild(block);
+
+        });
+
+    }
+
+    function selectCertGrade(gradeNumber) {
+
+        selectedCertGrade =
+            gradeNumber;
+
+        buildCertGradeStageNav();
+
+        renderCertGradeCertificates();
+
+    }
+
+    function renderCertGradeCertificates() {
+
+        if (
+            !selectedCertGrade ||
+            !allCertificates
+        ) {
+            return;
+        }
+
+        const gradeLabel =
+            GRADE_LABELS[selectedCertGrade];
 
         const query =
-            (certificatesSearchInput.value || '').trim().toLowerCase();
+            (certGradeSearchInput.value || '').trim().toLowerCase();
+
+        const studentGradeMap =
+            studentIdToGrade();
 
         let rows =
-            allCertificates.slice();
+            allCertificates.filter(function(c) {
+                return studentGradeMap[c.student_id] === selectedCertGrade;
+            });
 
         if (query) {
 
             rows = rows.filter(function(c) {
 
                 return (
-                    (c.student_name || '').toLowerCase().indexOf(query) !== -1 ||
+                    (c.student_name || studentNameById[c.student_id] || '').toLowerCase().indexOf(query) !== -1 ||
                     (c.assessment_name || '').toLowerCase().indexOf(query) !== -1
                 );
 
             });
 
         }
+
+        certGradeEmptyState.style.display =
+            rows.length === 0 ? 'block' : 'none';
+
+        certGradeEmptyText.textContent =
+            query
+                ? 'لا توجد نتائج مطابقة داخل ' + gradeLabel + '.'
+                : 'لا توجد شهادات لطلاب ' + gradeLabel + ' حتى الآن.';
+
+        certGradeTableWrapper.style.display =
+            rows.length === 0 ? 'none' : 'block';
+
+        certGradeTableBody.innerHTML =
+            '';
 
         rows.forEach(function(c) {
 
@@ -5890,26 +6162,28 @@
                         class="table-link"
                         href="student-profile.html?student_id=${encodeURIComponent(c.student_id)}"
                     >الملف</a>
+                    <button
+                        type="button"
+                        class="delete-student-button"
+                        data-del-cert="${escapeHtml(c.certificate_id)}"
+                        data-del-cert-name="${escapeHtml(c.student_name || studentNameById[c.student_id] || '')}"
+                    >حذف</button>
                 </td>
 
             `;
 
-            certificatesTableBody.appendChild(row);
+            certGradeTableBody.appendChild(row);
 
         });
 
-        certificatesResultsCount.textContent =
+        certGradeResultsCount.textContent =
             query
-                ? (rows.length + ' من ' + allCertificates.length + ' شهادة')
-                : '';
+                ? (rows.length + ' من ' + certGradeCount(selectedCertGrade) + ' طالب')
+                : (rows.length + ' شهادة');
 
     }
 
-
-    certificatesSearchInput.addEventListener('input', renderCertificates);
-
-
-    refreshCertificatesButton.addEventListener('click', loadAllCertificates);
+    certGradeSearchInput.addEventListener('input', renderCertGradeCertificates);
 
 
     /* ---------- Notifications (derived from live data — no invented backend) ---------- */
