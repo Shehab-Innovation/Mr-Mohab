@@ -1928,11 +1928,6 @@
         <span class="nav-badge" id="notificationsNavBadge">0</span>
     </button>
 
-    <button class="nav-item" data-page="profile">
-        <i class="fas fa-id-badge"></i>
-        Teacher Profile
-    </button>
-
     <button class="nav-item" data-page="settings">
         <i class="fas fa-gear"></i>
         Settings
@@ -2112,25 +2107,53 @@
             <div class="overview-card">
 
                 <div class="card-head">
-                    <i class="fas fa-chart-simple"></i>
-                    <h3>آخر النتائج</h3>
+                    <i class="fas fa-id-badge"></i>
+                    <h3>Teacher Profile</h3>
                 </div>
 
-                <div class="mini-list" id="overviewLatestResults">
-                    <div class="mini-row"><span class="mini-meta">جاري التحميل…</span></div>
+                <div class="teacher-profile-head">
+
+                    <img id="profileImage" class="teacher-image" style="width:64px;height:64px;" src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg" alt="المدرس">
+
+                    <div>
+                        <div class="teacher-name" id="profileName" style="font-size:18px;">مستر مهاب</div>
+                        <div class="brand profile-brand">NEXORA | Shehab Innovation</div>
+                    </div>
+
                 </div>
 
-            </div>
+                <div class="profile-rows" style="margin-top: 14px;">
 
-            <div class="overview-card">
+                    <div class="profile-row">
+                        <span class="pr-label">الاسم</span>
+                        <span class="pr-value rtl" id="profileNameRow">—</span>
+                    </div>
 
-                <div class="card-head">
-                    <i class="fas fa-bell"></i>
-                    <h3>إشعارات مهمة</h3>
+                    <div class="profile-row">
+                        <span class="pr-label">حالة الحساب</span>
+                        <span class="pr-value rtl"><span class="status">نشط</span></span>
+                    </div>
+
+                    <div class="profile-row">
+                        <span class="pr-label">آخر دخول</span>
+                        <span class="pr-value rtl" id="profileLastLogin">—</span>
+                    </div>
+
+                    <div class="profile-row">
+                        <span class="pr-label">انتهاء الجلسة</span>
+                        <span class="pr-value rtl" id="profileSessionExpiry">—</span>
+                    </div>
+
                 </div>
 
-                <div class="mini-list" id="overviewNotifs">
-                    <div class="mini-row"><span class="mini-meta">جاري التحميل…</span></div>
+                <div class="settings-note" style="margin-top: 14px;">
+
+                    <i class="fas fa-circle-info"></i>
+
+                    <span>
+                        انتهاء الجلسة يعني انتهاء صلاحية تسجيل الدخول الحالية فقط: سيُطلب منك تسجيل الدخول من جديد عند انتهائها، ولا يُحذف أي شيء — الطلاب والمجموعات والنتائج والشهادات تبقى محفوظة.
+                    </span>
+
                 </div>
 
             </div>
@@ -2602,73 +2625,6 @@
             <p class="pending-note" style="padding: 0 20px 20px; margin:0;">
                 هذه الإشعارات مشتقة من بياناتك الحالية (طلاب، مجموعات، نتائج، شهادات) — وستُربط لاحقًا بمركز إشعارات فعلي عند توفر Backend له.
             </p>
-
-        </section>
-
-    </section>
-
-    <!-- ==================== TEACHER PROFILE ==================== -->
-
-    <section class="page" id="page-profile">
-
-        <section class="students-card">
-
-            <div class="section-header">
-
-                <div class="section-title">
-                    <i class="fas fa-id-badge sec-ico"></i> Teacher Profile
-                </div>
-
-            </div>
-
-            <div style="padding: 22px;">
-
-                <div class="teacher-profile-head">
-
-                    <img id="profileImage" class="teacher-image" style="width:64px;height:64px;" src="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg" alt="المدرس">
-
-                    <div>
-                        <div class="teacher-name" id="profileName" style="font-size:18px;">مستر مهاب</div>
-                        <div class="brand profile-brand">NEXORA | Shehab Innovation</div>
-                    </div>
-
-                </div>
-
-                <div class="profile-rows" style="margin-top: 14px;">
-
-                    <div class="profile-row">
-                        <span class="pr-label">الاسم</span>
-                        <span class="pr-value rtl" id="profileNameRow">—</span>
-                    </div>
-
-                    <div class="profile-row">
-                        <span class="pr-label">حالة الحساب</span>
-                        <span class="pr-value rtl"><span class="status">نشط</span></span>
-                    </div>
-
-                    <div class="profile-row">
-                        <span class="pr-label">آخر دخول</span>
-                        <span class="pr-value rtl" id="profileLastLogin">—</span>
-                    </div>
-
-                    <div class="profile-row">
-                        <span class="pr-label">انتهاء الجلسة</span>
-                        <span class="pr-value rtl" id="profileSessionExpiry">—</span>
-                    </div>
-
-                </div>
-
-                <div class="settings-note" style="margin-top: 14px;">
-
-                    <i class="fas fa-circle-info"></i>
-
-                    <span>
-                        انتهاء الجلسة يعني انتهاء صلاحية تسجيل الدخول الحالية فقط: سيُطلب منك تسجيل الدخول من جديد عند انتهائها، ولا يُحذف أي شيء — الطلاب والمجموعات والنتائج والشهادات تبقى محفوظة.
-                    </span>
-
-                </div>
-
-            </div>
 
         </section>
 
@@ -5478,9 +5434,6 @@
     const resultsResultsCount =
         document.getElementById('resultsResultsCount');
 
-    const overviewLatestResults =
-        document.getElementById('overviewLatestResults');
-
     let allResults = [];
 
     let resultsLoaded = false;
@@ -5555,8 +5508,6 @@
             resultsLoaded = true;
 
             renderResults();
-
-            renderOverview();
 
         } catch (error) {
 
@@ -6183,9 +6134,6 @@
     const notificationsListElement =
         document.getElementById('notificationsList');
 
-    const overviewNotifsElement =
-        document.getElementById('overviewNotifs');
-
 
     function buildNotifications() {
 
@@ -6285,28 +6233,6 @@
 
         });
 
-        overviewNotifsElement.innerHTML =
-            '';
-
-        notifs.slice(0, 4).forEach(function(n) {
-
-            const row =
-                document.createElement('div');
-
-            row.className = 'mini-row';
-
-            row.innerHTML = `
-                <div>
-                    <div class="mini-name">${escapeHtml(n.title)}</div>
-                    <div class="mini-meta">${escapeHtml(n.meta)}</div>
-                </div>
-                <i class="fas ${n.icon}" style="color: var(--primary);"></i>
-            `;
-
-            overviewNotifsElement.appendChild(row);
-
-        });
-
         const badge =
             document.getElementById('notificationsNavBadge');
 
@@ -6321,44 +6247,6 @@
             );
 
         }
-
-    }
-
-
-    /* ---------- Overview assembly ---------- */
-
-    function renderOverview() {
-
-        overviewLatestResults.innerHTML =
-            '';
-
-        if (allResults.length === 0) {
-
-            overviewLatestResults.innerHTML =
-                '<div class="mini-row"><span class="mini-meta">لا توجد نتائج مسجلة بعد.</span></div>';
-
-            return;
-
-        }
-
-        allResults.slice(0, 5).forEach(function(r) {
-
-            const row =
-                document.createElement('div');
-
-            row.className = 'mini-row';
-
-            row.innerHTML = `
-                <div>
-                    <div class="mini-name">${escapeHtml(studentNameById[r.student_id] || r.student_id)}</div>
-                    <div class="mini-meta">${escapeHtml(r.title || 'نتيجة')} — ${escapeHtml(formatDate(r.completed_at))}</div>
-                </div>
-                <span class="percent-chip">${escapeHtml(String(r.percentage ?? 0))}%</span>
-            `;
-
-            overviewLatestResults.appendChild(row);
-
-        });
 
     }
 
