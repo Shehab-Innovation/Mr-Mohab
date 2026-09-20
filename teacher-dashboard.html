@@ -1920,22 +1920,6 @@
         الاختبارات
     </button>
 
-    <button class="nav-item" data-page="results">
-        <i class="fas fa-clipboard-check"></i>
-        النتائج
-    </button>
-
-    <button class="nav-item" data-page="certificates">
-        <i class="fas fa-award"></i>
-        الشهادات
-    </button>
-
-    <button class="nav-item" data-page="evaluations">
-        <i class="fas fa-star-half-stroke"></i>
-        التقييمات
-        <span class="badge-soft nav-soon">قريبًا</span>
-    </button>
-
     <div class="sidebar-section">النظام</div>
 
     <button class="nav-item" data-page="notifications">
@@ -2264,9 +2248,10 @@
                 <thead>
 
                     <tr>
+                        <th>ملف الطالب</th>
                         <th>الطالب</th>
-                        <th>رقم الطالب</th>
-                        <th>رقم الهاتف</th>
+                        <th>رقم هاتف الطالب</th>
+                        <th>رقم هاتف ولي الأمر</th>
                         <th>التسجيل</th>
                         <th>إجراء</th>
                     </tr>
@@ -2569,6 +2554,10 @@
                 </table>
 
             </div>
+
+        </section>
+
+    </section>
 
     <!-- ==================== EVALUATIONS ==================== -->
 
@@ -5285,24 +5274,27 @@
             row.innerHTML = `
 
                 <td>
-                    <div class="student-name">
-                        <a
-                            href="student-profile.html?student_id=${encodeURIComponent(student.student_id)}"
-                        >
-                            ${escapeHtml(student.name)}
-                        </a>
-                    </div>
+                    <a
+                        class="table-link"
+                        href="student-profile.html?student_id=${encodeURIComponent(student.student_id)}"
+                    >فتح الملف</a>
                 </td>
 
                 <td>
-                    <div class="student-id">
-                        ${escapeHtml(student.student_id)}
+                    <div class="student-name">
+                        ${escapeHtml(student.name)}
                     </div>
                 </td>
 
                 <td>
                     <div class="phone">
-                        ${escapeHtml(student.phone)}
+                        ${escapeHtml(student.phone || '—')}
+                    </div>
+                </td>
+
+                <td>
+                    <div class="phone">
+                        ${escapeHtml(student.parent_phone || '—')}
                     </div>
                 </td>
 
@@ -6559,6 +6551,12 @@
             renderProfile();
 
             applyTheme(getStoredTheme());
+
+            /* #students deep link (student profile back button lands on
+               the Students page instead of Overview) — additive only. */
+            if (window.location.hash === '#students') {
+                showPage('students');
+            }
 
             Promise.all([
                 loadAllResults(),
