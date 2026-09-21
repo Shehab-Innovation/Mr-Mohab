@@ -2402,6 +2402,46 @@
             flex:0 0 auto !important;
             width:100% !important;
         }
+        /* ---- X.9: teacher evaluations display (student side) ---- */
+
+        #teacherEvaluationsDisplay .teacher-eval-item{
+
+            padding:16px 4px;
+            border-bottom:1px solid var(--border);
+
+        }
+
+        #teacherEvaluationsDisplay .teacher-eval-item:last-child{
+
+            border-bottom:none;
+            padding-bottom:4px;
+
+        }
+
+        #teacherEvaluationsDisplay .teacher-eval-title{
+
+            font-weight:700;
+            color:var(--text);
+            margin-bottom:4px;
+
+        }
+
+        #teacherEvaluationsDisplay .teacher-eval-date{
+
+            font-size:13px;
+            color:var(--muted);
+            margin-bottom:8px;
+
+        }
+
+        #teacherEvaluationsDisplay .teacher-eval-text{
+
+            color:var(--text-2);
+            font-size:15px;
+            line-height:1.8;
+
+        }
+
     </style>
 </head>
 
@@ -3020,6 +3060,8 @@
                 </div>
 
             </div>
+
+            <div id="teacherEvaluationsDisplay" class="card"></div>
 
         </div>
 
@@ -7679,6 +7721,195 @@
     }
 
 
+    /* ================= X.9: STUDENT-SIDE TEACHER EVALUATIONS ================= */
+
+    /* Minimal HTML escaping for the notes below (local copy;
+       no other code in index.html defines escapeHtml). */
+
+    function escapeHtmlX9(value){
+
+        if(value === null || value === undefined)
+            return '';
+
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+
+    }
+
+
+    function formatEvalDateX9(value){
+
+        if(!value)
+            return 'غير متوفر';
+
+        const date = new Date(value);
+
+        if(isNaN(date.getTime()))
+            return String(value);
+
+        return date.toLocaleDateString(
+            'ar-EG',
+            {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+            }
+        );
+
+    }
+
+
+    /* Loads the CURRENT student's teacher evaluations through the
+       Phase X.9 read-only RPC, scoped by the student's own phone +
+       parent_phone identity pair (the Student Site's existing
+       login credential). Teacher-session tokens are never stored
+       here — the teacher's own RPC is not reachable from the
+       student browser by design. */
+
+    async function loadStudentEvaluationsDisplay(){
+
+        if(!currentStudent)
+            return;
+
+        const container =
+            document.getElementById(
+                'teacherEvaluationsDisplay'
+            );
+
+        if(!container)
+            return;
+
+
+        container.innerHTML = `
+
+            <h3>
+                <span class="head-ico"><i class="fas fa-comments"></i></span> تقييمات وتعليقات المستر
+            </h3>
+
+            <p>
+                جاري تحميل تقييمات المستر...
+            </p>
+
+        `;
+
+
+        try{
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_student_evaluations_by_phone',
+                    {
+                        p_phone: currentStudent.phone,
+                        p_parent_phone: currentStudent.parent_phone
+                    }
+                );
+
+
+            if(error)
+                throw error;
+
+
+            const evaluations =
+                Array.isArray(data)
+                    ? data
+                    : [];
+
+
+            if(
+                evaluations.length ===
+                0
+            ){
+
+                container.innerHTML = `
+
+                    <h3>
+                        <span class="head-ico"><i class="fas fa-comments"></i></span> تقييمات وتعليقات المستر
+                    </h3>
+
+                    <p>
+                        لا توجد تقييمات أو تعليقات من المستر حتى الآن.
+                    </p>
+
+                `;
+
+                return;
+
+            }
+
+
+            /* newest first (the RPC already orders; this is a safety net) */
+
+            const items =
+                [...evaluations]
+                    .reverse()
+                    .map(
+                        evaluation => `
+
+                            <div class="teacher-eval-item">
+
+                                <div class="teacher-eval-title">
+
+                                    ${escapeHtmlX9(evaluation.title)}
+
+                                </div>
+
+                                <div class="teacher-eval-date">
+
+                                    ${formatEvalDateX9(evaluation.created_at)}
+
+                                </div>
+
+                                <div class="teacher-eval-text">
+
+                                    "${escapeHtmlX9(evaluation.evaluation)}"
+
+                                </div>
+
+                            </div>
+
+                        `
+                    )
+                    .join('');
+
+
+            container.innerHTML = `
+
+                <h3>
+                    <span class="head-ico"><i class="fas fa-comments"></i></span> تقييمات وتعليقات المستر
+                </h3>
+
+                ${items}
+
+            `;
+
+        }catch(error){
+
+            console.error(
+                'Load teacher evaluations error:',
+                error
+            );
+
+            container.innerHTML = `
+
+                <h3>
+                    <span class="head-ico"><i class="fas fa-comments"></i></span> تقييمات وتعليقات المستر
+                </h3>
+
+                <p>
+                    لا توجد تقييمات أو تعليقات من المستر حتى الآن.
+                </p>
+
+            `;
+
+        }
+
+    }
+
+
     /* ================= SHOW CERTIFICATES ================= */
 
     function renderCertificates(){
@@ -7935,6 +8166,8 @@
 
                 renderStudentEvaluation();
 
+                loadStudentEvaluationsDisplay();
+
             }
 
 
@@ -8052,6 +8285,8 @@
                 renderCertificates();
 
                 renderStudentEvaluation();
+
+                loadStudentEvaluationsDisplay();
 
             }
 
