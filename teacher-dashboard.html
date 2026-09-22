@@ -8,6 +8,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <script src="nexora-push.js" defer></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -1211,6 +1213,44 @@
             color: var(--muted);
             font-size: 12.5px;
             font-weight: 600;
+        }
+
+        .notif-item.unread {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .notif-item.unread .notif-title {
+            color: var(--primary);
+        }
+
+        .notif-item .notif-time {
+            color: var(--muted);
+            font-size: 11.5px;
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .notif-item {
+            cursor: pointer;
+        }
+
+        .mark-all-read {
+            margin-left: auto;
+            border: 1px solid var(--border-strong);
+            background: var(--surface);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .mark-all-read:hover {
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .profile-rows {
@@ -2618,13 +2658,13 @@
                     <i class="fas fa-bell sec-ico"></i> الإشعارات
                 </div>
 
+                <button class="mark-all-read" id="markAllNotificationsRead" type="button">تحديد الكل كمقروء</button>
+
+                <button class="mark-all-read" id="nxEnablePushTeacher" type="button">تفعيل إشعارات الموبايل</button>
+
             </div>
 
             <div style="padding: 20px;" id="notificationsList"></div>
-
-            <p class="pending-note" style="padding: 0 20px 20px; margin:0;">
-                هذه الإشعارات مشتقة من بياناتك الحالية (طلاب، مجموعات، نتائج، شهادات) — وستُربط لاحقًا بمركز إشعارات فعلي عند توفر Backend له.
-            </p>
 
         </section>
 
@@ -6129,124 +6169,358 @@
     certGradeSearchInput.addEventListener('input', renderCertGradeCertificates);
 
 
-    /* ---------- Notifications (derived from live data — no invented backend) ---------- */
+    /* ---------- Notifications — real backend (Phase N3) ---------- */
 
     const notificationsListElement =
         document.getElementById('notificationsList');
 
+    const notificationsNavBadgeElement =
+        document.getElementById('notificationsNavBadge');
 
-    function buildNotifications() {
+    let nxNotifications = [];
 
-        const notifs = [];
+    function updateNotificationsBadge() {
 
-        if (allStudents.length === 0) {
+        const unread =
+            nxNotifications.filter(
+                function(n) { return !n.read_at; }
+            ).length;
 
-            notifs.push({
-                icon: 'fa-user-graduate',
-                title: 'لا يوجد طلاب مسجلون بعد',
-                meta: 'عند تسجيل أول طالب ستجد بياناته هنا تلقائيًا.'
-            });
+        if (notificationsNavBadgeElement) {
+
+            notificationsNavBadgeElement.textContent =
+                String(unread);
+
+            notificationsNavBadgeElement.classList.toggle(
+                'show',
+                unread > 0
+            );
+
+        }
+
+    }
+
+    async function loadNotifications() {
+
+        if (!notificationsListElement) return;
+
+        const teacherToken =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!teacherToken || !supabaseClient) {
+            nxNotifications = [];
+            renderNotifications();
+            return;
+        }
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_teacher_notifications_by_session',
+                    {
+                        p_session_token: teacherToken
+                    }
+                );
+
+            if (error) throw error;
+
+            nxNotifications =
+                Array.isArray(data) ? data : [];
+
+        } catch (error) {
+
+            console.error('Load notifications error:', error);
+
+            nxNotifications = [];
+
+        }
+
+        renderNotifications();
+
+    }
+
+    function renderNotifications() {
+
+        if (!notificationsListElement) return;
+
+        if (nxNotifications.length === 0) {
+
+            notificationsListElement.innerHTML =
+                '<p class="pending-note" style="padding:0;">لا توجد إشعارات حاليًا</p>';
 
         } else {
 
-            notifs.push({
-                icon: 'fa-circle-check',
-                title: 'بيانات الطلاب محدثة — ' + allStudents.length + ' طالب',
-                meta: 'آخر مزامنة مع قاعدة البيانات تمت بنجاح.'
+            notificationsListElement.innerHTML = '';
+
+            nxNotifications.forEach(function(n) {
+
+                const item = document.createElement('div');
+
+                item.className =
+                    'notif-item' + (n.read_at ? '' : ' unread');
+
+                item.setAttribute('data-notification-id', n.id);
+
+                item.innerHTML = `
+                    <i class="fas ${n.read_at ? 'fa-envelope-open' : 'fa-bell'}"></i>
+                    <div>
+                        <div class="notif-title">${escapeHtml(n.title)}</div>
+                        <div class="notif-meta">${escapeHtml(n.message)}</div>
+                        <div class="notif-time">${escapeHtml(formatDate(n.created_at))}${n.read_at ? '' : ' — غير مقروء'}</div>
+                    </div>
+                `;
+
+                notificationsListElement.appendChild(item);
+
             });
 
         }
 
-        if (currentGroups.length === 0) {
+        updateNotificationsBadge();
 
-            notifs.push({
-                icon: 'fa-users',
-                title: 'لا توجد مجموعات',
-                meta: 'أنشئ أول مجموعة من قسم المجموعات.'
-            });
+    }
 
-        } else {
+    function markNotificationReadAndOpen(id) {
 
-            notifs.push({
-                icon: 'fa-users',
-                title: 'المجموعات: ' + currentGroups.length,
-                meta: 'إدارة المجموعات متاحة من القسم المخصص.'
-            });
+        const notification =
+            nxNotifications.find(
+                function(n) { return n.id === id; }
+            );
+
+        const targetPage =
+            notification && notification.target_page;
+
+        if (notification && !notification.read_at) {
+
+            notification.read_at = new Date().toISOString();
+
+            renderNotifications();
+
+            if (supabaseClient) {
+
+                supabaseClient.rpc(
+                    'mark_teacher_notification_read_by_session',
+                    {
+                        p_session_token: sessionStorage.getItem(teacherTokenKey),
+                        p_notification_id: id
+                    }
+                ).then(loadNotifications).catch(console.error);
+
+            }
 
         }
 
-        allResults.slice(0, 3).forEach(function(r) {
+        if (targetPage) {
+            showPage(targetPage);
+        }
 
-            notifs.push({
-                icon: 'fa-clipboard-check',
-                title: (studentNameById[r.student_id] || r.student_id) + ' — ' + (r.title || 'نتيجة جديدة'),
-                meta: (r.percentage ?? '-') + '% — ' + formatDate(r.completed_at)
-            });
+    }
 
+    async function markAllNotificationsRead() {
+
+        const hasUnread =
+            nxNotifications.some(
+                function(n) { return !n.read_at; }
+            );
+
+        if (!hasUnread) return;
+
+        nxNotifications.forEach(function(n) {
+            if (!n.read_at) n.read_at = new Date().toISOString();
         });
 
-        allCertificates.slice(0, 2).forEach(function(c) {
+        renderNotifications();
 
-            notifs.push({
-                icon: 'fa-award',
-                title: 'شهادة جديدة — ' + (c.student_name || c.student_id),
-                meta: (c.assessment_name || '') + ' — ' + (c.date || formatDate(c.created_at))
-            });
+        if (supabaseClient) {
 
-        });
+            try {
 
-        return notifs;
+                await supabaseClient.rpc(
+                    'mark_all_teacher_notifications_read_by_session',
+                    {
+                        p_session_token: sessionStorage.getItem(teacherTokenKey)
+                    }
+                );
+
+            } catch (error) {
+                console.error('Mark all read error:', error);
+            }
+
+            loadNotifications();
+
+        }
+
+    }
+
+    notificationsListElement.addEventListener(
+        'click',
+        function(event) {
+
+            const target = event.target.closest('.notif-item');
+
+            if (target) {
+                markNotificationReadAndOpen(
+                    target.getAttribute('data-notification-id')
+                );
+            }
+
+        }
+    );
+
+    const markAllNotificationsReadButton =
+        document.getElementById('markAllNotificationsRead');
+
+    if (markAllNotificationsReadButton) {
+
+        markAllNotificationsReadButton.addEventListener(
+            'click',
+            markAllNotificationsRead
+        );
+
+
+    /* ============================================================
+       Phase N4 - Mobile Web Push (additive layer)
+       Subscription is saved via save_teacher_push_subscription;
+       ownership comes from the session token server-side.
+       ============================================================ */
+
+    function nxPushTeacherToken(){
+
+        return localStorage.getItem(teacherTokenKey);
 
     }
 
 
-    function renderNotifications() {
+    async function nxSaveTeacherSubscription(endpoint, p256dh, auth){
 
-        const notifs =
-            buildNotifications();
+        const token = nxPushTeacherToken();
 
-        notificationsListElement.innerHTML =
-            '';
+        if (!token) {
 
-        notifs.forEach(function(n) {
-
-            const item =
-                document.createElement('div');
-
-            item.className = 'notif-item';
-
-            item.innerHTML = `
-
-                <i class="fas ${n.icon}"></i>
-
-                <div>
-
-                    <div class="notif-title">${escapeHtml(n.title)}</div>
-
-                    <div class="notif-meta">${escapeHtml(n.meta)}</div>
-
-                </div>
-
-            `;
-
-            notificationsListElement.appendChild(item);
-
-        });
-
-        const badge =
-            document.getElementById('notificationsNavBadge');
-
-        if (badge) {
-
-            badge.textContent =
-                String(notifs.length);
-
-            badge.classList.toggle(
-                'show',
-                notifs.length > 0
-            );
+            throw new Error('NO_SESSION');
 
         }
+
+
+        const { data, error } =
+            await supabaseClient.rpc(
+                'save_teacher_push_subscription',
+                {
+                    p_session_token: token,
+                    p_endpoint: endpoint,
+                    p_p256dh: p256dh,
+                    p_auth: auth
+                }
+            );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        if (!data) {
+
+            throw new Error('SAVE_REJECTED');
+
+        }
+
+
+        return data;
+
+    }
+
+
+    async function nxEnableTeacherPush(){
+
+        const session = getTeacherSession();
+
+        if (!session || !nxPushTeacherToken()) {
+
+            alert('انتهت الجلسة. سجّل الدخول من جديد ثم أعد المحاولة.');
+
+            return;
+
+        }
+
+
+        try {
+
+            await NEXORA_PUSH.enablePush({
+
+                resolveTeacherToken: nxPushTeacherToken,
+
+                saveSubscription: nxSaveTeacherSubscription
+
+            });
+
+
+            alert('✅ تم تفعيل إشعارات الموبايل على هذا الجهاز.');
+
+        } catch (pushError) {
+
+            const msg = (pushError && pushError.message) || '';
+
+
+            if (msg === 'PERMISSION_DENIED') {
+
+                alert('⚠️ رُفض إذن الإشعارات. اسمح بالإشعارات من إعدادات الموقع في المتصفح ثم أعد المحاولة.');
+
+            } else if (msg === 'UNSUPPORTED_BROWSER') {
+
+                alert('⚠️ متصفحك لا يدعم إشعارات الويب. جرّب Chrome على الموبايل.');
+
+            } else {
+
+                alert('⚠️ تعذّر تفعيل الإشعارات: ' + msg);
+
+            }
+
+        }
+
+    }
+
+
+    (function () {
+
+        const pushBtn = document.getElementById('nxEnablePushTeacher');
+
+        if (pushBtn) {
+
+            pushBtn.addEventListener('click', nxEnableTeacherPush);
+
+        }
+
+    }());
+
+
+    /* Deep-link consumer: push clicks land as /#nxpage=<page> or
+       /?nxpage=<page> -> open that page with the existing router. */
+
+    (function () {
+
+        const match =
+            (location.hash || '').match(/nxpage=([a-z-]+)/i) ||
+            (location.search || '').match(/nxpage=([a-z-]+)/i);
+
+        if (match && typeof showPage === 'function') {
+
+            try {
+
+                showPage(match[1]);
+
+            } catch (deepLinkError) {
+
+                console.error('N4 deep-link error:', deepLinkError);
+
+            }
+
+        }
+
+    }());
 
     }
 
@@ -6446,10 +6720,7 @@
                 showPage('students');
             }
 
-            Promise.all([
-                loadAllResults(),
-                loadAllCertificates()
-            ]).then(renderNotifications);
+            loadNotifications();
 
         }
     );

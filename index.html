@@ -12,6 +12,7 @@
          exists before the main inline script below evaluates gradesData. -->
     <script src="nexora-content.js"></script>
     <script src="ui-enhance.js" defer></script>
+    <script src="nexora-push.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
@@ -2442,6 +2443,103 @@
 
         }
 
+        /* ---- Phase N3: student notifications center ---- */
+
+        #studentNotificationsList .student-notif-item{
+
+            padding:16px 4px;
+            border-bottom:1px solid var(--border);
+            cursor:pointer;
+
+        }
+
+        #studentNotificationsList .student-notif-item:last-child{
+
+            border-bottom:none;
+            padding-bottom:4px;
+
+        }
+
+        #studentNotificationsList .student-notif-item.unread{
+
+            background:var(--primary-soft);
+            border-radius:12px;
+            border-bottom-color:transparent;
+            padding:16px 12px;
+
+        }
+
+        .student-notif-title{
+
+            font-weight:700;
+            color:var(--text);
+            margin-bottom:4px;
+
+        }
+
+        #studentNotificationsList .student-notif-item.unread .student-notif-title{
+
+            color:var(--primary);
+
+        }
+
+        .student-notif-message{
+
+            color:var(--text-2);
+            font-size:15px;
+            line-height:1.8;
+            margin-bottom:4px;
+
+        }
+
+        .student-notif-time{
+
+            font-size:12px;
+            color:var(--muted);
+
+        }
+
+        .notif-badge{
+
+            display:none;
+            margin-left:8px;
+            background:var(--primary);
+            color:#0A0A0C;
+            border-radius:999px;
+            font-size:11px;
+            font-weight:800;
+            padding:1px 7px;
+            vertical-align:middle;
+
+        }
+
+        .notif-badge.show{
+
+            display:inline-flex;
+
+        }
+
+        .notif-mark-all{
+
+            border:1px solid var(--border-strong);
+            background:transparent;
+            color:var(--text);
+            border-radius:10px;
+            padding:6px 12px;
+            font-size:13px;
+            font-weight:700;
+            cursor:pointer;
+            white-space:nowrap;
+
+        }
+
+        .notif-mark-all:hover{
+
+            border-color:var(--primary);
+            color:var(--primary);
+
+        }
+
     </style>
 </head>
 
@@ -2503,6 +2601,14 @@
                     <a class="nav-close" onclick="showPage('certificate',this)">
                         <i class="fas fa-award"></i>
                         الشهادات
+                    </a>
+                </li>
+
+                <li>
+                    <a class="nav-close" onclick="showPage('notifications',this)">
+                        <i class="fas fa-bell"></i>
+                        الإشعارات
+                        <span class="notif-badge" id="studentNotificationsBadge"></span>
                     </a>
                 </li>
 
@@ -3080,6 +3186,30 @@
                 </p>
 
                 <div id="certificateContainer"></div>
+
+            </div>
+
+        </div>
+
+        <!-- NOTIFICATIONS (Phase N3) -->
+
+        <div id="notifications" class="page">
+
+            <h2><span class="head-ico"><i class="fas fa-bell"></i></span> الإشعارات</h2>
+
+            <div class="card">
+
+                <div id="studentNotificationsHeader" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+
+                    <h3 style="margin:0;">مركز الإشعارات</h3>
+
+                    <button type="button" id="markAllStudentNotificationsRead" class="notif-mark-all">تحديد الكل كمقروء</button>
+
+                    <button type="button" id="nxEnablePushStudent" class="notif-mark-all">تفعيل إشعارات الموبايل</button>
+
+                </div>
+
+                <div id="studentNotificationsList"></div>
 
             </div>
 
@@ -7910,6 +8040,379 @@
     }
 
 
+    /* ================= PHASE N3: STUDENT NOTIFICATIONS CENTER ================= */
+
+    function nxNotifDate(value){
+
+        if(!value)
+            return '';
+
+        const date = new Date(value);
+
+        if(isNaN(date.getTime()))
+            return String(value);
+
+        return date.toLocaleString(
+            'ar-EG',
+            {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            }
+        );
+
+    }
+
+
+    let nxStudentNotifs =
+        [];
+
+
+    function nxStudentNotifBadge(){
+
+        const badge =
+            document.getElementById('studentNotificationsBadge');
+
+        if(!badge)
+            return;
+
+        const unread =
+            nxStudentNotifs.filter(
+                function(n){ return !n.read_at; }
+            ).length;
+
+        badge.textContent =
+            String(unread);
+
+        badge.classList.toggle(
+            'show',
+            unread > 0
+        );
+
+    }
+
+
+    function nxRenderStudentNotifs(){
+
+        const container =
+            document.getElementById('studentNotificationsList');
+
+        if(!container)
+            return;
+
+        if(nxStudentNotifs.length === 0){
+
+            container.innerHTML =
+                '<p style="padding:16px 4px;color:var(--muted);">لا توجد إشعارات حاليًا</p>';
+
+        }else{
+
+            container.innerHTML =
+                nxStudentNotifs
+                    .map(
+                        function(n){
+                            return `
+                                <div class="student-notif-item${n.read_at ? '' : ' unread'}" data-notification-id="${escapeHtmlX9(n.id)}">
+                                    <div class="student-notif-title">
+                                        ${escapeHtmlX9(n.title)}
+                                    </div>
+                                    <div class="student-notif-message">
+                                        ${escapeHtmlX9(n.message)}
+                                    </div>
+                                    <div class="student-notif-time">
+                                        ${escapeHtmlX9(nxNotifDate(n.created_at))}${n.read_at ? '' : ' — غير مقروء'}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    )
+                    .join('');
+
+        }
+
+        nxStudentNotifBadge();
+
+    }
+
+
+    function nxMarkStudentNotifReadAndOpen(id){
+
+        const notification =
+            nxStudentNotifs.find(
+                function(n){ return n.id === id; }
+            );
+
+        const targetPage =
+            notification && notification.target_page;
+
+        if(notification && !notification.read_at){
+
+            notification.read_at =
+                new Date().toISOString();
+
+            nxRenderStudentNotifs();
+
+            if(supabaseClient && currentStudent){
+
+                supabaseClient.rpc(
+                    'mark_student_notification_read',
+                    {
+                        p_phone: currentStudent.phone,
+                        p_parent_phone: currentStudent.parent_phone,
+                        p_notification_id: id
+                    }
+                ).then(nxLoadStudentNotifs).catch(console.error);
+
+            }
+
+        }
+
+        if(targetPage){
+
+            showPage(targetPage);
+
+        }
+
+    }
+
+
+    function nxMarkAllStudentNotifsRead(){
+
+        const hasUnread =
+            nxStudentNotifs.some(
+                function(n){ return !n.read_at; }
+            );
+
+        if(!hasUnread)
+            return;
+
+        nxStudentNotifs.forEach(
+            function(n){
+                if(!n.read_at)
+                    n.read_at = new Date().toISOString();
+            }
+        );
+
+        nxRenderStudentNotifs();
+
+        if(supabaseClient && currentStudent){
+
+            supabaseClient.rpc(
+                'mark_all_student_notifications_read',
+                {
+                    p_phone: currentStudent.phone,
+                    p_parent_phone: currentStudent.parent_phone
+                }
+            ).catch(console.error);
+
+        }
+
+    }
+
+
+    async function nxLoadStudentNotifs(){
+
+        if(!currentStudent || !supabaseClient)
+            return;
+
+        try{
+
+            const { data, error } =
+                await supabaseClient.rpc(
+                    'get_student_notifications',
+                    {
+                        p_phone: currentStudent.phone,
+                        p_parent_phone: currentStudent.parent_phone
+                    }
+                );
+
+            if(error)
+                throw error;
+
+            nxStudentNotifs =
+                Array.isArray(data)
+                    ? data
+                    : [];
+
+        }catch(error){
+
+            console.error(
+                'Load student notifications error:',
+                error
+            );
+
+            nxStudentNotifs = [];
+
+        }
+
+        nxRenderStudentNotifs();
+
+    }
+
+
+    const studentNotificationsListElement =
+        document.getElementById('studentNotificationsList');
+
+    if(studentNotificationsListElement){
+
+        studentNotificationsListElement.addEventListener(
+            'click',
+            function(event){
+
+                const target =
+                    event.target.closest('.student-notif-item');
+
+                if(target){
+
+                    nxMarkStudentNotifReadAndOpen(
+                        target.getAttribute('data-notification-id')
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    const markAllStudentNotificationsReadButton =
+        document.getElementById('markAllStudentNotificationsRead');
+
+    if(markAllStudentNotificationsReadButton){
+
+        markAllStudentNotificationsReadButton.addEventListener(
+            'click',
+            nxMarkAllStudentNotifsRead
+        );
+
+
+    /* ============================================================
+       Phase N4 - Mobile Web Push for the student (additive layer)
+       Identity = currentStudent phone pair (X9 pattern). The RPC
+       resolves student_id server-side - no client-supplied id.
+       ============================================================ */
+
+    async function nxSaveStudentSubscription(endpoint, p256dh, auth){
+
+        if(!currentStudent)
+            throw new Error('NO_STUDENT');
+
+
+        const { data, error } =
+            await supabaseClient.rpc(
+                'save_student_push_subscription',
+                {
+                    p_phone: currentStudent.phone,
+                    p_parent_phone: currentStudent.parent_phone,
+                    p_endpoint: endpoint,
+                    p_p256dh: p256dh,
+                    p_auth: auth
+                }
+            );
+
+
+        if(error)
+            throw error;
+
+
+        if(!data)
+            throw new Error('SAVE_REJECTED');
+
+
+        return data;
+
+    }
+
+
+    async function nxEnableStudentPush(){
+
+        if(!currentStudent){
+
+            alert('سجّل الدخول أولًا ثم أعد المحاولة.');
+
+            return;
+
+        }
+
+
+        try{
+
+            await NEXORA_PUSH.enablePush({
+
+                resolveTeacherToken: function(){ return null; },
+
+                saveSubscription: nxSaveStudentSubscription
+
+            });
+
+
+            alert('✅ تم تفعيل إشعارات الموبايل على هذا الجهاز.');
+
+        }catch(pushError){
+
+            const msg = (pushError && pushError.message) || '';
+
+
+            if(msg === 'PERMISSION_DENIED'){
+
+                alert('⚠️ رُفض إذن الإشعارات. اسمح بالإشعارات من إعدادات الموقع في المتصفح ثم أعد المحاولة.');
+
+            }else if(msg === 'UNSUPPORTED_BROWSER'){
+
+                alert('⚠️ متصفحك لا يدعم إشعارات الويب. جرّب Chrome على الموبايل.');
+
+            }else{
+
+                alert('⚠️ تعذّر تفعيل الإشعارات: ' + msg);
+
+            }
+
+        }
+
+    }
+
+
+    (function(){
+
+        const pushBtn = document.getElementById('nxEnablePushStudent');
+
+        if(pushBtn)
+            pushBtn.addEventListener('click', nxEnableStudentPush);
+
+    }());
+
+
+    /* Deep-link consumer: push clicks land as /#nxpage=<page> or
+       /?nxpage=<page> -> open that page with the existing router. */
+
+    (function(){
+
+        const match =
+            (location.hash || '').match(/nxpage=([a-z-]+)/i) ||
+            (location.search || '').match(/nxpage=([a-z-]+)/i);
+
+        if(match && typeof showPage === 'function'){
+
+            try{
+
+                showPage(match[1]);
+
+            }catch(deepLinkError){
+
+                console.error('N4 deep-link error:', deepLinkError);
+
+            }
+
+        }
+
+    }());
+
+    }
+
+
     /* ================= SHOW CERTIFICATES ================= */
 
     function renderCertificates(){
@@ -8181,6 +8684,16 @@
             }
 
 
+            if(
+                pageId ===
+                'notifications'
+            ){
+
+                nxLoadStudentNotifs();
+
+            }
+
+
             const activityNames = {
 
                 home:
@@ -8211,7 +8724,10 @@
                     'فتح تقييم الطالب',
 
                 certificate:
-                    'فتح الشهادات'
+                    'فتح الشهادات',
+
+                notifications:
+                    'فتح الإشعارات'
 
             };
 
@@ -8289,6 +8805,8 @@
                 loadStudentEvaluationsDisplay();
 
             }
+
+            nxLoadStudentNotifs();
 
         }
 
