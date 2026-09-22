@@ -15,7 +15,10 @@
         vapidPublicKey: 'BAgoJeNv0OBQog2BU4go12_IjerMoo-vxxJmN5bDZz6uyQemyVALipWuslc94uIhC9FPNiBHlCVz1O8099a2iwY',
 
         /* N4 service worker path (same origin). */
-        swPath: '/nexora-push-sw.js',
+        /* N4 service worker path (same origin).
+           RELATIVE on purpose: GitHub Pages serves project repos
+           under a sub-path (/Mr-Mohab/) - an absolute path 404s. */
+        swPath: './nexora-push-sw.js',
 
         /* Supabase Edge Function that sends the actual web push.
            Reachable via the public REST gateway with the anon key. */
