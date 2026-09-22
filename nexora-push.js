@@ -46,6 +46,30 @@
             return navigator.serviceWorker.register(this.swPath);
         },
 
+        /* Byte-wise comparison of a live subscription's
+           applicationServerKey against the expected key.
+           Handles ArrayBuffer and typed-array views; null/empty
+           (old GCM-style subscription) counts as DIFFERENT so the
+           stale one gets dropped instead of throwing
+           "different applicationServerKey". */
+        nxSameApplicationServerKey: function (actual, expected) {
+            if (!actual) {
+                return false;
+            }
+            var a = ArrayBuffer.isView(actual)
+                ? new Uint8Array(actual.buffer, actual.byteOffset, actual.byteLength)
+                : new Uint8Array(actual);
+            if (a.length !== expected.length) {
+                return false;
+            }
+            for (var i = 0; i < a.length; i += 1) {
+                if (a[i] !== expected[i]) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
         /* Full enable flow. Caller supplies two hooks so this module
            stays completely UI-free:
              hooks.resolveTeacherToken() -> Promise<string|null>
@@ -66,10 +90,42 @@
                     return self.registerServiceWorker();
                 })
                 .then(function (registration) {
-                    return registration.pushManager.subscribe({
-                        userVisibleOnly: true,
-                        applicationServerKey: self.urlBase64ToUint8Array(self.vapidPublicKey)
-                    });
+                    return registration.pushManager.getSubscription()
+                        .then(function (existing) {
+
+                            var expectedKey =
+                                self.urlBase64ToUint8Array(
+                                    self.vapidPublicKey
+                                );
+
+                            /* Matching key -> reuse as-is. */
+                            if (
+                                existing &&
+                                self.nxSameApplicationServerKey(
+                                    existing.applicationServerKey,
+                                    expectedKey
+                                )
+                            ) {
+                                return existing;
+                            }
+
+                            /* Stale subscription signed with a previous
+                               key would make subscribe() fail with
+                               "different applicationServerKey" ->
+                               unsubscribe ONLY in that case, then
+                               resubscribe with the current key. */
+                            var ready = existing
+                                ? existing.unsubscribe()
+                                : Promise.resolve();
+
+                            return ready.then(function () {
+                                return registration.pushManager.subscribe({
+                                    userVisibleOnly: true,
+                                    applicationServerKey: expectedKey
+                                });
+                            });
+
+                        });
                 })
                 .then(function (subscription) {
                     var json = subscription.toJSON();

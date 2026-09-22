@@ -6387,7 +6387,9 @@
 
     function nxPushTeacherToken(){
 
-        return localStorage.getItem(teacherTokenKey);
+        /* sessionStorage on purpose: teacher-login.html stores the
+           raw token there (same source every other TD RPC uses). */
+        return sessionStorage.getItem(teacherTokenKey);
 
     }
 
