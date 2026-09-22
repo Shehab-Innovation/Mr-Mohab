@@ -12,7 +12,7 @@
     var NEXORA_PUSH = {
 
         /* VAPID public key (base64url, uncompressed P-256 point). */
-        vapidPublicKey: 'BAgoJeNv0OBQog2BU4go12_IjerMoo-vxxJmN5bDZz6uyQemyVALipWuslc94uIhC9FPNiBHlCVz1O8099a2iwY',
+        vapidPublicKey: 'BGmuNvmKuA5MhpdKxLSuQh1CSNgrgi4i2VqQjJtElHNrDvAKckfw_RZvuka8HDVkcqsbuCDoDaaeju-Vlm75mLM',
 
         /* N4 service worker path (same origin). */
         /* N4 service worker path (same origin).
