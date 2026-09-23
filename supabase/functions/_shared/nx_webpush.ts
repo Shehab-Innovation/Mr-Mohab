@@ -93,11 +93,13 @@ export async function sendWebPush(
   );
 
   const salt = crypto.getRandomValues(new Uint8Array(16));
-  const hkdfSalt = await crypto.subtle.importKey("raw", salt, "HKDF", false, [
-    "deriveBits",
-  ]);
 
   // CEK: HKDF(salt, ikm, "WebPush: info\0" | ua_pub | as_pub, 16)
+  // N4 fix: HkdfParams.salt must be a BufferSource (raw bytes), NOT a
+  // CryptoKey. Passing an imported HKDF CryptoKey as salt throws a
+  // TypeError in the Deno/WebCrypto runtime BEFORE the fetch to the push
+  // service, so FCM never even received the request (root cause of
+  // sent:0 / failed:N / removed:0).
   const cekInfo = concat(
     encoder.encode("WebPush: info\0"),
     uaPublic,
@@ -105,7 +107,7 @@ export async function sendWebPush(
   );
   const cekIk = new Uint8Array(
     await crypto.subtle.deriveBits(
-      { name: "HKDF", hash: "SHA-256", salt: hkdfSalt, info: cekInfo },
+      { name: "HKDF", hash: "SHA-256", salt, info: cekInfo },
       ikm,
       16 * 8,
     ),
@@ -117,7 +119,7 @@ export async function sendWebPush(
       {
         name: "HKDF",
         hash: "SHA-256",
-        salt: hkdfSalt,
+        salt,
         info: encoder.encode("Content-Encoding: nonce\0"),
       },
       ikm,
