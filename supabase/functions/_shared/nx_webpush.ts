@@ -83,37 +83,63 @@ export async function sendWebPush(
     ),
   );
 
-  // IKM = ecdh_secret || auth_secret
-  const ikm = await crypto.subtle.importKey(
+  // RFC 8291 §3.3 — combine the ECDH secret with the authentication secret.
+  // Stage 1: IKM = HKDF(salt=auth_secret, key=ecdh_secret,
+  //   info="WebPush: info\0" || ua_public || as_public, 32)
+  const stage1Key = await crypto.subtle.importKey(
     "raw",
-    concat(ecdhSecret, authSecret),
+    ecdhSecret,
     "HKDF",
     false,
     ["deriveBits"],
   );
+  const ikm = new Uint8Array(
+    await crypto.subtle.deriveBits(
+      {
+        name: "HKDF",
+        hash: "SHA-256",
+        salt: authSecret,
+        info: concat(
+          encoder.encode("WebPush: info\0"),
+          uaPublic,
+          clientPubRaw,
+        ),
+      },
+      stage1Key,
+      32 * 8,
+    ),
+  );
 
   const salt = crypto.getRandomValues(new Uint8Array(16));
 
-  // CEK: HKDF(salt, ikm, "WebPush: info\0" | ua_pub | as_pub, 16)
-  // N4 fix: HkdfParams.salt must be a BufferSource (raw bytes), NOT a
-  // CryptoKey. Passing an imported HKDF CryptoKey as salt throws a
-  // TypeError in the Deno/WebCrypto runtime BEFORE the fetch to the push
-  // service, so FCM never even received the request (root cause of
-  // sent:0 / failed:N / removed:0).
-  const cekInfo = concat(
-    encoder.encode("WebPush: info\0"),
-    uaPublic,
-    clientPubRaw,
+  // RFC 8291 §3.4 (per RFC 8188 §2.2) — derive CEK/NONCE from IKM.
+  // Stage 2: CEK = HKDF(salt=<body salt>, key=IKM,
+  //   info="Content-Encoding: aes128gcm\0", 16)
+  //          NONCE = HKDF(salt, IKM, "Content-Encoding: nonce\0", 12)
+  // N5 fix: the previous code used a single HKDF pass keyed by
+  // ecdh||auth with info="WebPush: info...", which no real user agent
+  // can reproduce, so FCM accepted the message (sent:1) but the browser
+  // silently failed to decrypt it (no notification bar).
+  const stage2Key = await crypto.subtle.importKey(
+    "raw",
+    ikm,
+    "HKDF",
+    false,
+    ["deriveBits"],
   );
   const cekIk = new Uint8Array(
     await crypto.subtle.deriveBits(
-      { name: "HKDF", hash: "SHA-256", salt, info: cekInfo },
-      ikm,
+      {
+        name: "HKDF",
+        hash: "SHA-256",
+        salt,
+        info: encoder.encode("Content-Encoding: aes128gcm\0"),
+      },
+      stage2Key,
       16 * 8,
     ),
   );
 
-  // NONCE: HKDF(salt, ikm, "Content-Encoding: nonce\0", 12)
   const nonce = new Uint8Array(
     await crypto.subtle.deriveBits(
       {
@@ -122,7 +148,7 @@ export async function sendWebPush(
         salt,
         info: encoder.encode("Content-Encoding: nonce\0"),
       },
-      ikm,
+      stage2Key,
       12 * 8,
     ),
   );
