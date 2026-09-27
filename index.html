@@ -8069,6 +8069,13 @@
     let nxStudentNotifs =
         [];
 
+    /* N6: monotonic load token - an older in-flight
+       get_student_notifications response must never overwrite newer
+       state (e.g. a read_at set by a mark-read that resolved in
+       between). */
+    let nxStudentNotifsLoadSeq =
+        0;
+
 
     function nxStudentNotifBadge(){
 
@@ -8163,7 +8170,20 @@
                         p_parent_phone: currentStudent.parent_phone,
                         p_notification_id: id
                     }
-                ).then(nxLoadStudentNotifs).catch(console.error);
+                )
+                .then(function(res){
+
+                    /* 0 rows = identity/id did not match server-side;
+                       surface it instead of failing silently. */
+                    if(res && res.data === 0)
+                        console.error(
+                            'mark_student_notification_read: 0 rows updated',
+                            id
+                        );
+
+                })
+                .then(nxLoadStudentNotifs)
+                .catch(console.error);
 
             }
 
@@ -8205,7 +8225,20 @@
                     p_phone: currentStudent.phone,
                     p_parent_phone: currentStudent.parent_phone
                 }
-            ).catch(console.error);
+            )
+            .then(function(res){
+
+                if(res && res.data === 0)
+                    console.error(
+                        'mark_all_student_notifications_read: 0 rows updated'
+                    );
+
+                /* Server is the source of truth: re-sync so the
+                   rendered state survives a refresh. */
+                return nxLoadStudentNotifs();
+
+            })
+            .catch(console.error);
 
         }
 
@@ -8216,6 +8249,9 @@
 
         if(!currentStudent || !supabaseClient)
             return;
+
+        const loadSeq =
+            ++nxStudentNotifsLoadSeq;
 
         try{
 
@@ -8231,6 +8267,10 @@
             if(error)
                 throw error;
 
+            /* A newer load/mark flow owns the state now. */
+            if(loadSeq !== nxStudentNotifsLoadSeq)
+                return;
+
             nxStudentNotifs =
                 Array.isArray(data)
                     ? data
@@ -8242,6 +8282,9 @@
                 'Load student notifications error:',
                 error
             );
+
+            if(loadSeq !== nxStudentNotifsLoadSeq)
+                return;
 
             nxStudentNotifs = [];
 
