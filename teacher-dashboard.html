@@ -1307,6 +1307,26 @@
             margin-top: 3px;
         }
 
+        .settings-status {
+            min-height: 20px;
+            font-size: 12.5px;
+            font-weight: 800;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .settings-status.ok {
+            color: var(--success);
+        }
+
+        .settings-status.warn {
+            color: var(--warning);
+        }
+
+        .settings-status.error {
+            color: var(--error);
+        }
+
         .inline-theme-switch {
             display: inline-flex;
             background: var(--surface-3);
@@ -2705,57 +2725,120 @@
 
                 </div>
 
-                <h3 class="settings-h2"><i class="fas fa-id-badge"></i> إعدادات المدرس <span class="future-tag">تحتاج Backend</span></h3>
+                <h3 class="settings-h2"><i class="fas fa-id-badge"></i> إعدادات المدرس</h3>
 
                 <div class="profile-field">
-                    <label class="form-label">صورة المدرس</label>
-                    <input type="text" class="form-input" value="https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg" disabled>
+                    <label class="form-label">اسم المستخدم (للدخول — يُغيَّر من قسم الأمان أدناه)</label>
+                    <input type="text" class="form-input" id="settingsUsernameDisplay" dir="ltr" disabled>
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">صورة المدرس (رابط صورة)</label>
+                    <input type="text" class="form-input" id="settingsImageInput" dir="ltr" placeholder="https://..." autocomplete="off">
+                    <div class="sr-sub">تظهر في الشريط الجانبي وصفحة البروفايل. مسار رفع ملف مباشر غير متاح — استخدم رابط صورة.</div>
                 </div>
 
                 <div class="profile-field">
                     <label class="form-label">اسم المدرس</label>
-                    <input type="text" class="form-input" id="settingsNameInput" disabled>
+                    <input type="text" class="form-input" id="settingsNameInput" autocomplete="off">
                 </div>
 
                 <div class="profile-field">
                     <label class="form-label">رقم التواصل الظاهر</label>
-                    <input type="text" class="form-input" placeholder="— يتطلب Backend لتحديث بيانات المدرس —" disabled>
+                    <input type="tel" class="form-input" id="settingsPhoneInput" dir="ltr" placeholder="مثال: 01012345678" autocomplete="off">
                 </div>
 
                 <div class="profile-field">
                     <label class="form-label">رابط WhatsApp</label>
-                    <input type="text" class="form-input" placeholder="— يتطلب Backend —" disabled>
+                    <input type="url" class="form-input" id="settingsWhatsappInput" dir="ltr" placeholder="https://wa.me/2010..." autocomplete="off">
                 </div>
 
                 <div class="profile-field">
                     <label class="form-label">رابط Facebook</label>
-                    <input type="text" class="form-input" placeholder="— يتطلب Backend —" disabled>
+                    <input type="url" class="form-input" id="settingsFacebookInput" dir="ltr" placeholder="https://facebook.com/..." autocomplete="off">
                 </div>
 
-                <div class="settings-note">
+                <div style="display:flex; gap:10px; margin:18px 0 6px;">
+                    <button class="primary-button" id="saveTeacherSettingsButton">حفظ التغييرات</button>
+                    <button class="secondary-button" id="resetTeacherSettingsButton">استعادة القيم المحفوظة</button>
+                </div>
+
+                <div class="settings-status" id="teacherSettingsStatus"></div>
+
+                <div class="settings-note" id="settingsBackendNote">
                     <i class="fas fa-circle-info"></i>
                     <span>
-                        تحديث بيانات المدرس (الصورة والاسم وبيانات التواصل) يحتاج واجهة Backend آمنة للتحديث — غير متاحة حاليًا وسيُربط عند توفرها.
+                        الحفظ يعمل الآن على السيرفر عبر RPC آمن teacher-scoped (<span dir="ltr">update_teacher_profile_by_session</span>) — المدرس يعدّل صفه هو فقط، ولا يُرسل معرّف المدرس من الواجهة.
                     </span>
                 </div>
 
-                <h3 class="settings-h2" id="securitySection"><i class="fas fa-shield-halved"></i> الأمان <span class="future-tag">تحتاج Backend</span></h3>
+                <h3 class="settings-h2" id="securitySection"><i class="fas fa-shield-halved"></i> الأمان</h3>
 
-                <div class="settings-row">
-
-                    <div>
-                        <div class="sr-label">تغيير كلمة المرور</div>
-                        <div class="sr-sub">غير متاح حاليًا</div>
-                    </div>
-
+                <div class="profile-field">
+                    <label class="form-label">تغيير اسم المستخدم</label>
+                    <input type="text" class="form-input" id="settingsNewUsernameInput" dir="ltr" placeholder="username جديد (a-z 0-9 . _ -)" autocomplete="off">
                 </div>
+
+                <div class="profile-field">
+                    <label class="form-label">كلمة المرور الحالية (للتأكيد)</label>
+                    <input type="password" class="form-input" id="settingsUsernamePasswordInput" dir="ltr" autocomplete="current-password">
+                </div>
+
+                <div style="margin:10px 0 4px;">
+                    <button class="primary-button" id="saveUsernameButton">تغيير اسم المستخدم</button>
+                </div>
+
+                <div class="settings-status" id="usernameStatus"></div>
+
+                <div class="profile-field" style="margin-top:26px;">
+                    <label class="form-label">كلمة المرور الحالية</label>
+                    <input type="password" class="form-input" id="passwordCurrentInput" autocomplete="new-password">
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">كلمة المرور الجديدة (8 أحرف على الأقل)</label>
+                    <input type="password" class="form-input" id="passwordNewInput" autocomplete="new-password">
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">تأكيد كلمة المرور الجديدة</label>
+                    <input type="password" class="form-input" id="passwordConfirmInput" autocomplete="new-password">
+                </div>
+
+                <div style="margin:10px 0 4px;">
+                    <button class="primary-button" id="savePasswordButton">تغيير كلمة المرور</button>
+                </div>
+
+                <div class="settings-status" id="passwordStatus"></div>
+
+                <div class="profile-field" style="margin-top:26px;">
+                    <label class="form-label">سؤال الاسترداد</label>
+                    <input type="text" class="form-input" id="recoveryQuestionInput" placeholder="مثال: ما اسم أول مدرسة درستها؟" autocomplete="off">
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">إجابة الاسترداد (تُخزَّن مشفّرة — لا تُحفظ في المتصفح)</label>
+                    <input type="password" class="form-input" id="recoveryAnswerInput" autocomplete="new-password">
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">كلمة المرور الحالية (للتأكيد)</label>
+                    <input type="password" class="form-input" id="recoveryPasswordInput" autocomplete="new-password">
+                </div>
+
+                <div style="margin:10px 0 4px;">
+                    <button class="primary-button" id="saveRecoveryButton">حفظ سؤال الاسترداد</button>
+                </div>
+
+                <div class="settings-status" id="recoveryStatus"></div>
 
                 <div class="security-note">
 
                     <i class="fas fa-key"></i>
 
                     <span>
-                        تغيير كلمة المرور يحتاج تفعيل مسار مصادقة آمن من NEXORA Admin/Backend. نظام تسجيل الدخول الحالي لا يوفر مسار تغيير آمن بعد، ولم يُنفذ أي بديل مؤقت حفاظًا على أمان الحساب.
+                        مسارات الأمان تعمل عبر RPCs آمنة teacher-scoped على السيرفر — لا تُرسل بيانات حساسة أو أسرار إلى المتصفح، ولا تُخزن كلمات المرور أو إجابة الاسترداد في هذا الجهاز.
+                        في حالة نسيان كلمة المرور: صفحة "استعادة الحساب" ستعيد التعيين عبر سؤال الاسترداد بعد 5 محاولات خاطئة يقفل الحساب 15 دقيقة.
                     </span>
 
                 </div>
@@ -6698,6 +6781,1205 @@
 
         }
     );
+
+
+    /* ============================================================
+       NEXORA — Teacher Settings module (S1, presentation + save flow)
+       - Wires the Settings page profile fields (name, image, phone,
+         WhatsApp, Facebook) to teacher identity data.
+       - Read path: login session metadata -> config fallback.
+         (Server identity RPC is additive and optional — see manual SQL.)
+       - Save path: update_teacher_profile_by_session RPC (teacher-scoped,
+         SECDEF, session-token authorisation — teacher edits own row only).
+       - Presentation-only: touches no quiz/registration/theme logic.
+       ============================================================ */
+
+    const SETTINGS_STORAGE_KEY =
+        'nexora_teacher_settings_cache';
+
+    const settingsIds = {
+        image:     'settingsImageInput',
+        name:      'settingsNameInput',
+        phone:     'settingsPhoneInput',
+        whatsapp:  'settingsWhatsappInput',
+        facebook:  'settingsFacebookInput'
+    };
+
+    const settingsSaveButton =
+        document.getElementById('saveTeacherSettingsButton');
+
+    const settingsResetButton =
+        document.getElementById('resetTeacherSettingsButton');
+
+    const settingsStatusElement =
+        document.getElementById('teacherSettingsStatus');
+
+    const settingsBackendNote =
+        document.getElementById('settingsBackendNote');
+
+    let settingsLoaded = null;
+
+    let settingsStatusTimer = null;
+
+    let settingsInputsDirty = false;
+
+
+    function showSettingsStatus(message, kind) {
+
+        if (!settingsStatusElement) {
+            return;
+        }
+
+        settingsStatusElement.textContent =
+            message;
+
+        settingsStatusElement.className =
+            'settings-status ' + (kind || '');
+
+        if (settingsStatusTimer) {
+            clearTimeout(settingsStatusTimer);
+        }
+
+        settingsStatusTimer = setTimeout(
+            function() {
+                settingsStatusElement.textContent = '';
+                settingsStatusElement.className = 'settings-status';
+            },
+            6000
+        );
+
+    }
+
+
+    function readSettingsInput(field) {
+
+        const element =
+            document.getElementById(settingsIds[field]);
+
+        return element ? element.value.trim() : '';
+
+    }
+
+
+    function writeSettingsInputs(values) {
+
+        Object.keys(settingsIds).forEach(function(field) {
+
+            const element =
+                document.getElementById(settingsIds[field]);
+
+            if (!element) {
+                return;
+            }
+
+            const value =
+                values[field];
+
+            element.value =
+                (value === undefined || value === null) ? '' : String(value);
+
+        });
+
+    }
+
+
+    function persistSettingsCache(values) {
+
+        try {
+
+            localStorage.setItem(
+                SETTINGS_STORAGE_KEY,
+                JSON.stringify(values)
+            );
+
+        } catch (error) {
+
+            /* storage unavailable — presentation cache only, ignore */
+
+        }
+
+    }
+
+
+    function loadSettingsCache() {
+
+        try {
+
+            const raw =
+                localStorage.getItem(SETTINGS_STORAGE_KEY);
+
+            if (!raw) {
+                return null;
+            }
+
+            const parsed =
+                JSON.parse(raw);
+
+            return (parsed && typeof parsed === 'object') ? parsed : null;
+
+        } catch (error) {
+
+            return null;
+
+        }
+
+    }
+
+
+    function validateSettingsValues(values) {
+
+        if (!values.name) {
+            return 'اسم المدرس مطلوب.';
+        }
+
+        if (values.name.length > 120) {
+            return 'الاسم طويل جدًا (الحد 120 حرفًا).';
+        }
+
+        if (values.image && !/^https?:\/\/\S+$/i.test(values.image)) {
+            return 'رابط صورة المدرس غير صالح — يجب أن يبدأ بـ http(s)://';
+        }
+
+        if (values.phone && !/^[0-9+\-\s()]{6,20}$/.test(values.phone)) {
+            return 'رقم التواصل غير صالح — أرقام ورموز (+ - ( )) فقط.';
+        }
+
+        if (values.whatsapp && !/^https:\/\/(wa\.me\/|api\.whatsapp\.com\/)/i.test(values.whatsapp)) {
+            return 'رابط WhatsApp يجب أن يبدأ بـ https://wa.me/ أو https://api.whatsapp.com/';
+        }
+
+        if (values.facebook) {
+            const okFacebook =
+                /^https:\/\/(www\.)?(facebook\.com|fb\.com|fb\.me)\/\S+$/i.test(values.facebook) ||
+                /^https:\/\/(www\.)?facebook\.com\/share\/\S+$/i.test(values.facebook);
+
+            if (!okFacebook) {
+                return 'رابط Facebook غير صالح — يجب أن يشير إلى facebook.com أو fb.com.';
+            }
+        }
+
+        return null;
+
+    }
+
+
+    async function saveTeacherSettings() {
+
+        if (!settingsSaveButton) {
+            return;
+        }
+
+        const token =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!token) {
+
+            showSettingsStatus('انتهت الجلسة — أعد تسجيل الدخول.', 'error');
+
+            return;
+
+        }
+
+        const values = {
+            image:    readSettingsInput('image'),
+            name:     readSettingsInput('name'),
+            phone:    readSettingsInput('phone'),
+            whatsapp: readSettingsInput('whatsapp'),
+            facebook: readSettingsInput('facebook')
+        };
+
+
+        const validationError =
+            validateSettingsValues(values);
+
+        if (validationError) {
+
+            showSettingsStatus(validationError, 'error');
+
+            return;
+
+        }
+
+
+        settingsSaveButton.disabled = true;
+
+        settingsResetButton.disabled = true;
+
+        settingsSaveButton.textContent = 'جاري الحفظ...';
+
+        showSettingsStatus('', '');
+
+
+        try {
+
+            /* Server-side teacher-scoped update (SECDEF RPC):
+               resolves teacher_id from the session token server-side,
+               so a teacher can only ever modify their own row. */
+
+            const { data, error } = await supabase.rpc(
+                'update_teacher_profile_by_session',
+                {
+                    p_session_token: token,
+                    p_name:     values.name,
+                    p_image:    values.image    || null,
+                    p_phone:    values.phone    || null,
+                    p_whatsapp: values.whatsapp || null,
+                    p_facebook: values.facebook || null
+                }
+            );
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            settingsLoaded =
+                values;
+
+            persistSettingsCache(values);
+
+            applySettingsIdentity(values, true);
+
+            showSettingsStatus('تم حفظ بيانات المدرس بنجاح ✅', 'ok');
+
+        } catch (saveError) {
+
+            console.error('Teacher settings save error:', saveError);
+
+            const codeMsg =
+                [
+                    saveError && saveError.code,
+                    saveError && saveError.message
+                ]
+                    .filter(Boolean)
+                    .join(' ');
+
+            if (String(codeMsg).indexOf('PGRST202') !== -1 ||
+                String(codeMsg).indexOf('Could not find the function') !== -1 ||
+                String(codeMsg).indexOf('schema cache') !== -1) {
+
+                /* RPC not installed yet (manual SQL pending) — keep the
+                   values locally so the UI stays usable, no fake success. */
+
+                persistSettingsCache(values);
+
+                applySettingsIdentity(values, false);
+
+                showSettingsStatus(
+                    '⚠️ تم التحقق من البيانات وحُفظت محليًا — الحفظ على السيرفر يتطلب تثبيت RPC تحديث البروفايل (SQL في Manual Actions).',
+                    'warn'
+                );
+
+            } else if (String(codeMsg).indexOf('INVALID_SESSION') !== -1) {
+
+                showSettingsStatus('انتهت صلاحية الجلسة — أعد تسجيل الدخول.', 'error');
+
+            } else {
+
+                showSettingsStatus(
+                    'تعذر الحفظ: ' + (saveError && saveError.message ? saveError.message : 'خطأ غير معروف'),
+                    'error'
+                );
+
+            }
+
+        } finally {
+
+            settingsSaveButton.disabled = false;
+
+            settingsResetButton.disabled = false;
+
+            settingsSaveButton.textContent = 'حفظ التغييرات';
+
+        }
+
+    }
+
+
+    function resetTeacherSettings() {
+
+        if (!settingsLoaded) {
+
+            showSettingsStatus('لا توجد قيم محفوظة للاستعادة بعد.', 'warn');
+
+            return;
+
+        }
+
+        writeSettingsInputs(settingsLoaded);
+
+        showSettingsStatus('تمت استعادة القيم المحفوظة.', 'ok');
+
+    }
+
+
+    function applySettingsIdentity(values, updateHeader) {
+
+        /* Presentation-only: refresh the visible identity across the
+           dashboard shell (sidebar, welcome, profile page). */
+
+        const displayName =
+            values.name || 'المدرس';
+
+        if (updateHeader) {
+
+            if (teacherNameElement) {
+                teacherNameElement.textContent = displayName;
+            }
+
+            if (welcomeNameElement) {
+                welcomeNameElement.textContent = displayName;
+            }
+
+        }
+
+        const headerImageElement =
+            document.getElementById('teacherImage');
+
+        const profileImageElement =
+            document.getElementById('profileImage');
+
+        if (values.image && headerImageElement) {
+            headerImageElement.src = values.image;
+        }
+
+        if (values.image && profileImageElement) {
+            profileImageElement.src = values.image;
+        }
+
+        const profileNameRow =
+            document.getElementById('profileNameRow');
+
+        if (updateHeader && profileNameRow) {
+            profileNameRow.textContent = displayName;
+        }
+
+    }
+
+
+    function initTeacherSettings() {
+
+        if (!settingsSaveButton) {
+            return;
+        }
+
+
+        /* 1) Cached values from a previous save (if any). */
+
+        const cached =
+            loadSettingsCache();
+
+
+        /* 2) Login session metadata (server-issued at login). */
+
+        const session =
+            getTeacherSession();
+
+
+        /* 3) Static config fallback (nexora-config.js). */
+
+        const configTeacher =
+            (window.nexoraConfig && window.nexoraConfig.teacher)
+                ? window.nexoraConfig.teacher
+                : {};
+
+
+        const fallbackValues = {
+            image:    (session && session.image)    || configTeacher.image    || '',
+            name:     (session && session.name)     || configTeacher.name     || '',
+            phone:    (cached && cached.phone)      || configTeacher.phone    || '',
+            whatsapp: (cached && cached.whatsapp)   || configTeacher.whatsapp || '',
+            facebook: (cached && cached.facebook)   || configTeacher.facebook || ''
+        };
+
+
+        const mergedValues = Object.assign(
+            {},
+            fallbackValues,
+            cached || {}
+        );
+
+
+        /* Name/image: session (server-issued) wins over cache. */
+
+        if (session && session.name) {
+            mergedValues.name = session.name;
+        }
+
+        if (session && session.image) {
+            mergedValues.image = session.image;
+        }
+
+
+        settingsLoaded =
+            mergedValues;
+
+        writeSettingsInputs(mergedValues);
+
+        /* T-c: username is display-only here (changed in Security). */
+
+        const usernameDisplayElement =
+            document.getElementById('settingsUsernameDisplay');
+
+        if (usernameDisplayElement && session && session.username) {
+            usernameDisplayElement.value = session.username;
+        }
+
+
+        /* Optional additive server refresh: the identity RPC may not be
+           installed yet — absence of the function is NOT an error here. */
+
+        (async function() {
+
+            const token =
+                sessionStorage.getItem(teacherTokenKey);
+
+            if (!token) {
+                return;
+            }
+
+            try {
+
+                if (settingsInputsDirty) {
+                    return; /* user already edited — never clobber input */
+                }
+
+                const { data, error } = await supabase.rpc(
+                    'get_teacher_identity_by_session',
+                    { p_session_token: token }
+                );
+
+                if (error || !data || !data.length) {
+                    return;
+                }
+
+                const identity =
+                    data[0];
+
+                const serverValues = {
+                    image:    identity.teacher_image || identity.image || mergedValues.image,
+                    name:     identity.display_name  || identity.name  || mergedValues.name,
+                    phone:    identity.phone         || mergedValues.phone,
+                    whatsapp: identity.whatsapp_url  || mergedValues.whatsapp,
+                    facebook: identity.facebook_url  || mergedValues.facebook
+                };
+
+                settingsLoaded =
+                    serverValues;
+
+                writeSettingsInputs(serverValues);
+
+                persistSettingsCache(serverValues);
+
+                if (identity.username) {
+                    const usernameDisplay =
+                        document.getElementById('settingsUsernameDisplay');
+                    if (usernameDisplay) {
+                        usernameDisplay.value = identity.username;
+                    }
+                }
+
+            } catch (identityError) {
+
+                /* Function missing / network issue — cached fallback stays. */
+
+            }
+
+        }());
+
+
+        Object.keys(settingsIds).forEach(function(field) {
+
+            const element =
+                document.getElementById(settingsIds[field]);
+
+            if (!element) {
+                return;
+            }
+
+            element.addEventListener(
+                'input',
+                function() {
+                    settingsInputsDirty = true;
+                }
+            );
+
+        });
+
+        settingsSaveButton.addEventListener(
+            'click',
+            saveTeacherSettings
+        );
+
+        if (settingsResetButton) {
+
+            settingsResetButton.addEventListener(
+                'click',
+                resetTeacherSettings
+            );
+
+        }
+
+    }
+
+
+    /* Wire-up: the script sits at the end of <body> and executes while
+       readyState is still 'loading', so init is deferred to
+       DOMContentLoaded (this registration happens BEFORE the existing
+       page-loading handler below; both coexist harmlessly). */
+
+    if (document.readyState === 'loading') {
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            initTeacherSettings
+        );
+
+    } else {
+
+        initTeacherSettings();
+
+    }
+
+
+    /* ============================================================
+       NEXORA — Teacher Security module (T-c, Settings → Security)
+       - Wires Change Username / Change Password / Recovery Setup to
+         the live SECDEF RPCs (S1 + T-b), teacher-scoped by the
+         existing session token (no teacher_id from the client).
+       - Secrets (passwords, recovery answer) are NEVER stored in
+         localStorage/sessionStorage — inputs only, cleared after use.
+       - Presentation-only: touches no quiz/registration/theme logic.
+       ============================================================ */
+
+    const securityIds = {
+        username: {
+            new_:   'settingsNewUsernameInput',
+            pass:   'settingsUsernamePasswordInput',
+            button: 'saveUsernameButton',
+            status: 'usernameStatus'
+        },
+        password: {
+            current: 'passwordCurrentInput',
+            new_:    'passwordNewInput',
+            confirm: 'passwordConfirmInput',
+            button:  'savePasswordButton',
+            status:  'passwordStatus'
+        },
+        recovery: {
+            question: 'recoveryQuestionInput',
+            answer:   'recoveryAnswerInput',
+            pass:     'recoveryPasswordInput',
+            button:   'saveRecoveryButton',
+            status:   'recoveryStatus'
+        }
+    };
+
+    /* Exact live RPC error codes -> Arabic user-facing messages. */
+
+    const SECURITY_ERROR_MAP = {
+        INVALID_SESSION:          'انتهت صلاحية الجلسة — أعد تسجيل الدخول.',
+        CURRENT_PASSWORD_REQUIRED:'أدخل كلمة المرور الحالية.',
+        INVALID_CURRENT_PASSWORD: 'كلمة المرور الحالية غير صحيحة.',
+        INVALID_USERNAME:         'اسم المستخدم غير صالح — 3 إلى 40 حرفًا (a-z 0-9 . _ -).',
+        USERNAME_TAKEN:           'اسم المستخدم مستخدم بالفعل — اختر اسمًا آخر.',
+        PASSWORD_TOO_SHORT:       'كلمة المرور الجديدة يجب أن تكون 8 أحرف على الأقل.',
+        INVALID_QUESTION:         'اكتب سؤال استرداد صالحًا (حتى 200 حرف).',
+        ANSWER_TOO_SHORT:         'إجابة الاسترداد قصيرة جدًا (3 أحرف على الأقل).'
+    };
+
+    let securityInputsDirty = false;
+
+    let securityLoadedUsername = null;
+
+
+    function securityElement(field) {
+
+        return document.getElementById(field);
+
+    }
+
+
+    function showSecurityStatus(field, message, kind) {
+
+        const element =
+            securityElement(field);
+
+        if (!element) {
+            return;
+        }
+
+        element.textContent =
+            message;
+
+        element.className =
+            'settings-status ' + (kind || '');
+
+    }
+
+
+    function clearSecurityStatus(field) {
+
+        showSecurityStatus(field, '', '');
+
+    }
+
+
+    function mapSecurityError(error) {
+
+        const codeMsg =
+            [
+                error && error.code,
+                error && error.message
+            ]
+                .filter(Boolean)
+                .join(' ');
+
+        const codes =
+            Object.keys(SECURITY_ERROR_MAP);
+
+        for (let i = 0; i < codes.length; i += 1) {
+
+            if (String(codeMsg).indexOf(codes[i]) !== -1) {
+                return SECURITY_ERROR_MAP[codes[i]];
+            }
+
+        }
+
+        return 'تعذر إتمام العملية: ' +
+            ((error && error.message) ? error.message : 'خطأ غير معروف');
+
+    }
+
+
+    function isInvalidSessionError(error) {
+
+        const codeMsg =
+            [
+                error && error.code,
+                error && error.message
+            ]
+                .filter(Boolean)
+                .join(' ');
+
+        return String(codeMsg).indexOf('INVALID_SESSION') !== -1;
+
+    }
+
+
+    function updateUsernameDisplays(newUsername) {
+
+        securityLoadedUsername =
+            newUsername;
+
+        const display =
+            securityElement('settingsUsernameDisplay');
+
+        if (display) {
+            display.value = newUsername;
+        }
+
+    }
+
+
+    async function changeUsername() {
+
+        const button =
+            securityElement(securityIds.username.button);
+
+        const status =
+            securityIds.username.status;
+
+        const token =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!token) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.INVALID_SESSION, 'error');
+
+            return;
+
+        }
+
+        const currentPassword =
+            (securityElement(securityIds.username.pass) || {}).value || '';
+
+        const newUsername =
+            (securityElement(securityIds.username.new_) || {}).value || '';
+
+        if (!newUsername.trim()) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.INVALID_USERNAME, 'error');
+
+            return;
+
+        }
+
+        if (!currentPassword) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.CURRENT_PASSWORD_REQUIRED, 'error');
+
+            return;
+
+        }
+
+        button.disabled = true;
+
+        button.textContent = 'جاري التغيير...';
+
+        clearSecurityStatus(status);
+
+        try {
+
+            const { data, error } = await supabase.rpc(
+                'update_teacher_username_by_session',
+                {
+                    p_session_token:     token,
+                    p_current_password:  currentPassword,
+                    p_new_username:      newUsername
+                }
+            );
+
+            if (error) {
+                throw error;
+            }
+
+            /* Success: keep the session token, refresh the shown
+               username only. */
+
+            updateUsernameDisplays(newUsername.trim().toLowerCase());
+
+            showSecurityStatus(status, 'تم تغيير اسم المستخدم بنجاح ✅ — استخدمه في الدخول القادم.', 'ok');
+
+            securityElement(securityIds.username.new_).value = '';
+
+            securityElement(securityIds.username.pass).value = '';
+
+        } catch (changeError) {
+
+            console.error('Change username error:', changeError);
+
+            showSecurityStatus(status, mapSecurityError(changeError), 'error');
+
+        } finally {
+
+            button.disabled = false;
+
+            button.textContent = 'تغيير اسم المستخدم';
+
+        }
+
+    }
+
+
+    async function changePassword() {
+
+        const button =
+            securityElement(securityIds.password.button);
+
+        const status =
+            securityIds.password.status;
+
+        const token =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!token) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.INVALID_SESSION, 'error');
+
+            return;
+
+        }
+
+        const currentPassword =
+            (securityElement(securityIds.password.current) || {}).value || '';
+
+        const newPassword =
+            (securityElement(securityIds.password.new_) || {}).value || '';
+
+        const confirmPassword =
+            (securityElement(securityIds.password.confirm) || {}).value || '';
+
+        if (!currentPassword) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.CURRENT_PASSWORD_REQUIRED, 'error');
+
+            return;
+
+        }
+
+        if (newPassword.length < 8) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.PASSWORD_TOO_SHORT, 'error');
+
+            return;
+
+        }
+
+        if (newPassword !== confirmPassword) {
+
+            showSecurityStatus(status, 'تأكيد كلمة المرور غير مطابق.', 'error');
+
+            return;
+
+        }
+
+        button.disabled = true;
+
+        button.textContent = 'جاري التغيير...';
+
+        clearSecurityStatus(status);
+
+        try {
+
+            const { data, error } = await supabase.rpc(
+                'update_teacher_password_by_session',
+                {
+                    p_session_token:     token,
+                    p_current_password:  currentPassword,
+                    p_new_password:      newPassword
+                }
+            );
+
+            if (error) {
+                throw error;
+            }
+
+            showSecurityStatus(status, 'تم تغيير كلمة المرور بنجاح ✅', 'ok');
+
+            /* Secrets never persist — clear all three inputs. */
+
+            securityElement(securityIds.password.current).value = '';
+
+            securityElement(securityIds.password.new_).value = '';
+
+            securityElement(securityIds.password.confirm).value = '';
+
+        } catch (changeError) {
+
+            console.error('Change password error:', changeError);
+
+            showSecurityStatus(status, mapSecurityError(changeError), 'error');
+
+        } finally {
+
+            button.disabled = false;
+
+            button.textContent = 'تغيير كلمة المرور';
+
+        }
+
+    }
+
+
+    async function saveRecovery() {
+
+        const button =
+            securityElement(securityIds.recovery.button);
+
+        const status =
+            securityIds.recovery.status;
+
+        const token =
+            sessionStorage.getItem(teacherTokenKey);
+
+        if (!token) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.INVALID_SESSION, 'error');
+
+            return;
+
+        }
+
+        const question =
+            (securityElement(securityIds.recovery.question) || {}).value || '';
+
+        const answer =
+            (securityElement(securityIds.recovery.answer) || {}).value || '';
+
+        const currentPassword =
+            (securityElement(securityIds.recovery.pass) || {}).value || '';
+
+        if (!question.trim()) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.INVALID_QUESTION, 'error');
+
+            return;
+
+        }
+
+        if (answer.trim().length < 3) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.ANSWER_TOO_SHORT, 'error');
+
+            return;
+
+        }
+
+        if (!currentPassword) {
+
+            showSecurityStatus(status, SECURITY_ERROR_MAP.CURRENT_PASSWORD_REQUIRED, 'error');
+
+            return;
+
+        }
+
+        button.disabled = true;
+
+        button.textContent = 'جاري الحفظ...';
+
+        clearSecurityStatus(status);
+
+        try {
+
+            const { data, error } = await supabase.rpc(
+                'set_teacher_recovery_by_session',
+                {
+                    p_session_token:     token,
+                    p_current_password:  currentPassword,
+                    p_question:          question,
+                    p_answer:            answer
+                }
+            );
+
+            if (error) {
+                throw error;
+            }
+
+            showSecurityStatus(status, 'تم حفظ سؤال الاسترداد بنجاح ✅', 'ok');
+
+            /* The answer is hashed server-side and never stored here. */
+
+            securityElement(securityIds.recovery.answer).value = '';
+
+            securityElement(securityIds.recovery.pass).value = '';
+
+        } catch (saveError) {
+
+            console.error('Save recovery error:', saveError);
+
+            showSecurityStatus(status, mapSecurityError(saveError), 'error');
+
+        } finally {
+
+            button.disabled = false;
+
+            button.textContent = 'حفظ سؤال الاسترداد';
+
+        }
+
+    }
+
+
+    function refreshRecoveryQuestionDisplay() {
+
+        /* Read-only hint: if a recovery question is already set, show
+           it pre-filled (server-side identity carries no answer hash). */
+
+        (async function() {
+
+            const token =
+                sessionStorage.getItem(teacherTokenKey);
+
+            if (!token || securityInputsDirty) {
+                return;
+            }
+
+            try {
+
+                const { data, error } = await supabase.rpc(
+                    'get_teacher_identity_by_session',
+                    { p_session_token: token }
+                );
+
+                if (error || !data || !data.length) {
+                    return;
+                }
+
+                if (securityInputsDirty) {
+                    return; /* re-check after await — never clobber input */
+                }
+
+                /* get_teacher_identity_by_session returns only the
+                   profile fields; the question display stays empty
+                   unless later extended server-side. No secret data
+                   is requested or rendered here. */
+
+            } catch (identityError) {
+
+                /* silent — presentation hint only */
+
+            }
+
+        }());
+
+    }
+
+
+    function initTeacherSecurity() {
+
+        const usernameButton =
+            securityElement(securityIds.username.button);
+
+        const passwordButton =
+            securityElement(securityIds.password.button);
+
+        const recoveryButton =
+            securityElement(securityIds.recovery.button);
+
+        if (!usernameButton && !passwordButton && !recoveryButton) {
+            return;
+        }
+
+        /* Seed the current username display from login metadata. */
+
+        const session =
+            getTeacherSession();
+
+        if (session && session.username) {
+            updateUsernameDisplays(session.username);
+        }
+
+        Object.keys(securityIds).forEach(function(section) {
+
+            Object.keys(securityIds[section]).forEach(function(key) {
+
+                if (key === 'button' || key === 'status') {
+                    return;
+                }
+
+                const element =
+                    securityElement(securityIds[section][key]);
+
+                if (element) {
+
+                    element.addEventListener(
+                        'input',
+                        function() {
+                            securityInputsDirty = true;
+                        }
+                    );
+
+                }
+
+            });
+
+        });
+
+        if (usernameButton) {
+
+            usernameButton.addEventListener('click', changeUsername);
+
+        }
+
+        if (passwordButton) {
+
+            passwordButton.addEventListener('click', changePassword);
+
+        }
+
+        if (recoveryButton) {
+
+            recoveryButton.addEventListener('click', saveRecovery);
+
+        }
+
+        /* Enter-key submits per section (inputs are forms-free). */
+
+        [
+            'settingsNewUsernameInput',
+            'settingsUsernamePasswordInput'
+        ].forEach(function(field) {
+
+            const element = securityElement(field);
+
+            if (element) {
+
+                element.addEventListener(
+                    'keydown',
+                    function(event) {
+
+                        if (event.key === 'Enter' && usernameButton) {
+                            changeUsername();
+                        }
+
+                    }
+                );
+
+            }
+
+        });
+
+        [
+            'passwordCurrentInput',
+            'passwordNewInput',
+            'passwordConfirmInput'
+        ].forEach(function(field) {
+
+            const element = securityElement(field);
+
+            if (element) {
+
+                element.addEventListener(
+                    'keydown',
+                    function(event) {
+
+                        if (event.key === 'Enter' && passwordButton) {
+                            changePassword();
+                        }
+
+                    }
+                );
+
+            }
+
+        });
+
+        [
+            'recoveryQuestionInput',
+            'recoveryAnswerInput',
+            'recoveryPasswordInput'
+        ].forEach(function(field) {
+
+            const element = securityElement(field);
+
+            if (element) {
+
+                element.addEventListener(
+                    'keydown',
+                    function(event) {
+
+                        if (event.key === 'Enter' && recoveryButton) {
+                            saveRecovery();
+                        }
+
+                    }
+                );
+
+            }
+
+        });
+
+        refreshRecoveryQuestionDisplay();
+
+    }
+
+
+    /* Same DOMContentLoaded coexistence pattern as the S1 module. */
+
+    if (document.readyState === 'loading') {
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            initTeacherSecurity
+        );
+
+    } else {
+
+        initTeacherSecurity();
+
+    }
 
 
     document.addEventListener(

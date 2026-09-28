@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NEXORA | استعادة حساب المدرس</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Tahoma, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0f172a;
+            padding: 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+            min-height: 560px;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+
+            background:
+                linear-gradient(
+                    rgba(15, 23, 42, 0.32),
+                    rgba(15, 23, 42, 0.32)
+                ),
+                var(--teacher-img, url('https://i.ibb.co/HfRP5zx8/Whats-App-Image-2026-09-03-at-3-34-26-AM.jpg'));
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(15, 23, 42, 0.15),
+                rgba(15, 23, 42, 0.75)
+            );
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 35px 28px;
+            text-align: center;
+        }
+
+        .brand {
+            color: white;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 35px;
+        }
+
+        .login-title {
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            text-align: right;
+        }
+
+        .input-label {
+            display: block;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 19px;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            height: 54px;
+            border: none;
+            outline: none;
+            border-radius: 15px;
+            padding: 0 48px 0 15px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+
+        .recovery-question-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 16px 15px;
+            margin-bottom: 18px;
+            color: #0f172a;
+            font-size: 16px;
+            font-weight: 800;
+            text-align: right;
+            line-height: 1.7;
+        }
+
+        .login-button {
+            width: 100%;
+            height: 56px;
+            border: none;
+            border-radius: 16px;
+            margin-top: 10px;
+
+            background: white;
+            color: #0f172a;
+
+            font-size: 17px;
+            font-weight: 900;
+
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .login-button:active {
+            transform: scale(0.98);
+        }
+
+        .login-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            min-height: 25px;
+            margin-top: 18px;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        .message.success {
+            color: #bbf7d0;
+        }
+
+        .message.error {
+            color: #fecaca;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .footer {
+            margin-top: 28px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .login-card {
+                min-height: 550px;
+                border-radius: 24px;
+            }
+
+            .content {
+                padding: 30px 22px;
+            }
+
+            .brand {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <div class="overlay"></div>
+
+        <div class="content">
+
+            <div class="brand">NEXORA</div>
+
+            <div class="subtitle">
+                لوحة تحكم المدرس
+            </div>
+
+            <div class="login-title" id="pageTitle">
+                🔑 استعادة الحساب
+            </div>
+
+            <!-- ============ STEP 1: Username ============ -->
+
+            <div class="step active" id="stepUsername">
+
+                <div class="input-group">
+
+                    <label class="input-label">
+                        اسم المستخدم
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">👤</span>
+
+                        <input
+                            type="text"
+                            id="usernameInput"
+                            placeholder="أدخل اسم المستخدم"
+                            autocomplete="username"
+                        >
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="login-button"
+                    id="continueButton"
+                >
+                    متابعة
+                </button>
+
+            </div>
+
+            <!-- ============ STEP 2: Recovery + New Password ============ -->
+
+            <div class="step" id="stepReset">
+
+                <div class="input-group">
+
+                    <label class="input-label">
+                        سؤال الاسترداد
+                    </label>
+
+                    <div class="recovery-question-box" id="recoveryQuestionBox">
+                        —
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label class="input-label">
+                        إجابة الاسترداد
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">💬</span>
+
+                        <input
+                            type="password"
+                            id="answerInput"
+                            placeholder="أدخل الإجابة"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label class="input-label">
+                        كلمة المرور الجديدة (8 أحرف على الأقل)
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">🔒</span>
+
+                        <input
+                            type="password"
+                            id="newPasswordInput"
+                            placeholder="كلمة المرور الجديدة"
+                            autocomplete="new-password"
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label class="input-label">
+                        تأكيد كلمة المرور الجديدة
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">🔒</span>
+
+                        <input
+                            type="password"
+                            id="confirmPasswordInput"
+                            placeholder="تأكيد كلمة المرور"
+                            autocomplete="new-password"
+                        >
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="login-button"
+                    id="resetButton"
+                >
+                    إعادة تعيين كلمة المرور
+                </button>
+
+            </div>
+
+            <!-- ============ STEP 3: Success ============ -->
+
+            <div class="step" id="stepSuccess">
+
+                <div class="message success" id="successMessage">
+                    تم تغيير كلمة المرور بنجاح.
+                </div>
+
+                <button
+                    type="button"
+                    class="login-button"
+                    id="backToLoginButton"
+                >
+                    العودة لتسجيل الدخول
+                </button>
+
+            </div>
+
+            <div
+                class="message"
+                id="message"
+            ></div>
+
+            <a class="back-link" href="teacher-login.html" id="backLink">
+                العودة لتسجيل الدخول
+            </a>
+
+            <div class="footer">
+                NEXORA | Shehab Innovation
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const supabaseClient = window.supabase.createClient(
+            'https://bbiflvdwardvozjvrsya.supabase.co',
+            'sb_publishable_I_7nb9Ab0--dz_5hpzq27w_G8_7b6PL'
+        );
+
+
+        const usernameInput = document.getElementById('usernameInput');
+        const continueButton = document.getElementById('continueButton');
+
+        const recoveryQuestionBox = document.getElementById('recoveryQuestionBox');
+        const answerInput = document.getElementById('answerInput');
+        const newPasswordInput = document.getElementById('newPasswordInput');
+        const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+        const resetButton = document.getElementById('resetButton');
+
+        const backToLoginButton = document.getElementById('backToLoginButton');
+
+        const stepUsername = document.getElementById('stepUsername');
+        const stepReset = document.getElementById('stepReset');
+        const stepSuccess = document.getElementById('stepSuccess');
+        const pageTitle = document.getElementById('pageTitle');
+        const message = document.getElementById('message');
+        const backLink = document.getElementById('backLink');
+
+
+        /* Forgot-password state lives in JS variables only.
+           Nothing is written to localStorage or sessionStorage —
+           the recovery answer and passwords never persist. */
+
+        let forgotUsername = null;
+
+        let resetCompleted = false;
+
+
+        function showMessage(text, type) {
+
+            message.textContent = text;
+
+            message.className = 'message' + (type ? ' ' + type : '');
+
+        }
+
+
+        function clearMessage() {
+
+            message.textContent = '';
+
+            message.className = 'message';
+
+        }
+
+
+        function showStep(stepElement) {
+
+            stepUsername.classList.remove('active');
+
+            stepReset.classList.remove('active');
+
+            stepSuccess.classList.remove('active');
+
+            stepElement.classList.add('active');
+
+        }
+
+
+        async function handleContinue() {
+
+            if (resetCompleted) {
+                return;
+            }
+
+            const username =
+                usernameInput.value.trim();
+
+            if (!username) {
+
+                showMessage('من فضلك أدخل اسم المستخدم.', 'error');
+
+                return;
+
+            }
+
+            clearMessage();
+
+            continueButton.disabled = true;
+
+            const idleText = 'متابعة';
+
+            continueButton.textContent = 'جاري البحث...';
+
+            try {
+
+                const { data, error } = await supabaseClient.rpc(
+                    'teacher_recovery_get_question',
+                    {
+                        p_username: username
+                    }
+                );
+
+                if (error) {
+                    throw error;
+                }
+
+                const row =
+                    (data && data.length > 0)
+                        ? data[0]
+                        : null;
+
+                const question =
+                    (row && row.recovery_question)
+                        ? row.recovery_question
+                        : null;
+
+                if (!question) {
+
+                    showMessage('حدث خطأ. حاول مرة أخرى.', 'error');
+
+                    continueButton.disabled = false;
+
+                    continueButton.textContent = idleText;
+
+                    return;
+
+                }
+
+                /* Rendered via textContent only — never innerHTML. */
+
+                recoveryQuestionBox.textContent = question;
+
+                forgotUsername = username;
+
+                pageTitle.textContent = '🔑 إعادة تعيين كلمة المرور';
+
+                showStep(stepReset);
+
+                clearMessage();
+
+            } catch (continueError) {
+
+                console.error('Recovery question error:', continueError);
+
+                showMessage('حدث خطأ. حاول مرة أخرى.', 'error');
+
+            } finally {
+
+                continueButton.disabled = false;
+
+                continueButton.textContent = 'متابعة';
+
+            }
+
+        }
+
+
+        async function handleReset() {
+
+            if (resetCompleted) {
+                return;
+            }
+
+            const answer =
+                answerInput.value;
+
+            const newPassword =
+                newPasswordInput.value;
+
+            const confirmPassword =
+                confirmPasswordInput.value;
+
+            /* Client-side guards — no RPC call unless ALL pass. */
+
+            if (!forgotUsername) {
+
+                showMessage('حدث خطأ. حاول مرة أخرى.', 'error');
+
+                return;
+
+            }
+
+            if (!answer || !answer.trim()) {
+
+                showMessage('من فضلك أدخل إجابة الاسترداد.', 'error');
+
+                return;
+
+            }
+
+            if (!newPassword) {
+
+                showMessage('من فضلك أدخل كلمة المرور الجديدة.', 'error');
+
+                return;
+
+            }
+
+            if (!confirmPassword) {
+
+                showMessage('من فضلك أكد كلمة المرور الجديدة.', 'error');
+
+                return;
+
+            }
+
+            if (newPassword.length < 8) {
+
+                showMessage('كلمة المرور قصيرة جدًا. يجب أن تكون 8 أحرف على الأقل.', 'error');
+
+                return;
+
+            }
+
+            if (newPassword !== confirmPassword) {
+
+                showMessage('تأكيد كلمة المرور غير مطابق.', 'error');
+
+                return;
+
+            }
+
+            clearMessage();
+
+            resetButton.disabled = true;
+
+            resetButton.textContent = 'جاري إعادة التعيين...';
+
+            try {
+
+                const result = await supabaseClient.rpc(
+                    'teacher_recovery_reset_password',
+                    {
+                        p_username: forgotUsername,
+                        p_answer: answer,
+                        p_new_password: newPassword
+                    }
+                );
+
+                const rpcError = result.error;
+
+                if (rpcError) {
+
+                    const errorText =
+                        String(
+                            (rpcError.code || '') + ' ' + (rpcError.message || '')
+                        );
+
+                    if (errorText.indexOf('PASSWORD_TOO_SHORT') !== -1) {
+
+                        showMessage('كلمة المرور قصيرة جدًا. يجب أن تكون 8 أحرف على الأقل.', 'error');
+
+                    } else {
+
+                        showMessage('حدث خطأ. حاول مرة أخرى.', 'error');
+
+                    }
+
+                    return;
+
+                }
+
+                const code = Array.isArray(result.data)
+                    ? (result.data.length > 0 ? Number(result.data[0]) : NaN)
+                    : Number(result.data);
+
+                if (code === 1) {
+
+                    /* Success: clear every secret from the DOM and stop
+                       any further submissions. */
+
+                    resetCompleted = true;
+
+                    answerInput.value = '';
+
+                    newPasswordInput.value = '';
+
+                    confirmPasswordInput.value = '';
+
+                    clearMessage();
+
+                    pageTitle.textContent = '✅ تم بنجاح';
+
+                    showStep(stepSuccess);
+
+                    backLink.style.display = 'none';
+
+                    return;
+
+                }
+
+                if (code === -1) {
+
+                    showMessage('تم قفل الاسترداد مؤقتًا. حاول مرة أخرى بعد 15 دقيقة.', 'error');
+
+                    return;
+
+                }
+
+                /* code === 0 (or any unexpected value): unified failure —
+                   no hint about whether the username exists. */
+
+                showMessage('بيانات الاسترداد غير صحيحة.', 'error');
+
+                answerInput.value = '';
+
+                newPasswordInput.value = '';
+
+                confirmPasswordInput.value = '';
+
+            } catch (resetError) {
+
+                console.error('Reset password error:', resetError);
+
+                const errorText =
+                    String(
+                        ((resetError && resetError.code) || '') + ' ' +
+                        ((resetError && resetError.message) || '')
+                    );
+
+                if (errorText.indexOf('PASSWORD_TOO_SHORT') !== -1) {
+
+                    showMessage('كلمة المرور قصيرة جدًا. يجب أن تكون 8 أحرف على الأقل.', 'error');
+
+                } else {
+
+                    showMessage('حدث خطأ. حاول مرة أخرى.', 'error');
+
+                }
+
+            } finally {
+
+                /* Secrets never persist — always cleared, success or fail. */
+
+                answerInput.value = '';
+
+                newPasswordInput.value = '';
+
+                confirmPasswordInput.value = '';
+
+                resetButton.disabled = resetCompleted;
+
+                resetButton.textContent = 'إعادة تعيين كلمة المرور';
+
+            }
+
+        }
+
+
+        continueButton.addEventListener('click', handleContinue);
+
+        resetButton.addEventListener('click', handleReset);
+
+        backToLoginButton.addEventListener('click', function () {
+
+            window.location.href = 'teacher-login.html';
+
+        });
+
+        usernameInput.addEventListener('keydown', function (event) {
+
+            if (event.key === 'Enter') {
+                handleContinue();
+            }
+
+        });
+
+        [
+            answerInput,
+            newPasswordInput,
+            confirmPasswordInput
+        ].forEach(function (input) {
+
+            input.addEventListener('keydown', function (event) {
+
+                if (event.key === 'Enter') {
+                    handleReset();
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

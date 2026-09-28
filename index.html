@@ -8705,6 +8705,28 @@
             );
 
 
+            /* UX pass: grade is the source of truth (X.7). A logged-in
+               student who opens "المنهج والمواد" lands directly on their
+               own grade page instead of re-picking it — the curriculum
+               grid already contains exactly their grade card via
+               applyGradeGating(). Purely presentational routing;
+               IDs, hooks and registration logic untouched. */
+
+            if(
+                pageId === 'curriculum' &&
+                currentStudent &&
+                currentStudent.grade
+            ){
+
+                openGrade(
+                    parseInt(currentStudent.grade, 10)
+                );
+
+                return;
+
+            }
+
+
             if(
                 pageId ===
                 'grades'
