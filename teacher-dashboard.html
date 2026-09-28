@@ -2728,11 +2728,6 @@
                 <h3 class="settings-h2"><i class="fas fa-id-badge"></i> إعدادات المدرس</h3>
 
                 <div class="profile-field">
-                    <label class="form-label">اسم المستخدم (للدخول — يُغيَّر من قسم الأمان أدناه)</label>
-                    <input type="text" class="form-input" id="settingsUsernameDisplay" dir="ltr" disabled>
-                </div>
-
-                <div class="profile-field">
                     <label class="form-label">صورة المدرس (رابط صورة)</label>
                     <input type="text" class="form-input" id="settingsImageInput" dir="ltr" placeholder="https://..." autocomplete="off">
                     <div class="sr-sub">تظهر في الشريط الجانبي وصفحة البروفايل. مسار رفع ملف مباشر غير متاح — استخدم رابط صورة.</div>
@@ -2774,13 +2769,22 @@
 
                 <h3 class="settings-h2" id="securitySection"><i class="fas fa-shield-halved"></i> الأمان</h3>
 
+                <div style="font-size:13px; font-weight:900; color:var(--text); margin:18px 0 10px; display:flex; align-items:center; gap:7px;">
+                    <i class="fas fa-user-pen" style="color:var(--primary); font-size:12px;"></i> بيانات الحساب — اسم المستخدم
+                </div>
+
                 <div class="profile-field">
-                    <label class="form-label">تغيير اسم المستخدم</label>
+                    <label class="form-label">اسم المستخدم الحالي (يُحدَّث فورًا بعد التغيير)</label>
+                    <input type="text" class="form-input" id="settingsUsernameDisplay" dir="ltr" disabled>
+                </div>
+
+                <div class="profile-field">
+                    <label class="form-label">اسم المستخدم الجديد</label>
                     <input type="text" class="form-input" id="settingsNewUsernameInput" dir="ltr" placeholder="username جديد (a-z 0-9 . _ -)" autocomplete="off">
                 </div>
 
                 <div class="profile-field">
-                    <label class="form-label">كلمة المرور الحالية (للتأكيد)</label>
+                    <label class="form-label">كلمة المرور الحالية للتأكيد</label>
                     <input type="password" class="form-input" id="settingsUsernamePasswordInput" dir="ltr" autocomplete="current-password">
                 </div>
 
@@ -2790,7 +2794,11 @@
 
                 <div class="settings-status" id="usernameStatus"></div>
 
-                <div class="profile-field" style="margin-top:26px;">
+                <div style="font-size:13px; font-weight:900; color:var(--text); margin:26px 0 10px; display:flex; align-items:center; gap:7px;">
+                    <i class="fas fa-lock" style="color:var(--primary); font-size:12px;"></i> تغيير كلمة المرور
+                </div>
+
+                <div class="profile-field">
                     <label class="form-label">كلمة المرور الحالية</label>
                     <input type="password" class="form-input" id="passwordCurrentInput" autocomplete="new-password">
                 </div>
@@ -2811,18 +2819,23 @@
 
                 <div class="settings-status" id="passwordStatus"></div>
 
-                <div class="profile-field" style="margin-top:26px;">
+                <div style="font-size:13px; font-weight:900; color:var(--text); margin:26px 0 10px; display:flex; align-items:center; gap:7px;">
+                    <i class="fas fa-life-ring" style="color:var(--primary); font-size:12px;"></i> سؤال الاسترداد
+                </div>
+
+                <div class="profile-field">
                     <label class="form-label">سؤال الاسترداد</label>
                     <input type="text" class="form-input" id="recoveryQuestionInput" placeholder="مثال: ما اسم أول مدرسة درستها؟" autocomplete="off">
                 </div>
 
                 <div class="profile-field">
-                    <label class="form-label">إجابة الاسترداد (تُخزَّن مشفّرة — لا تُحفظ في المتصفح)</label>
+                    <label class="form-label">إجابة الاسترداد</label>
                     <input type="password" class="form-input" id="recoveryAnswerInput" autocomplete="new-password">
+                    <div class="sr-sub">تُشفَّر الإجابة على السيرفر ولا يتم حفظها في المتصفح.</div>
                 </div>
 
                 <div class="profile-field">
-                    <label class="form-label">كلمة المرور الحالية (للتأكيد)</label>
+                    <label class="form-label">كلمة المرور الحالية للتأكيد</label>
                     <input type="password" class="form-input" id="recoveryPasswordInput" autocomplete="new-password">
                 </div>
 
